@@ -387,6 +387,7 @@ export default function App() {
       if (lang === 'English') {
         switch (page) {
           case 'home': setHomeContent(DEFAULT_HOME_CONTENT); break;
+          case 'news': setHomeContent(DEFAULT_HOME_CONTENT); break;
           case 'admissions': setAdmissionsContent(DEFAULT_ADMISSIONS_CONTENT); break;
           case 'academics': setAcademicsContent(DEFAULT_ACADEMICS_CONTENT); break;
           case 'faculty': setFacultyContent(DEFAULT_FACULTY_CONTENT); break;
@@ -413,9 +414,36 @@ export default function App() {
 
       switch (page) {
         case 'home':
-          const tHome = await getTranslatedData('home', DEFAULT_HOME_CONTENT, lang);
-          setHomeContent(tHome);
+        case 'news':
+          {
+            const key = `home_${lang}`;
+            if (translationCache.current.has(key)) {
+              setHomeContent(translationCache.current.get(key));
+              break;
+            }
+
+            // Optimize: Split huge Home content into 3 parallel requests
+            const baseContent = { ...DEFAULT_HOME_CONTENT, clinics: [], latestNews: [] };
+            const clinicsData = DEFAULT_HOME_CONTENT.clinics;
+            const newsData = DEFAULT_HOME_CONTENT.latestNews;
+
+            const [tBase, tClinics, tNews] = await Promise.all([
+               translateContent(baseContent, lang),
+               translateContent(clinicsData, lang),
+               translateContent(newsData, lang)
+            ]);
+
+            const tHome = { 
+              ...tBase, 
+              clinics: tClinics, 
+              latestNews: tNews 
+            } as HomeContent;
+
+            translationCache.current.set(key, tHome);
+            setHomeContent(tHome);
+          }
           break;
+
         case 'admissions':
           const tAdmissions = await getTranslatedData('admissions', DEFAULT_ADMISSIONS_CONTENT, lang);
           setAdmissionsContent(tAdmissions);
@@ -425,16 +453,68 @@ export default function App() {
           setAcademicsContent(tAcademics);
           break;
         case 'faculty':
-          const tFaculty = await getTranslatedData('faculty', DEFAULT_FACULTY_CONTENT, lang);
-          setFacultyContent(tFaculty);
+          {
+             const key = `faculty_${lang}`;
+             if (translationCache.current.has(key)) {
+               setFacultyContent(translationCache.current.get(key));
+               break;
+             }
+             
+             // Split faculty list from base
+             const base = { ...DEFAULT_FACULTY_CONTENT, facultyList: [] };
+             const list = DEFAULT_FACULTY_CONTENT.facultyList;
+             
+             const [tBase, tList] = await Promise.all([
+               translateContent(base, lang),
+               translateContent(list, lang)
+             ]);
+             
+             const tContent = { ...tBase, facultyList: tList } as FacultyContent;
+             translationCache.current.set(key, tContent);
+             setFacultyContent(tContent);
+          }
           break;
         case 'notices':
-          const tNotices = await getTranslatedData('notices', DEFAULT_NOTICES_CONTENT, lang);
-          setNoticesContent(tNotices);
+          {
+             const key = `notices_${lang}`;
+             if (translationCache.current.has(key)) {
+               setNoticesContent(translationCache.current.get(key));
+               break;
+             }
+             
+             const base = { ...DEFAULT_NOTICES_CONTENT, notices: [] };
+             const list = DEFAULT_NOTICES_CONTENT.notices;
+             
+             const [tBase, tList] = await Promise.all([
+               translateContent(base, lang),
+               translateContent(list, lang)
+             ]);
+             
+             const tContent = { ...tBase, notices: tList } as NoticesContent;
+             translationCache.current.set(key, tContent);
+             setNoticesContent(tContent);
+          }
           break;
         case 'centers':
-          const tCenters = await getTranslatedData('centers', DEFAULT_CENTERS_CONTENT, lang);
-          setCentersContent(tCenters);
+          {
+             const key = `centers_${lang}`;
+             if (translationCache.current.has(key)) {
+               setCentersContent(translationCache.current.get(key));
+               break;
+             }
+
+             const base = { ...DEFAULT_CENTERS_CONTENT, clinics: [] };
+             const list = DEFAULT_CENTERS_CONTENT.clinics;
+
+             const [tBase, tList] = await Promise.all([
+                translateContent(base, lang),
+                translateContent(list, lang)
+             ]);
+
+             const tContent = { ...tBase, clinics: tList } as CentersContent;
+             translationCache.current.set(key, tContent);
+             setCentersContent(tContent);
+          }
           break;
         case 'library':
           const tLibrary = await getTranslatedData('library', DEFAULT_LIBRARY_CONTENT, lang);

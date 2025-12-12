@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,13 +13,19 @@
             colors: {
               pau: {
                 blue: '#003366', // Deep Academic Blue
+                darkBlue: '#002244', // Darker footer blue
                 gold: '#C49A6C', // California Gold/Sand
+                goldLight: '#E5D0B1',
                 light: '#F8FAFC', // Slightly cooler light gray for modern feel
               }
             },
             fontFamily: {
               serif: ['"Libre Baskerville"', 'serif'],
               sans: ['"Inter"', 'sans-serif'],
+            },
+            boxShadow: {
+              'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+              'glow': '0 0 15px rgba(196, 154, 108, 0.3)',
             }
           }
         }
@@ -37,7 +43,7 @@
 }
 </script>
 </head>
-  <body>
+  <body class="antialiased text-gray-900 bg-gray-50">
     <div id="root"></div>
   </body>
 </html>
