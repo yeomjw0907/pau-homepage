@@ -24,11 +24,11 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
           </p>
         </div>
 
-        {/* Dean's Message & Stats Grid */}
+        {/* Dean's Message / Student Success & Stats Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
           <div className="bg-pau-light p-8 rounded-xl shadow-sm border-l-4 border-pau-gold">
             <h3 className="text-2xl font-serif font-bold text-pau-blue mb-4">{content.deansMessageTitle}</h3>
-            <p className="text-gray-700 italic leading-relaxed text-lg">"{content.deansMessage}"</p>
+            <p className="text-gray-700 leading-relaxed text-lg">{content.deansMessage}</p>
           </div>
 
           <div className="grid grid-cols-2 gap-4">

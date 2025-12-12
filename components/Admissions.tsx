@@ -1,7 +1,7 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { AdmissionsContent, SharedContent } from '../types';
-import { CalendarDaysIcon, CurrencyDollarIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
+import { CalendarDaysIcon, CurrencyDollarIcon, CheckCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
 interface AdmissionsProps {
   content: AdmissionsContent;
@@ -9,6 +9,29 @@ interface AdmissionsProps {
 }
 
 export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    lsacId: '',
+    email: ''
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Simulate LSAC redirection/submission
+    alert(`Redirecting to LSAC Gateway for candidate L${formData.lsacId}...\n\n(This is a simulation)`);
+    setIsModalOpen(false);
+    setFormData({ firstName: '', lastName: '', lsacId: '', email: '' });
+  };
+
   return (
     <div className="bg-white">
       {/* Hero Header */}
@@ -71,7 +94,10 @@ export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
                     </div>
                   ))}
                 </div>
-                <button className="w-full mt-8 bg-pau-gold text-white font-bold py-3 px-4 rounded hover:bg-yellow-600 transition-colors shadow-sm">
+                <button 
+                  onClick={() => setIsModalOpen(true)}
+                  className="w-full mt-8 bg-pau-gold text-white font-bold py-3 px-4 rounded hover:bg-yellow-600 transition-colors shadow-sm"
+                >
                   {shared.buttons.applyLsac}
                 </button>
              </div>
@@ -79,6 +105,80 @@ export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
 
         </div>
       </div>
+
+      {/* LSAC Application Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="lsac-modal" role="dialog" aria-modal="true">
+          <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div 
+              className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" 
+              onClick={() => setIsModalOpen(false)}
+              aria-hidden="true"
+            ></div>
+            <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full">
+              <form onSubmit={handleSubmit}>
+                <div className="bg-white px-4 pt-5 pb-4 sm:p-6">
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <h3 className="text-xl font-bold text-pau-blue">LSAC CAS Gateway</h3>
+                      <p className="text-sm text-gray-500 mt-1">Enter your credentials to begin the PAU Law application via LSAC.</p>
+                    </div>
+                    <button type="button" onClick={() => setIsModalOpen(false)} className="text-gray-400 hover:text-gray-500">
+                      <XMarkIcon className="h-6 w-6" />
+                    </button>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700">First Name</label>
+                        <input 
+                          type="text" name="firstName" required
+                          value={formData.firstName} onChange={handleChange}
+                          className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm p-2 text-gray-900" 
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700">Last Name</label>
+                        <input 
+                          type="text" name="lastName" required
+                          value={formData.lastName} onChange={handleChange}
+                          className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm p-2 text-gray-900" 
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">LSAC Account Number (L-Number)</label>
+                      <input 
+                        type="text" name="lsacId" placeholder="L12345678" required
+                        value={formData.lsacId} onChange={handleChange}
+                        className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm p-2 text-gray-900" 
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">Email Address</label>
+                      <input 
+                        type="email" name="email" required
+                        value={formData.email} onChange={handleChange}
+                        className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm p-2 text-gray-900" 
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                  <button type="submit" className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-pau-blue text-base font-medium text-white hover:bg-blue-800 sm:ml-3 sm:w-auto sm:text-sm">
+                    Proceed to LSAC
+                  </button>
+                  <button type="button" onClick={() => setIsModalOpen(false)} className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { InfoSection } from './components/InfoSection';
@@ -186,18 +186,18 @@ const DEFAULT_SHARED_CONTENT: SharedContent = {
 };
 
 const DEFAULT_HOME_CONTENT: HomeContent = {
-  heroTitle: "Innovating Justice in Silicon Valley",
-  heroSubtitle: "Pacific American University School of Law combines rigorous legal theory with practical skills, located at the intersection of law, technology, and social justice.",
-  aboutEyebrow: "Who We Are",
-  aboutTitle: "A Legacy of Innovation",
-  aboutText: "Since 1978, PAU Law has been a leader in experiential legal education. Located in Santa Clara County, we leverage our proximity to the world's leading tech companies to provide unmatched opportunities in Intellectual Property and Privacy Law, while maintaining a deep commitment to public service and community advocacy.",
-  deansMessageTitle: "Welcome from Dean Elena Rodriguez",
-  deansMessage: "At PAU Law, we don't just teach the law; we shape the future of the legal profession. Our curriculum is designed for the modern landscape, where lawyers must be agile, tech-savvy, and deeply ethical. Join a community that champions diversity and drives impact.",
+  heroTitle: "Study American Law From Anywhere",
+  heroSubtitle: "Begin your journey toward a California law license through Pacific American University’s School of Law, a fully online J.D. program designed for motivated students who want flexibility, world-class instruction, and a clear path toward professional success.",
+  aboutEyebrow: "Flexible Learning",
+  aboutTitle: "Flexible Learning That Fits Your Life",
+  aboutText: "At Pacific American University’s School of Law, you can complete two-thirds of your coursework asynchronously, allowing you to study on your schedule—anytime, anywhere. Our online platform is built for convenience without sacrificing academic rigor.",
+  deansMessageTitle: "A Student Success–Centered Law School",
+  deansMessage: "From academic support to bar examination preparation, every part of the Pacific American University’s School of Law program is designed to help you thrive. You’ll receive structured guidance from your first course through your preparation for the California Bar.",
   stats: [
-    { label: "Bar Passage Rate (First-Time)", value: "86%" },
-    { label: "Employment Rate (10 Months)", value: "92%" },
+    { label: "Online Coursework", value: "100%" },
+    { label: "Asynchronous", value: "66%" },
     { label: "Student-Faculty Ratio", value: "11:1" },
-    { label: "Clinics & Externships", value: "14+" }
+    { label: "Bar Prep Support", value: "Included" }
   ],
   clinicsTitle: "Centers of Excellence",
   clinicsIntro: "Real-world experience in the areas that matter most.",
@@ -224,19 +224,19 @@ const DEFAULT_ADMISSIONS_CONTENT: AdmissionsContent = {
     "Résumé / CV",
     "Character & Fitness Disclosure"
   ],
-  tuitionTitle: "Tuition & Financial Aid",
-  tuitionInfo: "We are committed to making legal education accessible. Over 85% of our students receive merit-based scholarships or need-based grants. Our financial aid counselors work individually with every admitted student.",
-  tuitionCost: "$58,450"
+  tuitionTitle: "Affordable Tuition Without Compromise",
+  tuitionInfo: "Pacific American University’s School of Law is proud to offer a high-quality legal education at a significantly lower cost than traditional U.S. law schools, making the dream of earning a J.D. more accessible for students anywhere.",
+  tuitionCost: "$28,450"
 };
 
 const DEFAULT_ACADEMICS_CONTENT: AcademicsContent = {
-  title: "A Curriculum for the 21st Century",
-  intro: "PAU Law’s curriculum bridges the gap between theory and practice. From your first year, you will be solving real legal problems, drafting contracts, and advocating for clients.",
+  title: "Prepare for a Global Legal Future",
+  intro: "Study American law from Korea and open doors to careers in International business, Compliance and corporate governance, Legal consulting, Cross-border trade, Government and regulatory fields, and Further graduate study in the U.S. Pacific American University’s School of Law empowers students to build the knowledge and credentials needed in today’s global legal environment.",
   programsTitle: "Degree Programs",
   programs: [
     {
       name: "Juris Doctor (JD)",
-      description: "Our core three-year program prepares students for the Bar Exam and practice in any jurisdiction. Features a rigorous 1L foundation followed by broad elective freedom."
+      description: "A fully online J.D. program designed for motivated students. Complete two-thirds of your coursework asynchronously."
     },
     {
       name: "LLM in Technology & Privacy",
@@ -255,8 +255,8 @@ const DEFAULT_ACADEMICS_CONTENT: AcademicsContent = {
 };
 
 const DEFAULT_FACULTY_CONTENT: FacultyContent = {
-  title: "Learn from the Masters",
-  intro: "Our faculty includes former Supreme Court clerks, partners at major international firms, and leading researchers in tech policy. They are not just scholars; they are mentors.",
+  title: "World-Class Faculty, Real Mentorship",
+  intro: "Learn from experienced legal professionals and professors who are committed to your progress. Our faculty provide personalized feedback, supportive guidance, and accessible communication, helping you succeed academically and professionally.",
   facultyList: [
     {
       name: "Dean Elena Rodriguez",
@@ -363,6 +363,117 @@ export default function App() {
   const [careersContent, setCareersContent] = useState<CareersContent>(DEFAULT_CAREERS_CONTENT);
   const [calendarContent, setCalendarContent] = useState<CalendarContent>(DEFAULT_CALENDAR_CONTENT);
 
+  // Cache to store translated content: key = `${pageType}_${lang}` or `${id}_${lang}`
+  const translationCache = useRef<Map<string, any>>(new Map());
+
+  // Helper to fetch from cache or API
+  const getTranslatedData = async <T extends unknown>(key: string, data: T, lang: SupportedLanguage): Promise<T> => {
+    if (lang === 'English') return data;
+    
+    const cacheKey = `${key}_${lang}`;
+    if (translationCache.current.has(cacheKey)) {
+      return translationCache.current.get(cacheKey) as T;
+    }
+    
+    const translated = await translateContent(data, lang);
+    translationCache.current.set(cacheKey, translated);
+    return translated;
+  };
+
+  // Helper function to translate specific page content
+  const translatePageContent = async (page: Page, lang: SupportedLanguage) => {
+    try {
+      // If switching back to English, restore defaults immediately
+      if (lang === 'English') {
+        switch (page) {
+          case 'home': setHomeContent(DEFAULT_HOME_CONTENT); break;
+          case 'admissions': setAdmissionsContent(DEFAULT_ADMISSIONS_CONTENT); break;
+          case 'academics': setAcademicsContent(DEFAULT_ACADEMICS_CONTENT); break;
+          case 'faculty': setFacultyContent(DEFAULT_FACULTY_CONTENT); break;
+          case 'notices': setNoticesContent(DEFAULT_NOTICES_CONTENT); break;
+          case 'centers': setCentersContent(DEFAULT_CENTERS_CONTENT); break;
+          case 'library': setLibraryContent(DEFAULT_LIBRARY_CONTENT); break;
+          case 'careers': setCareersContent(DEFAULT_CAREERS_CONTENT); break;
+          case 'calendar': setCalendarContent(DEFAULT_CALENDAR_CONTENT); break;
+          case 'news-detail':
+            if (selectedNewsItem) {
+               const original = [...NEWS_DATA, ...NOTICES_DATA].find(i => i.id === selectedNewsItem.id);
+               if (original) setSelectedNewsItem(original);
+            }
+            break;
+          case 'clinic-detail':
+            if (selectedClinic) {
+              const original = CLINIC_DATA.find(c => c.id === selectedClinic.id);
+              if (original) setSelectedClinic(original);
+            }
+            break;
+        }
+        return;
+      }
+
+      switch (page) {
+        case 'home':
+          const tHome = await getTranslatedData('home', DEFAULT_HOME_CONTENT, lang);
+          setHomeContent(tHome);
+          break;
+        case 'admissions':
+          const tAdmissions = await getTranslatedData('admissions', DEFAULT_ADMISSIONS_CONTENT, lang);
+          setAdmissionsContent(tAdmissions);
+          break;
+        case 'academics':
+          const tAcademics = await getTranslatedData('academics', DEFAULT_ACADEMICS_CONTENT, lang);
+          setAcademicsContent(tAcademics);
+          break;
+        case 'faculty':
+          const tFaculty = await getTranslatedData('faculty', DEFAULT_FACULTY_CONTENT, lang);
+          setFacultyContent(tFaculty);
+          break;
+        case 'notices':
+          const tNotices = await getTranslatedData('notices', DEFAULT_NOTICES_CONTENT, lang);
+          setNoticesContent(tNotices);
+          break;
+        case 'centers':
+          const tCenters = await getTranslatedData('centers', DEFAULT_CENTERS_CONTENT, lang);
+          setCentersContent(tCenters);
+          break;
+        case 'library':
+          const tLibrary = await getTranslatedData('library', DEFAULT_LIBRARY_CONTENT, lang);
+          setLibraryContent(tLibrary);
+          break;
+        case 'careers':
+          const tCareers = await getTranslatedData('careers', DEFAULT_CAREERS_CONTENT, lang);
+          setCareersContent(tCareers);
+          break;
+        case 'calendar':
+          const tCalendar = await getTranslatedData('calendar', DEFAULT_CALENDAR_CONTENT, lang);
+          setCalendarContent(tCalendar);
+          break;
+        case 'news-detail':
+          if (selectedNewsItem) {
+             const originalItem = [...NEWS_DATA, ...NOTICES_DATA].find(i => i.id === selectedNewsItem.id);
+             if (originalItem) {
+               const translatedItem = await getTranslatedData(`news_${originalItem.id}`, originalItem, lang);
+               setSelectedNewsItem(translatedItem);
+             }
+          }
+          break;
+        case 'clinic-detail':
+          if (selectedClinic) {
+            const originalClinic = CLINIC_DATA.find(c => c.id === selectedClinic.id);
+            if (originalClinic) {
+              const translatedClinic = await getTranslatedData(`clinic_${originalClinic.id}`, originalClinic, lang);
+              setSelectedClinic(translatedClinic);
+            }
+          }
+          break;
+        default:
+          break;
+      }
+    } catch (error) {
+      console.error(`Failed to translate page ${page}`, error);
+    }
+  };
+
   const handleLanguageChange = async (lang: SupportedLanguage) => {
     if (lang === currentLang) return;
     
@@ -370,57 +481,13 @@ export default function App() {
     setCurrentLang(lang);
 
     try {
-      // 1. Translate Shared Strings (Nav, Footer, Buttons)
-      const translatedShared = await translateContent(DEFAULT_SHARED_CONTENT, lang);
-      setSharedContent(translatedShared);
-
-      // 2. Translate Page Content
-      // Optimization: In a real app, we might only translate the visible page, 
-      // but here we'll do the core ones to ensure smooth navigation.
-      const tHome = await translateContent(DEFAULT_HOME_CONTENT, lang);
-      setHomeContent(tHome);
-
-      const tAdmissions = await translateContent(DEFAULT_ADMISSIONS_CONTENT, lang);
-      setAdmissionsContent(tAdmissions);
-
-      const tAcademics = await translateContent(DEFAULT_ACADEMICS_CONTENT, lang);
-      setAcademicsContent(tAcademics);
-
-      const tFaculty = await translateContent(DEFAULT_FACULTY_CONTENT, lang);
-      setFacultyContent(tFaculty);
-      
-      const tNotices = await translateContent(DEFAULT_NOTICES_CONTENT, lang);
-      setNoticesContent(tNotices);
-
-      const tCenters = await translateContent(DEFAULT_CENTERS_CONTENT, lang);
-      setCentersContent(tCenters);
-      
-      const tLibrary = await translateContent(DEFAULT_LIBRARY_CONTENT, lang);
-      setLibraryContent(tLibrary);
-      
-      const tCareers = await translateContent(DEFAULT_CAREERS_CONTENT, lang);
-      setCareersContent(tCareers);
-      
-      const tCalendar = await translateContent(DEFAULT_CALENDAR_CONTENT, lang);
-      setCalendarContent(tCalendar);
-
-      // 3. Handle Detail Pages Translation
-      if (currentPage === 'news-detail' && selectedNewsItem) {
-        // Find original english item to translate from
-        const originalItem = [...NEWS_DATA, ...NOTICES_DATA].find(i => i.id === selectedNewsItem.id);
-        if (originalItem) {
-          const translatedItem = await translateContent(originalItem, lang);
-          setSelectedNewsItem(translatedItem);
-        }
-      }
-
-      if (currentPage === 'clinic-detail' && selectedClinic) {
-        const originalClinic = CLINIC_DATA.find(c => c.id === selectedClinic.id);
-        if (originalClinic) {
-          const translatedClinic = await translateContent(originalClinic, lang);
-          setSelectedClinic(translatedClinic);
-        }
-      }
+      // Parallel execution:
+      // 1. Fetch/Translate Shared Content
+      // 2. Fetch/Translate Current Page Content
+      await Promise.all([
+        getTranslatedData('shared', DEFAULT_SHARED_CONTENT, lang).then(setSharedContent),
+        translatePageContent(currentPage, lang)
+      ]);
 
     } catch (error) {
       console.error("Translation failed", error);
@@ -429,21 +496,52 @@ export default function App() {
     }
   };
 
-  const handleNewsClick = (item: NewsItem) => {
+  const handleNavigate = async (page: Page) => {
+    setCurrentPage(page);
+    window.scrollTo(0, 0);
+
+    // If we are in a foreign language, ensure the page we are navigating to is translated
+    if (currentLang !== 'English') {
+      setIsTranslating(true);
+      await translatePageContent(page, currentLang);
+      setIsTranslating(false);
+    }
+  };
+
+  const handleNewsClick = async (item: NewsItem) => {
     setSelectedNewsItem(item);
     setCurrentPage('news-detail');
     window.scrollTo(0, 0);
+
+    if (currentLang !== 'English') {
+      setIsTranslating(true);
+      try {
+        const translatedItem = await getTranslatedData(`news_${item.id}`, item, currentLang);
+        setSelectedNewsItem(translatedItem);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setIsTranslating(false);
+      }
+    }
   };
 
-  const handleClinicClick = (clinic: Clinic) => {
+  const handleClinicClick = async (clinic: Clinic) => {
     setSelectedClinic(clinic);
     setCurrentPage('clinic-detail');
     window.scrollTo(0, 0);
-  };
 
-  const handleNavigate = (page: Page) => {
-    setCurrentPage(page);
-    window.scrollTo(0, 0);
+    if (currentLang !== 'English') {
+      setIsTranslating(true);
+      try {
+        const translatedClinic = await getTranslatedData(`clinic_${clinic.id}`, clinic, currentLang);
+        setSelectedClinic(translatedClinic);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setIsTranslating(false);
+      }
+    }
   };
 
   return (

@@ -13,11 +13,11 @@ export const Hero: React.FC<HeroProps> = ({ content, shared, onNavigate }) => {
     <div className="relative bg-pau-blue overflow-hidden">
       <div className="absolute inset-0">
         <img
-          className="w-full h-full object-cover opacity-30"
-          src="https://picsum.photos/1920/1080?grayscale"
-          alt="Law School Campus"
+          className="w-full h-full object-cover"
+          src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
+          alt="Law School Library Study"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-pau-blue to-transparent mix-blend-multiply" />
+        <div className="absolute inset-0 bg-pau-blue mix-blend-multiply opacity-80" />
       </div>
       
       <div className="relative max-w-7xl mx-auto py-24 px-4 sm:py-32 sm:px-6 lg:px-8">

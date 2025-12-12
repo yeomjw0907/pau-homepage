@@ -136,7 +136,7 @@ export const ClinicDetail: React.FC<ClinicDetailProps> = ({ clinic, onBack, shar
                         required
                         value={formData.name}
                         onChange={handleChange}
-                        className="mt-1 block w-full bg-white text-gray-900 border-gray-300 rounded-md shadow-sm focus:ring-pau-blue focus:border-pau-blue sm:text-sm p-2 border" 
+                        className="mt-1 block w-full bg-white text-gray-900 border border-gray-300 rounded-md shadow-sm focus:ring-pau-blue focus:border-pau-blue sm:text-sm p-2" 
                         placeholder="Jane Doe"
                       />
                     </div>
@@ -151,7 +151,7 @@ export const ClinicDetail: React.FC<ClinicDetailProps> = ({ clinic, onBack, shar
                         required
                         value={formData.email}
                         onChange={handleChange}
-                        className="mt-1 block w-full bg-white text-gray-900 border-gray-300 rounded-md shadow-sm focus:ring-pau-blue focus:border-pau-blue sm:text-sm p-2 border" 
+                        className="mt-1 block w-full bg-white text-gray-900 border border-gray-300 rounded-md shadow-sm focus:ring-pau-blue focus:border-pau-blue sm:text-sm p-2" 
                         placeholder="jdoe@pau.edu"
                       />
                     </div>
@@ -167,7 +167,7 @@ export const ClinicDetail: React.FC<ClinicDetailProps> = ({ clinic, onBack, shar
                           required
                           value={formData.studentId}
                           onChange={handleChange}
-                          className="mt-1 block w-full bg-white text-gray-900 border-gray-300 rounded-md shadow-sm focus:ring-pau-blue focus:border-pau-blue sm:text-sm p-2 border" 
+                          className="mt-1 block w-full bg-white text-gray-900 border border-gray-300 rounded-md shadow-sm focus:ring-pau-blue focus:border-pau-blue sm:text-sm p-2" 
                           placeholder="900xxxxxx"
                         />
                       </div>
