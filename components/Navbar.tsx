@@ -72,25 +72,21 @@ export const Navbar: React.FC<NavbarProps> = ({
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
-          {/* Logo Section */}
+          {/* Logo Section - Text Only */}
           <div 
-            className="flex-shrink-0 flex items-center gap-4 cursor-pointer group"
+            className="flex-shrink-0 cursor-pointer group select-none"
             onClick={() => onNavigate('home')}
           >
-            {/* Refined Logo */}
-            <div className="relative w-16 h-16 flex items-center justify-center">
-               <div className="absolute inset-0 border-[3px] border-pau-blue rounded-full opacity-20 group-hover:opacity-100 transition-opacity duration-500"></div>
-               <div className="absolute inset-1 border border-pau-gold rounded-full"></div>
-               <div className="flex flex-col items-center justify-center leading-none">
-                 <span className="text-pau-blue font-serif font-black text-2xl tracking-tighter">PAU</span>
-                 <span className="text-[0.5rem] uppercase tracking-widest text-pau-gold font-bold mt-0.5">Law</span>
+            <div className="flex flex-col justify-center">
+               {/* Desktop/Tablet View */}
+               <div className="hidden sm:flex flex-col">
+                 <h1 className="text-pau-blue font-bold text-xl tracking-wider leading-none font-sans group-hover:text-pau-darkBlue transition-colors">PACIFIC AMERICAN</h1>
+                 <h2 className="text-pau-gold font-medium text-base tracking-[0.38em] leading-none font-sans mt-1 group-hover:text-yellow-600 transition-colors">UNIVERSITY</h2>
                </div>
-            </div>
-            
-            <div className="flex flex-col justify-center h-full">
-               <h1 className="text-pau-blue font-bold text-lg tracking-wider leading-none font-sans hidden sm:block">PACIFIC AMERICAN</h1>
-               <h1 className="text-gray-800 font-light text-lg tracking-widest leading-none font-sans hidden sm:block">UNIVERSITY</h1>
-               <h1 className="text-pau-blue font-bold text-xl tracking-wide leading-none font-sans sm:hidden">PAU LAW</h1>
+               {/* Mobile View */}
+               <h1 className="text-pau-blue font-bold text-2xl tracking-wide leading-none font-sans sm:hidden">
+                 PAU <span className="text-pau-gold">LAW</span>
+               </h1>
             </div>
           </div>
 

@@ -20,13 +20,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, shared }) => {
       <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-12 border-b border-white/10">
         <div className="col-span-1 md:col-span-2 pr-8">
            <div 
-             className="flex items-center gap-3 cursor-pointer group mb-6"
+             className="flex flex-col cursor-pointer group mb-6 select-none"
              onClick={() => onNavigate('home')}
            >
-             <div className="w-10 h-10 border border-pau-gold rounded-full flex items-center justify-center">
-               <span className="text-pau-gold font-serif font-bold text-lg">P</span>
-             </div>
-             <span className="text-2xl font-serif font-bold italic tracking-wider text-white">PAU Law</span>
+             <h3 className="text-2xl font-bold tracking-widest text-white font-sans">PACIFIC AMERICAN</h3>
+             <h4 className="text-sm text-pau-gold tracking-[0.38em] font-medium font-sans mt-1">UNIVERSITY</h4>
            </div>
            <p className="text-gray-300 text-sm max-w-sm leading-relaxed font-light">
              {shared.footer.schoolDesc}

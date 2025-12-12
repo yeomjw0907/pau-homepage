@@ -231,7 +231,7 @@ const DEFAULT_ADMISSIONS_CONTENT: AdmissionsContent = {
 
 const DEFAULT_ACADEMICS_CONTENT: AcademicsContent = {
   title: "Prepare for a Global Legal Future",
-  intro: "Study American law from Korea and open doors to careers in International business, Compliance and corporate governance, Legal consulting, Cross-border trade, Government and regulatory fields, and Further graduate study in the U.S. Pacific American University’s School of Law empowers students to build the knowledge and credentials needed in today’s global legal environment.",
+  intro: "Study American law from anywhere in the world and open doors to careers in International business, Compliance and corporate governance, Legal consulting, Cross-border trade, Government and regulatory fields, and Further graduate study in the U.S. Pacific American University’s School of Law empowers students to build the knowledge and credentials needed in today’s global legal environment.",
   programsTitle: "Degree Programs",
   programs: [
     {

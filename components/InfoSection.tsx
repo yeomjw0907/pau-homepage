@@ -35,35 +35,39 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
           
           {/* Dean's Message (Left 7/12) */}
           <div className="lg:col-span-7 flex flex-col">
-            <div className="relative h-full bg-pau-blue rounded-tl-[3rem] rounded-br-[3rem] p-10 md:p-14 shadow-2xl text-white overflow-hidden group">
-              {/* Background decorative elements */}
-              <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity duration-700">
-                <svg className="w-40 h-40" fill="currentColor" viewBox="0 0 24 24">
-                   <path d="M14.017 21L14.017 18C14.017 16.096 14.713 15.013 16.104 14.752C16.924 14.597 17.65 13.974 17.65 12.923C17.65 11.872 17.151 11.393 16.035 11.393C15.111 11.393 14.07 10.963 14.07 9.471C14.07 7.979 15.345 6.438 17.227 6.438C19.109 6.438 20.384 7.979 20.384 9.471C20.384 10.963 19.343 11.393 19.343 12.923C19.343 14.453 20.069 15.076 20.889 15.231C22.28 15.492 22.976 16.575 22.976 18.479L22.976 21L14.017 21ZM5.017 21L5.017 18C5.017 16.096 5.713 15.013 7.104 14.752C7.924 14.597 8.65 13.974 8.65 12.923C8.65 11.872 8.151 11.393 7.035 11.393C6.111 11.393 5.07 10.963 5.07 9.471C5.07 7.979 6.345 6.438 8.227 6.438C10.109 6.438 11.384 7.979 11.384 9.471C11.384 10.963 10.343 11.393 10.343 12.923C10.343 14.453 11.069 15.076 11.889 15.231C13.28 15.492 13.976 16.575 13.976 18.479L13.976 21L5.017 21Z" />
-                </svg>
+            <div className="relative h-full bg-gradient-to-br from-pau-blue to-pau-darkBlue rounded-2xl p-10 md:p-14 shadow-2xl text-white overflow-hidden group border border-white/10">
+              {/* Background decorative elements - Giant Quote Mark */}
+              <div className="absolute top-0 right-8 text-pau-gold opacity-10 font-serif text-[12rem] leading-none select-none pointer-events-none transform translate-y-4">
+                &rdquo;
               </div>
 
               <div className="relative z-10 flex flex-col h-full justify-between">
                 <div>
-                   <h3 className="text-pau-gold font-bold tracking-widest uppercase text-sm mb-6 flex items-center">
-                     <span className="w-8 h-[1px] bg-pau-gold mr-3"></span>
-                     Dean's Message
-                   </h3>
-                   <h4 className="text-3xl font-serif font-bold mb-6 text-white leading-tight">
+                   <div className="flex items-center space-x-3 mb-8">
+                     <div className="h-[1px] w-8 bg-pau-gold"></div>
+                     <h3 className="text-pau-gold font-bold tracking-widest uppercase text-sm">
+                       Dean's Message
+                     </h3>
+                   </div>
+                   
+                   <h4 className="text-3xl md:text-4xl font-serif font-bold mb-8 text-white leading-tight">
                      {content.deansMessageTitle}
                    </h4>
-                   <p className="text-lg md:text-xl text-gray-200 italic font-serif leading-relaxed opacity-90">
+                   
+                   {/* Improved Typography: Sans-serif, normal weight, white for clarity */}
+                   <p className="text-lg md:text-xl text-white font-sans font-light leading-relaxed">
                      "{content.deansMessage}"
                    </p>
                 </div>
                 
-                <div className="mt-10 flex items-center">
-                   <div className="h-12 w-12 rounded-full bg-pau-gold/20 flex items-center justify-center text-pau-gold font-serif font-bold text-xl mr-4 border border-pau-gold/50">
+                <div className="mt-12 pt-8 border-t border-white/10 flex items-center">
+                   {/* Avatar / Initials */}
+                   <div className="h-14 w-14 rounded-full bg-white flex items-center justify-center text-pau-blue font-serif font-bold text-xl mr-5 shadow-lg">
                      ER
                    </div>
                    <div>
-                     <p className="font-bold text-white">Elena Rodriguez</p>
-                     <p className="text-sm text-pau-gold/80">Dean, School of Law</p>
+                     <p className="font-bold text-white text-lg font-serif">Elena Rodriguez</p>
+                     <p className="text-sm text-pau-gold font-medium tracking-wide">Dean, School of Law</p>
                    </div>
                 </div>
               </div>
