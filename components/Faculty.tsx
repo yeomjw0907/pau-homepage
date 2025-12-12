@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { FacultyContent, SharedContent, FacultyMember } from '../types';
-import { XMarkIcon, DocumentTextIcon, ArrowTopRightOnSquareIcon, MagnifyingGlassIcon, FunnelIcon } from '@heroicons/react/24/outline';
+import { XMarkIcon, DocumentTextIcon, ArrowTopRightOnSquareIcon, MagnifyingGlassIcon, FunnelIcon, UserIcon } from '@heroicons/react/24/outline';
 
 interface FacultyProps {
   content: FacultyContent;
@@ -38,7 +38,7 @@ export const Faculty: React.FC<FacultyProps> = ({ content, shared }) => {
     return matchesSearch && matchesCategory;
   });
 
-  // Mock publications data generator based on faculty name to vary content slightly
+  // Mock publications data generator
   const getPublications = (name: string) => {
     const createPub = (title: string, journal: string, year: string) => ({
       title,
@@ -47,7 +47,6 @@ export const Faculty: React.FC<FacultyProps> = ({ content, shared }) => {
       url: `https://scholar.google.com/scholar?q=${encodeURIComponent(title)}`
     });
 
-    // Deterministic mock data for demo purposes
     if (name.includes("Rodriguez")) {
       return [
         createPub("The Modern Interpretation of the Commerce Clause", "Yale Law Journal", "2022"),
@@ -71,46 +70,44 @@ export const Faculty: React.FC<FacultyProps> = ({ content, shared }) => {
 
   return (
     <div className="bg-white min-h-screen">
-      <div className="bg-pau-light py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-serif font-bold text-pau-blue text-center">{content.title}</h1>
-          <p className="mt-4 text-xl text-gray-600 text-center max-w-3xl mx-auto">{content.intro}</p>
+      {/* Hero */}
+      <div className="bg-pau-darkBlue py-20 px-4 sm:px-6 lg:px-8 text-center relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+        <div className="relative z-10 max-w-4xl mx-auto animate-fade-in-up">
+           <h1 className="text-4xl font-serif font-bold text-white sm:text-5xl">{content.title}</h1>
+           <p className="mt-4 text-xl text-gray-300 font-light">{content.intro}</p>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         
         {/* Search and Filter Section */}
-        <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-6 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-16 gap-6">
           
           {/* Search Input */}
-          <div className="relative w-full md:w-1/3">
+          <div className="relative w-full lg:w-96 group">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+              <MagnifyingGlassIcon className="h-5 w-5 text-gray-400 group-focus-within:text-pau-blue transition-colors" aria-hidden="true" />
             </div>
             <input
               type="text"
-              className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-pau-blue focus:border-pau-blue sm:text-sm transition duration-150 ease-in-out"
-              placeholder="Search faculty by name or keyword..."
+              className="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-lg leading-5 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pau-blue focus:border-transparent sm:text-sm shadow-sm transition-all"
+              placeholder="Search faculty..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
 
           {/* Category Buttons */}
-          <div className="flex flex-wrap justify-center md:justify-end gap-2 w-full md:w-2/3">
-             <div className="flex items-center text-gray-500 mr-2 text-sm font-medium">
-                <FunnelIcon className="h-4 w-4 mr-1" />
-                Filter by:
-             </div>
+          <div className="flex flex-wrap gap-2">
              {categories.map((category) => (
                <button
                  key={category}
                  onClick={() => setActiveCategory(category)}
-                 className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
+                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                    activeCategory === category
-                     ? 'bg-pau-blue text-white shadow-sm'
-                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-900'
+                     ? 'bg-pau-blue text-white shadow-md transform scale-105'
+                     : 'bg-white text-gray-600 border border-gray-200 hover:border-pau-blue hover:text-pau-blue'
                  }`}
                >
                  {category}
@@ -120,50 +117,48 @@ export const Faculty: React.FC<FacultyProps> = ({ content, shared }) => {
         </div>
 
         {/* Faculty List */}
-        <div className="space-y-12">
+        <div className="space-y-8">
           {filteredFaculty.length > 0 ? (
             filteredFaculty.map((prof, idx) => (
-              <div key={idx} className="flex flex-col md:flex-row bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
-                <div className="md:w-64 bg-gray-200 flex-shrink-0 min-h-[250px] relative">
+              <div key={idx} className="flex flex-col md:flex-row bg-white rounded-xl shadow-soft border border-gray-100 overflow-hidden hover:shadow-lg hover:border-pau-gold/30 transition-all duration-300 group">
+                <div className="md:w-64 bg-gray-50 flex-shrink-0 min-h-[250px] relative border-r border-gray-100">
                    {/* Placeholder for professor image */}
-                   <div className="absolute inset-0 flex items-center justify-center text-gray-400">
-                      <svg className="h-24 w-24" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                      </svg>
+                   <div className="absolute inset-0 flex items-center justify-center text-gray-300 group-hover:text-pau-gold transition-colors duration-500">
+                      <UserIcon className="h-24 w-24" />
                    </div>
                 </div>
                 
                 <div className="p-8 flex flex-col justify-center flex-grow">
                   <div className="flex flex-col md:flex-row md:items-baseline md:justify-between mb-2">
-                    <h2 className="text-2xl font-bold text-pau-blue">{prof.name}</h2>
-                    <span className="text-pau-gold font-serif italic">{prof.title}</span>
+                    <h2 className="text-2xl font-bold text-gray-900 group-hover:text-pau-blue transition-colors">{prof.name}</h2>
+                    <span className="text-pau-blue font-serif italic text-sm md:text-base mt-1 md:mt-0 bg-blue-50 px-3 py-1 rounded-full">{prof.title}</span>
                   </div>
-                  <p className="text-sm text-gray-500 mb-4">{prof.education}</p>
-                  <p className="text-gray-700 leading-relaxed">{prof.bio}</p>
+                  <p className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">{prof.education}</p>
+                  <p className="text-gray-600 leading-relaxed mb-6">{prof.bio}</p>
                   
-                  <div className="mt-6">
+                  <div className="mt-auto">
                     <button 
                       onClick={() => setSelectedFaculty(prof)}
-                      className="text-sm font-semibold text-pau-blue hover:text-pau-gold transition-colors uppercase tracking-wide flex items-center"
+                      className="inline-flex items-center text-sm font-bold text-pau-gold hover:text-pau-blue transition-colors uppercase tracking-wide border-b-2 border-transparent hover:border-pau-blue pb-1"
                     >
-                      {shared.buttons.viewPublications} &rarr;
+                      {shared.buttons.viewPublications} <ArrowTopRightOnSquareIcon className="ml-2 h-4 w-4" />
                     </button>
                   </div>
                 </div>
               </div>
             ))
           ) : (
-            <div className="text-center py-20 bg-gray-50 rounded-lg border border-dashed border-gray-300">
-              <MagnifyingGlassIcon className="mx-auto h-12 w-12 text-gray-400" />
-              <h3 className="mt-2 text-sm font-medium text-gray-900">No faculty found</h3>
-              <p className="mt-1 text-sm text-gray-500">
-                Try adjusting your search terms or changing the category filter.
+            <div className="text-center py-20 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">
+              <MagnifyingGlassIcon className="mx-auto h-12 w-12 text-gray-300" />
+              <h3 className="mt-4 text-lg font-medium text-gray-900">No faculty found</h3>
+              <p className="mt-2 text-gray-500">
+                Adjust your search or filter settings.
               </p>
               <button
                 onClick={() => { setSearchTerm(''); setActiveCategory('All'); }}
-                className="mt-6 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-pau-blue bg-blue-100 hover:bg-blue-200 focus:outline-none"
+                className="mt-6 inline-flex items-center px-6 py-2 border border-transparent text-sm font-bold rounded-full text-white bg-pau-blue hover:bg-pau-darkBlue transition-colors"
               >
-                Reset Filters
+                Clear All Filters
               </button>
             </div>
           )}
@@ -174,45 +169,51 @@ export const Faculty: React.FC<FacultyProps> = ({ content, shared }) => {
       {selectedFaculty && (
         <div className="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
           <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-             <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onClick={() => setSelectedFaculty(null)}></div>
+             <div 
+               className="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity backdrop-blur-sm" 
+               onClick={() => setSelectedFaculty(null)}
+             ></div>
              <span className="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
-             <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full">
-                <div className="bg-white px-4 pt-5 pb-4 sm:p-6">
-                  <div className="flex justify-between items-start mb-4">
-                    <div>
-                      <h3 className="text-xl font-bold text-pau-blue">{selectedFaculty.name}</h3>
-                      <p className="text-sm text-gray-500">Selected Publications & Research</p>
-                    </div>
-                    <button type="button" onClick={() => setSelectedFaculty(null)} className="text-gray-400 hover:text-gray-500">
+             <div className="inline-block align-bottom bg-white rounded-xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl w-full">
+                <div className="bg-white px-6 py-6 border-b border-gray-100 flex justify-between items-center">
+                   <div>
+                      <h3 className="text-xl font-bold text-pau-blue font-serif">{selectedFaculty.name}</h3>
+                      <p className="text-sm text-gray-500 mt-1">Selected Publications & Research</p>
+                   </div>
+                   <button type="button" onClick={() => setSelectedFaculty(null)} className="text-gray-400 hover:text-gray-600 bg-gray-100 rounded-full p-1 hover:bg-gray-200 transition-colors">
                       <XMarkIcon className="h-6 w-6" />
-                    </button>
-                  </div>
+                   </button>
+                </div>
                   
-                  <div className="space-y-3 mt-4 max-h-96 overflow-y-auto">
+                <div className="p-6 bg-gray-50 max-h-[60vh] overflow-y-auto">
+                   <div className="space-y-4">
                     {getPublications(selectedFaculty.name).map((pub, i) => (
-                      <div key={i} className="flex items-start justify-between p-4 bg-gray-50 rounded-lg border border-gray-100 hover:bg-blue-50 transition-colors group">
-                        <div className="flex items-start mr-3">
-                          <DocumentTextIcon className="h-6 w-6 text-pau-gold mr-3 flex-shrink-0 mt-1" />
+                      <div key={i} className="flex flex-col sm:flex-row items-start justify-between p-5 bg-white rounded-lg border border-gray-200 hover:border-pau-gold hover:shadow-md transition-all duration-300 group">
+                        <div className="flex items-start mr-4 mb-3 sm:mb-0">
+                          <DocumentTextIcon className="h-6 w-6 text-pau-gold mr-4 flex-shrink-0 mt-0.5" />
                           <div>
-                            <p className="font-bold text-gray-900 text-sm leading-snug group-hover:text-pau-blue transition-colors">{pub.title}</p>
-                            <p className="text-xs text-gray-500 italic mt-1">{pub.journal} &bull; {pub.year}</p>
+                            <p className="font-bold text-gray-900 text-lg leading-snug group-hover:text-pau-blue transition-colors">{pub.title}</p>
+                            <div className="flex items-center mt-2 text-sm text-gray-500 font-medium">
+                               <span className="bg-gray-100 px-2 py-0.5 rounded text-xs uppercase tracking-wide text-gray-600 mr-2">{pub.year}</span>
+                               <span className="italic">{pub.journal}</span>
+                            </div>
                           </div>
                         </div>
                         <a 
                           href={pub.url} 
                           target="_blank" 
                           rel="noopener noreferrer"
-                          className="flex-shrink-0 inline-flex items-center text-xs font-bold text-pau-blue hover:text-pau-gold border border-pau-blue hover:border-pau-gold px-3 py-1.5 rounded transition-colors"
+                          className="flex-shrink-0 inline-flex items-center text-xs font-bold text-pau-blue hover:text-white border border-pau-blue hover:bg-pau-blue px-4 py-2 rounded-full transition-all"
                         >
-                          View More
-                          <ArrowTopRightOnSquareIcon className="ml-1 h-3 w-3" />
+                          Access
+                          <ArrowTopRightOnSquareIcon className="ml-1.5 h-3 w-3" />
                         </a>
                       </div>
                     ))}
                   </div>
                 </div>
-                <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                  <button type="button" onClick={() => setSelectedFaculty(null)} className="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 sm:ml-3 sm:w-auto sm:text-sm">
+                <div className="bg-white px-6 py-4 border-t border-gray-100 flex flex-row-reverse">
+                  <button type="button" onClick={() => setSelectedFaculty(null)} className="w-full sm:w-auto inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-6 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 transition-colors sm:text-sm">
                     Close
                   </button>
                 </div>

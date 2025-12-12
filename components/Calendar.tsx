@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { CalendarContent, SharedContent } from '../types';
-import { CalendarDaysIcon } from '@heroicons/react/24/outline';
+import { CalendarDaysIcon, ArrowDownTrayIcon } from '@heroicons/react/24/outline';
 
 interface CalendarProps {
   content: CalendarContent;
@@ -11,41 +11,46 @@ interface CalendarProps {
 export const Calendar: React.FC<CalendarProps> = ({ content, shared }) => {
   return (
     <div className="bg-white min-h-screen">
-      <div className="bg-white py-16 border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center flex-col">
-          <CalendarDaysIcon className="h-12 w-12 text-pau-blue mb-4" />
-          <h1 className="text-4xl font-serif font-bold text-gray-900 text-center">{content.title}</h1>
-          <p className="mt-4 text-xl text-gray-500 text-center max-w-2xl">{content.intro}</p>
+      <div className="bg-pau-darkBlue py-20 text-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 animate-fade-in-up">
+          <CalendarDaysIcon className="h-16 w-16 text-pau-gold mx-auto mb-6" />
+          <h1 className="text-4xl font-serif font-bold text-white tracking-tight">{content.title}</h1>
+          <p className="mt-4 text-xl text-gray-300 max-w-2xl mx-auto font-light">{content.intro}</p>
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="bg-white shadow overflow-hidden rounded-md border border-gray-200">
-          <ul role="list" className="divide-y divide-gray-200">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="bg-white shadow-soft rounded-2xl border border-gray-100 overflow-hidden">
+          <ul role="list" className="divide-y divide-gray-100">
             {content.events.map((event, idx) => (
-              <li key={idx} className="px-6 py-4 hover:bg-gray-50 transition">
-                <div className="flex items-center justify-between">
-                  <div className="flex flex-col">
-                    <p className="text-sm font-medium text-pau-blue truncate">
-                      {event.event}
-                    </p>
-                    <p className="text-xs text-gray-500 mt-1">
-                      {event.type}
-                    </p>
+              <li key={idx} className="px-8 py-6 hover:bg-blue-50/50 transition duration-150 flex flex-col sm:flex-row sm:items-center sm:justify-between group cursor-default">
+                <div className="flex-grow">
+                  <div className="flex items-center mb-2 sm:mb-0">
+                     <span className="w-2 h-2 rounded-full bg-pau-gold mr-3 group-hover:scale-125 transition-transform"></span>
+                     <p className="text-lg font-bold text-pau-blue group-hover:text-pau-darkBlue">
+                       {event.event}
+                     </p>
                   </div>
-                  <div className="flex items-center">
-                    <div className="text-sm font-bold text-gray-900 bg-gray-100 px-3 py-1 rounded-full">
-                      {event.date}
-                    </div>
-                  </div>
+                  <p className="text-sm text-gray-500 pl-5 sm:mt-1">
+                    {event.type}
+                  </p>
+                </div>
+                <div className="mt-4 sm:mt-0 pl-5 sm:pl-0">
+                  <span className="inline-flex items-center px-4 py-2 rounded-lg text-sm font-bold bg-white border border-gray-200 text-gray-900 shadow-sm group-hover:border-pau-blue/30 transition-colors">
+                    {event.date}
+                  </span>
                 </div>
               </li>
             ))}
           </ul>
         </div>
         
-        <div className="mt-8 text-center">
-           <a href="#" className="text-pau-blue font-medium hover:text-pau-gold text-sm underline">
+        <div className="mt-12 text-center">
+           <a 
+             href="#" 
+             className="inline-flex items-center text-pau-blue font-bold hover:text-pau-gold transition-colors border-b-2 border-pau-blue hover:border-pau-gold pb-1"
+           >
+             <ArrowDownTrayIcon className="h-5 w-5 mr-2" />
              {shared.buttons.downloadCalendar}
            </a>
         </div>
