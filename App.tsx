@@ -15,6 +15,7 @@ import { ClinicDetail } from './components/ClinicDetail';
 import { Library } from './components/Library';
 import { Careers } from './components/Careers';
 import { Calendar } from './components/Calendar';
+import { ConsumerInfo } from './components/ConsumerInfo';
 import { 
   SupportedLanguage, 
   HomeContent, 
@@ -30,7 +31,8 @@ import {
   LibraryContent,
   CareersContent,
   CalendarContent,
-  SharedContent
+  SharedContent,
+  ConsumerInfoContent
 } from './types';
 import { translateContent } from './services/geminiService';
 
@@ -148,7 +150,9 @@ const DEFAULT_SHARED_CONTENT: SharedContent = {
     academicCalendar: "Academic Calendar",
     lawLibrary: "Law Library",
     careerServices: "Career Services",
-    rightsReserved: "Pacific American University School of Law. All rights reserved."
+    rightsReserved: "Pacific American University School of Law. All rights reserved.",
+    accreditation: "Accreditation & State Authorization",
+    disclosure: "Pacific American University School of Law is accredited by the Committee of Bar Examiners of the State Bar of California. Study at, or graduation from, this law school may not qualify a student to take the bar examination or to satisfy the requirements for admission to practice in jurisdictions other than California. A student intending to seek admission to practice law in a jurisdiction other than California should contact the admitting authority in that jurisdiction for information regarding the legal education requirements in that jurisdiction for admission to the practice of law."
   },
   buttons: {
     applyNow: "Apply Now",
@@ -342,6 +346,53 @@ const DEFAULT_CALENDAR_CONTENT: CalendarContent = {
   ]
 };
 
+const DEFAULT_CONSUMER_INFO_CONTENT: ConsumerInfoContent = {
+  title: "Consumer Information & Required Disclosures",
+  intro: "Pacific American University School of Law is committed to transparency. In compliance with the State Bar of California's regulations, we provide the following information to current and prospective students.",
+  sections: [
+    {
+      id: "bar-passage",
+      title: "Bar Examination Passage Data",
+      content: "The following data reflects the cumulative pass rates for PAU Law graduates taking the California Bar Examination for the first time.",
+      tableData: [
+        { label: "July 2023 First-Time Pass Rate", value: "68%" },
+        { label: "February 2023 First-Time Pass Rate", value: "54%" },
+        { label: "5-Year Cumulative Pass Rate", value: "72%" },
+        { label: "Statewide Average (July 2023)", value: "51%" }
+      ]
+    },
+    {
+      id: "employment",
+      title: "Employment Statistics",
+      content: "Employment outcomes for the Class of 2022, measured 10 months after graduation.",
+      tableData: [
+        { label: "Total Graduates", value: "120" },
+        { label: "Employed - Bar Passage Required", value: "85 (70.8%)" },
+        { label: "Employed - JD Advantage", value: "15 (12.5%)" },
+        { label: "Unemployed - Seeking", value: "10 (8.3%)" },
+        { label: "Pursuing Graduate Degree", value: "5 (4.2%)" }
+      ]
+    },
+    {
+      id: "attrition",
+      title: "Attrition and Retention",
+      content: "Attrition rates for the 2022-2023 Academic Year.",
+      tableData: [
+        { label: "1L Entering Class Size", value: "145" },
+        { label: "Academic Disqualification", value: "12 (8.2%)" },
+        { label: "Voluntary Withdrawal", value: "8 (5.5%)" },
+        { label: "Overall 1L Retention Rate", value: "86.3%" }
+      ]
+    },
+    {
+      id: "refund",
+      title: "Tuition Refund Policy",
+      content: "Students who withdraw from the program may be eligible for a tuition refund based on the date of withdrawal. \n\n- Withdrawal before 1st day of class: 100% Refund\n- Withdrawal during 1st week: 80% Refund\n- Withdrawal during 2nd week: 60% Refund\n- Withdrawal during 3rd week: 40% Refund\n- Withdrawal after 3rd week: 0% Refund\n\nAll refund requests must be submitted in writing to the Office of the Bursar."
+    }
+  ]
+};
+
+
 export default function App() {
   const [currentLang, setCurrentLang] = useState<SupportedLanguage>('English');
   const [currentPage, setCurrentPage] = useState<Page>('home');
@@ -362,6 +413,7 @@ export default function App() {
   const [libraryContent, setLibraryContent] = useState<LibraryContent>(DEFAULT_LIBRARY_CONTENT);
   const [careersContent, setCareersContent] = useState<CareersContent>(DEFAULT_CAREERS_CONTENT);
   const [calendarContent, setCalendarContent] = useState<CalendarContent>(DEFAULT_CALENDAR_CONTENT);
+  const [consumerInfoContent, setConsumerInfoContent] = useState<ConsumerInfoContent>(DEFAULT_CONSUMER_INFO_CONTENT);
 
   // Cache to store translated content: key = `${pageType}_${lang}` or `${id}_${lang}`
   const translationCache = useRef<Map<string, any>>(new Map());
@@ -396,6 +448,7 @@ export default function App() {
           case 'library': setLibraryContent(DEFAULT_LIBRARY_CONTENT); break;
           case 'careers': setCareersContent(DEFAULT_CAREERS_CONTENT); break;
           case 'calendar': setCalendarContent(DEFAULT_CALENDAR_CONTENT); break;
+          case 'consumer-info': setConsumerInfoContent(DEFAULT_CONSUMER_INFO_CONTENT); break;
           case 'news-detail':
             if (selectedNewsItem) {
                const original = [...NEWS_DATA, ...NOTICES_DATA].find(i => i.id === selectedNewsItem.id);
@@ -527,6 +580,10 @@ export default function App() {
         case 'calendar':
           const tCalendar = await getTranslatedData('calendar', DEFAULT_CALENDAR_CONTENT, lang);
           setCalendarContent(tCalendar);
+          break;
+        case 'consumer-info':
+          const tConsumer = await getTranslatedData('consumer-info', DEFAULT_CONSUMER_INFO_CONTENT, lang);
+          setConsumerInfoContent(tConsumer);
           break;
         case 'news-detail':
           if (selectedNewsItem) {
@@ -697,6 +754,7 @@ export default function App() {
         {currentPage === 'library' && <Library content={libraryContent} shared={sharedContent} />}
         {currentPage === 'careers' && <Careers content={careersContent} />}
         {currentPage === 'calendar' && <Calendar content={calendarContent} shared={sharedContent} />}
+        {currentPage === 'consumer-info' && <ConsumerInfo content={consumerInfoContent} />}
       </main>
 
       <Footer onNavigate={handleNavigate} shared={sharedContent} />

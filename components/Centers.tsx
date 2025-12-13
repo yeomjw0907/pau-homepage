@@ -12,7 +12,7 @@ interface CentersProps {
 export const Centers: React.FC<CentersProps> = ({ content, onClinicClick, shared }) => {
   return (
     <div className="bg-white min-h-screen">
-      <div className="bg-pau-darkBlue py-24 sm:py-32 relative overflow-hidden">
+      <div className="bg-pau-darkBlue pt-36 pb-24 sm:pb-32 relative overflow-hidden">
         <div className="absolute inset-0">
            <img 
              src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" 

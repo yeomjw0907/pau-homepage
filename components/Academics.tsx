@@ -11,7 +11,7 @@ export const Academics: React.FC<AcademicsProps> = ({ content }) => {
   return (
     <div className="bg-white min-h-screen">
        {/* Hero */}
-       <div className="relative bg-pau-darkBlue py-24 sm:py-32 overflow-hidden">
+       <div className="relative bg-pau-darkBlue pt-36 pb-24 sm:pb-32 overflow-hidden">
         <div className="absolute inset-0">
           <img
             src="https://images.unsplash.com/photo-1544928147-79a2e746b531?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"

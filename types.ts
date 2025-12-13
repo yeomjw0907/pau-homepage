@@ -21,7 +21,8 @@ export type Page =
   | 'news-detail'
   | 'library'
   | 'careers'
-  | 'calendar';
+  | 'calendar'
+  | 'consumer-info'; // Added
 
 export interface Statistic {
   label: string;
@@ -47,14 +48,14 @@ export interface NewsItem {
 export interface HomeContent {
   heroTitle: string;
   heroSubtitle: string;
-  aboutEyebrow: string; // New
+  aboutEyebrow: string;
   aboutTitle: string;
   aboutText: string;
   deansMessageTitle: string;
   deansMessage: string;
   stats: Statistic[];
   clinicsTitle: string;
-  clinicsIntro: string; // New
+  clinicsIntro: string;
   clinics: Clinic[];
   newsTitle: string;
   latestNews: NewsItem[];
@@ -131,6 +132,18 @@ export interface CalendarContent {
   events: { date: string; event: string; type: string }[];
 }
 
+// New Interface for Consumer Info
+export interface ConsumerInfoContent {
+  title: string;
+  intro: string;
+  sections: {
+    id: string;
+    title: string;
+    content?: string;
+    tableData?: { label: string; value: string }[];
+  }[];
+}
+
 export enum ImageSize {
   Size_1K = '1K',
   Size_2K = '2K',
@@ -159,6 +172,8 @@ export interface SharedContent {
     lawLibrary: string;
     careerServices: string;
     rightsReserved: string;
+    accreditation: string;
+    disclosure: string;
   };
   buttons: {
     applyNow: string;

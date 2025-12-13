@@ -11,7 +11,7 @@ interface CalendarProps {
 export const Calendar: React.FC<CalendarProps> = ({ content, shared }) => {
   return (
     <div className="bg-white min-h-screen">
-      <div className="bg-pau-darkBlue py-20 text-center">
+      <div className="bg-pau-darkBlue pt-36 pb-20 text-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 animate-fade-in-up">
           <CalendarDaysIcon className="h-16 w-16 text-pau-gold mx-auto mb-6" />
           <h1 className="text-4xl font-serif font-bold text-white tracking-tight">{content.title}</h1>

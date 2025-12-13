@@ -70,11 +70,25 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, shared }) => {
            </ul>
         </div>
       </div>
+      
+      {/* Accreditation & Disclosure Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 border-b border-white/10">
+        <div className="max-w-4xl">
+           <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">{shared.footer.accreditation}</h3>
+           <p className="text-xs text-gray-500 leading-relaxed text-justify font-light">
+             {shared.footer.disclosure}
+           </p>
+        </div>
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
         <p>
           &copy; {new Date().getFullYear()} {shared.footer.rightsReserved}
         </p>
         <div className="flex space-x-6 mt-4 md:mt-0">
+          <button onClick={() => onNavigate('consumer-info')} className="hover:text-gray-300 transition-colors">
+            Consumer Information
+          </button>
           <a href="#" className="hover:text-gray-300">Privacy Policy</a>
           <a href="#" className="hover:text-gray-300">Terms of Use</a>
           <a href="#" className="hover:text-gray-300">Accessibility</a>

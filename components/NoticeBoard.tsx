@@ -12,7 +12,7 @@ interface NoticeBoardProps {
 export const NoticeBoard: React.FC<NoticeBoardProps> = ({ content, onNewsClick, shared }) => {
   return (
     <div className="bg-white min-h-screen">
-       <div className="bg-pau-darkBlue py-20">
+       <div className="bg-pau-darkBlue pt-36 pb-20">
          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-fade-in-up">
            <div className="inline-flex items-center justify-center p-3 bg-white/10 rounded-full mb-6">
              <BellIcon className="h-8 w-8 text-pau-gold" />

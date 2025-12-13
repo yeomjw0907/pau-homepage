@@ -48,7 +48,7 @@ export const ClinicDetail: React.FC<ClinicDetailProps> = ({ clinic, onBack, shar
     <div className="bg-white min-h-screen relative">
       {/* Header */}
       <div className="bg-pau-light border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-36 pb-16">
            <button 
             onClick={onBack}
             className="flex items-center text-gray-500 hover:text-pau-blue transition-colors mb-8 group font-medium"

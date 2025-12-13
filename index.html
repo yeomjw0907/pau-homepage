@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
   <head>
@@ -13,10 +14,12 @@
             colors: {
               pau: {
                 blue: '#003366', // Deep Academic Blue
-                darkBlue: '#002244', // Darker footer blue
-                gold: '#C49A6C', // California Gold/Sand
+                darkBlue: '#0A1E36', // Darker, richer navy
+                gold: '#C49A6C', // California Gold
                 goldLight: '#E5D0B1',
-                light: '#F8FAFC', // Slightly cooler light gray for modern feel
+                goldDark: '#9C7853',
+                light: '#F5F7FA', // Cool gray-white
+                warm: '#FAF9F6', // Off-white
               }
             },
             fontFamily: {
@@ -24,23 +27,34 @@
               sans: ['"Inter"', 'sans-serif'],
             },
             boxShadow: {
-              'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
-              'glow': '0 0 15px rgba(196, 154, 108, 0.3)',
+              'soft': '0 4px 30px rgba(0, 0, 0, 0.03)',
+              'card': '0 10px 40px -10px rgba(0,51,102,0.08)',
+              'glow': '0 0 20px rgba(196, 154, 108, 0.4)',
+              'inner-light': 'inset 0 2px 4px 0 rgba(255, 255, 255, 0.3)',
             },
             animation: {
-              'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+              'fade-in-up': 'fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
               'fade-in': 'fadeIn 1s ease-out forwards',
-              'bounce-slow': 'bounce 2s infinite',
+              'bounce-slow': 'bounce 3s infinite',
+              'shimmer': 'shimmer 2s linear infinite',
             },
             keyframes: {
               fadeInUp: {
-                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '0%': { opacity: '0', transform: 'translateY(30px)' },
                 '100%': { opacity: '1', transform: 'translateY(0)' },
               },
               fadeIn: {
                 '0%': { opacity: '0' },
                 '100%': { opacity: '1' },
+              },
+              shimmer: {
+                '0%': { backgroundPosition: '-200% 0' },
+                '100%': { backgroundPosition: '200% 0' },
               }
+            },
+            backgroundImage: {
+              'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+              'paper-pattern': "url('https://www.transparenttextures.com/patterns/cream-paper.png')",
             }
           }
         }
@@ -57,8 +71,23 @@
   }
 }
 </script>
+<style>
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+  }
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+</style>
 </head>
-  <body class="antialiased text-gray-900 bg-gray-50">
+  <body class="antialiased text-gray-800 bg-pau-warm">
     <div id="root"></div>
   </body>
 </html>

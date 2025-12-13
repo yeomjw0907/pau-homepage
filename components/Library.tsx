@@ -39,7 +39,7 @@ export const Library: React.FC<LibraryProps> = ({ content, shared }) => {
 
   return (
     <div className="bg-white min-h-screen">
-      <div className="relative bg-pau-darkBlue py-24 sm:py-32 overflow-hidden">
+      <div className="relative bg-pau-darkBlue pt-36 pb-24 sm:pb-32 overflow-hidden">
         <div className="absolute inset-0">
           <img 
             src="https://images.unsplash.com/photo-1507842217121-ad763adcd942?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" 
