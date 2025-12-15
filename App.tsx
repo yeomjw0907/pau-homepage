@@ -32,7 +32,8 @@ import {
   CareersContent,
   CalendarContent,
   SharedContent,
-  ConsumerInfoContent
+  ConsumerInfoContent,
+  GlobalFutureItem
 } from './types';
 import { translateContent } from './services/geminiService';
 
@@ -190,19 +191,154 @@ const DEFAULT_SHARED_CONTENT: SharedContent = {
 };
 
 const DEFAULT_HOME_CONTENT: HomeContent = {
-  heroTitle: "Study American Law From Anywhere",
-  heroSubtitle: "Begin your journey toward a California law license through Pacific American University’s School of Law, a fully online J.D. program designed for motivated students who want flexibility, world-class instruction, and a clear path toward professional success.",
-  aboutEyebrow: "Flexible Learning",
-  aboutTitle: "Flexible Learning That Fits Your Life",
-  aboutText: "At Pacific American University’s School of Law, you can complete two-thirds of your coursework asynchronously, allowing you to study on your schedule—anytime, anywhere. Our online platform is built for convenience without sacrificing academic rigor.",
-  deansMessageTitle: "A Student Success–Centered Law School",
-  deansMessage: "From academic support to bar examination preparation, every part of the Pacific American University’s School of Law program is designed to help you thrive. You’ll receive structured guidance from your first course through your preparation for the California Bar.",
+  heroTitle: "Legal Education Without Borders",
+  heroSubtitle: "Overcome geographic boundaries through innovation. Master American law from anywhere with our flexible, technology-driven J.D. program.",
+  
+  // Revised Vision & Mission Data
+  visionStatement: "As educational borders dissolve, we nurture global leaders with critical perspectives. We are a platform for shaping thoughtful, solution-oriented professionals prepared to engage with the world’s most pressing challenges.",
+  
+  missionTitle: "Our Core Mission",
+  missionDescription: "To redefine legal education by breaking down geographic barriers and empowering talented students worldwide.",
+  missionPoints: [
+    {
+      title: "Innovation Without Boundaries",
+      description: "Merging rigorous American legal instruction with flexible, technology-driven delivery systems.",
+      icon: "innovation"
+    },
+    {
+      title: "Global Accessibility",
+      description: "Lowering barriers to entry and respecting global time zones to cultivate globally active professionals.",
+      icon: "access"
+    },
+    {
+      title: "Real-World Mastery",
+      description: "Combining dynamic video lectures with real-time sessions to ensure deep mastery of U.S. law.",
+      icon: "globe"
+    }
+  ],
+
+  introTitle: "Study American Law From Anywhere",
+  introText: "A fully online J.D. program designed for motivated students seeking flexibility, world-class instruction, and a clear path to a California law license.",
+  features: [
+    {
+      title: "Flexible Learning",
+      description: "Complete two-thirds of your coursework asynchronously on your schedule—anytime, anywhere, without sacrificing academic rigor.",
+      icon: "clock"
+    },
+    {
+      title: "World-Class Mentorship",
+      description: "Learn from experienced legal professionals who provide personalized feedback and guidance to help you succeed academically.",
+      icon: "academic"
+    },
+    {
+      title: "Accessible Tuition",
+      description: "We offer a high-quality legal education at a significantly lower cost than traditional U.S. law schools, making the J.D. dream accessible.",
+      icon: "currency"
+    }
+  ],
+  successTitle: "A Student-Centered Law School",
+  successText: "From academic support to bar examination preparation, every part of the PAU Law program is designed to help you thrive. You’ll receive structured guidance from your first course through your preparation for the California Bar.",
   stats: [
     { label: "Online Coursework", value: "100%" },
     { label: "Asynchronous", value: "66%" },
     { label: "Student-Faculty Ratio", value: "11:1" },
     { label: "Bar Prep Support", value: "Included" }
   ],
+  globalFutureTitle: "Your Path to a Global Career",
+  globalFutureIntro: "Our rigorous curriculum opens doors to diverse international fields, equipping you with the credentials needed for today's interconnected legal environment.",
+  globalFutureList: [
+    {
+      title: "International Business",
+      description: "Navigate the complex landscape of global commerce and trade.",
+      detailTitle: "International Business Law",
+      detailBody: "Prepare for a dynamic career facilitating cross-border transactions, mergers, and acquisitions. Our curriculum focuses on international commercial arbitration, contract drafting for multinational entities, and understanding diverse legal systems to effectively advise global corporations.",
+      image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80",
+      stats: [
+        { label: "Growth Rate", value: "+12%" },
+        { label: "Avg Starting Salary", value: "$160k" }
+      ],
+      relatedPathways: [
+        { label: "JD Program", targetPage: "academics", description: "Core curriculum details" },
+        { label: "Admissions", targetPage: "admissions", description: "Start your application" }
+      ]
+    },
+    {
+      title: "Corporate Governance",
+      description: "Advise boards and executives on fiduciary duties and ethical compliance.",
+      detailTitle: "Corporate Governance & Ethics",
+      detailBody: "Become a trusted advisor to boards of directors and C-suite executives. You will master the intricate framework of rules, practices, and processes by which companies are directed and controlled, with a strong emphasis on ESG (Environmental, Social, and Governance) criteria.",
+      image: "https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80",
+      stats: [
+        { label: "Demand", value: "High" },
+        { label: "Sector", value: "Corporate" }
+      ],
+      relatedPathways: [
+        { label: "High Tech Institute", targetPage: "centers", description: "Specialized training" },
+        { label: "Faculty", targetPage: "faculty", description: "Meet our experts" }
+      ]
+    },
+    {
+      title: "Legal Consulting",
+      description: "Provide strategic legal insight to non-legal entities and organizations.",
+      detailTitle: "Strategic Legal Consulting",
+      detailBody: "Move beyond traditional practice to offer high-level strategic advice. This path prepares you to work with management consulting firms, NGOs, and think tanks, applying legal reasoning to solve complex organizational challenges and risk management issues.",
+      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80",
+      stats: [
+         { label: "Flexibility", value: "High" },
+         { label: "Global Reach", value: "Yes" }
+      ],
+      relatedPathways: [
+        { label: "Careers", targetPage: "careers", description: "Career support services" },
+        { label: "News", targetPage: "news", description: "Industry insights" }
+      ]
+    },
+    {
+      title: "Cross-border Trade",
+      description: "Master the regulations governing imports, exports, and tariffs.",
+      detailTitle: "International Trade & Customs",
+      detailBody: "Specialize in the laws that move the world economy. From WTO regulations to bilateral trade agreements and sanctions compliance, you will gain the expertise needed to guide logistics companies, manufacturers, and governments through the web of international trade laws.",
+      image: "https://images.unsplash.com/photo-1578575437130-527eed3abbec?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80",
+      stats: [
+        { label: "Impact", value: "Global" },
+        { label: "Specialization", value: "Trade" }
+      ],
+      relatedPathways: [
+        { label: "Academics", targetPage: "academics", description: "View concentrations" },
+        { label: "Library", targetPage: "library", description: "Research resources" }
+      ]
+    },
+    {
+      title: "Regulatory Affairs",
+      description: "Ensure compliance with government agencies like the FDA, SEC, and EPA.",
+      detailTitle: "Regulatory Affairs & Compliance",
+      detailBody: "Serve as the vital link between industry and government. This career path focuses on ensuring that products and business practices comply with federal and state regulations. Key areas include healthcare (FDA), finance (SEC), and environmental protection (EPA).",
+      image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80",
+      stats: [
+         { label: "Stability", value: "Very High" },
+         { label: "Role", value: "In-House" }
+      ],
+      relatedPathways: [
+        { label: "Centers", targetPage: "centers", description: "Policy research" },
+        { label: "Careers", targetPage: "careers", description: "Placement stats" }
+      ]
+    },
+    {
+      title: "U.S. Graduate Study",
+      description: "Pursue advanced degrees like an LL.M. or S.J.D. at top universities.",
+      detailTitle: "Advanced Legal Studies",
+      detailBody: "For those with academic aspirations, our J.D. program provides a rigorous foundation for further study. Many graduates go on to pursue specialized LL.M. degrees or S.J.D. doctorates at prestigious institutions, preparing for careers in legal academia or high-level policy research.",
+      image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80",
+      stats: [
+         { label: "Academic", value: "Focus" },
+         { label: "Next Step", value: "LL.M." }
+      ],
+      relatedPathways: [
+        { label: "Faculty", targetPage: "faculty", description: "Academic mentorship" },
+        { label: "Library", targetPage: "library", description: "Scholarly resources" }
+      ]
+    }
+  ],
+  globalFutureClosing: "Empowering students to build the knowledge and credentials needed in today’s global legal environment.",
   clinicsTitle: "Centers of Excellence",
   clinicsIntro: "Real-world experience in the areas that matter most.",
   clinics: CLINIC_DATA,
@@ -476,20 +612,23 @@ export default function App() {
             }
 
             // Optimize: Split huge Home content into 3 parallel requests
-            const baseContent = { ...DEFAULT_HOME_CONTENT, clinics: [], latestNews: [] };
+            const baseContent = { ...DEFAULT_HOME_CONTENT, clinics: [], latestNews: [], globalFutureList: [] };
             const clinicsData = DEFAULT_HOME_CONTENT.clinics;
             const newsData = DEFAULT_HOME_CONTENT.latestNews;
+            const globalData = DEFAULT_HOME_CONTENT.globalFutureList;
 
-            const [tBase, tClinics, tNews] = await Promise.all([
+            const [tBase, tClinics, tNews, tGlobal] = await Promise.all([
                translateContent(baseContent, lang),
                translateContent(clinicsData, lang),
-               translateContent(newsData, lang)
+               translateContent(newsData, lang),
+               translateContent(globalData, lang)
             ]);
 
             const tHome = { 
               ...tBase, 
               clinics: tClinics, 
-              latestNews: tNews 
+              latestNews: tNews,
+              globalFutureList: tGlobal
             } as HomeContent;
 
             translationCache.current.set(key, tHome);
@@ -696,7 +835,12 @@ export default function App() {
         {currentPage === 'home' && (
           <>
             <Hero content={homeContent} shared={sharedContent} onNavigate={handleNavigate} />
-            <InfoSection content={homeContent} shared={sharedContent} onClinicClick={handleClinicClick} />
+            <InfoSection 
+              content={homeContent} 
+              shared={sharedContent} 
+              onClinicClick={handleClinicClick} 
+              onNavigate={handleNavigate} 
+            />
             <HomeNews 
               title={homeContent.newsTitle} 
               newsItems={homeContent.latestNews} 

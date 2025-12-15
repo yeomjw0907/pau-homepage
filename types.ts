@@ -22,7 +22,7 @@ export type Page =
   | 'library'
   | 'careers'
   | 'calendar'
-  | 'consumer-info'; // Added
+  | 'consumer-info';
 
 export interface Statistic {
   label: string;
@@ -45,18 +45,78 @@ export interface NewsItem {
   category: 'Academic' | 'Event' | 'General' | 'Career';
 }
 
+export interface FeatureItem {
+  title: string;
+  description: string;
+  icon: 'clock' | 'academic' | 'currency';
+}
+
+export interface MissionItem {
+  title: string;
+  description: string;
+  icon: 'globe' | 'innovation' | 'access';
+}
+
+export interface PathwayLink {
+  label: string;
+  targetPage: Page;
+  description: string;
+}
+
+export interface CareerStat {
+  label: string;
+  value: string;
+}
+
+export interface GlobalFutureItem {
+  title: string;
+  description: string;
+  // Enhanced Modal Data
+  detailTitle: string;
+  detailBody: string;
+  image: string; // URL for the modal hero image
+  stats: CareerStat[]; // Specific stats for this career
+  relatedPathways: PathwayLink[]; // Links to other parts of the site
+}
+
 export interface HomeContent {
+  // Hero
   heroTitle: string;
   heroSubtitle: string;
-  aboutEyebrow: string;
-  aboutTitle: string;
-  aboutText: string;
-  deansMessageTitle: string;
-  deansMessage: string;
+
+  // Vision Section (Specific)
+  visionStatement: string; // Short, punchy vision statement
+  visionAuthor?: string;
+
+  // Mission Section (Specific)
+  missionTitle: string;
+  missionDescription: string;
+  missionPoints: MissionItem[];
+
+  // Intro (General Program Info)
+  introTitle: string;
+  introText: string;
+
+  // Features Grid (Program Details)
+  features: FeatureItem[];
+
+  // Student Success
+  successTitle: string;
+  successText: string;
   stats: Statistic[];
+
+  // Global Future
+  globalFutureTitle: string;
+  globalFutureIntro: string;
+  globalFutureList: GlobalFutureItem[];
+  globalFutureClosing: string;
+
+  // Clinics
   clinicsTitle: string;
   clinicsIntro: string;
   clinics: Clinic[];
+
+  // News
   newsTitle: string;
   latestNews: NewsItem[];
 }
