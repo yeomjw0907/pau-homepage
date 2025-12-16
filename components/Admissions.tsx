@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { AdmissionsContent, SharedContent } from '../types';
-import { CalendarDaysIcon, CurrencyDollarIcon, CheckCircleIcon, XMarkIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
+import { CalendarDaysIcon, CurrencyDollarIcon, CheckCircleIcon, XMarkIcon, ArrowRightIcon, PlusIcon, MinusIcon } from '@heroicons/react/24/outline';
 
 interface AdmissionsProps {
   content: AdmissionsContent;
@@ -10,6 +10,7 @@ interface AdmissionsProps {
 
 export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeFaqIndex, setActiveFaqIndex] = useState<number | null>(null);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -31,6 +32,10 @@ export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
     setFormData({ firstName: '', lastName: '', lsacId: '', email: '' });
   };
 
+  const toggleFaq = (index: number) => {
+    setActiveFaqIndex(activeFaqIndex === index ? null : index);
+  };
+
   return (
     <div className="bg-white min-h-screen">
       {/* Hero Header */}
@@ -39,9 +44,9 @@ export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
           <img 
             src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" 
             alt="Students walking" 
-            className="w-full h-full object-cover opacity-20"
+            className="w-full h-full object-cover opacity-40"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-pau-darkBlue via-pau-darkBlue/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-pau-darkBlue via-pau-darkBlue/60 to-transparent" />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-fade-in-up">
           <h1 className="text-4xl font-serif font-bold tracking-tight text-white sm:text-6xl mb-6 shadow-sm">
@@ -133,6 +138,47 @@ export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
              </div>
           </div>
 
+        </div>
+      </div>
+
+      {/* FAQ Section */}
+      <div className="bg-gray-50 py-24 border-t border-gray-200">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-serif font-bold text-pau-blue mb-4">{content.faqTitle}</h2>
+          </div>
+          
+          <div className="space-y-4">
+            {content.faqs && content.faqs.map((faq, idx) => (
+              <div 
+                key={idx} 
+                className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden transition-all duration-300"
+              >
+                <button
+                  onClick={() => toggleFaq(idx)}
+                  className="w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none bg-white hover:bg-gray-50 transition-colors"
+                >
+                  <span className="text-lg font-bold text-gray-900 pr-8">{faq.question}</span>
+                  <div className={`flex-shrink-0 w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center transition-all duration-300 ${activeFaqIndex === idx ? 'bg-pau-blue border-pau-blue text-white' : 'text-gray-400'}`}>
+                    {activeFaqIndex === idx ? (
+                      <MinusIcon className="h-5 w-5" />
+                    ) : (
+                      <PlusIcon className="h-5 w-5" />
+                    )}
+                  </div>
+                </button>
+                <div 
+                  className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                    activeFaqIndex === idx ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                  }`}
+                >
+                  <div className="px-6 pb-6 pt-0 text-gray-600 leading-relaxed border-t border-gray-100">
+                    <div className="mt-4">{faq.answer}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 

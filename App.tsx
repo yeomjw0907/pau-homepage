@@ -191,7 +191,7 @@ const DEFAULT_SHARED_CONTENT: SharedContent = {
 };
 
 const DEFAULT_HOME_CONTENT: HomeContent = {
-  heroTitle: "Legal Education Without Borders",
+  heroTitle: "Legal Education\nWithout Borders",
   heroSubtitle: "Overcome geographic boundaries through innovation. Master American law from anywhere with our flexible, technology-driven J.D. program.",
   
   // Revised Vision & Mission Data
@@ -252,7 +252,7 @@ const DEFAULT_HOME_CONTENT: HomeContent = {
       description: "Navigate the complex landscape of global commerce and trade.",
       detailTitle: "International Business Law",
       detailBody: "Prepare for a dynamic career facilitating cross-border transactions, mergers, and acquisitions. Our curriculum focuses on international commercial arbitration, contract drafting for multinational entities, and understanding diverse legal systems to effectively advise global corporations.",
-      image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80",
+      image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80",
       stats: [
         { label: "Growth Rate", value: "+12%" },
         { label: "Avg Starting Salary", value: "$160k" }
@@ -267,7 +267,7 @@ const DEFAULT_HOME_CONTENT: HomeContent = {
       description: "Advise boards and executives on fiduciary duties and ethical compliance.",
       detailTitle: "Corporate Governance & Ethics",
       detailBody: "Become a trusted advisor to boards of directors and C-suite executives. You will master the intricate framework of rules, practices, and processes by which companies are directed and controlled, with a strong emphasis on ESG (Environmental, Social, and Governance) criteria.",
-      image: "https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80",
+      image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80",
       stats: [
         { label: "Demand", value: "High" },
         { label: "Sector", value: "Corporate" }
@@ -282,7 +282,7 @@ const DEFAULT_HOME_CONTENT: HomeContent = {
       description: "Provide strategic legal insight to non-legal entities and organizations.",
       detailTitle: "Strategic Legal Consulting",
       detailBody: "Move beyond traditional practice to offer high-level strategic advice. This path prepares you to work with management consulting firms, NGOs, and think tanks, applying legal reasoning to solve complex organizational challenges and risk management issues.",
-      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80",
+      image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80",
       stats: [
          { label: "Flexibility", value: "High" },
          { label: "Global Reach", value: "Yes" }
@@ -312,7 +312,7 @@ const DEFAULT_HOME_CONTENT: HomeContent = {
       description: "Ensure compliance with government agencies like the FDA, SEC, and EPA.",
       detailTitle: "Regulatory Affairs & Compliance",
       detailBody: "Serve as the vital link between industry and government. This career path focuses on ensuring that products and business practices comply with federal and state regulations. Key areas include healthcare (FDA), finance (SEC), and environmental protection (EPA).",
-      image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80",
+      image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80",
       stats: [
          { label: "Stability", value: "Very High" },
          { label: "Role", value: "In-House" }
@@ -327,7 +327,7 @@ const DEFAULT_HOME_CONTENT: HomeContent = {
       description: "Pursue advanced degrees like an LL.M. or S.J.D. at top universities.",
       detailTitle: "Advanced Legal Studies",
       detailBody: "For those with academic aspirations, our J.D. program provides a rigorous foundation for further study. Many graduates go on to pursue specialized LL.M. degrees or S.J.D. doctorates at prestigious institutions, preparing for careers in legal academia or high-level policy research.",
-      image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80",
+      image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80",
       stats: [
          { label: "Academic", value: "Focus" },
          { label: "Next Step", value: "LL.M." }
@@ -366,7 +366,26 @@ const DEFAULT_ADMISSIONS_CONTENT: AdmissionsContent = {
   ],
   tuitionTitle: "Affordable Tuition Without Compromise",
   tuitionInfo: "Pacific American University’s School of Law is proud to offer a high-quality legal education at a significantly lower cost than traditional U.S. law schools, making the dream of earning a J.D. more accessible for students anywhere.",
-  tuitionCost: "$28,450"
+  tuitionCost: "$28,450",
+  faqTitle: "Frequently Asked Questions",
+  faqs: [
+    {
+      question: "Is the LSAT required for admission?",
+      answer: "PAU Law requires either a valid LSAT or GRE score for all JD applicants. However, we take a holistic approach to admissions, considering your scores alongside your professional experience and academic background."
+    },
+    {
+      question: "Can I work full-time while enrolled in the program?",
+      answer: "Yes. Our online JD program is specifically designed for working professionals. The asynchronous nature of 66% of the coursework allows you to study on your own schedule, though you must attend live sessions occasionally."
+    },
+    {
+      question: "Do you accept transfer credits from other law schools?",
+      answer: "Yes, we accept transfer credits from ABA-accredited or CBE-accredited law schools for students in good academic standing. A maximum of 30 units may be transferred upon review by the Academic Dean."
+    },
+    {
+      question: "What is the minimum GPA requirement?",
+      answer: "We do not have a strict minimum GPA cutoff. While academic performance is important, we also value leadership potential, work history, and your personal statement."
+    }
+  ]
 };
 
 const DEFAULT_ACADEMICS_CONTENT: AcademicsContent = {
@@ -551,28 +570,35 @@ export default function App() {
   const [calendarContent, setCalendarContent] = useState<CalendarContent>(DEFAULT_CALENDAR_CONTENT);
   const [consumerInfoContent, setConsumerInfoContent] = useState<ConsumerInfoContent>(DEFAULT_CONSUMER_INFO_CONTENT);
 
-  // Cache to store translated content: key = `${pageType}_${lang}` or `${id}_${lang}`
-  const translationCache = useRef<Map<string, any>>(new Map());
+  // Cache to store translated content promises: key = `${pageType}_${lang}` or `${id}_${lang}`
+  // Storing Promises avoids race conditions and duplicate requests for the same content.
+  const translationCache = useRef<Map<string, Promise<any>>>(new Map());
 
-  // Helper to fetch from cache or API
-  const getTranslatedData = async <T extends unknown>(key: string, data: T, lang: SupportedLanguage): Promise<T> => {
-    if (lang === 'English') return data;
+  // Optimized Helper: Check cache (Promise) -> Return Promise -> or Start new translation
+  const getTranslatedData = <T extends unknown>(key: string, data: T, lang: SupportedLanguage): Promise<T> => {
+    if (lang === 'English') return Promise.resolve(data);
     
     const cacheKey = `${key}_${lang}`;
     if (translationCache.current.has(cacheKey)) {
-      return translationCache.current.get(cacheKey) as T;
+      return translationCache.current.get(cacheKey) as Promise<T>;
     }
     
-    const translated = await translateContent(data, lang);
-    translationCache.current.set(cacheKey, translated);
-    return translated;
+    // Create the promise and cache it immediately
+    const promise = translateContent(data, lang).catch(err => {
+        // If it fails, remove from cache so it can be retried
+        translationCache.current.delete(cacheKey);
+        throw err;
+    });
+
+    translationCache.current.set(cacheKey, promise);
+    return promise;
   };
 
-  // Helper function to translate specific page content
+  // Helper function to translate specific page content with granular parallelization
   const translatePageContent = async (page: Page, lang: SupportedLanguage) => {
     try {
-      // If switching back to English, restore defaults immediately
       if (lang === 'English') {
+        // Restore defaults synchronously
         switch (page) {
           case 'home': setHomeContent(DEFAULT_HOME_CONTENT); break;
           case 'news': setHomeContent(DEFAULT_HOME_CONTENT); break;
@@ -601,133 +627,146 @@ export default function App() {
         return;
       }
 
+      // Check for page-level cache first (for simple pages)
+      const pageCacheKey = `${page}_${lang}`;
+      
       switch (page) {
         case 'home':
         case 'news':
           {
-            const key = `home_${lang}`;
-            if (translationCache.current.has(key)) {
-              setHomeContent(translationCache.current.get(key));
-              break;
-            }
-
-            // Optimize: Split huge Home content into 3 parallel requests
             const baseContent = { ...DEFAULT_HOME_CONTENT, clinics: [], latestNews: [], globalFutureList: [] };
-            const clinicsData = DEFAULT_HOME_CONTENT.clinics;
-            const newsData = DEFAULT_HOME_CONTENT.latestNews;
-            const globalData = DEFAULT_HOME_CONTENT.globalFutureList;
-
+            
+            // Fetch parts in parallel using the cache-aware helper
             const [tBase, tClinics, tNews, tGlobal] = await Promise.all([
-               translateContent(baseContent, lang),
-               translateContent(clinicsData, lang),
-               translateContent(newsData, lang),
-               translateContent(globalData, lang)
+               getTranslatedData(`home_base`, baseContent, lang),
+               // Map through lists to ensure individual items are cached for detail views later
+               Promise.all(DEFAULT_HOME_CONTENT.clinics.map(c => getTranslatedData(`clinic_${c.id}`, c, lang))),
+               Promise.all(DEFAULT_HOME_CONTENT.latestNews.map(n => getTranslatedData(`news_${n.id}`, n, lang))),
+               Promise.all(DEFAULT_HOME_CONTENT.globalFutureList.map(g => getTranslatedData(`home_future_${g.title}`, g, lang)))
             ]);
 
-            const tHome = { 
+            setHomeContent({ 
               ...tBase, 
               clinics: tClinics, 
               latestNews: tNews,
               globalFutureList: tGlobal
-            } as HomeContent;
-
-            translationCache.current.set(key, tHome);
-            setHomeContent(tHome);
+            } as HomeContent);
           }
           break;
 
         case 'admissions':
-          const tAdmissions = await getTranslatedData('admissions', DEFAULT_ADMISSIONS_CONTENT, lang);
-          setAdmissionsContent(tAdmissions);
+          {
+             const base = { ...DEFAULT_ADMISSIONS_CONTENT, deadlines: [], requirements: [], faqs: [] };
+             const [tBase, tDeadlines, tRequirements, tFaqs] = await Promise.all([
+                 getTranslatedData('admissions_base', base, lang),
+                 Promise.all(DEFAULT_ADMISSIONS_CONTENT.deadlines.map((d, i) => getTranslatedData(`admissions_deadline_${i}`, d, lang))),
+                 getTranslatedData('admissions_reqs', DEFAULT_ADMISSIONS_CONTENT.requirements, lang),
+                 Promise.all(DEFAULT_ADMISSIONS_CONTENT.faqs.map((f, i) => getTranslatedData(`admissions_faq_${i}`, f, lang)))
+             ]);
+             setAdmissionsContent({ 
+               ...tBase, 
+               deadlines: tDeadlines, 
+               requirements: tRequirements,
+               faqs: tFaqs
+             } as AdmissionsContent);
+          }
           break;
+
         case 'academics':
-          const tAcademics = await getTranslatedData('academics', DEFAULT_ACADEMICS_CONTENT, lang);
-          setAcademicsContent(tAcademics);
+          {
+             const base = { ...DEFAULT_ACADEMICS_CONTENT, programs: [], concentrations: [] };
+             const [tBase, tPrograms, tConcentrations] = await Promise.all([
+                 getTranslatedData('academics_base', base, lang),
+                 Promise.all(DEFAULT_ACADEMICS_CONTENT.programs.map((p, i) => getTranslatedData(`academics_prog_${i}`, p, lang))),
+                 getTranslatedData('academics_conc', DEFAULT_ACADEMICS_CONTENT.concentrations, lang)
+             ]);
+             setAcademicsContent({ ...tBase, programs: tPrograms, concentrations: tConcentrations } as AcademicsContent);
+          }
           break;
+
         case 'faculty':
           {
-             const key = `faculty_${lang}`;
-             if (translationCache.current.has(key)) {
-               setFacultyContent(translationCache.current.get(key));
-               break;
-             }
-             
-             // Split faculty list from base
              const base = { ...DEFAULT_FACULTY_CONTENT, facultyList: [] };
-             const list = DEFAULT_FACULTY_CONTENT.facultyList;
-             
              const [tBase, tList] = await Promise.all([
-               translateContent(base, lang),
-               translateContent(list, lang)
+                 getTranslatedData('faculty_base', base, lang),
+                 Promise.all(DEFAULT_FACULTY_CONTENT.facultyList.map((f, i) => getTranslatedData(`faculty_member_${i}`, f, lang)))
              ]);
-             
-             const tContent = { ...tBase, facultyList: tList } as FacultyContent;
-             translationCache.current.set(key, tContent);
-             setFacultyContent(tContent);
+             setFacultyContent({ ...tBase, facultyList: tList } as FacultyContent);
           }
           break;
+
         case 'notices':
           {
-             const key = `notices_${lang}`;
-             if (translationCache.current.has(key)) {
-               setNoticesContent(translationCache.current.get(key));
-               break;
-             }
-             
              const base = { ...DEFAULT_NOTICES_CONTENT, notices: [] };
-             const list = DEFAULT_NOTICES_CONTENT.notices;
-             
              const [tBase, tList] = await Promise.all([
-               translateContent(base, lang),
-               translateContent(list, lang)
+                 getTranslatedData('notices_base', base, lang),
+                 Promise.all(DEFAULT_NOTICES_CONTENT.notices.map(n => getTranslatedData(`news_${n.id}`, n, lang)))
              ]);
-             
-             const tContent = { ...tBase, notices: tList } as NoticesContent;
-             translationCache.current.set(key, tContent);
-             setNoticesContent(tContent);
+             setNoticesContent({ ...tBase, notices: tList } as NoticesContent);
           }
           break;
+
         case 'centers':
           {
-             const key = `centers_${lang}`;
-             if (translationCache.current.has(key)) {
-               setCentersContent(translationCache.current.get(key));
-               break;
-             }
-
              const base = { ...DEFAULT_CENTERS_CONTENT, clinics: [] };
-             const list = DEFAULT_CENTERS_CONTENT.clinics;
-
              const [tBase, tList] = await Promise.all([
-                translateContent(base, lang),
-                translateContent(list, lang)
+                 getTranslatedData('centers_base', base, lang),
+                 Promise.all(DEFAULT_CENTERS_CONTENT.clinics.map(c => getTranslatedData(`clinic_${c.id}`, c, lang)))
              ]);
-
-             const tContent = { ...tBase, clinics: tList } as CentersContent;
-             translationCache.current.set(key, tContent);
-             setCentersContent(tContent);
+             setCentersContent({ ...tBase, clinics: tList } as CentersContent);
           }
           break;
+
         case 'library':
-          const tLibrary = await getTranslatedData('library', DEFAULT_LIBRARY_CONTENT, lang);
-          setLibraryContent(tLibrary);
+          {
+             const base = { ...DEFAULT_LIBRARY_CONTENT, sections: [] };
+             const [tBase, tSections] = await Promise.all([
+                 getTranslatedData('library_base', base, lang),
+                 Promise.all(DEFAULT_LIBRARY_CONTENT.sections.map((s, i) => getTranslatedData(`library_section_${i}`, s, lang)))
+             ]);
+             setLibraryContent({ ...tBase, sections: tSections } as LibraryContent);
+          }
           break;
+
         case 'careers':
-          const tCareers = await getTranslatedData('careers', DEFAULT_CAREERS_CONTENT, lang);
-          setCareersContent(tCareers);
+          {
+             const base = { ...DEFAULT_CAREERS_CONTENT, stats: [], services: [] };
+             const [tBase, tStats, tServices] = await Promise.all([
+                 getTranslatedData('careers_base', base, lang),
+                 Promise.all(DEFAULT_CAREERS_CONTENT.stats.map((s, i) => getTranslatedData(`careers_stat_${i}`, s, lang))),
+                 Promise.all(DEFAULT_CAREERS_CONTENT.services.map((s, i) => getTranslatedData(`careers_serv_${i}`, s, lang)))
+             ]);
+             setCareersContent({ ...tBase, stats: tStats, services: tServices } as CareersContent);
+          }
           break;
+
         case 'calendar':
-          const tCalendar = await getTranslatedData('calendar', DEFAULT_CALENDAR_CONTENT, lang);
-          setCalendarContent(tCalendar);
-          break;
+           {
+              const base = { ...DEFAULT_CALENDAR_CONTENT, events: [] };
+              const [tBase, tEvents] = await Promise.all([
+                  getTranslatedData('calendar_base', base, lang),
+                  Promise.all(DEFAULT_CALENDAR_CONTENT.events.map((e, i) => getTranslatedData(`calendar_evt_${i}`, e, lang)))
+              ]);
+              setCalendarContent({ ...tBase, events: tEvents } as CalendarContent);
+           }
+           break;
+
         case 'consumer-info':
-          const tConsumer = await getTranslatedData('consumer-info', DEFAULT_CONSUMER_INFO_CONTENT, lang);
-          setConsumerInfoContent(tConsumer);
+          {
+              const base = { ...DEFAULT_CONSUMER_INFO_CONTENT, sections: [] };
+              const [tBase, tSections] = await Promise.all([
+                  getTranslatedData('consumer_base', base, lang),
+                  Promise.all(DEFAULT_CONSUMER_INFO_CONTENT.sections.map((s, i) => getTranslatedData(`consumer_sec_${i}`, s, lang)))
+              ]);
+              setConsumerInfoContent({ ...tBase, sections: tSections } as ConsumerInfoContent);
+          }
           break;
+
         case 'news-detail':
           if (selectedNewsItem) {
              const originalItem = [...NEWS_DATA, ...NOTICES_DATA].find(i => i.id === selectedNewsItem.id);
              if (originalItem) {
+               // Reuse cache key from list views
                const translatedItem = await getTranslatedData(`news_${originalItem.id}`, originalItem, lang);
                setSelectedNewsItem(translatedItem);
              }
@@ -737,6 +776,7 @@ export default function App() {
           if (selectedClinic) {
             const originalClinic = CLINIC_DATA.find(c => c.id === selectedClinic.id);
             if (originalClinic) {
+              // Reuse cache key from list views
               const translatedClinic = await getTranslatedData(`clinic_${originalClinic.id}`, originalClinic, lang);
               setSelectedClinic(translatedClinic);
             }
@@ -757,13 +797,26 @@ export default function App() {
     setCurrentLang(lang);
 
     try {
-      // Parallel execution:
-      // 1. Fetch/Translate Shared Content
-      // 2. Fetch/Translate Current Page Content
-      await Promise.all([
-        getTranslatedData('shared', DEFAULT_SHARED_CONTENT, lang).then(setSharedContent),
-        translatePageContent(currentPage, lang)
-      ]);
+       // Parallelize Shared content and Page content
+       const sharedPromise = Promise.all([
+           getTranslatedData('shared_nav', DEFAULT_SHARED_CONTENT.nav, lang),
+           getTranslatedData('shared_footer', DEFAULT_SHARED_CONTENT.footer, lang),
+           getTranslatedData('shared_buttons', DEFAULT_SHARED_CONTENT.buttons, lang),
+           getTranslatedData('shared_labels', DEFAULT_SHARED_CONTENT.labels, lang)
+       ]).then(([tNav, tFooter, tButtons, tLabels]) => {
+           setSharedContent({
+               nav: tNav,
+               footer: tFooter,
+               buttons: tButtons,
+               labels: tLabels
+           });
+       });
+
+       // We await both to ensure consistent UI state before stopping the loader
+       await Promise.all([
+         sharedPromise,
+         translatePageContent(currentPage, lang)
+       ]);
 
     } catch (error) {
       console.error("Translation failed", error);
@@ -776,7 +829,6 @@ export default function App() {
     setCurrentPage(page);
     window.scrollTo(0, 0);
 
-    // If we are in a foreign language, ensure the page we are navigating to is translated
     if (currentLang !== 'English') {
       setIsTranslating(true);
       await translatePageContent(page, currentLang);
@@ -857,7 +909,7 @@ export default function App() {
         {currentPage === 'news' && (
           <HomeNews 
              title={sharedContent.nav.latestNews}
-             newsItems={homeContent.latestNews} // Using same source for now, effectively "All News"
+             newsItems={homeContent.latestNews} 
              onNewsClick={handleNewsClick}
              shared={sharedContent}
           />

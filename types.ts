@@ -127,6 +127,11 @@ export interface CentersContent {
   clinics: Clinic[];
 }
 
+export interface FAQItem {
+  question: string;
+  answer: string;
+}
+
 export interface AdmissionsContent {
   title: string;
   intro: string;
@@ -137,6 +142,9 @@ export interface AdmissionsContent {
   tuitionTitle: string;
   tuitionInfo: string;
   tuitionCost: string;
+  // New FAQ Section
+  faqTitle: string;
+  faqs: FAQItem[];
 }
 
 export interface AcademicsContent {

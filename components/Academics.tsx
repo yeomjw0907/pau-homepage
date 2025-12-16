@@ -16,9 +16,9 @@ export const Academics: React.FC<AcademicsProps> = ({ content }) => {
           <img
             src="https://images.unsplash.com/photo-1544928147-79a2e746b531?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
             alt="Law Library"
-            className="w-full h-full object-cover opacity-20"
+            className="w-full h-full object-cover opacity-40"
           />
-           <div className="absolute inset-0 bg-gradient-to-t from-pau-darkBlue via-pau-darkBlue/80 to-transparent" />
+           <div className="absolute inset-0 bg-gradient-to-t from-pau-darkBlue via-pau-darkBlue/70 to-transparent" />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-fade-in-up">
           <h1 className="text-4xl font-serif font-bold text-white sm:text-6xl mb-6">{content.title}</h1>

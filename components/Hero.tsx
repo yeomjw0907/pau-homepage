@@ -1,7 +1,7 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { HomeContent, SharedContent, Page } from '../types';
-import { ArrowRightIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
+import { ArrowRightIcon, ChevronDownIcon, PlayCircleIcon } from '@heroicons/react/24/outline';
 
 interface HeroProps {
   content: HomeContent;
@@ -11,72 +11,96 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ content, shared, onNavigate }) => {
   return (
-    <div className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden bg-pau-darkBlue">
-      {/* Dynamic Background Image */}
+    <div className="relative h-screen min-h-[800px] w-full overflow-hidden bg-pau-darkBlue text-white">
+      {/* Dynamic Background with Ken Burns Effect */}
       <div className="absolute inset-0 z-0">
+        {/* Adjusted gradients to ensure white navbar text is readable against the sunny sky */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-transparent z-10 h-32" />
+        <div className="absolute inset-0 bg-gradient-to-r from-pau-darkBlue/80 via-pau-darkBlue/40 to-transparent z-10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-pau-darkBlue via-transparent to-transparent z-10" />
+        
         <img
-          className="w-full h-full object-cover opacity-60 animate-fade-in transform scale-105 duration-[30s] ease-out hover:scale-100 transition-transform"
+          className="w-full h-full object-cover animate-fade-in scale-105 hover:scale-110 transition-transform duration-[40s] ease-linear"
           src="https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
-          alt="Law School Campus"
+          alt="Pacific American University Campus"
         />
-        {/* Overlay Gradients for Depth */}
-        <div className="absolute inset-0 bg-gradient-to-r from-pau-darkBlue/90 via-pau-darkBlue/40 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-pau-darkBlue via-transparent to-transparent opacity-90" />
       </div>
 
-      {/* Main Content Content */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center h-full pt-20">
-        <div className="max-w-4xl animate-fade-in-up">
+      {/* Main Content */}
+      <div className="relative z-20 h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center pb-20">
+        <div className="max-w-4xl space-y-8 animate-fade-in-up">
           
           {/* Badge */}
-          <div className="inline-flex items-center space-x-2 mb-8 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md shadow-glow">
-            <span className="flex h-2 w-2 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pau-gold opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-pau-gold"></span>
-            </span>
-            <span className="text-pau-goldLight font-bold tracking-[0.2em] uppercase text-[10px] sm:text-xs">
-              Vision for the Future
-            </span>
+          <div className="inline-flex items-center space-x-3 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20">
+             <span className="w-2 h-2 rounded-full bg-pau-gold animate-pulse"></span>
+             <span className="text-xs font-bold tracking-[0.2em] uppercase text-pau-goldLight">
+               The Future of Legal Education
+             </span>
           </div>
 
-          {/* Main Title */}
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white leading-[1.05] mb-8 tracking-tight drop-shadow-lg">
-            {content.heroTitle}
+          {/* Headline - Added space-y-3 for better line separation */}
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-medium leading-relaxed tracking-tight drop-shadow-2xl space-y-3">
+            {content.heroTitle.split('\n').map((line, i) => (
+              <span key={i} className="block text-white">
+                {line}
+              </span>
+            ))}
           </h1>
 
-          {/* Subtitle / Description - Glass Panel */}
-          <div className="p-8 rounded-2xl bg-white/5 backdrop-blur-lg border-l-4 border-pau-gold max-w-2xl mb-12 shadow-2xl">
-            <p className="text-xl md:text-2xl text-gray-100 font-light leading-relaxed">
+          {/* Subtitle with distinct styling */}
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-6 max-w-2xl border-l-2 border-pau-gold pl-6">
+            <p className="text-lg md:text-xl text-gray-200 font-light leading-relaxed">
               {content.heroSubtitle}
             </p>
           </div>
 
-          {/* Call to Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+          {/* Actions */}
+          <div className="flex flex-col sm:flex-row gap-5 pt-6">
             <button 
               onClick={() => onNavigate('admissions')}
-              className="group relative px-8 py-4 bg-pau-gold text-white font-bold text-sm tracking-widest uppercase rounded shadow-lg overflow-hidden transition-all hover:bg-white hover:text-pau-blue hover:shadow-glow"
+              className="group relative px-8 py-4 bg-pau-gold text-white font-bold text-sm tracking-widest uppercase rounded-sm overflow-hidden transition-all hover:bg-white hover:text-pau-darkBlue shadow-glow min-w-[180px]"
             >
               <span className="relative z-10 flex items-center justify-center">
                 {shared.buttons.applyNow}
-                <ArrowRightIcon className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRightIcon className="ml-3 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </span>
             </button>
             
             <button 
-              onClick={() => onNavigate('admissions')}
-              className="px-8 py-4 border border-white/30 bg-transparent text-white font-bold text-sm tracking-widest uppercase rounded hover:bg-white/10 hover:border-white/60 transition-colors backdrop-blur-sm"
+              onClick={() => onNavigate('academics')}
+              className="group px-8 py-4 bg-transparent border border-white/30 text-white font-bold text-sm tracking-widest uppercase rounded-sm hover:bg-white/10 hover:border-white transition-all backdrop-blur-sm flex items-center justify-center min-w-[180px]"
             >
-              {shared.buttons.requestInfo}
+              <PlayCircleIcon className="mr-3 h-6 w-6 text-pau-gold group-hover:text-white transition-colors" />
+              {shared.buttons.learnMore}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce-slow text-white/50 z-20 pointer-events-none">
-        <span className="text-[10px] uppercase tracking-[0.3em] mb-2">Scroll</span>
-        <ChevronDownIcon className="h-5 w-5" />
+      {/* Footer / Stats Strip in Hero */}
+      <div className="absolute bottom-0 w-full z-20 border-t border-white/10 bg-black/30 backdrop-blur-md">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center">
+              <div className="flex flex-col border-r border-white/10 last:border-0">
+                 <div className="text-pau-gold font-serif text-3xl font-bold">#1</div>
+                 <div className="text-[10px] uppercase tracking-widest text-gray-400 font-bold mt-1">Online JD Program</div>
+              </div>
+              <div className="flex flex-col border-r border-white/10 last:border-0">
+                 <div className="text-pau-gold font-serif text-3xl font-bold">11:1</div>
+                 <div className="text-[10px] uppercase tracking-widest text-gray-400 font-bold mt-1">Student-Faculty Ratio</div>
+              </div>
+              <div className="flex flex-col border-r border-white/10 last:border-0">
+                 <div className="text-pau-gold font-serif text-3xl font-bold">100%</div>
+                 <div className="text-[10px] uppercase tracking-widest text-gray-400 font-bold mt-1">Bar Prep Included</div>
+              </div>
+              <div className="hidden md:flex justify-end items-center">
+                 <div className="animate-bounce-slow text-white/50 cursor-pointer hover:text-white transition-colors flex items-center gap-2">
+                    <span className="text-[10px] uppercase tracking-widest">Scroll Down</span>
+                    <ChevronDownIcon className="h-5 w-5" />
+                 </div>
+              </div>
+           </div>
+        </div>
       </div>
     </div>
   );

@@ -50,7 +50,8 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
                <span className="block text-xs font-bold tracking-[0.25em] text-pau-gold uppercase mb-6 opacity-80">
                  Our Vision
                </span>
-               <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif font-medium leading-relaxed text-white/95 mb-8">
+               {/* Vision Statement - Font size reduced as requested */}
+               <h2 className="text-xl md:text-2xl lg:text-3xl font-serif font-medium leading-relaxed text-white/95 mb-8">
                  "{content.visionStatement}"
                </h2>
                
@@ -233,41 +234,41 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
       <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-gray-100 pb-8">
             <div className="max-w-2xl">
-              <h2 className="text-4xl font-serif font-bold text-pau-darkBlue mb-4">{content.clinicsTitle}</h2>
-              <p className="text-lg text-gray-500 font-light">{content.clinicsIntro}</p>
+            <h2 className="text-4xl font-serif font-bold text-pau-darkBlue mb-4">{content.clinicsTitle}</h2>
+            <p className="text-lg text-gray-500 font-light">{content.clinicsIntro}</p>
             </div>
             <button className="hidden md:inline-flex items-center px-6 py-3 bg-pau-light text-pau-blue font-bold rounded hover:bg-pau-blue hover:text-white transition-colors mt-6 md:mt-0 text-sm tracking-wide uppercase">
-              View All Centers <ArrowRightIcon className="ml-2 h-4 w-4" />
+            View All Centers <ArrowRightIcon className="ml-2 h-4 w-4" />
             </button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {content.clinics && content.clinics.map((clinic, idx) => (
-              <div 
+            <div 
                 key={clinic.id || idx} 
                 onClick={() => onClinicClick(clinic)}
                 className="group relative bg-white rounded p-8 border border-gray-100 transition-all duration-500 hover:shadow-card hover:border-pau-blue/20 cursor-pointer overflow-hidden flex flex-col h-full"
-              >
+            >
                 <div className="absolute top-0 left-0 w-full h-1 bg-gray-100 group-hover:bg-pau-gold transition-colors duration-500"></div>
                 
                 <div className="w-14 h-14 bg-gray-50 rounded flex items-center justify-center text-gray-400 mb-8 group-hover:bg-pau-blue group-hover:text-white transition-colors duration-300">
                     {idx === 0 ? <AcademicCapIcon className="h-7 w-7" /> : 
-                     idx === 1 ? <UserGroupIcon className="h-7 w-7" /> : 
-                     <BuildingOffice2Icon className="h-7 w-7" />}
+                    idx === 1 ? <UserGroupIcon className="h-7 w-7" /> : 
+                    <BuildingOffice2Icon className="h-7 w-7" />}
                 </div>
                 
                 <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-pau-blue transition-colors font-serif">
-                  {clinic.title}
+                {clinic.title}
                 </h3>
                 <p className="text-gray-600 text-sm leading-relaxed mb-8 flex-grow">
-                  {clinic.description}
+                {clinic.description}
                 </p>
                 
                 <div className="flex items-center text-sm font-bold text-gray-400 group-hover:text-pau-gold transition-colors uppercase tracking-widest">
-                  {shared.buttons.learnMore}
-                  <ArrowRightIcon className="ml-2 h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
+                {shared.buttons.learnMore}
+                <ArrowRightIcon className="ml-2 h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
                 </div>
-              </div>
+            </div>
             ))}
         </div>
       </section>
@@ -296,13 +297,13 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
 
                 {/* Hero Image */}
                 {selectedCareer.image && (
-                  <div className="h-64 w-full relative">
+                  <div className="h-64 w-full relative bg-gray-900">
                      <img 
                        src={selectedCareer.image} 
                        alt={selectedCareer.title} 
-                       className="w-full h-full object-cover"
+                       className="w-full h-full object-cover opacity-80"
                      />
-                     <div className="absolute inset-0 bg-gradient-to-t from-pau-darkBlue to-transparent opacity-90"></div>
+                     <div className="absolute inset-0 bg-gradient-to-t from-pau-darkBlue via-pau-darkBlue/40 to-transparent opacity-80"></div>
                      <div className="absolute bottom-0 left-0 p-8">
                         <div className="inline-block px-3 py-1 bg-pau-gold text-white text-xs font-bold uppercase tracking-widest mb-3 rounded-sm">Career Pathway</div>
                         <h3 className="text-3xl md:text-4xl font-serif font-bold text-white tracking-wide shadow-sm">
