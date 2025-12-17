@@ -86,7 +86,7 @@ export const Hero: React.FC<HeroProps> = ({ content, shared, onNavigate }) => {
                  <div className="text-[10px] uppercase tracking-widest text-gray-400 font-bold mt-1">Online JD Program</div>
               </div>
               <div className="flex flex-col border-r border-white/10 last:border-0">
-                 <div className="text-pau-gold font-serif text-3xl font-bold">11:1</div>
+                 <div className="text-pau-gold font-serif text-3xl font-bold">15:1</div>
                  <div className="text-[10px] uppercase tracking-widest text-gray-400 font-bold mt-1">Student-Faculty Ratio</div>
               </div>
               <div className="flex flex-col border-r border-white/10 last:border-0">

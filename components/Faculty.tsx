@@ -71,7 +71,7 @@ export const Faculty: React.FC<FacultyProps> = ({ content, shared }) => {
   return (
     <div className="bg-white min-h-screen">
       {/* Hero */}
-      <div className="bg-pau-darkBlue pt-36 pb-20 px-4 sm:px-6 lg:px-8 text-center relative overflow-hidden">
+      <div className="bg-pau-darkBlue pt-44 pb-20 px-4 sm:px-6 lg:px-8 text-center relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
         <div className="relative z-10 max-w-4xl mx-auto animate-fade-in-up">
            <h1 className="text-4xl font-serif font-bold text-white sm:text-5xl">{content.title}</h1>

@@ -39,7 +39,7 @@ export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
   return (
     <div className="bg-white min-h-screen">
       {/* Hero Header */}
-      <div className="relative bg-pau-darkBlue pt-36 pb-24 sm:pb-32 overflow-hidden">
+      <div className="relative bg-pau-darkBlue pt-44 pb-24 sm:pb-32 overflow-hidden">
         <div className="absolute inset-0">
           <img 
             src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" 

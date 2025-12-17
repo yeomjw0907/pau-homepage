@@ -48,7 +48,7 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
              
              <div className="relative z-10">
                <span className="block text-xs font-bold tracking-[0.25em] text-pau-gold uppercase mb-6 opacity-80">
-                 Our Vision
+                 Our Founding Mission
                </span>
                {/* Vision Statement - Font size reduced as requested */}
                <h2 className="text-xl md:text-2xl lg:text-3xl font-serif font-medium leading-relaxed text-white/95 mb-8">
@@ -58,7 +58,7 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
                {/* Signature / Authority Mark */}
                <div className="flex items-center mt-auto opacity-50">
                   <div className="h-px bg-white w-12 mr-4"></div>
-                  <span className="text-xs font-serif italic text-white">Office of the Dean</span>
+                  <span className="text-xs font-serif italic text-white">Office of the President</span>
                </div>
              </div>
 
@@ -69,7 +69,7 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
           {/* RIGHT: Mission (Clarity & Structure) */}
           <div className="bg-white p-12 lg:p-20 flex flex-col justify-center border-t lg:border-t-0 lg:border-l border-gray-100">
              <div className="mb-12 border-b border-gray-100 pb-8">
-                <h2 className="text-3xl font-serif font-bold text-pau-darkBlue mb-4">{content.missionTitle}</h2>
+                {content.missionTitle && <h2 className="text-3xl font-serif font-bold text-pau-darkBlue mb-4">{content.missionTitle}</h2>}
                 <p className="text-gray-600 font-light leading-relaxed text-lg">
                   {content.missionDescription}
                 </p>
@@ -151,13 +151,15 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
                 {content.successText}
               </p>
               
-              <div className="flex items-center space-x-4">
-                 <div className="h-12 w-12 rounded-full bg-pau-gold flex items-center justify-center text-pau-darkBlue font-serif font-bold text-lg">
+              {/* Emphasized Dean Section */}
+              <div className="flex items-center space-x-6 bg-white/5 p-6 rounded-xl border border-white/10 backdrop-blur-sm max-w-lg hover:bg-white/10 transition-colors duration-300">
+                 <div className="flex-shrink-0 h-20 w-20 rounded-full bg-gradient-to-br from-pau-gold to-yellow-600 flex items-center justify-center text-white font-serif font-bold text-2xl shadow-xl ring-4 ring-white/10">
                    ER
                  </div>
                  <div>
-                   <p className="font-serif text-lg">Elena Rodriguez</p>
-                   <p className="text-xs text-gray-400 uppercase tracking-widest">Dean, School of Law</p>
+                   <p className="font-serif text-3xl font-bold text-white tracking-wide leading-none">Elena Rodriguez</p>
+                   <div className="h-0.5 w-12 bg-pau-gold my-3"></div>
+                   <p className="text-sm text-blue-100 font-bold uppercase tracking-[0.15em]">Dean, School of Law</p>
                  </div>
               </div>
             </div>
@@ -232,15 +234,17 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
 
       {/* SECTION 6: Clinics & Centers (Clean) */}
       <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-gray-100 pb-8">
-            <div className="max-w-2xl">
-            <h2 className="text-4xl font-serif font-bold text-pau-darkBlue mb-4">{content.clinicsTitle}</h2>
-            <p className="text-lg text-gray-500 font-light">{content.clinicsIntro}</p>
-            </div>
-            <button className="hidden md:inline-flex items-center px-6 py-3 bg-pau-light text-pau-blue font-bold rounded hover:bg-pau-blue hover:text-white transition-colors mt-6 md:mt-0 text-sm tracking-wide uppercase">
-            View All Centers <ArrowRightIcon className="ml-2 h-4 w-4" />
-            </button>
-        </div>
+        {(content.clinicsTitle || content.clinicsIntro) && (
+          <div className="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-gray-100 pb-8">
+              <div className="max-w-2xl">
+              {content.clinicsTitle && <h2 className="text-4xl font-serif font-bold text-pau-darkBlue mb-4">{content.clinicsTitle}</h2>}
+              {content.clinicsIntro && <p className="text-lg text-gray-500 font-light">{content.clinicsIntro}</p>}
+              </div>
+              <button className="hidden md:inline-flex items-center px-6 py-3 bg-pau-light text-pau-blue font-bold rounded hover:bg-pau-blue hover:text-white transition-colors mt-6 md:mt-0 text-sm tracking-wide uppercase">
+              View All Centers <ArrowRightIcon className="ml-2 h-4 w-4" />
+              </button>
+          </div>
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {content.clinics && content.clinics.map((clinic, idx) => (

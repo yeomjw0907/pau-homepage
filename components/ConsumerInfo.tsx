@@ -11,7 +11,7 @@ export const ConsumerInfo: React.FC<ConsumerInfoProps> = ({ content }) => {
   return (
     <div className="bg-white min-h-screen">
       {/* Header */}
-      <div className="bg-gray-50 pt-36 pb-16 border-b border-gray-200">
+      <div className="bg-gray-50 pt-44 pb-16 border-b border-gray-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-fade-in-up">
            <InformationCircleIcon className="h-12 w-12 text-pau-gold mx-auto mb-4" />
            <h1 className="text-3xl font-serif font-bold text-pau-blue sm:text-4xl">{content.title}</h1>

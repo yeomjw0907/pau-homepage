@@ -52,15 +52,13 @@ export const Navbar: React.FC<NavbarProps> = ({
     }, 200);
   };
 
-  // Dynamic Styles based on Scroll State
-  const navBgClass = scrolled 
-    ? 'bg-white/95 backdrop-blur-md shadow-soft py-3 border-b border-gray-100' 
-    : 'bg-transparent py-6 border-b border-white/10';
-    
-  // On home page, if not scrolled, use white text. Otherwise (scrolled or other pages), use dark text.
-  // Exception: If we navigate to other pages, they might need a solid navbar always or specific handling. 
-  // For now, let's assume transparency is primarily for the Home Hero.
+  // Logic: Transparent only on Home page when not scrolled.
   const isTransparent = currentPage === 'home' && !scrolled;
+
+  // Dynamic Styles based on Scroll State or Page
+  const navBgClass = isTransparent 
+    ? 'bg-transparent py-6 border-b border-white/10'
+    : 'bg-white/95 backdrop-blur-md shadow-soft py-3 border-b border-gray-100';
 
   const textColorClass = isTransparent 
     ? 'text-white/90 hover:text-white hover:bg-white/10' 

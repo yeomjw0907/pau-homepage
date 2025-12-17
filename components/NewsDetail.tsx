@@ -11,7 +11,7 @@ interface NewsDetailProps {
 
 export const NewsDetail: React.FC<NewsDetailProps> = ({ item, onBack, shared }) => {
   return (
-    <div className="bg-white min-h-screen pt-36 pb-16 px-4 sm:px-6 lg:px-8">
+    <div className="bg-white min-h-screen pt-44 pb-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto animate-fade-in-up">
         <button 
           onClick={onBack}

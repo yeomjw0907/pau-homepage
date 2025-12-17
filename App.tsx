@@ -152,7 +152,7 @@ const DEFAULT_SHARED_CONTENT: SharedContent = {
     lawLibrary: "Law Library",
     careerServices: "Career Services",
     rightsReserved: "Pacific American University School of Law. All rights reserved.",
-    accreditation: "Accreditation & State Authorization",
+    accreditation: "State Bar Registration",
     disclosure: "Pacific American University School of Law is accredited by the Committee of Bar Examiners of the State Bar of California. Study at, or graduation from, this law school may not qualify a student to take the bar examination or to satisfy the requirements for admission to practice in jurisdictions other than California. A student intending to seek admission to practice law in a jurisdiction other than California should contact the admitting authority in that jurisdiction for information regarding the legal education requirements in that jurisdiction for admission to the practice of law."
   },
   buttons: {
@@ -197,7 +197,7 @@ const DEFAULT_HOME_CONTENT: HomeContent = {
   // Revised Vision & Mission Data
   visionStatement: "As educational borders dissolve, we nurture global leaders with critical perspectives. We are a platform for shaping thoughtful, solution-oriented professionals prepared to engage with the world’s most pressing challenges.",
   
-  missionTitle: "Our Core Mission",
+  missionTitle: "",
   missionDescription: "To redefine legal education by breaking down geographic barriers and empowering talented students worldwide.",
   missionPoints: [
     {
@@ -241,7 +241,7 @@ const DEFAULT_HOME_CONTENT: HomeContent = {
   stats: [
     { label: "Online Coursework", value: "100%" },
     { label: "Asynchronous", value: "66%" },
-    { label: "Student-Faculty Ratio", value: "11:1" },
+    { label: "Student-Faculty Ratio", value: "15:1" },
     { label: "Bar Prep Support", value: "Included" }
   ],
   globalFutureTitle: "Your Path to a Global Career",
@@ -323,7 +323,7 @@ const DEFAULT_HOME_CONTENT: HomeContent = {
       ]
     },
     {
-      title: "U.S. Graduate Study",
+      title: "Graduate Study in US, Canada or London",
       description: "Pursue advanced degrees like an LL.M. or S.J.D. at top universities.",
       detailTitle: "Advanced Legal Studies",
       detailBody: "For those with academic aspirations, our J.D. program provides a rigorous foundation for further study. Many graduates go on to pursue specialized LL.M. degrees or S.J.D. doctorates at prestigious institutions, preparing for careers in legal academia or high-level policy research.",
@@ -339,8 +339,8 @@ const DEFAULT_HOME_CONTENT: HomeContent = {
     }
   ],
   globalFutureClosing: "Empowering students to build the knowledge and credentials needed in today’s global legal environment.",
-  clinicsTitle: "Centers of Excellence",
-  clinicsIntro: "Real-world experience in the areas that matter most.",
+  clinicsTitle: "",
+  clinicsIntro: "",
   clinics: CLINIC_DATA,
   newsTitle: "Latest News & Headlines",
   latestNews: NEWS_DATA
