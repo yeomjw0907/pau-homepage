@@ -13,8 +13,12 @@ export const Faculty: React.FC<FacultyProps> = ({ content, shared }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
 
-  // Categories for filtering
-  const categories = ["All", "Leadership", "Technology & IP", "Criminal Law", "Constitutional Law"];
+  // Dynamic categories from data
+  const categories = React.useMemo(() => {
+    const tags = new Set<string>();
+    content.facultyList.forEach(prof => prof.expertise?.forEach(t => tags.add(t)));
+    return ["All", ...Array.from(tags).sort()];
+  }, [content.facultyList]);
 
   // Filter Logic
   const filteredFaculty = content.facultyList.filter((prof) => {
@@ -22,17 +26,12 @@ export const Faculty: React.FC<FacultyProps> = ({ content, shared }) => {
     const matchesSearch = 
       prof.name.toLowerCase().includes(term) || 
       prof.title.toLowerCase().includes(term) || 
-      prof.bio.toLowerCase().includes(term);
+      prof.bio.toLowerCase().includes(term) ||
+      (prof.expertise && prof.expertise.some(t => t.toLowerCase().includes(term)));
 
     let matchesCategory = true;
-    if (activeCategory === "Leadership") {
-      matchesCategory = prof.title.includes("Dean") || prof.title.includes("Director");
-    } else if (activeCategory === "Technology & IP") {
-      matchesCategory = prof.bio.includes("patent") || prof.title.includes("Tech") || prof.bio.includes("software");
-    } else if (activeCategory === "Criminal Law") {
-      matchesCategory = prof.title.includes("Criminal") || prof.bio.includes("Criminal");
-    } else if (activeCategory === "Constitutional Law") {
-      matchesCategory = prof.bio.includes("Constitutional");
+    if (activeCategory !== "All") {
+      matchesCategory = prof.expertise?.includes(activeCategory) || false;
     }
 
     return matchesSearch && matchesCategory;
@@ -133,7 +132,14 @@ export const Faculty: React.FC<FacultyProps> = ({ content, shared }) => {
                     <h2 className="text-2xl font-bold text-gray-900 group-hover:text-pau-blue transition-colors">{prof.name}</h2>
                     <span className="text-pau-blue font-serif italic text-sm md:text-base mt-1 md:mt-0 bg-blue-50 px-3 py-1 rounded-full">{prof.title}</span>
                   </div>
-                  <p className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">{prof.education}</p>
+                  <p className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-2">{prof.education}</p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {prof.expertise?.map((tag, i) => (
+                      <span key={i} className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                   <p className="text-gray-600 leading-relaxed mb-6">{prof.bio}</p>
                   
                   <div className="mt-auto">

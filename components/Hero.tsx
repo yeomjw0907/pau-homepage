@@ -21,8 +21,8 @@ export const Hero: React.FC<HeroProps> = ({ content, shared, onNavigate }) => {
         
         <img
           className="w-full h-full object-cover animate-fade-in scale-105 hover:scale-110 transition-transform duration-[40s] ease-linear"
-          src="https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
-          alt="Pacific American University Campus"
+          src="https://images.unsplash.com/photo-1554469384-e58fac16e23a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
+          alt="Pacific American University Modern Campus"
         />
       </div>
 

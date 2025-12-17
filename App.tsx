@@ -227,7 +227,7 @@ const DEFAULT_HOME_CONTENT: HomeContent = {
     },
     {
       title: "World-Class Mentorship",
-      description: "Learn from experienced legal professionals who provide personalized feedback and guidance to help you succeed academically.",
+      description: "Learn from experienced legal professionals and professors who provide personalized feedback and guidance to help you succeed academically.",
       icon: "academic"
     },
     {
@@ -421,19 +421,22 @@ const DEFAULT_FACULTY_CONTENT: FacultyContent = {
       name: "Dean Elena Rodriguez",
       title: "Dean & Professor of Law",
       education: "JD, Yale Law School",
-      bio: "Dean Rodriguez is a nationally recognized expert in Constitutional Law and Civil Rights. Before academia, she argued five cases before the U.S. Supreme Court."
+      bio: "Dean Rodriguez is a nationally recognized expert in Constitutional Law and Civil Rights. Before academia, she argued five cases before the U.S. Supreme Court.",
+      expertise: ["Constitutional Law", "Civil Rights", "Leadership"]
     },
     {
       name: "Prof. David Chen",
       title: "Director, High Tech Law Institute",
       education: "JD, Stanford Law School",
-      bio: "Professor Chen specializes in patent law and software copyright. He previously served as lead IP counsel for a major semiconductor company."
+      bio: "Professor Chen specializes in patent law and software copyright. He previously served as lead IP counsel for a major semiconductor company.",
+      expertise: ["Technology & IP", "Patent Law", "Leadership"]
     },
     {
       name: "Prof. Sarah Johnson",
       title: "Professor of Criminal Law",
       education: "JD, Harvard Law School",
-      bio: "A former federal prosecutor, Professor Johnson teaches Criminal Law, Evidence, and Trial Advocacy. Her research focuses on sentencing reform."
+      bio: "A former federal prosecutor, Professor Johnson teaches Criminal Law, Evidence, and Trial Advocacy. Her research focuses on sentencing reform.",
+      expertise: ["Criminal Law", "Evidence", "Trial Advocacy"]
     }
   ]
 };
