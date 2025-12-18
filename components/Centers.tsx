@@ -10,24 +10,30 @@ interface CentersProps {
 }
 
 export const Centers: React.FC<CentersProps> = ({ content, onClinicClick, shared }) => {
+  const hasHeader = content.title || content.intro;
+
   return (
     <div className="bg-white min-h-screen">
-      <div className="bg-pau-darkBlue pt-44 pb-24 sm:pb-32 relative overflow-hidden">
-        <div className="absolute inset-0">
-           <img 
-             src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" 
-             alt="Office background" 
-             className="w-full h-full object-cover opacity-10"
-           />
-           <div className="absolute inset-0 bg-gradient-to-b from-pau-darkBlue/90 to-pau-darkBlue" />
+      {hasHeader ? (
+        <div className="bg-pau-darkBlue pt-44 pb-24 sm:pb-32 relative overflow-hidden">
+          <div className="absolute inset-0">
+             <img 
+               src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" 
+               alt="Office background" 
+               className="w-full h-full object-cover opacity-10"
+             />
+             <div className="absolute inset-0 bg-gradient-to-b from-pau-darkBlue/90 to-pau-darkBlue" />
+          </div>
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-fade-in-up">
+            {content.title && <h1 className="text-4xl font-serif font-bold text-white sm:text-6xl mb-6">{content.title}</h1>}
+            {content.intro && <p className="text-xl text-gray-300 max-w-3xl mx-auto font-light leading-relaxed">{content.intro}</p>}
+          </div>
         </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-fade-in-up">
-          <h1 className="text-4xl font-serif font-bold text-white sm:text-6xl mb-6">{content.title}</h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto font-light leading-relaxed">{content.intro}</p>
-        </div>
-      </div>
+      ) : (
+        <div className="pt-44"></div>
+      )}
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${hasHeader ? 'py-20' : 'pb-20'}`}>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {content.clinics.map((clinic, idx) => (
             <div 
@@ -44,7 +50,7 @@ export const Centers: React.FC<CentersProps> = ({ content, onClinicClick, shared
                         <ScaleIcon className="h-8 w-8" />}
                     </div>
                  </div>
-                 <h2 className="text-2xl font-bold text-gray-900 leading-tight mb-4 group-hover:text-pau-blue transition-colors">{clinic.title}</h2>
+                 <h2 className="text-2xl font-bold text-gray-900 leading-tight mb-4 group-hover:text-pau-blue transition-colors font-serif">{clinic.title}</h2>
                  <p className="text-gray-600 leading-relaxed mb-8 flex-grow">
                    {clinic.description}
                  </p>

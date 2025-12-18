@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { NewsItem, SharedContent } from '../types';
-import { ArrowLeftIcon, CalendarDaysIcon, TagIcon } from '@heroicons/react/24/outline';
+import { ArrowLeftIcon, CalendarDaysIcon, TagIcon, PhotoIcon } from '@heroicons/react/24/outline';
 
 interface NewsDetailProps {
   item: NewsItem;
@@ -10,6 +10,8 @@ interface NewsDetailProps {
 }
 
 export const NewsDetail: React.FC<NewsDetailProps> = ({ item, onBack, shared }) => {
+  const images = item.images && item.images.length > 0 ? item.images : ((item as any).imageUrl ? [(item as any).imageUrl] : []);
+
   return (
     <div className="bg-white min-h-screen pt-44 pb-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto animate-fade-in-up">
@@ -40,14 +42,33 @@ export const NewsDetail: React.FC<NewsDetailProps> = ({ item, onBack, shared }) 
               </span>
             </div>
             
-            <h1 className="text-4xl sm:text-5xl font-serif font-bold text-pau-blue leading-tight mb-6">
+            <h1 className="text-4xl sm:text-5xl font-serif font-bold text-pau-blue leading-tight mb-8">
               {item.title}
             </h1>
+
+            {images.length > 0 && (
+              <div className="space-y-4 mb-10">
+                <div className="w-full h-[400px] md:h-[500px] rounded-2xl overflow-hidden shadow-lg border border-gray-100">
+                   <img src={images[0]} alt={item.title} className="w-full h-full object-cover" />
+                </div>
+                {images.length > 1 && (
+                  <div className="grid grid-cols-4 gap-4">
+                    {images.slice(1).map((img, i) => (
+                      <div key={i} className="aspect-square rounded-xl overflow-hidden shadow-sm border border-gray-100">
+                        <img src={img} alt={`Gallery ${i}`} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
           </header>
 
-          <div className="prose prose-lg prose-blue text-gray-700 leading-relaxed whitespace-pre-wrap font-sans max-w-none">
-            {item.body}
-          </div>
+          {/* Render Rich Text Content Safely */}
+          <div 
+            className="prose prose-lg prose-blue text-gray-700 leading-relaxed font-sans max-w-none mb-16"
+            dangerouslySetInnerHTML={{ __html: item.body }}
+          />
           
           <div className="mt-16 bg-gray-50 p-8 rounded-xl border border-gray-100 border-l-4 border-l-pau-gold">
              <h3 className="text-sm font-bold text-pau-darkBlue uppercase tracking-widest mb-3">{shared.labels.aboutPauNews}</h3>

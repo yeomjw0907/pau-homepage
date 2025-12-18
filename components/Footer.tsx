@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Page, SharedContent } from '../types';
-import { XMarkIcon, ShieldCheckIcon, DocumentTextIcon, EyeIcon } from '@heroicons/react/24/outline';
+import { XMarkIcon, ShieldCheckIcon, DocumentTextIcon, EyeIcon, Cog8ToothIcon } from '@heroicons/react/24/outline';
 
 interface FooterProps {
   onNavigate: (page: Page) => void;
@@ -151,6 +151,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, shared }) => {
           &copy; {new Date().getFullYear()} {shared.footer.rightsReserved}
         </p>
         <div className="flex space-x-6 mt-4 md:mt-0">
+          <button onClick={() => onNavigate('admin')} className="flex items-center hover:text-pau-gold transition-colors">
+            <Cog8ToothIcon className="h-4 w-4 mr-1" />
+            Admin Dashboard
+          </button>
           <button onClick={() => onNavigate('consumer-info')} className="hover:text-gray-300 transition-colors">
             Consumer Information
           </button>

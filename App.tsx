@@ -16,6 +16,7 @@ import { Library } from './components/Library';
 import { Careers } from './components/Careers';
 import { Calendar } from './components/Calendar';
 import { ConsumerInfo } from './components/ConsumerInfo';
+import { Admin } from './components/Admin';
 import { 
   SupportedLanguage, 
   HomeContent, 
@@ -442,8 +443,8 @@ const DEFAULT_FACULTY_CONTENT: FacultyContent = {
 };
 
 const DEFAULT_CENTERS_CONTENT: CentersContent = {
-  title: "Centers of Excellence",
-  intro: "Our specialized centers provide the infrastructure for deep engagement with the most pressing legal issues of our time. Through clinics, research labs, and conferences, we drive the conversation forward.",
+  title: "",
+  intro: "",
   clinics: CLINIC_DATA
 };
 
@@ -954,6 +955,20 @@ export default function App() {
         {currentPage === 'careers' && <Careers content={careersContent} />}
         {currentPage === 'calendar' && <Calendar content={calendarContent} shared={sharedContent} />}
         {currentPage === 'consumer-info' && <ConsumerInfo content={consumerInfoContent} />}
+        {currentPage === 'admin' && (
+          <Admin 
+            home={homeContent} 
+            setHome={setHomeContent}
+            admissions={admissionsContent}
+            setAdmissions={setAdmissionsContent}
+            academics={academicsContent}
+            setAcademics={setAcademicsContent}
+            faculty={facultyContent}
+            setFaculty={setFacultyContent}
+            notices={noticesContent}
+            setNotices={setNoticesContent}
+          />
+        )}
       </main>
 
       <Footer onNavigate={handleNavigate} shared={sharedContent} />

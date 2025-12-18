@@ -2,6 +2,7 @@
 import React from 'react';
 import { NoticesContent, NewsItem, SharedContent } from '../types';
 import { BellIcon, ChevronRightIcon, CalendarDaysIcon } from '@heroicons/react/24/outline';
+import { BookmarkIcon as BookmarkSolidIcon } from '@heroicons/react/24/solid';
 
 interface NoticeBoardProps {
   content: NoticesContent;
@@ -10,6 +11,9 @@ interface NoticeBoardProps {
 }
 
 export const NoticeBoard: React.FC<NoticeBoardProps> = ({ content, onNewsClick, shared }) => {
+  // Sort pinned notices to the top
+  const sortedNotices = [...content.notices].sort((a, b) => (b.isPinned ? 1 : 0) - (a.isPinned ? 1 : 0));
+
   return (
     <div className="bg-white min-h-screen">
        <div className="bg-pau-darkBlue pt-44 pb-20">
@@ -24,13 +28,22 @@ export const NoticeBoard: React.FC<NoticeBoardProps> = ({ content, onNewsClick, 
 
        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="space-y-6">
-            {content.notices.map((notice, idx) => (
+            {sortedNotices.map((notice, idx) => (
               <div 
                 key={notice.id} 
-                className="group bg-white border border-gray-200 rounded-xl p-8 shadow-sm hover:border-pau-blue hover:shadow-lg transition-all duration-300 cursor-pointer relative animate-fade-in"
+                className={`group bg-white border rounded-xl p-8 shadow-sm hover:border-pau-blue hover:shadow-lg transition-all duration-300 cursor-pointer relative animate-fade-in ${notice.isPinned ? 'border-pau-gold ring-1 ring-pau-gold/10' : 'border-gray-200'}`}
                 style={{ animationDelay: `${idx * 0.1}s` }}
                 onClick={() => onNewsClick(notice)}
               >
+                {notice.isPinned && (
+                  <div className="absolute top-0 right-12 transform -translate-y-1/2">
+                    <span className="bg-pau-gold text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-md flex items-center">
+                       <BookmarkSolidIcon className="h-3 w-3 mr-1" />
+                       Pinned
+                    </span>
+                  </div>
+                )}
+
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                   <div className="flex-grow pr-8">
                     <div className="flex items-center space-x-3 mb-3">

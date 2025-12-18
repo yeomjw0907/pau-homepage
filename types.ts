@@ -1,5 +1,4 @@
 
-
 export type SupportedLanguage = 
   | 'English' 
   | 'Spanish' 
@@ -23,7 +22,8 @@ export type Page =
   | 'library'
   | 'careers'
   | 'calendar'
-  | 'consumer-info';
+  | 'consumer-info'
+  | 'admin';
 
 export interface Statistic {
   label: string;
@@ -42,8 +42,10 @@ export interface NewsItem {
   title: string;
   date: string;
   summary: string;
-  body: string;
+  body: string; // Now stores HTML from rich text editor
   category: 'Academic' | 'Event' | 'General' | 'Career';
+  images?: string[]; // Array of base64 or URL strings for multiple images
+  isPinned?: boolean;
 }
 
 export interface FeatureItem {
@@ -72,52 +74,34 @@ export interface CareerStat {
 export interface GlobalFutureItem {
   title: string;
   description: string;
-  // Enhanced Modal Data
   detailTitle: string;
   detailBody: string;
-  image: string; // URL for the modal hero image
-  stats: CareerStat[]; // Specific stats for this career
-  relatedPathways: PathwayLink[]; // Links to other parts of the site
+  image: string;
+  stats: CareerStat[];
+  relatedPathways: PathwayLink[];
 }
 
 export interface HomeContent {
-  // Hero
   heroTitle: string;
   heroSubtitle: string;
-
-  // Vision Section (Specific)
-  visionStatement: string; // Short, punchy vision statement
+  visionStatement: string;
   visionAuthor?: string;
-
-  // Mission Section (Specific)
   missionTitle: string;
   missionDescription: string;
   missionPoints: MissionItem[];
-
-  // Intro (General Program Info)
   introTitle: string;
   introText: string;
-
-  // Features Grid (Program Details)
   features: FeatureItem[];
-
-  // Student Success
   successTitle: string;
   successText: string;
   stats: Statistic[];
-
-  // Global Future
   globalFutureTitle: string;
   globalFutureIntro: string;
   globalFutureList: GlobalFutureItem[];
   globalFutureClosing: string;
-
-  // Clinics
   clinicsTitle: string;
   clinicsIntro: string;
   clinics: Clinic[];
-
-  // News
   newsTitle: string;
   latestNews: NewsItem[];
 }
@@ -143,7 +127,6 @@ export interface AdmissionsContent {
   tuitionTitle: string;
   tuitionInfo: string;
   tuitionCost: string;
-  // New FAQ Section
   faqTitle: string;
   faqs: FAQItem[];
 }
@@ -202,7 +185,6 @@ export interface CalendarContent {
   events: { date: string; event: string; type: string }[];
 }
 
-// New Interface for Consumer Info
 export interface ConsumerInfoContent {
   title: string;
   intro: string;

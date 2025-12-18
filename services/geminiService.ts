@@ -1,11 +1,8 @@
 import { GoogleGenAI } from "@google/genai";
 import { SupportedLanguage, ImageSize } from "../types";
 
-const apiKey = process.env.API_KEY || '';
-const ai = new GoogleGenAI({ apiKey });
-
 /**
- * Translates site content dynamically using Gemini Flash.
+ * Translates site content dynamically using Gemini 3 Flash.
  * Generic function to handle HomeContent, AdmissionsContent, etc.
  */
 export const translateContent = async <T>(
@@ -15,6 +12,9 @@ export const translateContent = async <T>(
   if (targetLanguage === 'English') {
     return currentContent;
   }
+
+  // Always create a new GoogleGenAI instance right before making an API call to ensure it uses the most up-to-date API key.
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
   const prompt = `
     You are a professional translator for the Pacific American University (PAU) Law School website.
@@ -29,26 +29,20 @@ export const translateContent = async <T>(
     Content to translate:
     ${JSON.stringify(currentContent)}
 
-    Return ONLY the valid JSON. Do not wrap in markdown code blocks.
+    Return ONLY the valid JSON.
   `;
 
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-3-flash-preview',
       contents: prompt,
       config: {
         responseMimeType: 'application/json'
       }
     });
 
-    let text = response.text;
+    const text = response.text;
     if (!text) throw new Error("No translation returned");
-    
-    // Clean markdown code blocks if present (e.g. ```json ... ```)
-    text = text.trim();
-    if (text.startsWith('```')) {
-      text = text.replace(/^```(json)?/, '').replace(/```$/, '');
-    }
     
     return JSON.parse(text) as T;
   } catch (error) {
@@ -64,6 +58,8 @@ export const generateArchitecturalImage = async (
   prompt: string,
   size: ImageSize
 ): Promise<string> => {
+  // Always create a new GoogleGenAI instance right before making an API call to ensure it uses the most up-to-date API key.
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-3-pro-image-preview',
@@ -80,8 +76,10 @@ export const generateArchitecturalImage = async (
 
     if (response.candidates && response.candidates[0].content && response.candidates[0].content.parts) {
       for (const part of response.candidates[0].content.parts) {
-        if (part.inlineData && part.inlineData.data) {
-          return `data:${part.inlineData.mimeType};base64,${part.inlineData.data}`;
+        // Find the image part, do not assume it is the first part.
+        if (part.inlineData) {
+          const base64EncodeString: string = part.inlineData.data;
+          return `data:image/png;base64,${base64EncodeString}`;
         }
       }
     }

@@ -1,8 +1,11 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ImageSize } from '../types';
 import { generateArchitecturalImage } from '../services/geminiService';
-import { PhotoIcon, ArrowPathIcon, BuildingOffice2Icon } from '@heroicons/react/24/outline';
+import { PhotoIcon, ArrowPathIcon, BuildingOffice2Icon, KeyIcon } from '@heroicons/react/24/outline';
+
+// The global 'aistudio' object and its 'AIStudio' type are provided by the environment.
+// Conflicting local declaration removed.
 
 export const CampusVisualizer: React.FC = () => {
   const [prompt, setPrompt] = useState('');
@@ -10,6 +13,33 @@ export const CampusVisualizer: React.FC = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [hasApiKey, setHasApiKey] = useState<boolean>(false);
+
+  // Check whether an API key has been selected on component mount
+  useEffect(() => {
+    const checkKey = async () => {
+      try {
+        // @ts-ignore - aistudio is injected by the environment
+        const has = await window.aistudio.hasSelectedApiKey();
+        setHasApiKey(has);
+      } catch (e) {
+        console.error("Failed to check API key selection status", e);
+      }
+    };
+    checkKey();
+  }, []);
+
+  // Handle opening the API key selection dialog
+  const handleSelectKey = async () => {
+    try {
+      // @ts-ignore - aistudio is injected by the environment
+      await window.aistudio.openSelectKey();
+      // Assume success immediately to avoid race conditions as per coding guidelines
+      setHasApiKey(true);
+    } catch (e) {
+      console.error("Failed to open API key selection dialog", e);
+    }
+  };
 
   const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,12 +56,54 @@ export const CampusVisualizer: React.FC = () => {
         size
       );
       setGeneratedImage(base64Image);
-    } catch (err) {
-      setError("Failed to generate visualization. Please try again.");
+    } catch (err: any) {
+      console.error("Generation failed:", err);
+      // If requested entity was not found, the key might be invalid or from an unpaid project
+      if (err?.message?.includes("Requested entity was not found.")) {
+        setHasApiKey(false);
+        setError("API Key configuration error. Please re-select a valid API key from a paid GCP project.");
+      } else {
+        setError("Failed to generate visualization. Please try again.");
+      }
     } finally {
       setIsGenerating(false);
     }
   };
+
+  // If no API key is selected, show mandatory selection UI
+  if (!hasApiKey) {
+    return (
+      <section id="campus-viz" className="bg-pau-darkBlue border-t border-white/10 py-32 text-center">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="inline-flex items-center justify-center p-4 bg-white/10 rounded-full mb-8">
+            <KeyIcon className="h-12 w-12 text-pau-gold" />
+          </div>
+          <h2 className="text-3xl md:text-5xl font-serif font-bold text-white mb-6">
+            Vision 2030 Architecture Lab
+          </h2>
+          <p className="text-xl text-gray-300 mb-10 leading-relaxed font-light max-w-2xl mx-auto">
+            Our high-fidelity architectural tools utilize <strong>Gemini 3 Pro</strong>. To access this feature, you must select an API key from a <strong>paid Google Cloud project</strong>.
+          </p>
+          <div className="bg-white/5 border border-white/10 p-8 rounded-2xl mb-12 inline-block text-left max-w-lg">
+             <h4 className="text-pau-gold font-bold text-xs uppercase tracking-widest mb-4">Requirements & Billing:</h4>
+             <ul className="text-sm text-gray-400 space-y-3 list-disc pl-5">
+               <li>User-selected API keys are mandatory for image generation models.</li>
+               <li>Ensure your project has <a href="https://ai.google.dev/gemini-api/docs/billing" target="_blank" rel="noopener noreferrer" className="text-pau-gold underline">billing enabled</a>.</li>
+               <li>Requests using non-paid projects will result in an error.</li>
+             </ul>
+          </div>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+             <button
+               onClick={handleSelectKey}
+               className="bg-pau-gold text-white px-12 py-5 rounded-full font-bold uppercase tracking-widest hover:bg-white hover:text-pau-darkBlue transition-all shadow-glow transform hover:-translate-y-1"
+             >
+               Select Paid API Key
+             </button>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="campus-viz" className="bg-gray-50 border-t border-gray-200">
@@ -102,6 +174,14 @@ export const CampusVisualizer: React.FC = () => {
                     Generate Concept
                   </>
                 )}
+              </button>
+              
+              <button 
+                type="button"
+                onClick={handleSelectKey}
+                className="w-full text-[10px] text-gray-400 hover:text-pau-blue uppercase tracking-widest font-bold mt-2 transition-colors"
+              >
+                Change API Key
               </button>
             </form>
 
