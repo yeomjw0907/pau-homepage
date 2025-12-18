@@ -1,9 +1,13 @@
+
 import { GoogleGenAI } from "@google/genai";
 import { SupportedLanguage, ImageSize } from "../types";
 
+// In-memory cache for translations to avoid redundant API calls and improve speed
+const translationCache = new Map<string, any>();
+
 /**
  * Translates site content dynamically using Gemini 3 Flash.
- * Generic function to handle HomeContent, AdmissionsContent, etc.
+ * Optimized with caching and concise prompting for maximum performance.
  */
 export const translateContent = async <T>(
   currentContent: T,
@@ -13,38 +17,46 @@ export const translateContent = async <T>(
     return currentContent;
   }
 
-  // Always create a new GoogleGenAI instance right before making an API call to ensure it uses the most up-to-date API key.
+  // Generate a cache key based on language and content fingerprint
+  const contentString = JSON.stringify(currentContent);
+  const cacheKey = `${targetLanguage}_${contentString.length}_${contentString.slice(0, 20)}`;
+  
+  if (translationCache.has(cacheKey)) {
+    console.debug(`[Performance] Returning cached translation for ${targetLanguage}`);
+    return translationCache.get(cacheKey);
+  }
+
+  // Always create a new GoogleGenAI instance right before making an API call
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
-  const prompt = `
-    You are a professional translator for the Pacific American University (PAU) Law School website.
-    Translate the values in the following JSON object into ${targetLanguage}.
-    
-    Guidelines:
-    1. Maintain the academic, prestigious, and welcoming tone.
-    2. "Juris Doctor", "LLM", and proper nouns (like "Silicon Valley") should be adapted appropriately for the target language or kept if standard.
-    3. Do NOT change the structure of the keys or the structure of the JSON.
-    4. Only translate the string values.
-    
-    Content to translate:
-    ${JSON.stringify(currentContent)}
+  // Optimized prompt: Minimal instructions to reduce latency and processing time
+  const prompt = `Translate JSON to ${targetLanguage}. 
+Keep keys. Keep names like "Juris Doctor", "LLM", "Silicon Valley".
+Return ONLY raw JSON.
 
-    Return ONLY the valid JSON.
-  `;
+JSON:
+${contentString}`;
 
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: prompt,
       config: {
-        responseMimeType: 'application/json'
+        responseMimeType: 'application/json',
+        // Lower temperature for faster, more deterministic output
+        temperature: 0.1,
       }
     });
 
     const text = response.text;
     if (!text) throw new Error("No translation returned");
     
-    return JSON.parse(text) as T;
+    const translated = JSON.parse(text) as T;
+    
+    // Persist in memory cache
+    translationCache.set(cacheKey, translated);
+    
+    return translated;
   } catch (error) {
     console.error("Translation error:", error);
     throw error;
@@ -58,7 +70,6 @@ export const generateArchitecturalImage = async (
   prompt: string,
   size: ImageSize
 ): Promise<string> => {
-  // Always create a new GoogleGenAI instance right before making an API call to ensure it uses the most up-to-date API key.
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   try {
     const response = await ai.models.generateContent({
@@ -76,10 +87,8 @@ export const generateArchitecturalImage = async (
 
     if (response.candidates && response.candidates[0].content && response.candidates[0].content.parts) {
       for (const part of response.candidates[0].content.parts) {
-        // Find the image part, do not assume it is the first part.
         if (part.inlineData) {
-          const base64EncodeString: string = part.inlineData.data;
-          return `data:image/png;base64,${base64EncodeString}`;
+          return `data:image/png;base64,${part.inlineData.data}`;
         }
       }
     }

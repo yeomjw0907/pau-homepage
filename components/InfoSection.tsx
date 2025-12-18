@@ -1,21 +1,23 @@
 
 import React, { useState } from 'react';
-import { HomeContent, Clinic, SharedContent, GlobalFutureItem, Page } from '../types';
+import { HomeContent, Clinic, SharedContent, Page } from '../types';
 import { 
-  AcademicCapIcon, 
-  BriefcaseIcon, 
-  UserGroupIcon, 
   ArrowRightIcon, 
-  ClockIcon, 
-  CurrencyDollarIcon,
-  GlobeAmericasIcon,
-  BuildingLibraryIcon,
+  LightBulbIcon, 
+  GlobeAmericasIcon, 
+  AcademicCapIcon,
   ScaleIcon,
+  BuildingLibraryIcon,
+  BriefcaseIcon,
   BuildingOffice2Icon,
-  LightBulbIcon,
   GlobeAsiaAustraliaIcon,
+  DocumentTextIcon,
+  PresentationChartBarIcon,
+  UserGroupIcon,
   XMarkIcon,
-  ChevronRightIcon
+  CheckCircleIcon,
+  ChartBarIcon,
+  AcademicCapIcon as DegreeIcon
 } from '@heroicons/react/24/outline';
 
 interface InfoSectionProps {
@@ -25,370 +27,306 @@ interface InfoSectionProps {
   onNavigate: (page: Page) => void;
 }
 
-export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onClinicClick, onNavigate }) => {
-  const [selectedCareer, setSelectedCareer] = useState<GlobalFutureItem | null>(null);
-
-  const handlePathwayClick = (page: Page) => {
-    setSelectedCareer(null); // Close modal
-    onNavigate(page);
+interface CareerPath {
+  icon: any;
+  title: string;
+  desc: string;
+  details: {
+    overview: string;
+    focusAreas: string[];
+    potentialRoles: string[];
+    outlook: string;
   };
+}
+
+export const InfoSection: React.FC<InfoSectionProps> = ({ shared, onClinicClick, onNavigate }) => {
+  const [selectedPath, setSelectedPath] = useState<CareerPath | null>(null);
+
+  const careerPaths: CareerPath[] = [
+    { 
+      icon: GlobeAmericasIcon, 
+      title: "International Business", 
+      desc: "Navigate the complex landscape of global commerce and trade.",
+      details: {
+        overview: "As companies expand globally, the need for lawyers who understand multi-jurisdictional regulations and international trade law has never been greater.",
+        focusAreas: ["Mergers & Acquisitions", "International Trade Treaties", "Cross-border Tax Planning"],
+        potentialRoles: ["International Counsel", "Trade Compliance Officer", "Global M&A Attorney"],
+        outlook: "High growth potential in emerging markets and global tech hubs."
+      }
+    },
+    { 
+      icon: BuildingLibraryIcon, 
+      title: "Corporate Governance", 
+      desc: "Advise boards and executives on fiduciary duties and ethical compliance.",
+      details: {
+        overview: "Ensure organizations operate within legal and ethical boundaries while managing risks and upholding shareholder interests.",
+        focusAreas: ["Board Advisory", "ESG Compliance", "Securities Law"],
+        potentialRoles: ["Chief Compliance Officer", "Corporate Secretary", "General Counsel"],
+        outlook: "Steady demand due to increasing regulatory oversight globally."
+      }
+    },
+    { 
+      icon: PresentationChartBarIcon, 
+      title: "Legal Consulting", 
+      desc: "Provide strategic legal insight to non-legal entities and organizations.",
+      details: {
+        overview: "Bridge the gap between business strategy and legal requirements for major consulting firms and private equity groups.",
+        focusAreas: ["Risk Management", "Strategic Policy", "Crisis Management"],
+        potentialRoles: ["Strategy Consultant", "Policy Analyst", "Legal Risk Manager"],
+        outlook: "Expanding field for J.D. holders in non-traditional legal roles."
+      }
+    },
+    { 
+      icon: ArrowRightIcon, 
+      title: "Cross-border Trade", 
+      desc: "Master the regulations governing imports, exports, and tariffs.",
+      details: {
+        overview: "Become an expert in the laws that move the world's goods across oceans and borders.",
+        focusAreas: ["WTO Regulations", "Customs Law", "International Sales of Goods"],
+        potentialRoles: ["Trade Specialist", "Logistics Legal Counsel", "Customs Broker Attorney"],
+        outlook: "Critical role in stabilizing and securing global supply chains."
+      }
+    },
+    { 
+      icon: BuildingOffice2Icon, 
+      title: "Regulatory Affairs", 
+      desc: "Ensure compliance with government agencies like the FDA, SEC, and EPA.",
+      details: {
+        overview: "Specialized knowledge in highly regulated industries like Pharmaceuticals, Energy, and Finance.",
+        focusAreas: ["Administrative Law", "Industry Compliance", "Government Lobbying"],
+        potentialRoles: ["Regulatory Counsel", "Public Policy Director", "Environmental Compliance Officer"],
+        outlook: "Essential for industries navigating complex government bureaucracies."
+      }
+    },
+    { 
+      icon: DegreeIcon, 
+      title: "Graduate Study", 
+      desc: "Pursue advanced degrees like an LL.M. or S.J.D. at top universities.",
+      details: {
+        overview: "Use your J.D. from PAU Law as a stepping stone to elite academic and research positions worldwide.",
+        focusAreas: ["Legal Research", "Academic Writing", "Specialized Law Degrees"],
+        potentialRoles: ["Law Professor", "Legal Scholar", "Research Fellow"],
+        outlook: "Opens doors to academia and specialized private practice."
+      }
+    }
+  ];
+
+  const clinicList: Clinic[] = [
+    { 
+      id: "c1", 
+      title: "High Tech Law Institute", 
+      description: "Partnering with Silicon Valley giants to address legal challenges in AI, patent law, and data privacy.",
+      body: "The High Tech Law Institute at PAU Law provides students with unparalleled access to the intersection of law and technology. Working alongside faculty who are experts in Intellectual Property and Artificial Intelligence, students assist in research projects and pro-bono consulting for early-stage startups in the Santa Clara region. \n\nFocus areas include: \n- AI Ethics and Regulation\n- Patent Prosecution & Strategy\n- Data Privacy Compliance (GDPR/CCPA)\n- Emerging Tech Policy"
+    },
+    { 
+      id: "c2", 
+      title: "Immigration & Human Rights Clinic", 
+      description: "Providing pro bono legal representation to asylum seekers and immigrant families in the Bay Area.",
+      body: "Students in the Immigration and Human Rights Clinic represent real clients in administrative and federal court proceedings. Under the supervision of clinical faculty, students take the lead in interviewing clients, drafting briefs, and appearing at hearings. \n\nExperience gained: \n- Client counseling in traumatic contexts\n- Legal research on international human rights standards\n- Litigation skills in immigration court\n- Advocacy for vulnerable populations"
+    },
+    { 
+      id: "c3", 
+      title: "Start-up Legal Garage", 
+      description: "Hands-on experience assisting early-stage startups with incorporation, IP strategy, and compliance.",
+      body: "The Start-up Legal Garage matches law students with early-stage startups to provide essential legal services under attorney supervision. This clinic is perfect for students interested in venture capital, corporate law, and the Silicon Valley ecosystem.\n\nWork includes:\n- Drafting Articles of Incorporation\n- Employment Agreements\n- Trademark Registration\n- Seed Funding Legal Review"
+    }
+  ];
 
   return (
-    <div className="bg-white">
+    <div className="bg-white font-sans">
       
-      {/* SECTION 1 & 2 COMBINED: Vision & Mission Split Layout */}
-      {/* Design Concept: "The Official Document" - Crisp edges, high contrast, structured hierarchy */}
-      <section className="relative z-20 -mt-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 shadow-2xl bg-white">
-          
-          {/* LEFT: Vision (Prestige & Depth) */}
-          <div className="bg-pau-darkBlue text-white p-12 lg:p-20 flex flex-col justify-center relative">
-             {/* Classical decorative accent */}
-             <div className="w-16 h-1 bg-pau-gold mb-10"></div>
-             
-             <div className="relative z-10">
-               <span className="block text-xs font-bold tracking-[0.25em] text-pau-gold uppercase mb-6 opacity-80">
-                 Our Founding Mission
-               </span>
-               {/* Vision Statement - Font size reduced as requested */}
-               <h2 className="text-xl md:text-2xl lg:text-3xl font-serif font-medium leading-relaxed text-white/95 mb-8">
-                 "{content.visionStatement}"
-               </h2>
-               
-               {/* Signature / Authority Mark */}
-               <div className="flex items-center mt-auto opacity-50">
-                  <div className="h-px bg-white w-12 mr-4"></div>
-                  <span className="text-xs font-serif italic text-white">Office of the President</span>
-               </div>
-             </div>
-
-             {/* Background texture hint */}
-             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5 pointer-events-none"></div>
-          </div>
-
-          {/* RIGHT: Mission (Clarity & Structure) */}
-          <div className="bg-white p-12 lg:p-20 flex flex-col justify-center border-t lg:border-t-0 lg:border-l border-gray-100">
-             <div className="mb-12 border-b border-gray-100 pb-8">
-                {content.missionTitle && <h2 className="text-3xl font-serif font-bold text-pau-darkBlue mb-4">{content.missionTitle}</h2>}
-                <p className="text-gray-600 font-light leading-relaxed text-lg">
-                  {content.missionDescription}
-                </p>
-             </div>
-
-             <div className="space-y-8">
-                {content.missionPoints.map((mission, idx) => (
-                   <div key={idx} className="flex gap-5 items-start group">
-                      <div className="mt-1 flex-shrink-0 w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 group-hover:border-pau-blue group-hover:text-pau-blue group-hover:bg-blue-50 transition-all duration-300">
-                         {mission.icon === 'innovation' && <LightBulbIcon className="h-5 w-5" />}
-                         {mission.icon === 'access' && <GlobeAsiaAustraliaIcon className="h-5 w-5" />}
-                         {mission.icon === 'globe' && <AcademicCapIcon className="h-5 w-5" />}
-                      </div>
-                      <div>
-                         <h4 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-2 group-hover:text-pau-blue transition-colors">
-                           {mission.title}
-                         </h4>
-                         <p className="text-sm text-gray-500 leading-relaxed border-l-2 border-transparent pl-0 group-hover:border-gray-200 group-hover:pl-3 transition-all duration-300">
-                           {mission.description}
-                         </p>
-                      </div>
-                   </div>
-                ))}
-             </div>
-          </div>
-
-        </div>
-      </section>
-
-      {/* SECTION 3: Features & Intro (Clean White) */}
-      <section className="pb-24 pt-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="text-center max-w-3xl mx-auto mb-20">
-          <h2 className="text-3xl md:text-5xl font-serif font-bold text-pau-darkBlue mb-6">
-             {content.introTitle}
-          </h2>
-          <p className="text-xl text-gray-500 font-light leading-relaxed">
-             {content.introText}
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-           {content.features.map((feature, idx) => (
-             <div key={idx} className="bg-white p-10 border border-gray-100 shadow-sm hover:shadow-card hover:-translate-y-1 transition-all duration-300 group">
-                <div className="w-12 h-12 text-pau-blue mb-6 group-hover:text-pau-gold transition-colors">
-                   {feature.icon === 'clock' && <ClockIcon className="h-10 w-10 stroke-1" />}
-                   {feature.icon === 'academic' && <UserGroupIcon className="h-10 w-10 stroke-1" />}
-                   {feature.icon === 'currency' && <CurrencyDollarIcon className="h-10 w-10 stroke-1" />}
-                </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-3 font-serif group-hover:text-pau-blue transition-colors">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed text-sm">
-                  {feature.description}
-                </p>
-             </div>
-           ))}
-        </div>
-      </section>
-
-      {/* SECTION 4: Stats & Success (Dark Mode Block) */}
-      <section className="bg-pau-darkBlue text-white py-32 relative overflow-hidden">
-        {/* Abstract Pattern */}
-        <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-        <div className="absolute top-0 right-0 -mt-20 -mr-20 w-96 h-96 bg-pau-blue rounded-full blur-[100px] opacity-30"></div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            
-            {/* Text Content */}
-            <div>
-              <div className="flex items-center space-x-4 mb-8">
-                 <span className="h-px w-12 bg-pau-gold"></span>
-                 <span className="text-pau-gold font-bold tracking-widest uppercase text-xs">Student Success</span>
-              </div>
-              <h2 className="text-4xl md:text-5xl font-serif font-bold mb-8 leading-tight">
-                {content.successTitle}
-              </h2>
-              <p className="text-lg text-gray-300 mb-10 leading-relaxed font-light border-l-2 border-white/20 pl-6">
-                {content.successText}
-              </p>
-              
-              {/* Emphasized Dean Section */}
-              <div className="flex items-center space-x-6 bg-white/5 p-6 rounded-xl border border-white/10 backdrop-blur-sm max-w-lg hover:bg-white/10 transition-colors duration-300">
-                 <div className="flex-shrink-0 h-20 w-20 rounded-full bg-gradient-to-br from-pau-gold to-yellow-600 flex items-center justify-center text-white font-serif font-bold text-2xl shadow-xl ring-4 ring-white/10">
-                   ER
-                 </div>
-                 <div>
-                   <p className="font-serif text-3xl font-bold text-white tracking-wide leading-none">Elena Rodriguez</p>
-                   <div className="h-0.5 w-12 bg-pau-gold my-3"></div>
-                   <p className="text-sm text-blue-100 font-bold uppercase tracking-[0.15em]">Dean, School of Law</p>
-                 </div>
-              </div>
+      {/* SECTION: Founding Mission */}
+      <section className="relative -mt-24 z-30 max-w-7xl mx-auto px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 shadow-2xl overflow-hidden">
+          <div className="bg-[#051626] p-16 lg:p-24 text-white">
+            <div className="w-12 h-[2px] bg-pau-gold mb-8"></div>
+            <p className="text-[10px] font-bold tracking-widest uppercase text-pau-gold mb-6">Our Founding Mission</p>
+            <blockquote className="text-3xl font-serif font-bold leading-relaxed mb-12">
+              "As educational borders dissolve, we nurture global leaders with critical perspectives. We are a platform for shaping thoughtful, solution-oriented professionals prepared to engage with the world's most pressing challenges."
+            </blockquote>
+            <div className="flex items-center space-x-4 opacity-60">
+              <div className="w-8 h-px bg-white"></div>
+              <p className="text-xs font-serif italic">Office of the President</p>
             </div>
-
-            {/* Stats Grid */}
-            <div className="grid grid-cols-2 gap-px bg-white/10 border border-white/10 rounded-sm overflow-hidden">
-              {content.stats && content.stats.map((stat, idx) => (
-                <div key={idx} className="bg-pau-darkBlue/80 backdrop-blur-sm p-8 hover:bg-white/5 transition-colors group">
-                  <h3 className="text-3xl md:text-4xl font-serif font-bold text-white mb-2 group-hover:text-pau-gold transition-colors">
-                    {stat.value}
-                  </h3>
-                  <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">
-                    {stat.label}
-                  </p>
+          </div>
+          <div className="bg-white p-16 lg:p-24 text-gray-900 flex flex-col justify-center">
+            <p className="text-sm text-gray-500 font-light leading-relaxed mb-12">
+              To redefine legal education by breaking down geographic barriers and empowering talented students worldwide.
+            </p>
+            <div className="space-y-10">
+              {[
+                { icon: LightBulbIcon, title: "Innovation Without Boundaries", desc: "Merging rigorous American legal instruction with flexible, technology-driven delivery systems." },
+                { icon: GlobeAsiaAustraliaIcon, title: "Global Accessibility", desc: "Lowering barriers to entry and respecting global time zones to cultivate globally active professionals." },
+                { icon: AcademicCapIcon, title: "Real-World Mastery", desc: "Combining dynamic video lectures with real-time sessions to ensure deep mastery of U.S. law." }
+              ].map((item, i) => (
+                <div key={i} className="flex space-x-6 group">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full border border-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-pau-light group-hover:text-pau-blue transition-all">
+                    <item.icon className="h-5 w-5 stroke-1" />
+                  </div>
+                  <div>
+                    <h4 className="text-[11px] font-bold uppercase tracking-widest mb-2">{item.title}</h4>
+                    <p className="text-xs text-gray-500 leading-relaxed font-light">{item.desc}</p>
+                  </div>
                 </div>
               ))}
             </div>
-
           </div>
         </div>
       </section>
 
-      {/* SECTION 5: Global Future (Gray Background) */}
-      <section className="bg-gray-50 py-32 px-4 sm:px-6 lg:px-8 border-b border-gray-200">
+      {/* SECTION: Study American Law */}
+      <section className="py-32 px-6 text-center">
+        <h2 className="text-4xl md:text-5xl font-serif font-bold text-pau-blue mb-6">
+          Study American Law From <br /> Anywhere
+        </h2>
+        <p className="text-gray-500 max-w-2xl mx-auto font-light leading-relaxed">
+          A fully online J.D. program designed for motivated students seeking flexibility, world-class instruction, and a clear path to a California law license.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto mt-20">
+          {[
+            { icon: GlobeAmericasIcon, title: "Flexible Learning", desc: "Complete two-thirds of your coursework asynchronously on your schedule—anytime, anywhere, without sacrificing academic rigor." },
+            { icon: UserGroupIcon, title: "World-Class Mentorship", desc: "Learn from experienced legal professionals and professors who provide personalized feedback and guidance to help you succeed academically." },
+            { icon: ScaleIcon, title: "Accessible Tuition", desc: "We offer a high-quality legal education at a significantly lower cost than traditional U.S. law schools, making the J.D. dream accessible." }
+          ].map((feature, i) => (
+            <div key={i} className="bg-white p-10 border border-gray-50 hover:shadow-xl transition-all text-left">
+              <feature.icon className="h-8 w-8 text-pau-blue mb-6 stroke-1" />
+              <h3 className="text-lg font-bold mb-4 font-serif">{feature.title}</h3>
+              <p className="text-sm text-gray-500 leading-relaxed font-light">{feature.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* SECTION: Global Career Path */}
+      <section className="py-32 px-6 bg-gray-50/50">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-serif font-bold text-pau-darkBlue mb-4">
-              {content.globalFutureTitle}
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              {content.globalFutureIntro}
+          <div className="text-center mb-20">
+            <h2 className="text-4xl font-serif font-bold text-pau-blue mb-6">Your Path to a Global Career</h2>
+            <p className="text-gray-500 max-w-2xl mx-auto font-light leading-relaxed">
+              Our rigorous curriculum opens doors to diverse international fields, equipping you with the credentials needed for today's interconnected legal environment.
             </p>
           </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-             {content.globalFutureList.map((item, idx) => (
-               <div 
-                 key={idx} 
-                 onClick={() => setSelectedCareer(item)}
-                 className="bg-white p-6 rounded shadow-sm border border-gray-100 flex flex-col justify-center items-start group hover:shadow-card hover:border-pau-blue/30 hover:-translate-y-1 transition-all duration-300 cursor-pointer h-full"
-               >
-                 <div className="flex items-center mb-4">
-                   <div className="w-12 h-12 rounded-full bg-pau-light flex items-center justify-center text-pau-blue mr-4 group-hover:scale-110 transition-transform">
-                      {idx === 0 ? <GlobeAmericasIcon className="h-6 w-6" /> :
-                       idx === 1 ? <ScaleIcon className="h-6 w-6" /> :
-                       idx === 2 ? <BriefcaseIcon className="h-6 w-6" /> :
-                       idx === 3 ? <ArrowRightIcon className="h-6 w-6" /> :
-                       idx === 4 ? <BuildingLibraryIcon className="h-6 w-6" /> :
-                       <AcademicCapIcon className="h-6 w-6" />}
-                   </div>
-                   <h3 className="text-lg font-bold text-gray-800 group-hover:text-pau-darkBlue transition-colors font-serif">
-                     {item.title}
-                   </h3>
-                 </div>
-                 <p className="text-sm text-gray-500 leading-relaxed mb-4 line-clamp-2">
-                   {item.description}
-                 </p>
-                 <span className="mt-auto text-xs font-bold text-pau-gold uppercase tracking-wider flex items-center group-hover:translate-x-1 transition-transform">
-                   Explore Path <ArrowRightIcon className="ml-1 h-3 w-3" />
-                 </span>
-               </div>
-             ))}
-          </div>
-          
-          <div className="mt-16 text-center">
-             <p className="inline-block px-8 py-4 bg-white rounded border border-gray-200 text-gray-500 italic shadow-sm">
-                "{content.globalFutureClosing}"
-             </p>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 6: Clinics & Centers (Clean) */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        {(content.clinicsTitle || content.clinicsIntro) && (
-          <div className="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-gray-100 pb-8">
-              <div className="max-w-2xl">
-              {content.clinicsTitle && <h2 className="text-4xl font-serif font-bold text-pau-darkBlue mb-4">{content.clinicsTitle}</h2>}
-              {content.clinicsIntro && <p className="text-lg text-gray-500 font-light">{content.clinicsIntro}</p>}
-              </div>
-              <button className="hidden md:inline-flex items-center px-6 py-3 bg-pau-light text-pau-blue font-bold rounded hover:bg-pau-blue hover:text-white transition-colors mt-6 md:mt-0 text-sm tracking-wide uppercase">
-              View All Centers <ArrowRightIcon className="ml-2 h-4 w-4" />
-              </button>
-          </div>
-        )}
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {content.clinics && content.clinics.map((clinic, idx) => (
-            <div 
-                key={clinic.id || idx} 
-                onClick={() => onClinicClick(clinic)}
-                className="group relative bg-white rounded p-8 border border-gray-100 transition-all duration-500 hover:shadow-card hover:border-pau-blue/20 cursor-pointer overflow-hidden flex flex-col h-full"
-            >
-                <div className="absolute top-0 left-0 w-full h-1 bg-gray-100 group-hover:bg-pau-gold transition-colors duration-500"></div>
-                
-                <div className="w-14 h-14 bg-gray-50 rounded flex items-center justify-center text-gray-400 mb-8 group-hover:bg-pau-blue group-hover:text-white transition-colors duration-300">
-                    {idx === 0 ? <AcademicCapIcon className="h-7 w-7" /> : 
-                    idx === 1 ? <UserGroupIcon className="h-7 w-7" /> : 
-                    <BuildingOffice2Icon className="h-7 w-7" />}
-                </div>
-                
-                <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-pau-blue transition-colors font-serif">
-                {clinic.title}
-                </h3>
-                <p className="text-gray-600 text-sm leading-relaxed mb-8 flex-grow">
-                {clinic.description}
-                </p>
-                
-                <div className="flex items-center text-sm font-bold text-gray-400 group-hover:text-pau-gold transition-colors uppercase tracking-widest">
-                {shared.buttons.learnMore}
-                <ArrowRightIcon className="ml-2 h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
-                </div>
-            </div>
-            ))}
-        </div>
-      </section>
-
-      {/* Global Career Detail Modal */}
-      {selectedCareer && (
-        <div className="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-          <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-             <div 
-               className="fixed inset-0 bg-gray-900 bg-opacity-80 transition-opacity backdrop-blur-sm" 
-               onClick={() => setSelectedCareer(null)}
-             ></div>
-
-             <span className="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
-
-             <div className="inline-block align-bottom bg-white rounded-xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl w-full relative">
-                
-                {/* Close Button */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {careerPaths.map((item, i) => (
+              <div key={i} className="bg-white p-10 border border-gray-100 hover:shadow-lg transition-all flex flex-col h-full group">
+                <item.icon className="h-6 w-6 text-pau-blue mb-8 stroke-1 group-hover:text-pau-gold transition-colors" />
+                <h3 className="text-lg font-bold mb-4 font-serif">{item.title}</h3>
+                <p className="text-sm text-gray-500 leading-relaxed font-light mb-8 flex-grow">{item.desc}</p>
                 <button 
-                   type="button" 
-                   onClick={() => setSelectedCareer(null)} 
-                   className="absolute top-4 right-4 z-20 bg-black/20 hover:bg-black/50 text-white rounded-full p-2 transition-colors backdrop-blur-md"
+                  onClick={() => setSelectedPath(item)}
+                  className="text-[10px] font-bold uppercase tracking-widest text-pau-gold flex items-center hover:translate-x-1 transition-transform"
                 >
-                   <XMarkIcon className="h-6 w-6" />
+                  Explore Path <ArrowRightIcon className="ml-2 h-3 w-3" />
                 </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-                {/* Hero Image */}
-                {selectedCareer.image && (
-                  <div className="h-64 w-full relative bg-gray-900">
-                     <img 
-                       src={selectedCareer.image} 
-                       alt={selectedCareer.title} 
-                       className="w-full h-full object-cover opacity-80"
-                     />
-                     <div className="absolute inset-0 bg-gradient-to-t from-pau-darkBlue via-pau-darkBlue/40 to-transparent opacity-80"></div>
-                     <div className="absolute bottom-0 left-0 p-8">
-                        <div className="inline-block px-3 py-1 bg-pau-gold text-white text-xs font-bold uppercase tracking-widest mb-3 rounded-sm">Career Pathway</div>
-                        <h3 className="text-3xl md:text-4xl font-serif font-bold text-white tracking-wide shadow-sm">
-                          {selectedCareer.detailTitle}
-                        </h3>
-                     </div>
+      {/* SECTION: Clinics */}
+      <section className="py-32 px-6 max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-serif font-bold text-pau-blue mb-4">Clinical Opportunities</h2>
+          <p className="text-gray-500 font-light">Practical experience supervised by expert faculty.</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          {clinicList.map((clinic, i) => (
+            <div key={i} className="group cursor-pointer" onClick={() => onClinicClick(clinic)}>
+              <div className="w-12 h-12 rounded bg-pau-light flex items-center justify-center text-gray-300 mb-8 group-hover:bg-pau-blue group-hover:text-white transition-all">
+                <BuildingLibraryIcon className="h-6 w-6 stroke-1" />
+              </div>
+              <h3 className="text-xl font-bold mb-4 font-serif group-hover:text-pau-blue transition-colors">{clinic.title}</h3>
+              <p className="text-sm text-gray-500 leading-relaxed font-light mb-8 line-clamp-2">{clinic.description}</p>
+              <button className="text-[10px] font-bold uppercase tracking-widest text-pau-blue flex items-center">
+                Learn More <ArrowRightIcon className="ml-2 h-3 w-3" />
+              </button>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* CAREER PATH MODAL */}
+      {selectedPath && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-pau-darkBlue/90 backdrop-blur-md animate-fade-in">
+          <div className="bg-white w-full max-w-3xl rounded-3xl shadow-2xl overflow-hidden relative max-h-[90vh] flex flex-col animate-fade-in-up">
+            <button 
+              onClick={() => setSelectedPath(null)}
+              className="absolute top-6 right-6 p-2 bg-gray-100 rounded-full hover:bg-pau-blue hover:text-white transition-all z-10"
+            >
+              <XMarkIcon className="h-6 w-6" />
+            </button>
+            
+            <div className="p-10 lg:p-16 overflow-y-auto">
+              <div className="flex items-center gap-4 mb-8">
+                <div className="p-4 bg-pau-light rounded-2xl text-pau-blue">
+                  <selectedPath.icon className="h-8 w-8" />
+                </div>
+                <div>
+                   <p className="text-xs font-bold text-pau-gold uppercase tracking-[0.2em] mb-1">Career Pathway</p>
+                   <h2 className="text-4xl font-serif font-bold text-pau-darkBlue">{selectedPath.title}</h2>
+                </div>
+              </div>
+
+              <div className="space-y-10">
+                <div>
+                   <h3 className="text-sm font-bold text-gray-900 uppercase tracking-widest mb-4 flex items-center">
+                     <DocumentTextIcon className="h-5 w-5 mr-2 text-pau-gold" /> Overview
+                   </h3>
+                   <p className="text-gray-600 leading-relaxed font-light text-lg">
+                     {selectedPath.details.overview}
+                   </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                  <div>
+                    <h3 className="text-sm font-bold text-gray-900 uppercase tracking-widest mb-4 flex items-center">
+                      <AcademicCapIcon className="h-5 w-5 mr-2 text-pau-gold" /> Key Focus Areas
+                    </h3>
+                    <ul className="space-y-3">
+                      {selectedPath.details.focusAreas.map((area, i) => (
+                        <li key={i} className="flex items-center text-sm text-gray-600">
+                          <CheckCircleIcon className="h-4 w-4 mr-2 text-pau-blue" /> {area}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                )}
-                
-                <div className="px-8 py-8 md:py-10">
-                   <div className="flex flex-col md:flex-row gap-12">
-                      {/* Main Content */}
-                      <div className="md:w-2/3">
-                         <h4 className="text-xl font-bold text-pau-darkBlue mb-4 font-serif border-b border-gray-100 pb-2">Overview</h4>
-                         <p className="text-gray-600 leading-relaxed text-lg font-light mb-8">
-                            {selectedCareer.detailBody}
-                         </p>
-
-                         {/* Organic Navigation: Related Pathways */}
-                         {selectedCareer.relatedPathways && (
-                           <div className="mt-10">
-                              <h4 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Recommended Next Steps</h4>
-                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                 {selectedCareer.relatedPathways.map((path, idx) => (
-                                    <button 
-                                      key={idx}
-                                      onClick={() => handlePathwayClick(path.targetPage)}
-                                      className="flex items-center justify-between p-4 bg-gray-50 border border-gray-200 rounded-lg hover:border-pau-blue hover:bg-white hover:shadow-md transition-all group text-left"
-                                    >
-                                       <div>
-                                          <div className="font-bold text-pau-blue text-sm">{path.label}</div>
-                                          <div className="text-xs text-gray-500 mt-0.5">{path.description}</div>
-                                       </div>
-                                       <ChevronRightIcon className="h-4 w-4 text-gray-400 group-hover:text-pau-gold" />
-                                    </button>
-                                 ))}
-                              </div>
-                           </div>
-                         )}
-                      </div>
-
-                      {/* Sidebar: Stats & Facts */}
-                      <div className="md:w-1/3 space-y-8">
-                         {selectedCareer.stats && (
-                           <div className="bg-pau-light p-6 rounded-xl border border-blue-100">
-                              <h4 className="text-sm font-bold text-pau-blue uppercase tracking-widest mb-6">Key Insights</h4>
-                              <div className="space-y-6">
-                                 {selectedCareer.stats.map((stat, idx) => (
-                                   <div key={idx} className="flex flex-col border-b border-blue-200/50 last:border-0 pb-4 last:pb-0">
-                                      <span className="text-2xl font-bold text-pau-darkBlue font-serif">{stat.value}</span>
-                                      <span className="text-xs text-gray-500 font-medium uppercase mt-1">{stat.label}</span>
-                                   </div>
-                                 ))}
-                              </div>
-                           </div>
-                         )}
-
-                         <div className="bg-white border border-gray-100 p-6 rounded-xl shadow-sm">
-                            <h4 className="text-sm font-bold text-gray-900 mb-2">Why PAU Law?</h4>
-                            <p className="text-sm text-gray-500 leading-relaxed">
-                              Our curriculum is specifically designed to bridge theory and practice in {selectedCareer.title.toLowerCase()}, giving you a competitive edge.
-                            </p>
-                         </div>
-                      </div>
-                   </div>
+                  <div>
+                    <h3 className="text-sm font-bold text-gray-900 uppercase tracking-widest mb-4 flex items-center">
+                      <BriefcaseIcon className="h-5 w-5 mr-2 text-pau-gold" /> Potential Roles
+                    </h3>
+                    <ul className="space-y-3">
+                      {selectedPath.details.potentialRoles.map((role, i) => (
+                        <li key={i} className="flex items-center text-sm text-gray-600">
+                          <ArrowRightIcon className="h-3 w-3 mr-2 text-pau-gold" /> {role}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
 
-                <div className="bg-gray-50 px-8 py-4 flex flex-row-reverse border-t border-gray-100">
-                  <button 
-                    type="button" 
-                    onClick={() => setSelectedCareer(null)} 
-                    className="w-full sm:w-auto inline-flex justify-center rounded border border-gray-300 shadow-sm px-6 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none transition-colors"
-                  >
-                    Close
-                  </button>
+                <div className="bg-pau-light p-8 rounded-2xl border border-pau-blue/10">
+                  <h3 className="text-sm font-bold text-pau-darkBlue uppercase tracking-widest mb-2 flex items-center">
+                    <ChartBarIcon className="h-5 w-5 mr-2 text-pau-blue" /> Market Outlook
+                  </h3>
+                  <p className="text-gray-700 font-medium italic">
+                    {selectedPath.details.outlook}
+                  </p>
                 </div>
-             </div>
+              </div>
+
+              <div className="mt-12">
+                 <button 
+                  onClick={() => onNavigate('admissions')}
+                  className="w-full bg-pau-blue text-white py-5 rounded-xl font-bold uppercase tracking-widest hover:bg-pau-gold transition-all shadow-lg"
+                 >
+                   Start Your Application
+                 </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
-
     </div>
   );
 };

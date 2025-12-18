@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { FacultyContent, SharedContent, FacultyMember } from '../types';
-import { XMarkIcon, DocumentTextIcon, ArrowTopRightOnSquareIcon, MagnifyingGlassIcon, FunnelIcon, UserIcon } from '@heroicons/react/24/outline';
+import { XMarkIcon, DocumentTextIcon, ArrowTopRightOnSquareIcon, MagnifyingGlassIcon, UserIcon } from '@heroicons/react/24/outline';
 
 interface FacultyProps {
   content: FacultyContent;
@@ -13,218 +13,120 @@ export const Faculty: React.FC<FacultyProps> = ({ content, shared }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
 
-  // Dynamic categories from data
-  const categories = React.useMemo(() => {
-    const tags = new Set<string>();
-    content.facultyList.forEach(prof => prof.expertise?.forEach(t => tags.add(t)));
-    return ["All", ...Array.from(tags).sort()];
-  }, [content.facultyList]);
+  const categories = ["All", "Constitutional", "Technology", "Clinical", "Ethics"];
 
-  // Filter Logic
   const filteredFaculty = content.facultyList.filter((prof) => {
     const term = searchTerm.toLowerCase();
-    const matchesSearch = 
-      prof.name.toLowerCase().includes(term) || 
-      prof.title.toLowerCase().includes(term) || 
-      prof.bio.toLowerCase().includes(term) ||
-      (prof.expertise && prof.expertise.some(t => t.toLowerCase().includes(term)));
-
-    let matchesCategory = true;
-    if (activeCategory !== "All") {
-      matchesCategory = prof.expertise?.includes(activeCategory) || false;
-    }
-
-    return matchesSearch && matchesCategory;
+    return prof.name.toLowerCase().includes(term) || prof.expertise.some(e => e.toLowerCase().includes(term));
   });
-
-  // Mock publications data generator
-  const getPublications = (name: string) => {
-    const createPub = (title: string, journal: string, year: string) => ({
-      title,
-      journal,
-      year,
-      url: `https://scholar.google.com/scholar?q=${encodeURIComponent(title)}`
-    });
-
-    if (name.includes("Rodriguez")) {
-      return [
-        createPub("The Modern Interpretation of the Commerce Clause", "Yale Law Journal", "2022"),
-        createPub("Civil Rights in the Digital Age: A Constitutional Framework", "Harvard Law Review", "2020"),
-        createPub("Judicial Activism vs. Restraint: A Historical Perspective", "Stanford Law Review", "2018")
-      ];
-    } else if (name.includes("Chen")) {
-      return [
-        createPub("Patent Eligibility of Artificial Intelligence Algorithms", "Berkeley Technology Law Journal", "2023"),
-        createPub("Open Source Licensing and Corporate Compliance", "Columbia Law Review", "2021"),
-        createPub("The Future of Software Copyright", "MIT Technology Review", "2019")
-      ];
-    } else {
-      return [
-        createPub("Sentencing Disparities in Federal Courts", "University of Chicago Law Review", "2023"),
-        createPub("Evidence Admissibility in the Era of Deepfakes", "Georgetown Law Journal", "2021"),
-        createPub("Reforming the Grand Jury System", "NYU Law Review", "2020")
-      ];
-    }
-  };
 
   return (
     <div className="bg-white min-h-screen">
-      {/* Hero */}
-      <div className="bg-pau-darkBlue pt-44 pb-20 px-4 sm:px-6 lg:px-8 text-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
-        <div className="relative z-10 max-w-4xl mx-auto animate-fade-in-up">
-           <h1 className="text-4xl font-serif font-bold text-white sm:text-5xl">{content.title}</h1>
-           <p className="mt-4 text-xl text-gray-300 font-light">{content.intro}</p>
+      <div className="bg-pau-darkBlue pt-56 pb-28 text-center relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+        <div className="relative z-10 max-w-4xl mx-auto px-6">
+           <h1 className="text-5xl md:text-7xl font-serif font-bold text-white tracking-tight">{content.title}</h1>
+           <div className="w-20 h-1 bg-pau-gold mx-auto my-8"></div>
+           <p className="text-xl text-gray-300 font-light leading-relaxed">{content.intro}</p>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20">
         
-        {/* Search and Filter Section */}
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-16 gap-6">
-          
-          {/* Search Input */}
-          <div className="relative w-full lg:w-96 group">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <MagnifyingGlassIcon className="h-5 w-5 text-gray-400 group-focus-within:text-pau-blue transition-colors" aria-hidden="true" />
-            </div>
+        {/* Modern Filter Bar */}
+        <div className="flex flex-col md:flex-row justify-between items-center mb-20 gap-8">
+          <div className="relative w-full md:w-96">
+            <MagnifyingGlassIcon className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
             <input
               type="text"
-              className="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-lg leading-5 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pau-blue focus:border-transparent sm:text-sm shadow-sm transition-all"
-              placeholder="Search faculty..."
+              className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-lg focus:ring-2 focus:ring-pau-blue/10 focus:border-pau-blue outline-none transition-all"
+              placeholder="Search by name or expertise..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-
-          {/* Category Buttons */}
-          <div className="flex flex-wrap gap-2">
-             {categories.map((category) => (
-               <button
-                 key={category}
-                 onClick={() => setActiveCategory(category)}
-                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                   activeCategory === category
-                     ? 'bg-pau-blue text-white shadow-md transform scale-105'
-                     : 'bg-white text-gray-600 border border-gray-200 hover:border-pau-blue hover:text-pau-blue'
-                 }`}
-               >
-                 {category}
-               </button>
-             ))}
+          <div className="flex flex-wrap gap-3 justify-center">
+            {categories.map(cat => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`px-6 py-2 rounded-full text-sm font-bold uppercase tracking-widest border transition-all ${
+                  activeCategory === cat ? 'bg-pau-blue text-white border-pau-blue shadow-lg' : 'bg-white text-gray-500 border-gray-100 hover:border-pau-gold hover:text-pau-gold'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Faculty List */}
-        <div className="space-y-8">
-          {filteredFaculty.length > 0 ? (
-            filteredFaculty.map((prof, idx) => (
-              <div key={idx} className="flex flex-col md:flex-row bg-white rounded-xl shadow-soft border border-gray-100 overflow-hidden hover:shadow-lg hover:border-pau-gold/30 transition-all duration-300 group">
-                <div className="md:w-64 bg-gray-50 flex-shrink-0 min-h-[250px] relative border-r border-gray-100">
-                   {/* Placeholder for professor image */}
-                   <div className="absolute inset-0 flex items-center justify-center text-gray-300 group-hover:text-pau-gold transition-colors duration-500">
-                      <UserIcon className="h-24 w-24" />
-                   </div>
-                </div>
-                
-                <div className="p-8 flex flex-col justify-center flex-grow">
-                  <div className="flex flex-col md:flex-row md:items-baseline md:justify-between mb-2">
-                    <h2 className="text-2xl font-bold text-gray-900 group-hover:text-pau-blue transition-colors">{prof.name}</h2>
-                    <span className="text-pau-blue font-serif italic text-sm md:text-base mt-1 md:mt-0 bg-blue-50 px-3 py-1 rounded-full">{prof.title}</span>
-                  </div>
-                  <p className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-2">{prof.education}</p>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {prof.expertise?.map((tag, i) => (
-                      <span key={i} className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  <p className="text-gray-600 leading-relaxed mb-6">{prof.bio}</p>
-                  
-                  <div className="mt-auto">
-                    <button 
-                      onClick={() => setSelectedFaculty(prof)}
-                      className="inline-flex items-center text-sm font-bold text-pau-gold hover:text-pau-blue transition-colors uppercase tracking-wide border-b-2 border-transparent hover:border-pau-blue pb-1"
-                    >
-                      {shared.buttons.viewPublications} <ArrowTopRightOnSquareIcon className="ml-2 h-4 w-4" />
-                    </button>
-                  </div>
-                </div>
+        {/* Faculty Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          {filteredFaculty.map((prof, idx) => (
+            <div key={idx} className="bg-white rounded-lg shadow-premium border border-gray-100 overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group">
+              <div className="h-80 bg-gray-100 relative overflow-hidden">
+                 <div className="absolute inset-0 flex items-center justify-center text-gray-200">
+                    <UserIcon className="h-32 w-32 stroke-1 group-hover:text-pau-gold transition-colors duration-500" />
+                 </div>
+                 <div className="absolute inset-0 bg-gradient-to-t from-pau-darkBlue/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
-            ))
-          ) : (
-            <div className="text-center py-20 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">
-              <MagnifyingGlassIcon className="mx-auto h-12 w-12 text-gray-300" />
-              <h3 className="mt-4 text-lg font-medium text-gray-900">No faculty found</h3>
-              <p className="mt-2 text-gray-500">
-                Adjust your search or filter settings.
-              </p>
-              <button
-                onClick={() => { setSearchTerm(''); setActiveCategory('All'); }}
-                className="mt-6 inline-flex items-center px-6 py-2 border border-transparent text-sm font-bold rounded-full text-white bg-pau-blue hover:bg-pau-darkBlue transition-colors"
-              >
-                Clear All Filters
-              </button>
+              <div className="p-8">
+                <h3 className="text-2xl font-serif font-bold text-gray-900 mb-1 group-hover:text-pau-blue transition-colors">{prof.name}</h3>
+                <p className="text-pau-gold text-sm font-bold uppercase tracking-widest mb-4">{prof.title}</p>
+                <p className="text-xs text-gray-400 font-medium mb-6">{prof.education}</p>
+                <p className="text-gray-600 text-sm leading-relaxed mb-8 line-clamp-3 font-light">
+                  {prof.bio}
+                </p>
+                <div className="flex flex-wrap gap-2 mb-8">
+                   {prof.expertise.slice(0, 3).map(exp => (
+                     <span key={exp} className="px-3 py-1 bg-gray-50 text-[10px] font-bold uppercase tracking-widest text-gray-500 rounded border border-gray-100">
+                       {exp}
+                     </span>
+                   ))}
+                </div>
+                <button 
+                  onClick={() => setSelectedFaculty(prof)}
+                  className="w-full py-3 bg-pau-light text-pau-blue text-xs font-bold uppercase tracking-widest hover:bg-pau-blue hover:text-white transition-all rounded"
+                >
+                  View Profile
+                </button>
+              </div>
             </div>
-          )}
+          ))}
         </div>
       </div>
-
-      {/* Publications Modal */}
+      
+      {/* Bio Modal */}
       {selectedFaculty && (
-        <div className="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-          <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-             <div 
-               className="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity backdrop-blur-sm" 
-               onClick={() => setSelectedFaculty(null)}
-             ></div>
-             <span className="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
-             <div className="inline-block align-bottom bg-white rounded-xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl w-full">
-                <div className="bg-white px-6 py-6 border-b border-gray-100 flex justify-between items-center">
-                   <div>
-                      <h3 className="text-xl font-bold text-pau-blue font-serif">{selectedFaculty.name}</h3>
-                      <p className="text-sm text-gray-500 mt-1">Selected Publications & Research</p>
-                   </div>
-                   <button type="button" onClick={() => setSelectedFaculty(null)} className="text-gray-400 hover:text-gray-600 bg-gray-100 rounded-full p-1 hover:bg-gray-200 transition-colors">
-                      <XMarkIcon className="h-6 w-6" />
-                   </button>
-                </div>
-                  
-                <div className="p-6 bg-gray-50 max-h-[60vh] overflow-y-auto">
-                   <div className="space-y-4">
-                    {getPublications(selectedFaculty.name).map((pub, i) => (
-                      <div key={i} className="flex flex-col sm:flex-row items-start justify-between p-5 bg-white rounded-lg border border-gray-200 hover:border-pau-gold hover:shadow-md transition-all duration-300 group">
-                        <div className="flex items-start mr-4 mb-3 sm:mb-0">
-                          <DocumentTextIcon className="h-6 w-6 text-pau-gold mr-4 flex-shrink-0 mt-0.5" />
-                          <div>
-                            <p className="font-bold text-gray-900 text-lg leading-snug group-hover:text-pau-blue transition-colors">{pub.title}</p>
-                            <div className="flex items-center mt-2 text-sm text-gray-500 font-medium">
-                               <span className="bg-gray-100 px-2 py-0.5 rounded text-xs uppercase tracking-wide text-gray-600 mr-2">{pub.year}</span>
-                               <span className="italic">{pub.journal}</span>
-                            </div>
-                          </div>
-                        </div>
-                        <a 
-                          href={pub.url} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="flex-shrink-0 inline-flex items-center text-xs font-bold text-pau-blue hover:text-white border border-pau-blue hover:bg-pau-blue px-4 py-2 rounded-full transition-all"
-                        >
-                          Access
-                          <ArrowTopRightOnSquareIcon className="ml-1.5 h-3 w-3" />
-                        </a>
-                      </div>
-                    ))}
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-pau-darkBlue/90 backdrop-blur-md animate-fade-in">
+           <div className="bg-white w-full max-w-4xl rounded-lg shadow-2xl overflow-hidden relative max-h-[90vh] flex flex-col">
+              <button 
+                onClick={() => setSelectedFaculty(null)}
+                className="absolute top-6 right-6 p-2 bg-gray-100 rounded-full hover:bg-pau-blue hover:text-white transition-all z-10"
+              >
+                <XMarkIcon className="h-6 w-6" />
+              </button>
+              
+              <div className="flex flex-col md:flex-row overflow-y-auto">
+                <div className="md:w-1/3 bg-gray-50 p-12 flex flex-col items-center">
+                  <div className="w-48 h-48 rounded-full bg-white shadow-xl flex items-center justify-center text-pau-blue mb-8">
+                    <UserIcon className="h-24 w-24 stroke-1" />
                   </div>
+                  <h3 className="text-2xl font-serif font-bold text-center text-pau-darkBlue">{selectedFaculty.name}</h3>
+                  <p className="text-pau-gold font-bold text-xs uppercase tracking-widest text-center mt-2">{selectedFaculty.title}</p>
                 </div>
-                <div className="bg-white px-6 py-4 border-t border-gray-100 flex flex-row-reverse">
-                  <button type="button" onClick={() => setSelectedFaculty(null)} className="w-full sm:w-auto inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-6 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 transition-colors sm:text-sm">
-                    Close
-                  </button>
+                <div className="md:w-2/3 p-12">
+                   <h4 className="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] mb-4">Biography & Research</h4>
+                   <div className="prose prose-blue text-gray-600 font-light leading-relaxed">
+                      {selectedFaculty.bio}
+                   </div>
+                   <div className="mt-12">
+                      <h4 className="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] mb-4">Academic Background</h4>
+                      <p className="text-sm font-bold text-pau-blue">{selectedFaculty.education}</p>
+                   </div>
                 </div>
-             </div>
-          </div>
+              </div>
+           </div>
         </div>
       )}
     </div>

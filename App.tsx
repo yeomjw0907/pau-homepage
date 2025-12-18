@@ -1,976 +1,609 @@
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { InfoSection } from './components/InfoSection';
-import { HomeNews } from './components/HomeNews';
 import { Footer } from './components/Footer';
 import { Admissions } from './components/Admissions';
 import { Academics } from './components/Academics';
 import { Faculty } from './components/Faculty';
-import { NoticeBoard } from './components/NoticeBoard';
 import { NewsDetail } from './components/NewsDetail';
-import { Centers } from './components/Centers';
 import { ClinicDetail } from './components/ClinicDetail';
-import { Library } from './components/Library';
-import { Careers } from './components/Careers';
-import { Calendar } from './components/Calendar';
-import { ConsumerInfo } from './components/ConsumerInfo';
 import { Admin } from './components/Admin';
+import { HomeNews } from './components/HomeNews';
+import { Calendar } from './components/Calendar';
 import { 
   SupportedLanguage, 
-  HomeContent, 
   Page, 
-  AdmissionsContent, 
-  AcademicsContent, 
-  FacultyContent,
-  NoticesContent,
-  NewsPageContent,
-  NewsItem,
-  CentersContent,
   Clinic,
-  LibraryContent,
-  CareersContent,
-  CalendarContent,
   SharedContent,
-  ConsumerInfoContent,
-  GlobalFutureItem
+  FacultyMember,
+  NewsItem,
+  DEFAULT_SHARED_CONTENT,
+  MOCK_HOME_CONTENT
 } from './types';
 import { translateContent } from './services/geminiService';
+import { 
+  ShieldCheckIcon, 
+  AcademicCapIcon, 
+  DocumentTextIcon, 
+  ClockIcon,
+  CheckBadgeIcon,
+  ExclamationCircleIcon,
+  DocumentDuplicateIcon,
+  QuestionMarkCircleIcon,
+  IdentificationIcon,
+  BriefcaseIcon,
+  CurrencyDollarIcon,
+  UserIcon,
+  BookOpenIcon,
+  GlobeAmericasIcon,
+  ScaleIcon,
+  BuildingLibraryIcon,
+  ArrowDownTrayIcon,
+  ClipboardDocumentCheckIcon,
+  ListBulletIcon,
+  ArrowRightIcon,
+  ChatBubbleLeftEllipsisIcon,
+  MapIcon,
+  UserCircleIcon,
+  UsersIcon,
+  PencilSquareIcon,
+  HeartIcon,
+  ClipboardDocumentListIcon,
+  GlobeAltIcon,
+  ComputerDesktopIcon,
+  SignalIcon,
+  ArrowUpTrayIcon,
+  UserPlusIcon,
+  NumberedListIcon,
+  CreditCardIcon,
+  BanknotesIcon,
+  ArrowPathIcon,
+  PhoneIcon,
+  EnvelopeIcon,
+  MapPinIcon,
+  PaperAirplaneIcon,
+  DevicePhoneMobileIcon,
+  VideoCameraIcon,
+  WifiIcon,
+  CommandLineIcon
+} from '@heroicons/react/24/outline';
 
-// --- DATA DEFINITIONS ---
-
-const CLINIC_DATA: Clinic[] = [
-  {
-    id: "clinic-tech",
-    title: "High Tech Law Institute",
-    description: "Partnering with Silicon Valley giants to address legal challenges in AI, patent law, and data privacy.",
-    body: "The High Tech Law Institute at PAU Law is a world-renowned hub for the study of intellectual property and technology law. Located in the heart of Silicon Valley, the Institute leverages its proximity to tech giants like Google, Apple, and Meta to provide students with unparalleled networking and experiential learning opportunities.\n\nKey Programs:\n- **Patent Law Clinic**: Students work under the supervision of registered patent attorneys to draft claims for under-resourced inventors.\n- **Privacy & Data Security**: A seminar series featuring Chief Privacy Officers from Fortune 500 companies.\n- **AI Governance Lab**: A research initiative exploring the legal implications of Generative AI, algorithmic bias, and automated decision-making.\n\nThe Institute also hosts the annual 'Tech Law Summit', which attracts scholars and practitioners from around the globe to discuss the future of digital regulation."
-  },
-  {
-    id: "clinic-immigration",
-    title: "Immigration & Human Rights Clinic",
-    description: "Providing pro bono legal representation to asylum seekers and immigrant families in the Bay Area.",
-    body: "The Immigration & Human Rights Clinic provides vital legal services to the Bay Area's diverse immigrant communities. Under the guidance of experienced clinical professors, students take primary responsibility for cases involving asylum, U-visas, and deportation defense.\n\nStudents learn to:\n- Interview clients using trauma-informed techniques.\n- Draft affidavits and legal briefs for immigration court.\n- Represent clients in hearings before federal immigration judges.\n\nSince its founding, the clinic has secured asylum for over 200 individuals fleeing persecution. The clinic also engages in policy advocacy, working with local non-profits to improve conditions in detention centers."
-  },
-  {
-    id: "clinic-startup",
-    title: "Start-up Legal Garage",
-    description: "Hands-on experience assisting early-stage startups with incorporation, IP strategy, and compliance.",
-    body: "The Start-up Legal Garage offers students the unique opportunity to act as corporate counsel for early-stage companies. Students are paired with practicing attorneys from top law firms to assist startups with their foundational legal needs.\n\nScope of Work:\n- Entity Formation (LLC/C-Corp)\n- Intellectual Property Assignment & Protection\n- Employment Agreements & Equity Compensation\n- Terms of Service & Privacy Policies\n\nThis clinic is highly competitive and recommended for students interested in corporate transactional law. It provides a realistic simulation of life as a junior associate in a corporate practice group."
-  }
-];
-
+// --- SHARED DATA ---
 const NEWS_DATA: NewsItem[] = [
   {
-    id: "news-001",
-    title: "PAU Law Team Wins National Moot Court Competition",
-    date: "October 15, 2023",
-    summary: "Our advanced advocacy team took home the top prize at the National Constitutional Law competition in Washington D.C.",
-    body: "Pacific American University School of Law is proud to announce that our Moot Court Honor Board team has won first place at the 35th Annual National Constitutional Law Competition held in Washington D.C.\n\nThe team, comprised of 3L students Sarah Jenkins and Michael Chen, argued a complex case involving First Amendment rights in the digital age. They prevailed over teams from 40 other law schools across the country. In addition to the team championship, Sarah Jenkins was awarded 'Best Oralist' for the final round.\n\n'This victory is a testament to the hard work of our students and the dedication of our faculty coaches,' said Dean Elena Rodriguez. 'Our advocacy program continues to be one of the finest in the nation, preparing students for the rigors of appellate litigation.'",
-    category: "Academic"
-  },
-  {
-    id: "news-002",
-    title: "New Partnership with Silicon Valley Tech Council",
-    date: "October 02, 2023",
-    summary: "A groundbreaking initiative to provide legal internships for students specializing in AI governance and ethics.",
-    body: "PAU Law has officially signed a Memorandum of Understanding with the Silicon Valley Tech Council (SVTC) to launch the 'Future of Tech Law' internship program.\n\nStarting Spring 2024, select PAU Law students will be placed in in-house legal departments at leading tech companies to work specifically on issues related to Artificial Intelligence governance, data privacy compliance, and algorithmic bias. This partnership bridges the gap between legal education and the rapidly evolving needs of the technology sector.\n\n'Lawyers of tomorrow need to understand code as much as they understand the constitution,' remarked SVTC Director Marcus Thorne. This program ensures PAU graduates are ready on day one.",
-    category: "Career"
-  },
-  {
-    id: "news-003",
-    title: "Fall Symposium: The Future of Digital Rights",
-    date: "September 20, 2023",
-    summary: "Join us for a day-long event featuring keynote speakers from the EFF and major tech policy think tanks.",
-    body: "Registration is now open for the Annual PAU Law Fall Symposium. This year's theme, 'The Future of Digital Rights,' explores the intersection of civil liberties and surveillance technology.\n\nThe event will take place on November 10th in the Grand Hall. Keynote speakers include directors from the Electronic Frontier Foundation (EFF) and senior privacy counsel from Google and Meta. Panels will cover topics such as encryption backdoors, Section 230 reform, and the right to be forgotten.\n\nStudents, alumni, and the general public are invited to attend. MCLE credit is available for practicing attorneys.",
-    category: "Event"
+    id: "n1",
+    title: "PAUSL Team Ranks Top 10 in National Moot Court",
+    date: "2024-05-15",
+    summary: "Our advocacy team demonstrated exceptional skill in constitutional law arguments during the Chicago finals.",
+    body: "<p>Pacific American University School of Law is proud to announce that its Moot Court Advocacy Team achieved a Top 10 ranking at the National Constitutional Law Competition held in Chicago last week.</p>",
+    category: "Academic",
+    isPinned: true
   }
 ];
 
-const NOTICES_DATA: NewsItem[] = [
-    {
-      id: "notice-001",
-      title: "Spring 2024 Course Registration Opens",
-      date: "October 20, 2023",
-      summary: "Registration for the Spring 2024 semester begins next Monday at 8:00 AM PST. Please consult with your academic advisor before selecting classes.",
-      body: "Dear Students,\n\nRegistration for Spring 2024 classes will open on Monday, October 23, 2023, at 8:00 AM PST via the Student Portal.\n\nPlease note the following priority windows:\n- 3L Students: Monday, Oct 23\n- 2L Students: Tuesday, Oct 24\n- 1L Electives: Wednesday, Oct 25\n\nEnsure you have cleared any Bursar holds prior to registration. If you have questions regarding your degree progress, please schedule an appointment with the Office of Academic Affairs before Friday.",
-      category: "Academic"
-    },
-    {
-      id: "notice-002",
-      title: "Library Hours Extended for Midterms",
-      date: "October 18, 2023",
-      summary: "The Law Library will be open 24 hours a day starting this Friday through the end of the examination period.",
-      body: "To support students during the midterm examination period, the PAU Law Library will move to a 24-hour schedule effective Friday, October 20th.\n\nAccess after 10:00 PM will require a valid Student ID card. Coffee and snacks will be provided in the Student Lounge at midnight during this period.\n\nPlease remember to reserve study rooms in advance using the online booking system.",
-      category: "General"
-    },
-    {
-      id: "notice-003",
-      title: "Pro Bono Recognition Ceremony",
-      date: "November 05, 2023",
-      summary: "Join us in the Grand Hall to celebrate students who have completed over 50 hours of pro bono service this year.",
-      body: "The Public Interest Law Center invites you to the Annual Pro Bono Recognition Ceremony.\n\nWe will be honoring 45 students who have dedicated over 50 hours each to serving underrepresented communities this academic year. Awards will be presented by Justice Thorne.\n\nReception to follow in the Courtyard. All students and faculty are welcome.",
-      category: "Event"
-    },
-    {
-      id: "notice-004",
-      title: "Guest Lecture: The Supreme Court and Tech Policy",
-      date: "November 12, 2023",
-      summary: "A special lecture by visiting scholar Dr. Emily Zhang, discussing recent SCOTUS rulings affecting the tech sector.",
-      body: "The High Tech Law Institute presents a lunchtime lecture with Dr. Emily Zhang.\n\nTopic: 'The Roberts Court and the Internet: A New Era of Regulation?'\n\nDr. Zhang will discuss recent certiorari grants involving Section 230 and social media moderation. Lunch will be provided for the first 50 attendees.\n\nLocation: Room 204\nTime: 12:30 PM - 1:30 PM",
-      category: "Academic"
-    },
-    {
-      id: "notice-005",
-      title: "On-Campus Interview (OCI) Week",
-      date: "January 15, 2024",
-      summary: "OCI bidding begins in December. Prepare your materials now for interviews with top national firms.",
-      body: "Career Services is pleased to announce the schedule for Spring OCI Week.\n\nOver 30 employers from Big Law, government agencies, and public interest organizations will be on campus interviewing for Summer Associate positions.\n\nKey Dates:\n- Bidding Opens: Dec 1\n- Bidding Closes: Dec 15\n- Interview Schedules Released: Jan 5\n\nPlease attend the OCI Prep Workshop on Nov 30th for resume review and interview tips.",
-      category: "Career"
-    }
-  ];
-
-const DEFAULT_SHARED_CONTENT: SharedContent = {
-  nav: {
-    home: "Home",
-    admissions: "Admissions",
-    academics: "Academics",
-    degreePrograms: "Degree Programs",
-    centersClinics: "Centers & Clinics",
-    faculty: "Faculty",
-    newsUpdates: "News & Updates",
-    latestNews: "Latest News",
-    noticeBoard: "Notice Board",
-    language: "Language"
-  },
-  footer: {
-    schoolDesc: "Pacific American University School of Law is dedicated to excellence in legal education, serving the diverse communities of California and beyond since 1978.",
-    contact: "Contact",
-    quickLinks: "Quick Links",
-    applyNow: "Apply Now",
-    academicCalendar: "Academic Calendar",
-    lawLibrary: "Law Library",
-    careerServices: "Career Services",
-    rightsReserved: "Pacific American University School of Law. All rights reserved.",
-    accreditation: "State Bar Registration",
-    disclosure: "Pacific American University School of Law is accredited by the Committee of Bar Examiners of the State Bar of California. Study at, or graduation from, this law school may not qualify a student to take the bar examination or to satisfy the requirements for admission to practice in jurisdictions other than California. A student intending to seek admission to practice law in a jurisdiction other than California should contact the admitting authority in that jurisdiction for information regarding the legal education requirements in that jurisdiction for admission to the practice of law."
-  },
-  buttons: {
-    applyNow: "Apply Now",
-    requestInfo: "Request Info",
-    learnMore: "Learn more",
-    readMore: "Read more",
-    readFullNotice: "Read full notice",
-    backToList: "Back to List",
-    backToCenters: "Back to Centers",
-    exploreCenter: "Explore Center",
-    contactDirector: "Contact Clinic Director",
-    viewPublications: "View Full Publications",
-    submitInquiry: "Submit Inquiry",
-    cancel: "Cancel",
-    chatLibrarian: "Chat with a Librarian",
-    reserveRoom: "Reserve Study Room",
-    downloadCalendar: "Download Full PDF Calendar",
-    applyLsac: "Apply via LSAC"
-  },
-  labels: {
-    interestedInClinic: "Interested in joining this clinic?",
-    clinicPositions: "Clinical positions are open to 2L and 3L students. Applications open at the beginning of each semester.",
-    clinicInquiryForm: "Clinic Inquiry Form",
-    sendMessageTo: "Send a message to the director of the",
-    fullName: "Full Name",
-    pauEmail: "PAU Email Address",
-    studentId: "Student ID",
-    academicYear: "Academic Year",
-    prerequisitesMet: "Prerequisites Met",
-    prereqDetail: "I have completed or am currently enrolled in Evidence and Professional Responsibility.",
-    statementInterest: "Statement of Interest",
-    aboutPauNews: "About PAU News",
-    aboutPauNewsDetail: "All articles are published by the Pacific American University Office of Communications. For press inquiries, please contact press@pau.edu."
+const FACULTY_DATA: FacultyMember[] = [
+  {
+    name: "Dr. Elena Rodriguez",
+    title: "Dean & Professor of Constitutional Law",
+    education: "J.D., Stanford University; Ph.D., Yale",
+    bio: "Dean Rodriguez has spent 20 years specializing in Civil Rights litigation.",
+    expertise: ["Constitutional Law", "Civil Rights"]
   }
-};
+];
 
-const DEFAULT_HOME_CONTENT: HomeContent = {
-  heroTitle: "Legal Education\nWithout Borders",
-  heroSubtitle: "Overcome geographic boundaries through innovation. Master American law from anywhere with our flexible, technology-driven J.D. program.",
-  
-  // Revised Vision & Mission Data
-  visionStatement: "As educational borders dissolve, we nurture global leaders with critical perspectives. We are a platform for shaping thoughtful, solution-oriented professionals prepared to engage with the world’s most pressing challenges.",
-  
-  missionTitle: "",
-  missionDescription: "To redefine legal education by breaking down geographic barriers and empowering talented students worldwide.",
-  missionPoints: [
-    {
-      title: "Innovation Without Boundaries",
-      description: "Merging rigorous American legal instruction with flexible, technology-driven delivery systems.",
-      icon: "innovation"
-    },
-    {
-      title: "Global Accessibility",
-      description: "Lowering barriers to entry and respecting global time zones to cultivate globally active professionals.",
-      icon: "access"
-    },
-    {
-      title: "Real-World Mastery",
-      description: "Combining dynamic video lectures with real-time sessions to ensure deep mastery of U.S. law.",
-      icon: "globe"
-    }
-  ],
+// --- HELPER COMPONENTS ---
 
-  introTitle: "Study American Law From Anywhere",
-  introText: "A fully online J.D. program designed for motivated students seeking flexibility, world-class instruction, and a clear path to a California law license.",
-  features: [
-    {
-      title: "Flexible Learning",
-      description: "Complete two-thirds of your coursework asynchronously on your schedule—anytime, anywhere, without sacrificing academic rigor.",
-      icon: "clock"
-    },
-    {
-      title: "World-Class Mentorship",
-      description: "Learn from experienced legal professionals and professors who provide personalized feedback and guidance to help you succeed academically.",
-      icon: "academic"
-    },
-    {
-      title: "Accessible Tuition",
-      description: "We offer a high-quality legal education at a significantly lower cost than traditional U.S. law schools, making the J.D. dream accessible.",
-      icon: "currency"
-    }
-  ],
-  successTitle: "A Student-Centered Law School",
-  successText: "From academic support to bar examination preparation, every part of the PAU Law program is designed to help you thrive. You’ll receive structured guidance from your first course through your preparation for the California Bar.",
-  stats: [
-    { label: "Online Coursework", value: "100%" },
-    { label: "Asynchronous", value: "66%" },
-    { label: "Student-Faculty Ratio", value: "15:1" },
-    { label: "Bar Prep Support", value: "Included" }
-  ],
-  globalFutureTitle: "Your Path to a Global Career",
-  globalFutureIntro: "Our rigorous curriculum opens doors to diverse international fields, equipping you with the credentials needed for today's interconnected legal environment.",
-  globalFutureList: [
-    {
-      title: "International Business",
-      description: "Navigate the complex landscape of global commerce and trade.",
-      detailTitle: "International Business Law",
-      detailBody: "Prepare for a dynamic career facilitating cross-border transactions, mergers, and acquisitions. Our curriculum focuses on international commercial arbitration, contract drafting for multinational entities, and understanding diverse legal systems to effectively advise global corporations.",
-      image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80",
-      stats: [
-        { label: "Growth Rate", value: "+12%" },
-        { label: "Avg Starting Salary", value: "$160k" }
-      ],
-      relatedPathways: [
-        { label: "JD Program", targetPage: "academics", description: "Core curriculum details" },
-        { label: "Admissions", targetPage: "admissions", description: "Start your application" }
-      ]
-    },
-    {
-      title: "Corporate Governance",
-      description: "Advise boards and executives on fiduciary duties and ethical compliance.",
-      detailTitle: "Corporate Governance & Ethics",
-      detailBody: "Become a trusted advisor to boards of directors and C-suite executives. You will master the intricate framework of rules, practices, and processes by which companies are directed and controlled, with a strong emphasis on ESG (Environmental, Social, and Governance) criteria.",
-      image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80",
-      stats: [
-        { label: "Demand", value: "High" },
-        { label: "Sector", value: "Corporate" }
-      ],
-      relatedPathways: [
-        { label: "High Tech Institute", targetPage: "centers", description: "Specialized training" },
-        { label: "Faculty", targetPage: "faculty", description: "Meet our experts" }
-      ]
-    },
-    {
-      title: "Legal Consulting",
-      description: "Provide strategic legal insight to non-legal entities and organizations.",
-      detailTitle: "Strategic Legal Consulting",
-      detailBody: "Move beyond traditional practice to offer high-level strategic advice. This path prepares you to work with management consulting firms, NGOs, and think tanks, applying legal reasoning to solve complex organizational challenges and risk management issues.",
-      image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80",
-      stats: [
-         { label: "Flexibility", value: "High" },
-         { label: "Global Reach", value: "Yes" }
-      ],
-      relatedPathways: [
-        { label: "Careers", targetPage: "careers", description: "Career support services" },
-        { label: "News", targetPage: "news", description: "Industry insights" }
-      ]
-    },
-    {
-      title: "Cross-border Trade",
-      description: "Master the regulations governing imports, exports, and tariffs.",
-      detailTitle: "International Trade & Customs",
-      detailBody: "Specialize in the laws that move the world economy. From WTO regulations to bilateral trade agreements and sanctions compliance, you will gain the expertise needed to guide logistics companies, manufacturers, and governments through the web of international trade laws.",
-      image: "https://images.unsplash.com/photo-1578575437130-527eed3abbec?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80",
-      stats: [
-        { label: "Impact", value: "Global" },
-        { label: "Specialization", value: "Trade" }
-      ],
-      relatedPathways: [
-        { label: "Academics", targetPage: "academics", description: "View concentrations" },
-        { label: "Library", targetPage: "library", description: "Research resources" }
-      ]
-    },
-    {
-      title: "Regulatory Affairs",
-      description: "Ensure compliance with government agencies like the FDA, SEC, and EPA.",
-      detailTitle: "Regulatory Affairs & Compliance",
-      detailBody: "Serve as the vital link between industry and government. This career path focuses on ensuring that products and business practices comply with federal and state regulations. Key areas include healthcare (FDA), finance (SEC), and environmental protection (EPA).",
-      image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80",
-      stats: [
-         { label: "Stability", value: "Very High" },
-         { label: "Role", value: "In-House" }
-      ],
-      relatedPathways: [
-        { label: "Centers", targetPage: "centers", description: "Policy research" },
-        { label: "Careers", targetPage: "careers", description: "Placement stats" }
-      ]
-    },
-    {
-      title: "Graduate Study in US, Canada or London",
-      description: "Pursue advanced degrees like an LL.M. or S.J.D. at top universities.",
-      detailTitle: "Advanced Legal Studies",
-      detailBody: "For those with academic aspirations, our J.D. program provides a rigorous foundation for further study. Many graduates go on to pursue specialized LL.M. degrees or S.J.D. doctorates at prestigious institutions, preparing for careers in legal academia or high-level policy research.",
-      image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80",
-      stats: [
-         { label: "Academic", value: "Focus" },
-         { label: "Next Step", value: "LL.M." }
-      ],
-      relatedPathways: [
-        { label: "Faculty", targetPage: "faculty", description: "Academic mentorship" },
-        { label: "Library", targetPage: "library", description: "Scholarly resources" }
-      ]
-    }
-  ],
-  globalFutureClosing: "Empowering students to build the knowledge and credentials needed in today’s global legal environment.",
-  clinicsTitle: "",
-  clinicsIntro: "",
-  clinics: CLINIC_DATA,
-  newsTitle: "Latest News & Headlines",
-  latestNews: NEWS_DATA
-};
+const PageHeader: React.FC<{ title: string; subtitle: string; icon?: React.ElementType }> = ({ title, subtitle, icon: Icon }) => (
+  <div className="relative bg-pau-darkBlue pt-56 pb-28 overflow-hidden">
+    <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] pointer-events-none"></div>
+    <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-pau-blue/30 to-transparent"></div>
+    <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center relative z-10 animate-fade-in-up">
+      {Icon && (
+        <div className="inline-flex p-4 bg-white/5 rounded-full border border-white/10 mb-8 backdrop-blur-sm">
+          <Icon className="h-10 w-10 text-pau-gold" />
+        </div>
+      )}
+      <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white tracking-tight leading-[1.1] mb-6">
+        {title}
+      </h1>
+      <div className="w-20 h-1 bg-pau-gold mx-auto mb-8"></div>
+      <p className="text-xl text-gray-300 max-w-2xl mx-auto font-light leading-relaxed">
+        {subtitle}
+      </p>
+    </div>
+  </div>
+);
 
-const DEFAULT_ADMISSIONS_CONTENT: AdmissionsContent = {
-  title: "Join the Next Generation of Legal Leaders",
-  intro: "We seek diverse, driven individuals who are ready to make a difference. Our holistic review process looks beyond the numbers to find students with the passion and resilience to succeed.",
-  deadlinesTitle: "Application Deadlines",
-  deadlines: [
-    { term: "Early Decision", date: "November 15", type: "Binding" },
-    { term: "Regular Decision", date: "March 1", type: "Priority" },
-    { term: "Transfer (Fall)", date: "July 1", type: "Rolling" }
-  ],
-  requirementsTitle: "Application Requirements",
-  requirements: [
-    "Completed application via LSAC",
-    "Valid LSAT or GRE score (taken within last 5 years)",
-    "Personal Statement (2-3 pages) detailing your unique perspective",
-    "Two Letters of Recommendation",
-    "Résumé / CV",
-    "Character & Fitness Disclosure"
-  ],
-  tuitionTitle: "Affordable Tuition Without Compromise",
-  tuitionInfo: "Pacific American University’s School of Law is proud to offer a high-quality legal education at a significantly lower cost than traditional U.S. law schools, making the dream of earning a J.D. more accessible for students anywhere.",
-  tuitionCost: "$28,450",
-  faqTitle: "Frequently Asked Questions",
-  faqs: [
-    {
-      question: "Is the LSAT required for admission?",
-      answer: "PAU Law requires either a valid LSAT or GRE score for all JD applicants. However, we take a holistic approach to admissions, considering your scores alongside your professional experience and academic background."
-    },
-    {
-      question: "Can I work full-time while enrolled in the program?",
-      answer: "Yes. Our online JD program is specifically designed for working professionals. The asynchronous nature of 66% of the coursework allows you to study on your own schedule, though you must attend live sessions occasionally."
-    },
-    {
-      question: "Do you accept transfer credits from other law schools?",
-      answer: "Yes, we accept transfer credits from ABA-accredited or CBE-accredited law schools for students in good academic standing. A maximum of 30 units may be transferred upon review by the Academic Dean."
-    },
-    {
-      question: "What is the minimum GPA requirement?",
-      answer: "We do not have a strict minimum GPA cutoff. While academic performance is important, we also value leadership potential, work history, and your personal statement."
-    }
-  ]
-};
+const SectionWrapper: React.FC<{ children?: React.ReactNode, title?: string, centered?: boolean }> = ({ children, title, centered = false }) => (
+  <div className={`max-w-7xl mx-auto px-6 py-24 animate-fade-in ${centered ? 'text-center' : ''}`}>
+    {title && (
+      <div className={`mb-16 ${centered ? 'flex flex-col items-center' : ''}`}>
+        <h2 className="text-4xl font-serif font-bold text-pau-darkBlue mb-4">{title}</h2>
+        <div className="w-16 h-1 bg-pau-gold"></div>
+      </div>
+    )}
+    {children}
+  </div>
+);
 
-const DEFAULT_ACADEMICS_CONTENT: AcademicsContent = {
-  title: "Prepare for a Global Legal Future",
-  intro: "Study American law from anywhere in the world and open doors to careers in International business, Compliance and corporate governance, Legal consulting, Cross-border trade, Government and regulatory fields, and Further graduate study in the U.S. Pacific American University’s School of Law empowers students to build the knowledge and credentials needed in today’s global legal environment.",
-  programsTitle: "Degree Programs",
-  programs: [
-    {
-      name: "Juris Doctor (JD)",
-      description: "A fully online J.D. program designed for motivated students. Complete two-thirds of your coursework asynchronously."
-    },
-    {
-      name: "LLM in Technology & Privacy",
-      description: "A specialized one-year degree for lawyers who want to master the laws governing the internet, artificial intelligence, and intellectual property."
-    }
-  ],
-  concentrationsTitle: "Certificates & Concentrations",
-  concentrations: [
-    "Intellectual Property Law",
-    "International & Comparative Law",
-    "Public Interest & Social Justice",
-    "Corporate Compliance",
-    "Criminal Law Advocacy",
-    "Environmental Law"
-  ]
-};
+const InfoCard: React.FC<{ icon: any, title: string, content: string | React.ReactNode, isDark?: boolean }> = ({ icon: Icon, title, content, isDark = false }) => (
+  <div className={`p-10 rounded-2xl border transition-all duration-500 mb-10 group ${isDark ? 'bg-pau-darkBlue text-white border-white/10' : 'bg-white shadow-premium border-gray-100 hover:border-pau-gold/50'}`}>
+    <div className="flex items-start mb-6">
+      <div className={`p-4 rounded-xl mr-6 transition-all ${isDark ? 'bg-white/10 text-pau-gold' : 'bg-pau-light text-pau-blue group-hover:bg-pau-blue group-hover:text-white'}`}>
+        <Icon className="h-7 w-7" />
+      </div>
+      <div className="flex-grow">
+        <h3 className={`text-2xl font-serif font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>{title}</h3>
+        <div className={`leading-relaxed text-lg font-light ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>{content}</div>
+      </div>
+    </div>
+  </div>
+);
 
-const DEFAULT_FACULTY_CONTENT: FacultyContent = {
-  title: "World-Class Faculty, Real Mentorship",
-  intro: "Learn from experienced legal professionals and professors who are committed to your progress. Our faculty provide personalized feedback, supportive guidance, and accessible communication, helping you succeed academically and professionally.",
-  facultyList: [
-    {
-      name: "Dean Elena Rodriguez",
-      title: "Dean & Professor of Law",
-      education: "JD, Yale Law School",
-      bio: "Dean Rodriguez is a nationally recognized expert in Constitutional Law and Civil Rights. Before academia, she argued five cases before the U.S. Supreme Court.",
-      expertise: ["Constitutional Law", "Civil Rights", "Leadership"]
-    },
-    {
-      name: "Prof. David Chen",
-      title: "Director, High Tech Law Institute",
-      education: "JD, Stanford Law School",
-      bio: "Professor Chen specializes in patent law and software copyright. He previously served as lead IP counsel for a major semiconductor company.",
-      expertise: ["Technology & IP", "Patent Law", "Leadership"]
-    },
-    {
-      name: "Prof. Sarah Johnson",
-      title: "Professor of Criminal Law",
-      education: "JD, Harvard Law School",
-      bio: "A former federal prosecutor, Professor Johnson teaches Criminal Law, Evidence, and Trial Advocacy. Her research focuses on sentencing reform.",
-      expertise: ["Criminal Law", "Evidence", "Trial Advocacy"]
-    }
-  ]
-};
+const DocumentLink: React.FC<{ title: string, type?: string }> = ({ title, type = "PDF" }) => (
+  <div className="flex items-center justify-between p-6 bg-white border border-gray-100 rounded-xl hover:shadow-md hover:border-pau-gold transition-all cursor-pointer group">
+    <div className="flex items-center">
+      <div className="p-3 bg-red-50 text-red-500 rounded-lg mr-4 group-hover:bg-pau-blue group-hover:text-white transition-colors">
+        <DocumentTextIcon className="h-6 w-6" />
+      </div>
+      <div>
+        <h4 className="font-bold text-pau-darkBlue">{title}</h4>
+        <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">{type} Download</p>
+      </div>
+    </div>
+    <ArrowDownTrayIcon className="h-5 w-5 text-gray-300 group-hover:text-pau-gold transition-colors" />
+  </div>
+);
 
-const DEFAULT_CENTERS_CONTENT: CentersContent = {
-  title: "",
-  intro: "",
-  clinics: CLINIC_DATA
-};
-
-const DEFAULT_NOTICES_CONTENT: NoticesContent = {
-  title: "Student Notice Board",
-  intro: "Important announcements, academic deadlines, and campus events for the PAU Law community.",
-  notices: NOTICES_DATA
-};
-
-const DEFAULT_LIBRARY_CONTENT: LibraryContent = {
-  title: "Mabury Law Library",
-  intro: "The intellectual heart of the campus, providing access to extensive digital and print collections, quiet study spaces, and expert research support.",
-  sections: [
-    {
-      title: "Hours of Operation",
-      content: "Monday - Thursday: 7:00 AM - Midnight\nFriday: 7:00 AM - 10:00 PM\nSaturday - Sunday: 9:00 AM - 9:00 PM"
-    },
-    {
-      title: "Collections",
-      content: "Over 500,000 volumes including federal and state case law, statutes, and treatises. Comprehensive access to Westlaw, Lexis+, and Bloomberg Law."
-    },
-    {
-      title: "Technology",
-      content: "20 group study rooms equipped with large-format displays. Computer lab with legal practice software installed."
-    }
-  ]
-};
-
-const DEFAULT_CAREERS_CONTENT: CareersContent = {
-  title: "Career Development Office",
-  intro: "Our mission is to empower students and alumni to achieve their professional goals through personalized counseling, networking events, and recruitment programs.",
-  stats: [
-    { label: "Employed at Graduation", value: "78%" },
-    { label: "Judicial Clerkships", value: "12%" },
-    { label: "Median Starting Salary", value: "$145k" }
-  ],
-  services: [
-    {
-      title: "One-on-One Counseling",
-      description: "Every student is assigned a dedicated career counselor in their 1L year."
-    },
-    {
-      title: "Mock Interview Program",
-      description: "Practice your interview skills with practicing attorneys from local firms."
-    }
-  ]
-};
-
-const DEFAULT_CALENDAR_CONTENT: CalendarContent = {
-  title: "Academic Calendar",
-  intro: "Key dates for the 2023-2024 academic year.",
-  events: [
-    { date: "Aug 21", event: "First Day of Classes", type: "Fall 2023" },
-    { date: "Nov 22-24", event: "Thanksgiving Recess", type: "Holiday" },
-    { date: "Dec 4", event: "Last Day of Classes", type: "Fall 2023" },
-    { date: "Dec 6-18", event: "Final Examination Period", type: "Exams" },
-    { date: "Jan 8", event: "First Day of Classes", type: "Spring 2024" }
-  ]
-};
-
-const DEFAULT_CONSUMER_INFO_CONTENT: ConsumerInfoContent = {
-  title: "Consumer Information & Required Disclosures",
-  intro: "Pacific American University School of Law is committed to transparency. In compliance with the State Bar of California's regulations, we provide the following information to current and prospective students.",
-  sections: [
-    {
-      id: "bar-passage",
-      title: "Bar Examination Passage Data",
-      content: "The following data reflects the cumulative pass rates for PAU Law graduates taking the California Bar Examination for the first time.",
-      tableData: [
-        { label: "July 2023 First-Time Pass Rate", value: "68%" },
-        { label: "February 2023 First-Time Pass Rate", value: "54%" },
-        { label: "5-Year Cumulative Pass Rate", value: "72%" },
-        { label: "Statewide Average (July 2023)", value: "51%" }
-      ]
-    },
-    {
-      id: "employment",
-      title: "Employment Statistics",
-      content: "Employment outcomes for the Class of 2022, measured 10 months after graduation.",
-      tableData: [
-        { label: "Total Graduates", value: "120" },
-        { label: "Employed - Bar Passage Required", value: "85 (70.8%)" },
-        { label: "Employed - JD Advantage", value: "15 (12.5%)" },
-        { label: "Unemployed - Seeking", value: "10 (8.3%)" },
-        { label: "Pursuing Graduate Degree", value: "5 (4.2%)" }
-      ]
-    },
-    {
-      id: "attrition",
-      title: "Attrition and Retention",
-      content: "Attrition rates for the 2022-2023 Academic Year.",
-      tableData: [
-        { label: "1L Entering Class Size", value: "145" },
-        { label: "Academic Disqualification", value: "12 (8.2%)" },
-        { label: "Voluntary Withdrawal", value: "8 (5.5%)" },
-        { label: "Overall 1L Retention Rate", value: "86.3%" }
-      ]
-    },
-    {
-      id: "refund",
-      title: "Tuition Refund Policy",
-      content: "Students who withdraw from the program may be eligible for a tuition refund based on the date of withdrawal. \n\n- Withdrawal before 1st day of class: 100% Refund\n- Withdrawal during 1st week: 80% Refund\n- Withdrawal during 2nd week: 60% Refund\n- Withdrawal during 3rd week: 40% Refund\n- Withdrawal after 3rd week: 0% Refund\n\nAll refund requests must be submitted in writing to the Office of the Bursar."
-    }
-  ]
-};
-
+// --- MAIN APP COMPONENT ---
 
 export default function App() {
   const [currentLang, setCurrentLang] = useState<SupportedLanguage>('English');
   const [currentPage, setCurrentPage] = useState<Page>('home');
   const [isTranslating, setIsTranslating] = useState(false);
-  
-  // Specific Item State for Details
+  const [sharedContent, setSharedContent] = useState<SharedContent>(DEFAULT_SHARED_CONTENT); 
   const [selectedNewsItem, setSelectedNewsItem] = useState<NewsItem | null>(null);
   const [selectedClinic, setSelectedClinic] = useState<Clinic | null>(null);
 
-  // Content State
-  const [sharedContent, setSharedContent] = useState<SharedContent>(DEFAULT_SHARED_CONTENT);
-  const [homeContent, setHomeContent] = useState<HomeContent>(DEFAULT_HOME_CONTENT);
-  const [admissionsContent, setAdmissionsContent] = useState<AdmissionsContent>(DEFAULT_ADMISSIONS_CONTENT);
-  const [academicsContent, setAcademicsContent] = useState<AcademicsContent>(DEFAULT_ACADEMICS_CONTENT);
-  const [facultyContent, setFacultyContent] = useState<FacultyContent>(DEFAULT_FACULTY_CONTENT);
-  const [noticesContent, setNoticesContent] = useState<NoticesContent>(DEFAULT_NOTICES_CONTENT);
-  const [centersContent, setCentersContent] = useState<CentersContent>(DEFAULT_CENTERS_CONTENT);
-  const [libraryContent, setLibraryContent] = useState<LibraryContent>(DEFAULT_LIBRARY_CONTENT);
-  const [careersContent, setCareersContent] = useState<CareersContent>(DEFAULT_CAREERS_CONTENT);
-  const [calendarContent, setCalendarContent] = useState<CalendarContent>(DEFAULT_CALENDAR_CONTENT);
-  const [consumerInfoContent, setConsumerInfoContent] = useState<ConsumerInfoContent>(DEFAULT_CONSUMER_INFO_CONTENT);
-
-  // Cache to store translated content promises: key = `${pageType}_${lang}` or `${id}_${lang}`
-  // Storing Promises avoids race conditions and duplicate requests for the same content.
-  const translationCache = useRef<Map<string, Promise<any>>>(new Map());
-
-  // Optimized Helper: Check cache (Promise) -> Return Promise -> or Start new translation
-  const getTranslatedData = <T extends unknown>(key: string, data: T, lang: SupportedLanguage): Promise<T> => {
-    if (lang === 'English') return Promise.resolve(data);
-    
-    const cacheKey = `${key}_${lang}`;
-    if (translationCache.current.has(cacheKey)) {
-      return translationCache.current.get(cacheKey) as Promise<T>;
-    }
-    
-    // Create the promise and cache it immediately
-    const promise = translateContent(data, lang).catch(err => {
-        // If it fails, remove from cache so it can be retried
-        translationCache.current.delete(cacheKey);
-        throw err;
-    });
-
-    translationCache.current.set(cacheKey, promise);
-    return promise;
-  };
-
-  // Helper function to translate specific page content with granular parallelization
-  const translatePageContent = async (page: Page, lang: SupportedLanguage) => {
-    try {
-      if (lang === 'English') {
-        // Restore defaults synchronously
-        switch (page) {
-          case 'home': setHomeContent(DEFAULT_HOME_CONTENT); break;
-          case 'news': setHomeContent(DEFAULT_HOME_CONTENT); break;
-          case 'admissions': setAdmissionsContent(DEFAULT_ADMISSIONS_CONTENT); break;
-          case 'academics': setAcademicsContent(DEFAULT_ACADEMICS_CONTENT); break;
-          case 'faculty': setFacultyContent(DEFAULT_FACULTY_CONTENT); break;
-          case 'notices': setNoticesContent(DEFAULT_NOTICES_CONTENT); break;
-          case 'centers': setCentersContent(DEFAULT_CENTERS_CONTENT); break;
-          case 'library': setLibraryContent(DEFAULT_LIBRARY_CONTENT); break;
-          case 'careers': setCareersContent(DEFAULT_CAREERS_CONTENT); break;
-          case 'calendar': setCalendarContent(DEFAULT_CALENDAR_CONTENT); break;
-          case 'consumer-info': setConsumerInfoContent(DEFAULT_CONSUMER_INFO_CONTENT); break;
-          case 'news-detail':
-            if (selectedNewsItem) {
-               const original = [...NEWS_DATA, ...NOTICES_DATA].find(i => i.id === selectedNewsItem.id);
-               if (original) setSelectedNewsItem(original);
-            }
-            break;
-          case 'clinic-detail':
-            if (selectedClinic) {
-              const original = CLINIC_DATA.find(c => c.id === selectedClinic.id);
-              if (original) setSelectedClinic(original);
-            }
-            break;
-        }
-        return;
-      }
-
-      // Check for page-level cache first (for simple pages)
-      const pageCacheKey = `${page}_${lang}`;
-      
-      switch (page) {
-        case 'home':
-        case 'news':
-          {
-            const baseContent = { ...DEFAULT_HOME_CONTENT, clinics: [], latestNews: [], globalFutureList: [] };
-            
-            // Fetch parts in parallel using the cache-aware helper
-            const [tBase, tClinics, tNews, tGlobal] = await Promise.all([
-               getTranslatedData(`home_base`, baseContent, lang),
-               // Map through lists to ensure individual items are cached for detail views later
-               Promise.all(DEFAULT_HOME_CONTENT.clinics.map(c => getTranslatedData(`clinic_${c.id}`, c, lang))),
-               Promise.all(DEFAULT_HOME_CONTENT.latestNews.map(n => getTranslatedData(`news_${n.id}`, n, lang))),
-               Promise.all(DEFAULT_HOME_CONTENT.globalFutureList.map(g => getTranslatedData(`home_future_${g.title}`, g, lang)))
-            ]);
-
-            setHomeContent({ 
-              ...tBase, 
-              clinics: tClinics, 
-              latestNews: tNews,
-              globalFutureList: tGlobal
-            } as HomeContent);
-          }
-          break;
-
-        case 'admissions':
-          {
-             const base = { ...DEFAULT_ADMISSIONS_CONTENT, deadlines: [], requirements: [], faqs: [] };
-             const [tBase, tDeadlines, tRequirements, tFaqs] = await Promise.all([
-                 getTranslatedData('admissions_base', base, lang),
-                 Promise.all(DEFAULT_ADMISSIONS_CONTENT.deadlines.map((d, i) => getTranslatedData(`admissions_deadline_${i}`, d, lang))),
-                 getTranslatedData('admissions_reqs', DEFAULT_ADMISSIONS_CONTENT.requirements, lang),
-                 Promise.all(DEFAULT_ADMISSIONS_CONTENT.faqs.map((f, i) => getTranslatedData(`admissions_faq_${i}`, f, lang)))
-             ]);
-             setAdmissionsContent({ 
-               ...tBase, 
-               deadlines: tDeadlines, 
-               requirements: tRequirements,
-               faqs: tFaqs
-             } as AdmissionsContent);
-          }
-          break;
-
-        case 'academics':
-          {
-             const base = { ...DEFAULT_ACADEMICS_CONTENT, programs: [], concentrations: [] };
-             const [tBase, tPrograms, tConcentrations] = await Promise.all([
-                 getTranslatedData('academics_base', base, lang),
-                 Promise.all(DEFAULT_ACADEMICS_CONTENT.programs.map((p, i) => getTranslatedData(`academics_prog_${i}`, p, lang))),
-                 getTranslatedData('academics_conc', DEFAULT_ACADEMICS_CONTENT.concentrations, lang)
-             ]);
-             setAcademicsContent({ ...tBase, programs: tPrograms, concentrations: tConcentrations } as AcademicsContent);
-          }
-          break;
-
-        case 'faculty':
-          {
-             const base = { ...DEFAULT_FACULTY_CONTENT, facultyList: [] };
-             const [tBase, tList] = await Promise.all([
-                 getTranslatedData('faculty_base', base, lang),
-                 Promise.all(DEFAULT_FACULTY_CONTENT.facultyList.map((f, i) => getTranslatedData(`faculty_member_${i}`, f, lang)))
-             ]);
-             setFacultyContent({ ...tBase, facultyList: tList } as FacultyContent);
-          }
-          break;
-
-        case 'notices':
-          {
-             const base = { ...DEFAULT_NOTICES_CONTENT, notices: [] };
-             const [tBase, tList] = await Promise.all([
-                 getTranslatedData('notices_base', base, lang),
-                 Promise.all(DEFAULT_NOTICES_CONTENT.notices.map(n => getTranslatedData(`news_${n.id}`, n, lang)))
-             ]);
-             setNoticesContent({ ...tBase, notices: tList } as NoticesContent);
-          }
-          break;
-
-        case 'centers':
-          {
-             const base = { ...DEFAULT_CENTERS_CONTENT, clinics: [] };
-             const [tBase, tList] = await Promise.all([
-                 getTranslatedData('centers_base', base, lang),
-                 Promise.all(DEFAULT_CENTERS_CONTENT.clinics.map(c => getTranslatedData(`clinic_${c.id}`, c, lang)))
-             ]);
-             setCentersContent({ ...tBase, clinics: tList } as CentersContent);
-          }
-          break;
-
-        case 'library':
-          {
-             const base = { ...DEFAULT_LIBRARY_CONTENT, sections: [] };
-             const [tBase, tSections] = await Promise.all([
-                 getTranslatedData('library_base', base, lang),
-                 Promise.all(DEFAULT_LIBRARY_CONTENT.sections.map((s, i) => getTranslatedData(`library_section_${i}`, s, lang)))
-             ]);
-             setLibraryContent({ ...tBase, sections: tSections } as LibraryContent);
-          }
-          break;
-
-        case 'careers':
-          {
-             const base = { ...DEFAULT_CAREERS_CONTENT, stats: [], services: [] };
-             const [tBase, tStats, tServices] = await Promise.all([
-                 getTranslatedData('careers_base', base, lang),
-                 Promise.all(DEFAULT_CAREERS_CONTENT.stats.map((s, i) => getTranslatedData(`careers_stat_${i}`, s, lang))),
-                 Promise.all(DEFAULT_CAREERS_CONTENT.services.map((s, i) => getTranslatedData(`careers_serv_${i}`, s, lang)))
-             ]);
-             setCareersContent({ ...tBase, stats: tStats, services: tServices } as CareersContent);
-          }
-          break;
-
-        case 'calendar':
-           {
-              const base = { ...DEFAULT_CALENDAR_CONTENT, events: [] };
-              const [tBase, tEvents] = await Promise.all([
-                  getTranslatedData('calendar_base', base, lang),
-                  Promise.all(DEFAULT_CALENDAR_CONTENT.events.map((e, i) => getTranslatedData(`calendar_evt_${i}`, e, lang)))
-              ]);
-              setCalendarContent({ ...tBase, events: tEvents } as CalendarContent);
-           }
-           break;
-
-        case 'consumer-info':
-          {
-              const base = { ...DEFAULT_CONSUMER_INFO_CONTENT, sections: [] };
-              const [tBase, tSections] = await Promise.all([
-                  getTranslatedData('consumer_base', base, lang),
-                  Promise.all(DEFAULT_CONSUMER_INFO_CONTENT.sections.map((s, i) => getTranslatedData(`consumer_sec_${i}`, s, lang)))
-              ]);
-              setConsumerInfoContent({ ...tBase, sections: tSections } as ConsumerInfoContent);
-          }
-          break;
-
-        case 'news-detail':
-          if (selectedNewsItem) {
-             const originalItem = [...NEWS_DATA, ...NOTICES_DATA].find(i => i.id === selectedNewsItem.id);
-             if (originalItem) {
-               // Reuse cache key from list views
-               const translatedItem = await getTranslatedData(`news_${originalItem.id}`, originalItem, lang);
-               setSelectedNewsItem(translatedItem);
-             }
-          }
-          break;
-        case 'clinic-detail':
-          if (selectedClinic) {
-            const originalClinic = CLINIC_DATA.find(c => c.id === selectedClinic.id);
-            if (originalClinic) {
-              // Reuse cache key from list views
-              const translatedClinic = await getTranslatedData(`clinic_${originalClinic.id}`, originalClinic, lang);
-              setSelectedClinic(translatedClinic);
-            }
-          }
-          break;
-        default:
-          break;
-      }
-    } catch (error) {
-      console.error(`Failed to translate page ${page}`, error);
-    }
-  };
-
   const handleLanguageChange = async (lang: SupportedLanguage) => {
     if (lang === currentLang) return;
-    
     setIsTranslating(true);
     setCurrentLang(lang);
-
     try {
-       // Parallelize Shared content and Page content
-       const sharedPromise = Promise.all([
-           getTranslatedData('shared_nav', DEFAULT_SHARED_CONTENT.nav, lang),
-           getTranslatedData('shared_footer', DEFAULT_SHARED_CONTENT.footer, lang),
-           getTranslatedData('shared_buttons', DEFAULT_SHARED_CONTENT.buttons, lang),
-           getTranslatedData('shared_labels', DEFAULT_SHARED_CONTENT.labels, lang)
-       ]).then(([tNav, tFooter, tButtons, tLabels]) => {
-           setSharedContent({
-               nav: tNav,
-               footer: tFooter,
-               buttons: tButtons,
-               labels: tLabels
-           });
-       });
-
-       // We await both to ensure consistent UI state before stopping the loader
-       await Promise.all([
-         sharedPromise,
-         translatePageContent(currentPage, lang)
-       ]);
-
-    } catch (error) {
-      console.error("Translation failed", error);
-    } finally {
-      setIsTranslating(false);
-    }
+       const translated = await translateContent(DEFAULT_SHARED_CONTENT, lang);
+       setSharedContent(translated);
+    } catch (e) { console.error(e); } finally { setIsTranslating(false); }
   };
 
-  const handleNavigate = async (page: Page) => {
+  const handleNavigate = (page: Page) => {
     setCurrentPage(page);
-    window.scrollTo(0, 0);
-
-    if (currentLang !== 'English') {
-      setIsTranslating(true);
-      await translatePageContent(page, currentLang);
-      setIsTranslating(false);
-    }
+    setSelectedNewsItem(null);
+    setSelectedClinic(null);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleNewsClick = async (item: NewsItem) => {
-    setSelectedNewsItem(item);
-    setCurrentPage('news-detail');
-    window.scrollTo(0, 0);
-
-    if (currentLang !== 'English') {
-      setIsTranslating(true);
-      try {
-        const translatedItem = await getTranslatedData(`news_${item.id}`, item, currentLang);
-        setSelectedNewsItem(translatedItem);
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setIsTranslating(false);
-      }
-    }
-  };
-
-  const handleClinicClick = async (clinic: Clinic) => {
+  const handleClinicClick = (clinic: Clinic) => {
     setSelectedClinic(clinic);
     setCurrentPage('clinic-detail');
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
-    if (currentLang !== 'English') {
-      setIsTranslating(true);
-      try {
-        const translatedClinic = await getTranslatedData(`clinic_${clinic.id}`, clinic, currentLang);
-        setSelectedClinic(translatedClinic);
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setIsTranslating(false);
-      }
+  const renderContent = () => {
+    if (selectedNewsItem) return <NewsDetail item={selectedNewsItem} onBack={() => setSelectedNewsItem(null)} shared={sharedContent} />;
+    if (selectedClinic && currentPage === 'clinic-detail') return <ClinicDetail clinic={selectedClinic} onBack={() => handleNavigate('home')} shared={sharedContent} />;
+
+    switch (currentPage) {
+      case 'home':
+        return (
+          <>
+            <Hero content={{...MOCK_HOME_CONTENT, latestNews: NEWS_DATA}} shared={sharedContent} onNavigate={handleNavigate} />
+            <InfoSection content={{...MOCK_HOME_CONTENT, latestNews: NEWS_DATA}} shared={sharedContent} onClinicClick={handleClinicClick} onNavigate={handleNavigate} />
+            <HomeNews title="University News" newsItems={NEWS_DATA} onNewsClick={setSelectedNewsItem} shared={sharedContent} />
+          </>
+        );
+
+      // --- ADMISSIONS SECTIONS ---
+      case 'admission-reqs':
+        return (
+          <>
+            <PageHeader title="Admission Requirements" subtitle="Evaluating candidates for a lifetime of legal excellence." icon={IdentificationIcon} />
+            <SectionWrapper title="Eligibility Criteria">
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <InfoCard 
+                    icon={AcademicCapIcon} 
+                    title="Undergraduate Degree" 
+                    content="Candidates must hold a Bachelor's degree (B.A., B.S., or equivalent) from a regionally accredited institution or a foreign institution recognized by the State Bar of California."
+                  />
+                  <InfoCard 
+                    icon={ClipboardDocumentCheckIcon} 
+                    title="Standardized Tests" 
+                    content="Submission of a valid LSAT or GRE score is mandatory for all Juris Doctor applicants. Scores must be no more than five years old at the time of application."
+                  />
+                  <InfoCard 
+                    icon={UserPlusIcon} 
+                    title="Letters of Recommendation" 
+                    content="At least two letters are required. We recommend one academic reference and one professional reference that can attest to your analytical and writing abilities."
+                  />
+                  <InfoCard 
+                    icon={PencilSquareIcon} 
+                    title="Personal Statement" 
+                    content="A 500-750 word essay describing your motivation for practicing law, your unique life experiences, and how PAU Law fits your career goals."
+                  />
+               </div>
+            </SectionWrapper>
+          </>
+        );
+
+      case 'transfer-int':
+        return (
+          <>
+            <PageHeader title="Transfer & International" subtitle="Broadening horizons, welcoming global perspectives." icon={GlobeAltIcon} />
+            <SectionWrapper>
+               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                  <div className="bg-white p-12 rounded-3xl shadow-premium border border-gray-100">
+                     <h3 className="text-3xl font-serif font-bold text-pau-blue mb-8">Transfer Applicants</h3>
+                     <p className="text-gray-600 mb-6 leading-relaxed">Students who have completed their first year of law study at an ABA-approved or California-accredited law school may apply for transfer.</p>
+                     <ul className="space-y-4 mb-10">
+                        <li className="flex items-start text-sm text-gray-700 font-medium"><CheckBadgeIcon className="h-5 w-5 mr-3 text-pau-gold" /> Maximum of 30 semester units may be transferred</li>
+                        <li className="flex items-start text-sm text-gray-700 font-medium"><CheckBadgeIcon className="h-5 w-5 mr-3 text-pau-gold" /> Minimum GPA of 2.7 in prior law studies required</li>
+                        <li className="flex items-start text-sm text-gray-700 font-medium"><CheckBadgeIcon className="h-5 w-5 mr-3 text-pau-gold" /> Dean's Certification of Good Standing required</li>
+                     </ul>
+                     <button className="text-pau-blue font-bold text-sm uppercase tracking-widest border-b-2 border-pau-blue pb-1 hover:text-pau-gold hover:border-pau-gold transition-all">Transfer Policies</button>
+                  </div>
+                  <div className="bg-pau-darkBlue p-12 rounded-3xl text-white shadow-xl">
+                     <h3 className="text-3xl font-serif font-bold text-pau-gold mb-8">International Candidates</h3>
+                     <p className="text-gray-300 mb-6 leading-relaxed">PAU Law values the diversity international students bring to our digital campus. Candidates with non-U.S. degrees must complete additional steps:</p>
+                     <div className="space-y-8">
+                        <div>
+                           <h4 className="text-sm font-bold uppercase tracking-widest text-white mb-2">1. Credential Evaluation</h4>
+                           <p className="text-xs text-gray-400">All foreign transcripts must be evaluated by LSAC's CAS or a recognized agency like WES.</p>
+                        </div>
+                        <div>
+                           <h4 className="text-sm font-bold uppercase tracking-widest text-white mb-2">2. English Proficiency</h4>
+                           <p className="text-xs text-gray-400">Non-native speakers must submit a TOEFL (min 100 iBT) or IELTS (min 7.0) score.</p>
+                        </div>
+                        <div>
+                           <h4 className="text-sm font-bold uppercase tracking-widest text-white mb-2">3. Distance Education Policy</h4>
+                           <p className="text-xs text-gray-400">International students study remotely and do not require F-1 or J-1 visas for the online program.</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </SectionWrapper>
+          </>
+        );
+
+      case 'tech-reqs':
+        return (
+          <>
+            <PageHeader title="Tech Requirements" subtitle="The essential toolkit for your digital JD." icon={ComputerDesktopIcon} />
+            <SectionWrapper title="Systems & Connectivity">
+               <div className="max-w-4xl mx-auto">
+                  <div className="bg-white p-12 rounded-3xl shadow-premium border border-gray-100 mb-12">
+                     <h3 className="text-2xl font-serif font-bold text-pau-blue mb-8">Minimum Hardware Specifications</h3>
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                        <div className="flex items-start">
+                           <CommandLineIcon className="h-6 w-6 text-pau-gold mr-4 mt-1" />
+                           <div>
+                              <p className="font-bold text-gray-900">Processor & RAM</p>
+                              <p className="text-sm text-gray-500">Intel i5 (or equivalent) / 8GB RAM minimum</p>
+                           </div>
+                        </div>
+                        <div className="flex items-start">
+                           <VideoCameraIcon className="h-6 w-6 text-pau-gold mr-4 mt-1" />
+                           <div>
+                              <p className="font-bold text-gray-900">Camera & Mic</p>
+                              <p className="text-sm text-gray-500">720p HD Webcam / Noise-canceling microphone</p>
+                           </div>
+                        </div>
+                        <div className="flex items-start">
+                           <WifiIcon className="h-6 w-6 text-pau-gold mr-4 mt-1" />
+                           <div>
+                              <p className="font-bold text-gray-900">Internet Connection</p>
+                              <p className="text-sm text-gray-500">Minimum 10 Mbps Download / 5 Mbps Upload</p>
+                           </div>
+                        </div>
+                        <div className="flex items-start">
+                           <ShieldCheckIcon className="h-6 w-6 text-pau-gold mr-4 mt-1" />
+                           <div>
+                              <p className="font-bold text-gray-900">Operating System</p>
+                              <p className="text-sm text-gray-500">Windows 10+ / macOS Monterey+</p>
+                           </div>
+                        </div>
+                     </div>
+                     <div className="bg-pau-light p-6 rounded-xl border border-pau-blue/5">
+                        <p className="text-sm text-pau-blue font-bold mb-2">Mandatory Software:</p>
+                        <p className="text-xs text-gray-500">Google Chrome (latest), Microsoft Office 365 (Provided by school), and ExamSoft Examplify for proctored examinations.</p>
+                     </div>
+                  </div>
+                  <div className="bg-orange-50 border-l-4 border-orange-400 p-8 rounded-r-xl">
+                     <div className="flex">
+                        <div className="flex-shrink-0">
+                           <ExclamationCircleIcon className="h-6 w-6 text-orange-400" />
+                        </div>
+                        <div className="ml-4">
+                           <h3 className="text-sm font-bold text-orange-800 uppercase tracking-widest mb-2">Online Examination Requirement</h3>
+                           <p className="text-sm text-orange-700 leading-relaxed font-light">All JD students must have a computer that meets the requirements for Examplify. iPads and Chromebooks are currently <strong>NOT</strong> compatible with our examination software.</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </SectionWrapper>
+          </>
+        );
+
+      // --- OTHER SECTIONS (KEPT AS IS) ---
+      case 'office-hours':
+        return (
+          <>
+            <PageHeader title="Office Hours" subtitle="We are here to assist your academic journey." icon={ClockIcon} />
+            <SectionWrapper title="Standard Operating Hours">
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                  <div className="bg-white p-10 rounded-3xl border border-gray-100 shadow-premium">
+                     <h3 className="text-2xl font-serif font-bold text-pau-blue mb-8">Administrative Offices</h3>
+                     <div className="space-y-6">
+                        {[
+                          { dept: "Admissions & Recruitment", hours: "Mon - Fri, 9 AM - 6 PM (PST)" },
+                          { dept: "Registrar's Office", hours: "Mon - Thu, 10 AM - 5 PM (PST)" },
+                          { dept: "Financial Aid Service", hours: "Tue - Fri, 10 AM - 4 PM (PST)" },
+                          { dept: "Career Services", hours: "Mon - Fri, 9 AM - 5 PM (PST)" }
+                        ].map((item, i) => (
+                          <div key={i} className="flex justify-between items-start pb-4 border-b border-gray-50">
+                             <span className="font-bold text-gray-700">{item.dept}</span>
+                             <span className="text-pau-blue text-sm">{item.hours}</span>
+                          </div>
+                        ))}
+                     </div>
+                  </div>
+                  <div className="bg-pau-darkBlue p-10 rounded-3xl text-white shadow-xl">
+                     <h3 className="text-2xl font-serif font-bold text-pau-gold mb-8">Academic Support</h3>
+                     <div className="space-y-6">
+                        {[
+                          { dept: "Law Library (Online)", hours: "24 / 7 Access" },
+                          { dept: "Reference Librarian", hours: "Mon - Fri, 11 AM - 8 PM (PST)" },
+                          { dept: "Academic Success Center", hours: "By Appointment Only" },
+                          { dept: "IT Support Desk", hours: "Mon - Sat, 8 AM - 10 PM (PST)" }
+                        ].map((item, i) => (
+                          <div key={i} className="flex justify-between items-start pb-4 border-b border-white/10">
+                             <span className="font-bold text-gray-200">{item.dept}</span>
+                             <span className="text-pau-gold text-sm">{item.hours}</span>
+                          </div>
+                        ))}
+                     </div>
+                  </div>
+               </div>
+            </SectionWrapper>
+          </>
+        );
+
+      case 'contact-info':
+        return (
+          <>
+            <PageHeader title="Contact Information" subtitle="Direct channels to our departments." icon={PhoneIcon} />
+            <SectionWrapper>
+               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                  <div className="p-10 bg-white rounded-2xl border border-gray-100 shadow-sm text-center">
+                     <MapPinIcon className="h-12 w-12 text-pau-blue mx-auto mb-6" />
+                     <h4 className="text-xl font-bold mb-4">Mailing Address</h4>
+                     <p className="text-gray-500 font-light leading-relaxed">123 University Drive<br/>Santa Clara, CA 95050<br/>United States</p>
+                  </div>
+                  <div className="p-10 bg-white rounded-2xl border border-gray-100 shadow-sm text-center">
+                     <PhoneIcon className="h-12 w-12 text-pau-blue mx-auto mb-6" />
+                     <h4 className="text-xl font-bold mb-4">Phone Support</h4>
+                     <p className="text-gray-500 font-light leading-relaxed">Main Line: (408) 555-0100<br/>Admissions: (408) 555-0199<br/>Registrar: (408) 555-0102</p>
+                  </div>
+                  <div className="p-10 bg-white rounded-2xl border border-gray-100 shadow-sm text-center">
+                     <EnvelopeIcon className="h-12 w-12 text-pau-blue mx-auto mb-6" />
+                     <h4 className="text-xl font-bold mb-4">Email Inquiry</h4>
+                     <p className="text-gray-500 font-light leading-relaxed">General: info@pau.edu<br/>Admissions: apply@pau.edu<br/>Support: it@pau.edu</p>
+                  </div>
+               </div>
+            </SectionWrapper>
+          </>
+        );
+
+      case 'request-info':
+        return (
+          <>
+            <PageHeader title="Request Information" subtitle="Discover your future at PAU Law." icon={PaperAirplaneIcon} />
+            <SectionWrapper>
+               <div className="max-w-4xl mx-auto bg-white p-12 lg:p-20 rounded-3xl shadow-premium border border-gray-100">
+                  <h3 className="text-3xl font-serif font-bold text-pau-darkBlue mb-10">Candidate Inquiry Form</h3>
+                  <form className="space-y-8" onSubmit={(e) => { e.preventDefault(); alert('Your request has been submitted successfully.'); }}>
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                           <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Full Name</label>
+                           <input type="text" required className="w-full p-4 bg-gray-50 border border-gray-100 rounded-lg outline-none focus:ring-2 focus:ring-pau-blue/5 focus:border-pau-blue transition-all" />
+                        </div>
+                        <div>
+                           <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Email Address</label>
+                           <input type="email" required className="w-full p-4 bg-gray-50 border border-gray-100 rounded-lg outline-none focus:ring-2 focus:ring-pau-blue/5 focus:border-pau-blue transition-all" />
+                        </div>
+                     </div>
+                     <button type="submit" className="w-full bg-pau-blue text-white py-5 rounded-lg font-bold uppercase tracking-widest shadow-lg hover:bg-pau-gold transition-all">Submit Request</button>
+                  </form>
+               </div>
+            </SectionWrapper>
+          </>
+        );
+
+      case 'tuition-fees':
+        return (
+          <>
+            <PageHeader title="Tuition & Fees" subtitle="Transparent pricing for your legal education." icon={CurrencyDollarIcon} />
+            <SectionWrapper title="2024-2025 Academic Year">
+               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
+                  <div className="bg-white p-10 rounded-3xl shadow-premium border border-gray-100">
+                     <h3 className="text-2xl font-serif font-bold text-pau-blue mb-8">Base Tuition</h3>
+                     <div className="space-y-6">
+                        <div className="flex justify-between items-center pb-4 border-b border-gray-50">
+                           <span className="text-gray-600">Per Credit Unit</span>
+                           <span className="text-xl font-bold text-pau-darkBlue">$520</span>
+                        </div>
+                        <div className="flex justify-between items-center pb-4 border-b border-gray-50">
+                           <span className="text-gray-600">Annual Tuition (approx.)</span>
+                           <span className="text-xl font-bold text-pau-darkBlue">$12,500</span>
+                        </div>
+                     </div>
+                  </div>
+                  <div className="bg-pau-darkBlue p-10 rounded-3xl shadow-xl text-white">
+                     <h3 className="text-2xl font-serif font-bold text-pau-gold mb-8">Mandatory Fees</h3>
+                     <div className="space-y-6">
+                        <div className="flex justify-between items-center pb-4 border-b border-white/10">
+                           <span className="text-gray-300">Registration (Annual)</span>
+                           <span className="text-xl font-bold">$250</span>
+                        </div>
+                        <div className="flex justify-between items-center pb-4 border-b border-white/10">
+                           <span className="text-gray-300">Tech & Library Access</span>
+                           <span className="text-xl font-bold">$300</span>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </SectionWrapper>
+          </>
+        );
+
+      case 'payment-plan':
+        return (
+          <>
+            <PageHeader title="Payment Plans" subtitle="Flexible options to fit your financial life." icon={CreditCardIcon} />
+            <SectionWrapper>
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                  <InfoCard 
+                    icon={BanknotesIcon} 
+                    title="Full Annual Payment" 
+                    content="Pay your entire year's tuition upfront and receive a 5% discount on your base tuition fees."
+                  />
+                  <InfoCard 
+                    icon={ArrowPathIcon} 
+                    title="Semester Installments" 
+                    content="Divide your annual tuition into two semester payments due at the start of Fall and Spring."
+                  />
+               </div>
+            </SectionWrapper>
+          </>
+        );
+
+      case 'refund-policy':
+        return (
+          <>
+            <PageHeader title="Refund Policy" subtitle="Fairness and transparency in withdrawals." icon={ShieldCheckIcon} />
+            <SectionWrapper>
+               <div className="max-w-4xl mx-auto">
+                  <div className="bg-white p-12 rounded-3xl shadow-premium border border-gray-100 mb-12">
+                     <h3 className="text-2xl font-serif font-bold text-pau-blue mb-8">Tuition Refund Schedule</h3>
+                     <div className="space-y-2">
+                        {[
+                          { period: "Before first day of classes", refund: "100% of Tuition" },
+                          { period: "Within Week 1 of Semester", refund: "90% of Tuition" },
+                          { period: "Weeks 2 through 4 of Semester", refund: "50% of Tuition" },
+                          { period: "After Week 8", refund: "No Refund" }
+                        ].map((row, i) => (
+                          <div key={i} className={`flex justify-between items-center p-5 rounded-lg ${i % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}>
+                             <span className="font-bold text-gray-700">{row.period}</span>
+                             <span className="text-pau-blue font-extrabold">{row.refund}</span>
+                          </div>
+                        ))}
+                     </div>
+                  </div>
+               </div>
+            </SectionWrapper>
+          </>
+        );
+
+      case 'admissions':
+        return <Admissions content={{ title: "Admissions Gateway", intro: "Start your journey toward becoming a licensed advocate in California.", requirementsTitle: "Core Requirements", requirements: ["Conferred Bachelor's Degree", "LSAT or GRE Scores", "Personal Statement"], tuitionTitle: "Tuition & Investment", tuitionInfo: "Affordable legal education without compromising quality.", tuitionCost: "$12,500", deadlinesTitle: "Key Dates", deadlines: [{ term: "Fall 2024", date: "July 15", type: "Priority" }], faqTitle: "FAQs", faqs: [] }} shared={sharedContent} />;
+
+      case 'app-steps':
+        return (
+          <>
+            <PageHeader title="Application Steps" subtitle="A clear roadmap for your law school application." icon={NumberedListIcon} />
+            <SectionWrapper title="Your Journey to PAU Law">
+               <div className="max-w-4xl mx-auto space-y-12">
+                  {[
+                    { step: 1, title: "Create an LSAC Account", desc: "Most applications must be submitted via the Law School Admission Council (LSAC). Register at lsac.org to begin." },
+                    { step: 2, title: "Register for the CAS", desc: "The Credential Assembly Service (CAS) centralizes your transcripts, letters of rec, and scores." },
+                    { step: 3, title: "Take the LSAT or GRE", desc: "Ensure your scores are transmitted to PAU Law (Institution Code: 4921)." },
+                    { step: 4, title: "Submit Transcripts", desc: "Request official transcripts from all post-secondary institutions attended." },
+                    { step: 5, title: "Draft Personal Statement", desc: "A 2-3 page essay detailing your motivation for pursuing law and your unique background." },
+                    { step: 6, title: "Final Submission", desc: "Complete the online application and pay the $60 application fee (fee waivers available)." }
+                  ].map((s) => (
+                    <div key={s.step} className="flex gap-8 group">
+                       <div className="flex-shrink-0 w-16 h-16 rounded-full bg-pau-light border-2 border-pau-gold/30 flex items-center justify-center text-2xl font-serif font-bold text-pau-blue group-hover:bg-pau-gold group-hover:text-white transition-all">
+                          {s.step}
+                       </div>
+                       <div className="pt-2">
+                          <h3 className="text-xl font-bold text-pau-darkBlue mb-2">{s.title}</h3>
+                          <p className="text-gray-600 leading-relaxed font-light">{s.desc}</p>
+                       </div>
+                    </div>
+                  ))}
+               </div>
+            </SectionWrapper>
+          </>
+        );
+
+      case 'academics':
+        return <Academics onNavigate={handleNavigate} content={{ title: "Academic Excellence", intro: "A rigorous, tech-driven approach to legal education.", programsTitle: "Degree Programs", programs: [{ name: "Juris Doctor (JD)", description: "4-year bar-qualifying program." }], concentrationsTitle: "Concentrations", concentrations: ["Tech Law", "Civil Litigation", "Corporate Law"] }} />;
+
+      case 'curriculum-schedule':
+        return (
+          <>
+            <PageHeader title="Curriculum Roadmap" subtitle="A structured 4-year path to your Juris Doctor." icon={MapIcon} />
+            <SectionWrapper title="JD Degree Sequence">
+               <div className="space-y-10">
+                  {[
+                    { year: "1L: Foundations", subjects: ["Torts", "Contracts", "Criminal Law", "Legal Writing"], focus: "Mastering the fundamentals of legal reasoning." },
+                    { year: "2L: Breadth", subjects: ["Property Law", "Civil Procedure", "Constitutional Law", "FYLSX Prep"], focus: "Expanding into regulatory and procedural law. Preparation for the Baby Bar." },
+                    { year: "3L: Specialization", subjects: ["Evidence", "Business Associations", "Wills & Trusts", "Electives"], focus: "Developing expertise in specific practice areas." },
+                    { year: "4L: Mastery", subjects: ["Criminal Procedure", "Remedies", "Bar Review Course", "Clinical Externship"], focus: "Intensive Bar exam preparation and practical clinical experience." }
+                  ].map((level, idx) => (
+                    <div key={idx} className="bg-white p-10 rounded-2xl shadow-premium border border-gray-100 flex flex-col md:flex-row gap-8 items-start hover:border-pau-gold transition-colors">
+                       <div className="md:w-1/4">
+                          <h3 className="text-3xl font-serif font-bold text-pau-blue mb-2">{level.year}</h3>
+                          <div className="h-1 w-10 bg-pau-gold"></div>
+                       </div>
+                       <div className="md:w-3/4">
+                          <p className="text-gray-600 mb-6 italic">{level.focus}</p>
+                          <div className="grid grid-cols-2 gap-4">
+                             {level.subjects.map((sub, sIdx) => (
+                               <div key={sIdx} className="flex items-center text-sm font-bold text-pau-darkBlue">
+                                  <ArrowRightIcon className="h-4 w-4 mr-2 text-pau-gold" /> {sub}
+                               </div>
+                             ))}
+                          </div>
+                       </div>
+                    </div>
+                  ))}
+               </div>
+            </SectionWrapper>
+          </>
+        );
+
+      case 'faculty':
+        return <Faculty content={{ title: "Faculty", intro: "Distinguished scholars and legal practitioners.", facultyList: FACULTY_DATA }} shared={sharedContent} />;
+
+      case 'admin':
+        return <Admin home={MOCK_HOME_CONTENT} setHome={() => {}} admissions={{ requirements: [] }} setAdmissions={() => {}} academics={{ programs: [], concentrations: [] }} setAcademics={() => {}} faculty={{ facultyList: FACULTY_DATA }} setFaculty={() => {}} notices={{ notices: NEWS_DATA }} setNotices={() => {}} />;
+
+      default:
+        return (
+          <div className="pt-60 pb-40 text-center animate-fade-in">
+            <h2 className="text-3xl font-serif text-pau-darkBlue">Coming Soon</h2>
+            <p className="text-gray-400 mt-4 font-light">We are finalizing the content for this section.</p>
+            <button onClick={() => handleNavigate('home')} className="mt-12 bg-pau-gold text-white px-8 py-3 rounded-full font-bold hover:bg-pau-blue transition-all">Return Home</button>
+          </div>
+        );
     }
   };
 
   return (
-    <div className="min-h-screen bg-white font-sans text-gray-900">
-      <Navbar 
-        currentLang={currentLang}
-        onLanguageChange={handleLanguageChange}
-        isTranslating={isTranslating}
-        currentPage={currentPage}
-        onNavigate={handleNavigate}
-        shared={sharedContent}
-      />
-
-      <main>
-        {currentPage === 'home' && (
-          <>
-            <Hero content={homeContent} shared={sharedContent} onNavigate={handleNavigate} />
-            <InfoSection 
-              content={homeContent} 
-              shared={sharedContent} 
-              onClinicClick={handleClinicClick} 
-              onNavigate={handleNavigate} 
-            />
-            <HomeNews 
-              title={homeContent.newsTitle} 
-              newsItems={homeContent.latestNews} 
-              onNewsClick={handleNewsClick}
-              shared={sharedContent}
-            />
-          </>
-        )}
-        
-        {currentPage === 'admissions' && <Admissions content={admissionsContent} shared={sharedContent} />}
-        {currentPage === 'academics' && <Academics content={academicsContent} />}
-        {currentPage === 'faculty' && <Faculty content={facultyContent} shared={sharedContent} />}
-        
-        {currentPage === 'news' && (
-          <HomeNews 
-             title={sharedContent.nav.latestNews}
-             newsItems={homeContent.latestNews} 
-             onNewsClick={handleNewsClick}
-             shared={sharedContent}
-          />
-        )}
-        
-        {currentPage === 'notices' && (
-          <NoticeBoard 
-            content={noticesContent} 
-            onNewsClick={handleNewsClick}
-            shared={sharedContent}
-          />
-        )}
-
-        {currentPage === 'news-detail' && selectedNewsItem && (
-          <NewsDetail 
-            item={selectedNewsItem} 
-            onBack={() => handleNavigate('news')}
-            shared={sharedContent}
-          />
-        )}
-
-        {currentPage === 'centers' && (
-          <Centers 
-            content={centersContent} 
-            onClinicClick={handleClinicClick} 
-            shared={sharedContent}
-          />
-        )}
-
-        {currentPage === 'clinic-detail' && selectedClinic && (
-          <ClinicDetail 
-            clinic={selectedClinic} 
-            onBack={() => handleNavigate('centers')} 
-            shared={sharedContent}
-          />
-        )}
-
-        {currentPage === 'library' && <Library content={libraryContent} shared={sharedContent} />}
-        {currentPage === 'careers' && <Careers content={careersContent} />}
-        {currentPage === 'calendar' && <Calendar content={calendarContent} shared={sharedContent} />}
-        {currentPage === 'consumer-info' && <ConsumerInfo content={consumerInfoContent} />}
-        {currentPage === 'admin' && (
-          <Admin 
-            home={homeContent} 
-            setHome={setHomeContent}
-            admissions={admissionsContent}
-            setAdmissions={setAdmissionsContent}
-            academics={academicsContent}
-            setAcademics={setAcademicsContent}
-            faculty={facultyContent}
-            setFaculty={setFacultyContent}
-            notices={noticesContent}
-            setNotices={setNoticesContent}
-          />
-        )}
-      </main>
-
+    <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-pau-gold/30">
+      <Navbar currentLang={currentLang} onLanguageChange={handleLanguageChange} isTranslating={isTranslating} currentPage={currentPage} onNavigate={handleNavigate} shared={sharedContent} />
+      <main className="min-h-[80vh]">{renderContent()}</main>
       <Footer onNavigate={handleNavigate} shared={sharedContent} />
     </div>
   );
