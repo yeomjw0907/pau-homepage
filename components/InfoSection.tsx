@@ -8,16 +8,16 @@ import {
   AcademicCapIcon,
   ScaleIcon,
   BuildingLibraryIcon,
-  BriefcaseIcon,
-  BuildingOffice2Icon,
   GlobeAsiaAustraliaIcon,
   DocumentTextIcon,
   PresentationChartBarIcon,
   UserGroupIcon,
   XMarkIcon,
-  CheckCircleIcon,
-  ChartBarIcon,
-  AcademicCapIcon as DegreeIcon
+  SparklesIcon,
+  ShieldCheckIcon,
+  ClockIcon,
+  ComputerDesktopIcon,
+  CheckBadgeIcon
 } from '@heroicons/react/24/outline';
 
 interface InfoSectionProps {
@@ -75,39 +75,6 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ shared, onClinicClick,
         potentialRoles: ["Strategy Consultant", "Policy Analyst", "Legal Risk Manager"],
         outlook: "Expanding field for J.D. holders in non-traditional legal roles."
       }
-    },
-    { 
-      icon: ArrowRightIcon, 
-      title: "Cross-border Trade", 
-      desc: "Master the regulations governing imports, exports, and tariffs.",
-      details: {
-        overview: "Become an expert in the laws that move the world's goods across oceans and borders.",
-        focusAreas: ["WTO Regulations", "Customs Law", "International Sales of Goods"],
-        potentialRoles: ["Trade Specialist", "Logistics Legal Counsel", "Customs Broker Attorney"],
-        outlook: "Critical role in stabilizing and securing global supply chains."
-      }
-    },
-    { 
-      icon: BuildingOffice2Icon, 
-      title: "Regulatory Affairs", 
-      desc: "Ensure compliance with government agencies like the FDA, SEC, and EPA.",
-      details: {
-        overview: "Specialized knowledge in highly regulated industries like Pharmaceuticals, Energy, and Finance.",
-        focusAreas: ["Administrative Law", "Industry Compliance", "Government Lobbying"],
-        potentialRoles: ["Regulatory Counsel", "Public Policy Director", "Environmental Compliance Officer"],
-        outlook: "Essential for industries navigating complex government bureaucracies."
-      }
-    },
-    { 
-      icon: DegreeIcon, 
-      title: "Graduate Study", 
-      desc: "Pursue advanced degrees like an LL.M. or S.J.D. at top universities.",
-      details: {
-        overview: "Use your J.D. from PAU Law as a stepping stone to elite academic and research positions worldwide.",
-        focusAreas: ["Legal Research", "Academic Writing", "Specialized Law Degrees"],
-        potentialRoles: ["Law Professor", "Legal Scholar", "Research Fellow"],
-        outlook: "Opens doors to academia and specialized private practice."
-      }
     }
   ];
 
@@ -116,20 +83,28 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ shared, onClinicClick,
       id: "c1", 
       title: "High Tech Law Institute", 
       description: "Partnering with Silicon Valley giants to address legal challenges in AI, patent law, and data privacy.",
-      body: "The High Tech Law Institute at PAU Law provides students with unparalleled access to the intersection of law and technology. Working alongside faculty who are experts in Intellectual Property and Artificial Intelligence, students assist in research projects and pro-bono consulting for early-stage startups in the Santa Clara region. \n\nFocus areas include: \n- AI Ethics and Regulation\n- Patent Prosecution & Strategy\n- Data Privacy Compliance (GDPR/CCPA)\n- Emerging Tech Policy"
+      body: "The High Tech Law Institute at PAU Law provides students with unparalleled access to the intersection of law and technology."
     },
     { 
       id: "c2", 
       title: "Immigration & Human Rights Clinic", 
       description: "Providing pro bono legal representation to asylum seekers and immigrant families in the Bay Area.",
-      body: "Students in the Immigration and Human Rights Clinic represent real clients in administrative and federal court proceedings. Under the supervision of clinical faculty, students take the lead in interviewing clients, drafting briefs, and appearing at hearings. \n\nExperience gained: \n- Client counseling in traumatic contexts\n- Legal research on international human rights standards\n- Litigation skills in immigration court\n- Advocacy for vulnerable populations"
+      body: "Students in the Immigration and Human Rights Clinic represent real clients in administrative and federal court proceedings."
     },
     { 
       id: "c3", 
       title: "Start-up Legal Garage", 
       description: "Hands-on experience assisting early-stage startups with incorporation, IP strategy, and compliance.",
-      body: "The Start-up Legal Garage matches law students with early-stage startups to provide essential legal services under attorney supervision. This clinic is perfect for students interested in venture capital, corporate law, and the Silicon Valley ecosystem.\n\nWork includes:\n- Drafting Articles of Incorporation\n- Employment Agreements\n- Trademark Registration\n- Seed Funding Legal Review"
+      body: "The Start-up Legal Garage matches law students with early-stage startups to provide essential legal services under attorney supervision."
     }
+  ];
+
+  // Restructured features to handle "INCLUDED" separately for design safety
+  const studentFeatures = [
+    { label: "100%", title: "ONLINE COURSEWORK", desc: "Access world-class legal education from any corner of the globe.", icon: ComputerDesktopIcon, isTextLabel: false },
+    { label: "66%", title: "ASYNCHRONOUS", desc: "Learn at your own pace while maintaining your professional commitments.", icon: ClockIcon, isTextLabel: false },
+    { label: "15:1", title: "STUDENT-FACULTY RATIO", desc: "Benefit from intimate class sizes and direct access to legal scholars.", icon: UserGroupIcon, isTextLabel: false },
+    { label: "INCLUDED", title: "BAR PREP SUPPORT", desc: "Integrated California Bar preparation to ensure your professional licensure.", icon: CheckBadgeIcon, isTextLabel: true },
   ];
 
   return (
@@ -137,12 +112,12 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ shared, onClinicClick,
       
       {/* SECTION: Founding Mission */}
       <section className="relative -mt-24 z-30 max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 shadow-2xl overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-2 shadow-2xl overflow-hidden rounded-[40px]">
           <div className="bg-[#051626] p-16 lg:p-24 text-white">
             <div className="w-12 h-[2px] bg-pau-gold mb-8"></div>
             <p className="text-[10px] font-bold tracking-widest uppercase text-pau-gold mb-6">Our Founding Mission</p>
             <blockquote className="text-3xl font-serif font-bold leading-relaxed mb-12">
-              "As educational borders dissolve, we nurture global leaders with critical perspectives. We are a platform for shaping thoughtful, solution-oriented professionals prepared to engage with the world's most pressing challenges."
+              "As educational borders dissolve, we nurture global leaders with critical perspectives. We are a platform for shaping thoughtful, solution-oriented professionals."
             </blockquote>
             <div className="flex items-center space-x-4 opacity-60">
               <div className="w-8 h-px bg-white"></div>
@@ -155,9 +130,9 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ shared, onClinicClick,
             </p>
             <div className="space-y-10">
               {[
-                { icon: LightBulbIcon, title: "Innovation Without Boundaries", desc: "Merging rigorous American legal instruction with flexible, technology-driven delivery systems." },
-                { icon: GlobeAsiaAustraliaIcon, title: "Global Accessibility", desc: "Lowering barriers to entry and respecting global time zones to cultivate globally active professionals." },
-                { icon: AcademicCapIcon, title: "Real-World Mastery", desc: "Combining dynamic video lectures with real-time sessions to ensure deep mastery of U.S. law." }
+                { icon: LightBulbIcon, title: "Innovation Without Boundaries", desc: "Merging rigorous American legal instruction with flexible delivery." },
+                { icon: GlobeAsiaAustraliaIcon, title: "Global Accessibility", desc: "Lowering barriers to entry and respecting global time zones." },
+                { icon: AcademicCapIcon, title: "Real-World Mastery", desc: "Ensuring deep mastery of U.S. law through dynamic sessions." }
               ].map((item, i) => (
                 <div key={i} className="flex space-x-6 group">
                   <div className="flex-shrink-0 w-12 h-12 rounded-full border border-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-pau-light group-hover:text-pau-blue transition-all">
@@ -174,21 +149,114 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ shared, onClinicClick,
         </div>
       </section>
 
+      {/* SECTION: STUDENT SUCCESS (PREMIUM 2x2 GRID) */}
+      <section className="py-32 px-6 bg-[#FDFDFD] relative overflow-hidden">
+        {/* Subtle background element */}
+        <div className="absolute top-0 right-0 w-1/4 h-full bg-pau-blue/[0.02] -skew-x-12 translate-x-1/4 -z-0"></div>
+        
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+            
+            {/* Left Column: Branding & Messaging */}
+            <div className="lg:w-2/5 animate-fade-in">
+              <div className="flex items-center space-x-4 mb-8">
+                <span className="w-12 h-px bg-pau-gold"></span>
+                <span className="text-[10px] font-bold tracking-[0.5em] uppercase text-pau-gold">Excellence in Legal Ed</span>
+              </div>
+              <h2 className="text-5xl md:text-6xl font-serif font-bold text-pau-darkBlue leading-[1.1] mb-10">
+                STUDENT <br /><span className="text-pau-blue">SUCCESS</span>
+              </h2>
+              <div className="w-20 h-1 bg-pau-gold mb-10"></div>
+              <p className="text-lg text-gray-500 font-light leading-relaxed mb-12 max-w-md">
+                We've redesigned the law school experience. By focusing on accessibility and student outcomes, we ensure your journey to the Bar is supported by both technology and world-class faculty.
+              </p>
+              <div className="flex flex-col space-y-5 mb-12">
+                 {[
+                   { icon: SparklesIcon, text: "Premier Global Legal Network" },
+                   { icon: ScaleIcon, text: "California Bar Registered Program" }
+                 ].map((item, i) => (
+                   <div key={i} className="flex items-center space-x-4 text-pau-darkBlue group cursor-default">
+                     <div className="p-2 bg-pau-light rounded-lg group-hover:bg-pau-gold/10 transition-colors">
+                       <item.icon className="h-5 w-5 text-pau-gold" />
+                     </div>
+                     <span className="font-bold text-[11px] uppercase tracking-[0.15em]">{item.text}</span>
+                   </div>
+                 ))}
+              </div>
+              <button 
+                onClick={() => onNavigate('admissions')}
+                className="group relative px-10 py-5 bg-pau-darkBlue text-white font-bold text-[11px] tracking-[0.2em] uppercase overflow-hidden transition-all hover:bg-pau-blue shadow-premium"
+              >
+                <span className="relative z-10">Start Your Application</span>
+                <div className="absolute inset-0 bg-pau-gold translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out -z-0 opacity-10"></div>
+              </button>
+            </div>
+
+            {/* Right Column: 2x2 Grid with Logic for "INCLUDED" overflow */}
+            <div className="lg:w-3/5 grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
+              {studentFeatures.map((feat, idx) => (
+                <div 
+                  key={idx} 
+                  className="relative bg-white p-10 lg:p-12 rounded-[32px] border-l-4 border-pau-gold shadow-card hover:shadow-premium hover:-translate-y-2 transition-all duration-500 group overflow-hidden"
+                >
+                  {/* Background Icon Watermark */}
+                  <div className="absolute -bottom-4 -right-4 text-gray-50 group-hover:text-pau-gold/[0.07] transition-colors duration-500 -z-0">
+                     <feat.icon className="h-28 w-28 stroke-[0.5]" />
+                  </div>
+
+                  <div className="relative z-10">
+                    <div className="mb-6 flex justify-between items-start">
+                      {feat.isTextLabel ? (
+                        /* "INCLUDED" case: Design it as a prominent badge to avoid box overflow */
+                        <div className="inline-flex flex-col">
+                           <span className="bg-pau-gold text-white text-[10px] font-extrabold px-3 py-1 rounded-full tracking-widest uppercase mb-4 shadow-sm group-hover:bg-pau-blue transition-colors">
+                             Included
+                           </span>
+                           <span className="text-3xl font-serif font-bold text-pau-darkBlue leading-none group-hover:text-pau-gold transition-colors">
+                             BAR PREP
+                           </span>
+                        </div>
+                      ) : (
+                        /* Numeric cases (100%, etc.) */
+                        <span className="text-5xl lg:text-6xl font-serif font-bold text-pau-darkBlue tracking-tighter group-hover:text-pau-blue transition-colors duration-300">
+                          {feat.label}
+                        </span>
+                      )}
+                    </div>
+                    
+                    <h4 className="text-[11px] font-extrabold tracking-[0.25em] text-pau-gold uppercase mb-5 group-hover:text-pau-darkBlue transition-colors">
+                      {feat.title}
+                    </h4>
+                    <p className="text-sm text-gray-500 font-light leading-relaxed max-w-[200px]">
+                      {feat.desc}
+                    </p>
+                  </div>
+                  
+                  {/* Subtle hover line at the bottom */}
+                  <div className="absolute bottom-0 left-0 h-1 bg-pau-blue w-0 group-hover:w-full transition-all duration-700"></div>
+                </div>
+              ))}
+            </div>
+
+          </div>
+        </div>
+      </section>
+
       {/* SECTION: Study American Law */}
-      <section className="py-32 px-6 text-center">
+      <section className="py-32 px-6 text-center bg-gray-50/30">
         <h2 className="text-4xl md:text-5xl font-serif font-bold text-pau-blue mb-6">
           Study American Law From <br /> Anywhere
         </h2>
         <p className="text-gray-500 max-w-2xl mx-auto font-light leading-relaxed">
-          A fully online J.D. program designed for motivated students seeking flexibility, world-class instruction, and a clear path to a California law license.
+          A fully online J.D. program designed for motivated students seeking flexibility and world-class instruction.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto mt-20">
           {[
-            { icon: GlobeAmericasIcon, title: "Flexible Learning", desc: "Complete two-thirds of your coursework asynchronously on your schedule—anytime, anywhere, without sacrificing academic rigor." },
-            { icon: UserGroupIcon, title: "World-Class Mentorship", desc: "Learn from experienced legal professionals and professors who provide personalized feedback and guidance to help you succeed academically." },
-            { icon: ScaleIcon, title: "Accessible Tuition", desc: "We offer a high-quality legal education at a significantly lower cost than traditional U.S. law schools, making the J.D. dream accessible." }
+            { icon: GlobeAmericasIcon, title: "Flexible Learning", desc: "Complete your coursework asynchronously on your schedule—anytime, anywhere." },
+            { icon: UserGroupIcon, title: "World-Class Mentorship", desc: "Learn from experienced legal professionals who provide personalized feedback." },
+            { icon: ScaleIcon, title: "Accessible Tuition", desc: "High-quality legal education at a significantly lower cost than traditional schools." }
           ].map((feature, i) => (
-            <div key={i} className="bg-white p-10 border border-gray-50 hover:shadow-xl transition-all text-left">
+            <div key={i} className="bg-white p-10 rounded-3xl border border-gray-100 hover:shadow-xl transition-all text-left">
               <feature.icon className="h-8 w-8 text-pau-blue mb-6 stroke-1" />
               <h3 className="text-lg font-bold mb-4 font-serif">{feature.title}</h3>
               <p className="text-sm text-gray-500 leading-relaxed font-light">{feature.desc}</p>
@@ -198,17 +266,17 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ shared, onClinicClick,
       </section>
 
       {/* SECTION: Global Career Path */}
-      <section className="py-32 px-6 bg-gray-50/50">
+      <section className="py-32 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
             <h2 className="text-4xl font-serif font-bold text-pau-blue mb-6">Your Path to a Global Career</h2>
             <p className="text-gray-500 max-w-2xl mx-auto font-light leading-relaxed">
-              Our rigorous curriculum opens doors to diverse international fields, equipping you with the credentials needed for today's interconnected legal environment.
+              Our rigorous curriculum opens doors to diverse international fields.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {careerPaths.map((item, i) => (
-              <div key={i} className="bg-white p-10 border border-gray-100 hover:shadow-lg transition-all flex flex-col h-full group">
+              <div key={i} className="bg-white p-10 border border-gray-100 rounded-3xl hover:shadow-lg transition-all flex flex-col h-full group">
                 <item.icon className="h-6 w-6 text-pau-blue mb-8 stroke-1 group-hover:text-pau-gold transition-colors" />
                 <h3 className="text-lg font-bold mb-4 font-serif">{item.title}</h3>
                 <p className="text-sm text-gray-500 leading-relaxed font-light mb-8 flex-grow">{item.desc}</p>
@@ -249,7 +317,7 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ shared, onClinicClick,
       {/* CAREER PATH MODAL */}
       {selectedPath && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-pau-darkBlue/90 backdrop-blur-md animate-fade-in">
-          <div className="bg-white w-full max-w-3xl rounded-3xl shadow-2xl overflow-hidden relative max-h-[90vh] flex flex-col animate-fade-in-up">
+          <div className="bg-white w-full max-w-3xl rounded-[40px] shadow-2xl overflow-hidden relative max-h-[90vh] flex flex-col animate-fade-in-up">
             <button 
               onClick={() => setSelectedPath(null)}
               className="absolute top-6 right-6 p-2 bg-gray-100 rounded-full hover:bg-pau-blue hover:text-white transition-all z-10"
@@ -277,48 +345,12 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ shared, onClinicClick,
                      {selectedPath.details.overview}
                    </p>
                 </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                  <div>
-                    <h3 className="text-sm font-bold text-gray-900 uppercase tracking-widest mb-4 flex items-center">
-                      <AcademicCapIcon className="h-5 w-5 mr-2 text-pau-gold" /> Key Focus Areas
-                    </h3>
-                    <ul className="space-y-3">
-                      {selectedPath.details.focusAreas.map((area, i) => (
-                        <li key={i} className="flex items-center text-sm text-gray-600">
-                          <CheckCircleIcon className="h-4 w-4 mr-2 text-pau-blue" /> {area}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-bold text-gray-900 uppercase tracking-widest mb-4 flex items-center">
-                      <BriefcaseIcon className="h-5 w-5 mr-2 text-pau-gold" /> Potential Roles
-                    </h3>
-                    <ul className="space-y-3">
-                      {selectedPath.details.potentialRoles.map((role, i) => (
-                        <li key={i} className="flex items-center text-sm text-gray-600">
-                          <ArrowRightIcon className="h-3 w-3 mr-2 text-pau-gold" /> {role}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="bg-pau-light p-8 rounded-2xl border border-pau-blue/10">
-                  <h3 className="text-sm font-bold text-pau-darkBlue uppercase tracking-widest mb-2 flex items-center">
-                    <ChartBarIcon className="h-5 w-5 mr-2 text-pau-blue" /> Market Outlook
-                  </h3>
-                  <p className="text-gray-700 font-medium italic">
-                    {selectedPath.details.outlook}
-                  </p>
-                </div>
               </div>
 
               <div className="mt-12">
                  <button 
                   onClick={() => onNavigate('admissions')}
-                  className="w-full bg-pau-blue text-white py-5 rounded-xl font-bold uppercase tracking-widest hover:bg-pau-gold transition-all shadow-lg"
+                  className="w-full bg-pau-blue text-white py-5 rounded-2xl font-bold uppercase tracking-widest hover:bg-pau-gold transition-all shadow-lg"
                  >
                    Start Your Application
                  </button>

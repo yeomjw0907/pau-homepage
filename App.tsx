@@ -48,6 +48,7 @@ import {
   MapIcon,
   UserCircleIcon,
   UsersIcon,
+  UserGroupIcon,
   PencilSquareIcon,
   HeartIcon,
   ClipboardDocumentListIcon,
@@ -67,7 +68,14 @@ import {
   DevicePhoneMobileIcon,
   VideoCameraIcon,
   WifiIcon,
-  CommandLineIcon
+  CommandLineIcon,
+  LightBulbIcon,
+  ChatBubbleLeftRightIcon,
+  PresentationChartBarIcon,
+  ClipboardDocumentIcon,
+  CalendarDaysIcon,
+  CheckCircleIcon,
+  ChevronDownIcon
 } from '@heroicons/react/24/outline';
 
 // --- SHARED DATA ---
@@ -88,27 +96,36 @@ const FACULTY_DATA: FacultyMember[] = [
     name: "Dr. Elena Rodriguez",
     title: "Dean & Professor of Constitutional Law",
     education: "J.D., Stanford University; Ph.D., Yale",
-    bio: "Dean Rodriguez has spent 20 years specializing in Civil Rights litigation.",
+    bio: "Dean Rodriguez has spent 20 years specializing in Civil Rights litigation and has been leading PAU Law toward academic excellence since 2018.",
     expertise: ["Constitutional Law", "Civil Rights"]
+  },
+  {
+    name: "Prof. Michael Chen",
+    title: "Professor of Technology Law",
+    education: "J.D., UC Berkeley; LL.M., Harvard",
+    bio: "A pioneer in Silicon Valley tech regulations, Prof. Chen consults for major AI startups and leads our High Tech Law Institute.",
+    expertise: ["Intellectual Property", "AI Ethics", "Patent Law"]
   }
 ];
 
-// --- HELPER COMPONENTS ---
+// --- HELPER COMPONENTS (DESIGN SYSTEM) ---
 
 const PageHeader: React.FC<{ title: string; subtitle: string; icon?: React.ElementType }> = ({ title, subtitle, icon: Icon }) => (
   <div className="relative bg-pau-darkBlue pt-56 pb-28 overflow-hidden">
     <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] pointer-events-none"></div>
     <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-pau-blue/30 to-transparent"></div>
+    <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-pau-gold/30 to-transparent"></div>
+    
     <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center relative z-10 animate-fade-in-up">
       {Icon && (
-        <div className="inline-flex p-4 bg-white/5 rounded-full border border-white/10 mb-8 backdrop-blur-sm">
+        <div className="inline-flex p-4 bg-white/5 rounded-full border border-white/10 mb-8 backdrop-blur-sm shadow-glow">
           <Icon className="h-10 w-10 text-pau-gold" />
         </div>
       )}
-      <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white tracking-tight leading-[1.1] mb-6">
+      <h1 className="text-5xl md:text-7xl font-serif font-bold text-white tracking-tight leading-[1.1] mb-6 whitespace-pre-line">
         {title}
       </h1>
-      <div className="w-20 h-1 bg-pau-gold mx-auto mb-8"></div>
+      <div className="w-20 h-1 bg-pau-gold mx-auto mb-8 rounded-full"></div>
       <p className="text-xl text-gray-300 max-w-2xl mx-auto font-light leading-relaxed">
         {subtitle}
       </p>
@@ -116,22 +133,24 @@ const PageHeader: React.FC<{ title: string; subtitle: string; icon?: React.Eleme
   </div>
 );
 
-const SectionWrapper: React.FC<{ children?: React.ReactNode, title?: string, centered?: boolean }> = ({ children, title, centered = false }) => (
-  <div className={`max-w-7xl mx-auto px-6 py-24 animate-fade-in ${centered ? 'text-center' : ''}`}>
-    {title && (
-      <div className={`mb-16 ${centered ? 'flex flex-col items-center' : ''}`}>
-        <h2 className="text-4xl font-serif font-bold text-pau-darkBlue mb-4">{title}</h2>
-        <div className="w-16 h-1 bg-pau-gold"></div>
-      </div>
-    )}
-    {children}
+const SectionWrapper: React.FC<{ children?: React.ReactNode, title?: string, centered?: boolean, bgColor?: string }> = ({ children, title, centered = false, bgColor = "bg-white" }) => (
+  <div className={`${bgColor} py-24 border-b border-gray-100 last:border-0`}>
+    <div className={`max-w-7xl mx-auto px-6 animate-fade-in ${centered ? 'text-center' : ''}`}>
+      {title && (
+        <div className={`mb-16 ${centered ? 'flex flex-col items-center' : ''}`}>
+          <h2 className="text-4xl font-serif font-bold text-pau-darkBlue mb-4">{title}</h2>
+          <div className="w-16 h-1 bg-pau-gold rounded-full"></div>
+        </div>
+      )}
+      {children}
+    </div>
   </div>
 );
 
 const InfoCard: React.FC<{ icon: any, title: string, content: string | React.ReactNode, isDark?: boolean }> = ({ icon: Icon, title, content, isDark = false }) => (
-  <div className={`p-10 rounded-2xl border transition-all duration-500 mb-10 group ${isDark ? 'bg-pau-darkBlue text-white border-white/10' : 'bg-white shadow-premium border-gray-100 hover:border-pau-gold/50'}`}>
+  <div className={`p-10 rounded-3xl border transition-all duration-500 mb-10 group ${isDark ? 'bg-pau-darkBlue text-white border-white/10 shadow-2xl' : 'bg-white shadow-premium border-gray-100 hover:border-pau-gold/50'}`}>
     <div className="flex items-start mb-6">
-      <div className={`p-4 rounded-xl mr-6 transition-all ${isDark ? 'bg-white/10 text-pau-gold' : 'bg-pau-light text-pau-blue group-hover:bg-pau-blue group-hover:text-white'}`}>
+      <div className={`p-4 rounded-2xl mr-6 transition-all flex-shrink-0 ${isDark ? 'bg-white/10 text-pau-gold' : 'bg-pau-light text-pau-blue group-hover:bg-pau-blue group-hover:text-white'}`}>
         <Icon className="h-7 w-7" />
       </div>
       <div className="flex-grow">
@@ -143,14 +162,14 @@ const InfoCard: React.FC<{ icon: any, title: string, content: string | React.Rea
 );
 
 const DocumentLink: React.FC<{ title: string, type?: string }> = ({ title, type = "PDF" }) => (
-  <div className="flex items-center justify-between p-6 bg-white border border-gray-100 rounded-xl hover:shadow-md hover:border-pau-gold transition-all cursor-pointer group">
+  <div className="flex items-center justify-between p-6 bg-white border border-gray-100 rounded-2xl hover:shadow-xl hover:border-pau-gold transition-all cursor-pointer group">
     <div className="flex items-center">
-      <div className="p-3 bg-red-50 text-red-500 rounded-lg mr-4 group-hover:bg-pau-blue group-hover:text-white transition-colors">
+      <div className="p-4 bg-red-50 text-red-500 rounded-xl mr-5 group-hover:bg-red-500 group-hover:text-white transition-colors">
         <DocumentTextIcon className="h-6 w-6" />
       </div>
       <div>
-        <h4 className="font-bold text-pau-darkBlue">{title}</h4>
-        <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">{type} Download</p>
+        <h4 className="font-bold text-pau-darkBlue text-lg">{title}</h4>
+        <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">{type} Resource • Secure Download</p>
       </div>
     </div>
     <ArrowDownTrayIcon className="h-5 w-5 text-gray-300 group-hover:text-pau-gold transition-colors" />
@@ -204,226 +223,397 @@ export default function App() {
           </>
         );
 
-      // --- ADMISSIONS SECTIONS ---
+      case 'history-mission':
+        return (
+          <>
+            <PageHeader title={"History &\nMission"} subtitle="Forging excellence in legal education since 1978." icon={GlobeAmericasIcon} />
+            <SectionWrapper title="A Legacy of Access">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                <div className="space-y-6">
+                  <p className="text-xl text-gray-600 leading-relaxed font-light">
+                    Founded in Santa Clara, California, PAU School of Law was established to break the traditional barriers of entry into the legal profession.
+                  </p>
+                  <p className="text-xl text-gray-600 leading-relaxed font-light">
+                    By leveraging digital innovation, we provide a rigorous JD program that honors the diverse life experiences of our student body.
+                  </p>
+                </div>
+                <div className="bg-pau-darkBlue p-12 rounded-[40px] shadow-2xl relative overflow-hidden group">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-pau-gold/10 rounded-bl-full translate-x-12 -translate-y-12 group-hover:scale-150 transition-transform duration-700"></div>
+                  <h3 className="text-2xl font-serif font-bold text-pau-gold mb-8">Timeline of Excellence</h3>
+                  <div className="space-y-8">
+                    {[
+                      { year: '1978', event: 'Founded in Santa Clara, California.' },
+                      { year: '1995', event: 'Registered with the CA Committee of Bar Examiners.' },
+                      { year: '2010', event: 'Launched pioneer Digital JD Program.' },
+                      { year: '2024', event: 'Surpassed 2,500 active alumni globally.' }
+                    ].map((m, i) => (
+                      <div key={i} className="flex items-start space-x-6">
+                        <span className="text-white font-bold font-serif text-lg bg-white/10 px-3 py-1 rounded border border-white/20">{m.year}</span>
+                        <p className="text-gray-400 text-sm font-medium mt-1.5">{m.event}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </SectionWrapper>
+          </>
+        );
+
+      case 'president-welcome':
+        return (
+          <>
+            <PageHeader title={"President's\nWelcome"} subtitle="A strategic vision for the next generation of legal leaders." icon={UserIcon} />
+            <SectionWrapper>
+              <div className="max-w-5xl mx-auto bg-white p-10 lg:p-16 rounded-[60px] shadow-premium border border-gray-50 flex flex-col md:flex-row gap-16 items-center">
+                  <div className="md:w-[40%] flex-shrink-0">
+                    <div className="w-full aspect-[4/5] bg-gray-200 rounded-[40px] overflow-hidden shadow-2xl ring-12 ring-pau-light relative">
+                      <img 
+                        src="https://images.unsplash.com/photo-1560250097-0b93528c311a?fit=crop&w=800&q=80" 
+                        alt="President Mockup" 
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-pau-darkBlue/80 to-transparent p-8">
+                         <p className="text-white font-serif font-bold text-xl leading-tight">Dr. William J. Vance</p>
+                         <p className="text-pau-gold text-[10px] font-bold uppercase tracking-widest mt-1">President, PAU</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="md:w-[60%]">
+                    <div className="relative mb-10">
+                      <div className="absolute -left-6 -top-4 text-pau-gold/20 text-8xl font-serif leading-none">"</div>
+                      <h2 className="text-3xl lg:text-4xl font-serif font-bold text-pau-darkBlue leading-tight relative z-10">
+                        Legal education must evolve with the world it serves.
+                      </h2>
+                    </div>
+                    <div className="prose prose-lg text-gray-600 leading-relaxed font-light space-y-6">
+                      <p>At Pacific American University School of Law, we don't just teach the law; we prepare you to master it in a global, digital-first context. Our mission is to ensure that talent and ambition are never limited by geographic boundaries.</p>
+                      <p>As we navigate an increasingly complex legal landscape, our commitment remains fixed: providing a rigorous, accessible, and technologically advanced education that empowers you to become a licensed advocate and a force for positive change.</p>
+                      <p>I welcome you to join our vibrant community of scholars and practitioners.</p>
+                      <div className="pt-8 border-t border-gray-100">
+                        <p className="font-serif text-3xl text-pau-blue">William J. Vance</p>
+                        <p className="text-xs font-bold text-pau-gold uppercase tracking-[0.2em] mt-2">Office of the President</p>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </SectionWrapper>
+          </>
+        );
+
+      case 'dean-message':
+        return (
+          <>
+            <PageHeader title={"Dean's\nMessage"} subtitle="Academic rigor and Bar readiness." icon={AcademicCapIcon} />
+            <SectionWrapper>
+              <div className="max-w-4xl mx-auto bg-pau-darkBlue p-12 lg:p-20 rounded-[60px] shadow-2xl text-white">
+                <div className="flex flex-col md:flex-row gap-16 items-center mb-16 border-b border-white/10 pb-16">
+                  <div className="md:w-1/3 text-center">
+                    <div className="aspect-square w-40 h-40 bg-pau-gold rounded-full flex items-center justify-center text-pau-darkBlue text-6xl font-serif mx-auto shadow-glow transition-transform hover:scale-105 duration-500">ER</div>
+                  </div>
+                  <div className="md:w-2/3">
+                    <h2 className="text-4xl font-serif font-bold mb-4">Dr. Elena Rodriguez</h2>
+                    <p className="text-pau-gold font-bold uppercase tracking-widest text-sm mb-6">Dean & Professor of Constitutional Law</p>
+                    <div className="h-1 w-20 bg-pau-gold"></div>
+                  </div>
+                </div>
+                <div className="prose prose-lg prose-invert text-gray-300 leading-relaxed font-light space-y-6">
+                  <p>As Dean, my commitment is to provide a curriculum that is both theoretically profound and practically indispensable. Our J.D. program is built on the philosophy that modern lawyers must be technologically fluent and ethically anchored.</p>
+                  <p>Our focus on the California Bar Examination is unparalleled. From day one, we integrate the skills necessary for success on the nation's most challenging licensure exam.</p>
+                </div>
+              </div>
+            </SectionWrapper>
+          </>
+        );
+
+      case 'academic-calendar':
+        return (
+          <>
+            <PageHeader title={"Academic\nCalendar"} subtitle="Key milestones for the 2024-2025 academic year." icon={CalendarDaysIcon} />
+            <SectionWrapper title="Semester Schedule">
+               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                  {[
+                    { 
+                      semester: "Fall 2024", 
+                      dates: [
+                        { event: "Classes Begin", date: "Sep 2, 2024" },
+                        { event: "Thanksgiving Break", date: "Nov 25-29, 2024" },
+                        { event: "Final Exams", date: "Dec 14-21, 2024" },
+                        { event: "Winter Break", date: "Dec 22 - Jan 12" }
+                      ]
+                    },
+                    { 
+                      semester: "Spring 2025", 
+                      dates: [
+                        { event: "Classes Begin", date: "Jan 13, 2025" },
+                        { event: "Spring Break", date: "Mar 17-21, 2025" },
+                        { event: "Final Exams", date: "May 10-17, 2025" },
+                        { event: "Commencement", date: "May 31, 2025" }
+                      ]
+                    }
+                  ].map((sem, i) => (
+                    <div key={i} className="bg-white p-12 rounded-[40px] shadow-premium border border-gray-50">
+                       <h3 className="text-3xl font-serif font-bold text-pau-blue mb-10 border-b border-pau-gold/20 pb-6">{sem.semester}</h3>
+                       <div className="space-y-6">
+                          {sem.dates.map((d, idx) => (
+                            <div key={idx} className="flex justify-between items-center py-4 border-b border-gray-50 last:border-0">
+                               <span className="font-bold text-gray-800 text-lg">{d.event}</span>
+                               <span className="text-pau-gold font-extrabold text-lg">{d.date}</span>
+                            </div>
+                          ))}
+                       </div>
+                    </div>
+                  ))}
+               </div>
+            </SectionWrapper>
+          </>
+        );
+
+      case 'bar-info':
+        return (
+          <>
+            <PageHeader title={"Bar Exam\nInformation"} subtitle="Your roadmap to California licensure." icon={ShieldCheckIcon} />
+            <SectionWrapper title="The Licensure Path">
+               <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
+                  <div className="bg-pau-darkBlue p-12 rounded-[50px] shadow-2xl text-white flex flex-col justify-between">
+                    <div>
+                      <h3 className="text-3xl font-serif font-bold text-pau-gold mb-8">Baby Bar (FYLSX)</h3>
+                      <p className="text-gray-300 leading-relaxed font-light mb-10 italic">Mandatory for first-year students at unaccredited schools.</p>
+                      <p className="text-gray-400 mb-8 text-sm leading-relaxed">It ensures you have the foundational analytical skills required for advanced legal study before proceeding to 2L.</p>
+                    </div>
+                    <ul className="space-y-4 text-sm font-bold uppercase tracking-widest text-pau-gold">
+                       <li className="flex items-center"><CheckCircleIcon className="h-5 w-5 mr-3" /> Administered June/October</li>
+                       <li className="flex items-center"><CheckCircleIcon className="h-5 w-5 mr-3" /> Covers Contracts, Torts, Crimes</li>
+                    </ul>
+                  </div>
+                  <div className="bg-white p-12 rounded-[50px] shadow-premium border border-gray-100 flex flex-col justify-between">
+                    <div>
+                      <h3 className="text-3xl font-serif font-bold text-pau-blue mb-8">General Bar Exam</h3>
+                      <p className="text-gray-500 leading-relaxed font-light mb-10 italic">The final gateway to practice in California.</p>
+                      <p className="text-gray-500 mb-8 text-sm leading-relaxed">Graduation from PAU qualifies you to take this exam upon satisfying all State Bar moral character requirements and passing the MPRE.</p>
+                    </div>
+                    <button className="w-full bg-pau-light py-5 rounded-2xl text-pau-blue font-bold uppercase tracking-widest hover:bg-pau-blue hover:text-white transition-all">Official State Bar Guide</button>
+                  </div>
+               </div>
+            </SectionWrapper>
+          </>
+        );
+
+      case 'course-desc':
+        return (
+          <>
+            <PageHeader title={"Course\nDescriptions"} subtitle="Explore our foundational and specialized legal curriculum." icon={ListBulletIcon} />
+            <SectionWrapper title="Core Curriculum Highlights">
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                  {[
+                    { code: "LAW 101", name: "Contracts", desc: "Foundational study of offer, acceptance, consideration, and enforcement of legal agreements." },
+                    { code: "LAW 102", name: "Torts", desc: "Analysis of non-contractual civil wrongs, negligence, strict liability, and intentional harms." },
+                    { code: "LAW 205", name: "Constitutional Law", desc: "Powers of the Federal Government and Individual Rights under the U.S. Constitution." },
+                    { code: "LAW 310", name: "Evidence", desc: "Rules governing the admissibility of proof in civil and criminal trials under the CA Evidence Code." }
+                  ].map((course, i) => (
+                    <div key={i} className="bg-white p-10 rounded-[40px] border border-gray-100 shadow-premium hover:shadow-2xl transition-all group">
+                       <span className="text-[10px] font-bold text-pau-gold uppercase tracking-[0.3em] mb-4 block group-hover:text-pau-blue transition-colors">{course.code}</span>
+                       <h4 className="text-2xl font-serif font-bold text-pau-darkBlue mb-4">{course.name}</h4>
+                       <p className="text-gray-500 leading-relaxed font-light">{course.desc}</p>
+                    </div>
+                  ))}
+               </div>
+            </SectionWrapper>
+          </>
+        );
+
+      case 'counseling':
+        return (
+          <>
+            <PageHeader title={"Counseling &\nAcademic Success"} subtitle="Dedicated support for your professional growth." icon={ChatBubbleLeftRightIcon} />
+            <SectionWrapper title="Personalized Mentorship">
+               <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+                  <InfoCard icon={UserCircleIcon} title="Faculty Mentors" content="Connect with practicing attorneys for real-world career guidance and clerkship opportunities." />
+                  <InfoCard icon={PencilSquareIcon} title="Legal Writing Lab" content="Intensive coaching on legal analysis, case brief construction, and essay writing skills." />
+                  <InfoCard icon={CheckBadgeIcon} title="Bar Success Program" content="Targeted workshops for FYLSX and General Bar preparation starting from your first semester." />
+               </div>
+            </SectionWrapper>
+          </>
+        );
+
+      case 'grad-reqs':
+        return (
+          <>
+            <PageHeader title={"Graduation\nRequirements"} subtitle="The roadmap to your Juris Doctor degree." icon={CheckBadgeIcon} />
+            <SectionWrapper title="Degree Completion Criteria">
+               <div className="max-w-4xl mx-auto bg-white p-12 lg:p-20 rounded-[60px] shadow-premium border border-gray-100">
+                  <div className="space-y-12">
+                     {[
+                       { title: "84 Semester Units", desc: "Completion of all required doctrinal and clinical coursework within the specified timeframe." },
+                       { title: "2.0 Minimum GPA", desc: "Maintain a cumulative Grade Point Average on a 4.0 scale throughout the program." },
+                       { title: "Residency Requirement", desc: "Minimum of four years of law study in accordance with California State Bar rules." },
+                       { title: "FYLSX Completion", desc: "Successful passing of the First-Year Law Students' Examination (if applicable)." }
+                     ].map((item, i) => (
+                       <div key={i} className="flex items-start gap-8">
+                          <div className="flex-shrink-0 w-12 h-12 rounded-full bg-pau-light flex items-center justify-center text-pau-gold">
+                             <CheckCircleIcon className="h-6 w-6" />
+                          </div>
+                          <div>
+                             <h4 className="text-2xl font-serif font-bold text-pau-blue mb-2">{item.title}</h4>
+                             <p className="text-gray-600 leading-relaxed font-light text-lg">{item.desc}</p>
+                          </div>
+                       </div>
+                     ))}
+                  </div>
+               </div>
+            </SectionWrapper>
+          </>
+        );
+
+      case 'curriculum-schedule':
+        return (
+          <>
+            <PageHeader title={"Curriculum\nRoadmap"} subtitle="A structured 4-year sequence for the modern advocate." icon={MapIcon} />
+            <SectionWrapper title="Degree Sequence">
+               <div className="space-y-12">
+                  {[
+                    { year: "1L", title: "Legal Foundations", subjects: ["Torts", "Contracts", "Criminal Law", "Legal Writing I"] },
+                    { year: "2L", title: "Regulatory Depth", subjects: ["Property Law", "Civil Procedure", "Constitutional Law", "Legal Writing II"] },
+                    { year: "3L", title: "Specialized Electives", subjects: ["Evidence", "Business Organizations", "Wills & Trusts", "Community Property"] },
+                    { year: "4L", title: "Mastery & Bar Prep", subjects: ["Criminal Procedure", "Remedies", "Professional Responsibility", "Bar Review"] }
+                  ].map((lvl, i) => (
+                    <div key={i} className="bg-white p-12 rounded-[50px] shadow-premium border border-gray-100 flex flex-col md:flex-row gap-12 items-center hover:border-pau-gold transition-all duration-500">
+                       <div className="md:w-1/4 text-center md:text-left">
+                          <span className="text-6xl font-serif font-bold text-pau-gold/20 block mb-2">{lvl.year}</span>
+                          <h3 className="text-xl font-serif font-bold text-pau-blue uppercase tracking-widest">{lvl.title}</h3>
+                       </div>
+                       <div className="md:w-3/4 grid grid-cols-2 gap-6">
+                          {lvl.subjects.map((sub, j) => (
+                             <div key={j} className="flex items-center text-lg text-gray-700 font-light">
+                                <ArrowRightIcon className="h-5 w-5 mr-3 text-pau-gold" /> {sub}
+                             </div>
+                          ))}
+                       </div>
+                    </div>
+                  ))}
+               </div>
+            </SectionWrapper>
+          </>
+        );
+
+      case 'bar-reg':
+        return (
+          <>
+            <PageHeader title={"Bar\nRegistration"} subtitle="Registered with the State Bar of California." icon={ShieldCheckIcon} />
+            <SectionWrapper title="Institutional Status">
+               <div className="max-w-4xl mx-auto space-y-12">
+                  <div className="bg-white p-12 rounded-[40px] border-l-[12px] border-pau-gold shadow-premium">
+                    <h3 className="text-3xl font-serif font-bold text-pau-blue mb-6">Official Notice</h3>
+                    <p className="text-gray-600 leading-relaxed font-light text-xl">
+                      Pacific American University School of Law is a private institution. The Juris Doctor (J.D.) program is registered with the Committee of Bar Examiners of the State Bar of California as an unaccredited distance-learning law school.
+                    </p>
+                  </div>
+               </div>
+            </SectionWrapper>
+          </>
+        );
+
+      case 'disclosure':
+        return (
+          <>
+            <PageHeader title={"Public\nDisclosures"} subtitle="Transparency and mandatory consumer data." icon={DocumentDuplicateIcon} />
+            <SectionWrapper title="Reports & Compliance">
+               <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <DocumentLink title="2023 Bar Pass Rate Report" />
+                  <DocumentLink title="Section 6061.7 Disclosure" />
+                  <DocumentLink title="Job Placement Data (2022-2023)" />
+                  <DocumentLink title="Tuition & Refund Policies" />
+               </div>
+            </SectionWrapper>
+          </>
+        );
+
+      case 'admin-staffs':
+        return (
+          <>
+            <PageHeader title={"Admin &\nStaff"} subtitle="The team behind your academic success." icon={UsersIcon} />
+            <SectionWrapper title="Leadership">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                {[
+                  { name: "Dr. William J. Vance", role: "President" },
+                  { name: "Dr. Elena Rodriguez", role: "Dean of Law" },
+                  { name: "Sarah Montgomery, J.D.", role: "Associate Dean" }
+                ].map((staff, i) => (
+                  <div key={i} className="bg-white p-10 rounded-[40px] border border-gray-100 shadow-premium hover:border-pau-gold transition-all text-center group">
+                    <div className="w-24 h-24 bg-pau-light rounded-3xl mx-auto mb-6 flex items-center justify-center text-pau-blue group-hover:bg-pau-blue group-hover:text-white transition-all">
+                       <UserIcon className="h-10 w-10" />
+                    </div>
+                    <h4 className="text-2xl font-serif font-bold text-pau-darkBlue">{staff.name}</h4>
+                    <p className="text-xs font-bold text-pau-gold uppercase tracking-[0.2em] mt-3">{staff.role}</p>
+                  </div>
+                ))}
+              </div>
+            </SectionWrapper>
+          </>
+        );
+
+      case 'catalog':
+        return (
+          <>
+            <PageHeader title={"School\nCatalog"} subtitle="Academic policies and program requirements." icon={BookOpenIcon} />
+            <SectionWrapper centered>
+                 <div className="max-w-2xl bg-white p-16 rounded-[60px] shadow-premium border border-gray-100 flex flex-col items-center">
+                    <div className="p-8 bg-red-50 text-red-600 rounded-[32px] mb-10 shadow-inner">
+                      <DocumentTextIcon className="h-24 w-24" />
+                    </div>
+                    <h3 className="text-4xl font-serif font-bold text-pau-blue mb-4">2024-2025 Catalog</h3>
+                    <button className="w-full bg-pau-blue text-white py-6 rounded-2xl font-bold uppercase tracking-widest shadow-glow hover:bg-pau-gold transition-all transform hover:-translate-y-1">
+                      Download Official Catalog (PDF)
+                    </button>
+                 </div>
+            </SectionWrapper>
+          </>
+        );
+
+      case 'school-form':
+        return (
+          <>
+            <PageHeader title={"School\nForms"} subtitle="Streamlining your administrative needs." icon={ClipboardDocumentListIcon} />
+            <SectionWrapper title="Online Request Center">
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <DocumentLink title="Official Transcript Request" />
+                  <DocumentLink title="Notice of Withdrawal" />
+               </div>
+            </SectionWrapper>
+          </>
+        );
+
+      case 'faqs':
+        return (
+          <>
+            <PageHeader title={"Frequently Asked\nQuestions"} subtitle="Expert answers to your legal education queries." icon={QuestionMarkCircleIcon} />
+            <SectionWrapper>
+               <div className="max-w-4xl mx-auto space-y-10">
+                  {[
+                    { q: "Is PAU Law accredited by the ABA?", a: "No. PAU School of Law is registered with the Committee of Bar Examiners of the State Bar of California as an unaccredited distance-learning law school." }
+                  ].map((faq, i) => (
+                    <div key={i} className="bg-white p-12 rounded-[40px] shadow-premium border border-gray-50 hover:shadow-2xl transition-all">
+                      <h4 className="text-2xl font-serif font-bold text-pau-blue mb-6 flex items-start">
+                        <span className="text-pau-gold mr-4">Q.</span>
+                        {faq.q}
+                      </h4>
+                      <p className="text-gray-600 leading-relaxed font-light text-lg pl-12 border-l-2 border-pau-gold/20">
+                        {faq.a}
+                      </p>
+                    </div>
+                  ))}
+               </div>
+            </SectionWrapper>
+          </>
+        );
+
       case 'admission-reqs':
         return (
           <>
-            <PageHeader title="Admission Requirements" subtitle="Evaluating candidates for a lifetime of legal excellence." icon={IdentificationIcon} />
+            <PageHeader title={"Admission\nRequirements"} subtitle="Identifying the next generation of leaders." icon={IdentificationIcon} />
             <SectionWrapper title="Eligibility Criteria">
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <InfoCard 
-                    icon={AcademicCapIcon} 
-                    title="Undergraduate Degree" 
-                    content="Candidates must hold a Bachelor's degree (B.A., B.S., or equivalent) from a regionally accredited institution or a foreign institution recognized by the State Bar of California."
-                  />
-                  <InfoCard 
-                    icon={ClipboardDocumentCheckIcon} 
-                    title="Standardized Tests" 
-                    content="Submission of a valid LSAT or GRE score is mandatory for all Juris Doctor applicants. Scores must be no more than five years old at the time of application."
-                  />
-                  <InfoCard 
-                    icon={UserPlusIcon} 
-                    title="Letters of Recommendation" 
-                    content="At least two letters are required. We recommend one academic reference and one professional reference that can attest to your analytical and writing abilities."
-                  />
-                  <InfoCard 
-                    icon={PencilSquareIcon} 
-                    title="Personal Statement" 
-                    content="A 500-750 word essay describing your motivation for practicing law, your unique life experiences, and how PAU Law fits your career goals."
-                  />
-               </div>
-            </SectionWrapper>
-          </>
-        );
-
-      case 'transfer-int':
-        return (
-          <>
-            <PageHeader title="Transfer & International" subtitle="Broadening horizons, welcoming global perspectives." icon={GlobeAltIcon} />
-            <SectionWrapper>
-               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                  <div className="bg-white p-12 rounded-3xl shadow-premium border border-gray-100">
-                     <h3 className="text-3xl font-serif font-bold text-pau-blue mb-8">Transfer Applicants</h3>
-                     <p className="text-gray-600 mb-6 leading-relaxed">Students who have completed their first year of law study at an ABA-approved or California-accredited law school may apply for transfer.</p>
-                     <ul className="space-y-4 mb-10">
-                        <li className="flex items-start text-sm text-gray-700 font-medium"><CheckBadgeIcon className="h-5 w-5 mr-3 text-pau-gold" /> Maximum of 30 semester units may be transferred</li>
-                        <li className="flex items-start text-sm text-gray-700 font-medium"><CheckBadgeIcon className="h-5 w-5 mr-3 text-pau-gold" /> Minimum GPA of 2.7 in prior law studies required</li>
-                        <li className="flex items-start text-sm text-gray-700 font-medium"><CheckBadgeIcon className="h-5 w-5 mr-3 text-pau-gold" /> Dean's Certification of Good Standing required</li>
-                     </ul>
-                     <button className="text-pau-blue font-bold text-sm uppercase tracking-widest border-b-2 border-pau-blue pb-1 hover:text-pau-gold hover:border-pau-gold transition-all">Transfer Policies</button>
-                  </div>
-                  <div className="bg-pau-darkBlue p-12 rounded-3xl text-white shadow-xl">
-                     <h3 className="text-3xl font-serif font-bold text-pau-gold mb-8">International Candidates</h3>
-                     <p className="text-gray-300 mb-6 leading-relaxed">PAU Law values the diversity international students bring to our digital campus. Candidates with non-U.S. degrees must complete additional steps:</p>
-                     <div className="space-y-8">
-                        <div>
-                           <h4 className="text-sm font-bold uppercase tracking-widest text-white mb-2">1. Credential Evaluation</h4>
-                           <p className="text-xs text-gray-400">All foreign transcripts must be evaluated by LSAC's CAS or a recognized agency like WES.</p>
-                        </div>
-                        <div>
-                           <h4 className="text-sm font-bold uppercase tracking-widest text-white mb-2">2. English Proficiency</h4>
-                           <p className="text-xs text-gray-400">Non-native speakers must submit a TOEFL (min 100 iBT) or IELTS (min 7.0) score.</p>
-                        </div>
-                        <div>
-                           <h4 className="text-sm font-bold uppercase tracking-widest text-white mb-2">3. Distance Education Policy</h4>
-                           <p className="text-xs text-gray-400">International students study remotely and do not require F-1 or J-1 visas for the online program.</p>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </SectionWrapper>
-          </>
-        );
-
-      case 'tech-reqs':
-        return (
-          <>
-            <PageHeader title="Tech Requirements" subtitle="The essential toolkit for your digital JD." icon={ComputerDesktopIcon} />
-            <SectionWrapper title="Systems & Connectivity">
-               <div className="max-w-4xl mx-auto">
-                  <div className="bg-white p-12 rounded-3xl shadow-premium border border-gray-100 mb-12">
-                     <h3 className="text-2xl font-serif font-bold text-pau-blue mb-8">Minimum Hardware Specifications</h3>
-                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                        <div className="flex items-start">
-                           <CommandLineIcon className="h-6 w-6 text-pau-gold mr-4 mt-1" />
-                           <div>
-                              <p className="font-bold text-gray-900">Processor & RAM</p>
-                              <p className="text-sm text-gray-500">Intel i5 (or equivalent) / 8GB RAM minimum</p>
-                           </div>
-                        </div>
-                        <div className="flex items-start">
-                           <VideoCameraIcon className="h-6 w-6 text-pau-gold mr-4 mt-1" />
-                           <div>
-                              <p className="font-bold text-gray-900">Camera & Mic</p>
-                              <p className="text-sm text-gray-500">720p HD Webcam / Noise-canceling microphone</p>
-                           </div>
-                        </div>
-                        <div className="flex items-start">
-                           <WifiIcon className="h-6 w-6 text-pau-gold mr-4 mt-1" />
-                           <div>
-                              <p className="font-bold text-gray-900">Internet Connection</p>
-                              <p className="text-sm text-gray-500">Minimum 10 Mbps Download / 5 Mbps Upload</p>
-                           </div>
-                        </div>
-                        <div className="flex items-start">
-                           <ShieldCheckIcon className="h-6 w-6 text-pau-gold mr-4 mt-1" />
-                           <div>
-                              <p className="font-bold text-gray-900">Operating System</p>
-                              <p className="text-sm text-gray-500">Windows 10+ / macOS Monterey+</p>
-                           </div>
-                        </div>
-                     </div>
-                     <div className="bg-pau-light p-6 rounded-xl border border-pau-blue/5">
-                        <p className="text-sm text-pau-blue font-bold mb-2">Mandatory Software:</p>
-                        <p className="text-xs text-gray-500">Google Chrome (latest), Microsoft Office 365 (Provided by school), and ExamSoft Examplify for proctored examinations.</p>
-                     </div>
-                  </div>
-                  <div className="bg-orange-50 border-l-4 border-orange-400 p-8 rounded-r-xl">
-                     <div className="flex">
-                        <div className="flex-shrink-0">
-                           <ExclamationCircleIcon className="h-6 w-6 text-orange-400" />
-                        </div>
-                        <div className="ml-4">
-                           <h3 className="text-sm font-bold text-orange-800 uppercase tracking-widest mb-2">Online Examination Requirement</h3>
-                           <p className="text-sm text-orange-700 leading-relaxed font-light">All JD students must have a computer that meets the requirements for Examplify. iPads and Chromebooks are currently <strong>NOT</strong> compatible with our examination software.</p>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </SectionWrapper>
-          </>
-        );
-
-      // --- OTHER SECTIONS (KEPT AS IS) ---
-      case 'office-hours':
-        return (
-          <>
-            <PageHeader title="Office Hours" subtitle="We are here to assist your academic journey." icon={ClockIcon} />
-            <SectionWrapper title="Standard Operating Hours">
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                  <div className="bg-white p-10 rounded-3xl border border-gray-100 shadow-premium">
-                     <h3 className="text-2xl font-serif font-bold text-pau-blue mb-8">Administrative Offices</h3>
-                     <div className="space-y-6">
-                        {[
-                          { dept: "Admissions & Recruitment", hours: "Mon - Fri, 9 AM - 6 PM (PST)" },
-                          { dept: "Registrar's Office", hours: "Mon - Thu, 10 AM - 5 PM (PST)" },
-                          { dept: "Financial Aid Service", hours: "Tue - Fri, 10 AM - 4 PM (PST)" },
-                          { dept: "Career Services", hours: "Mon - Fri, 9 AM - 5 PM (PST)" }
-                        ].map((item, i) => (
-                          <div key={i} className="flex justify-between items-start pb-4 border-b border-gray-50">
-                             <span className="font-bold text-gray-700">{item.dept}</span>
-                             <span className="text-pau-blue text-sm">{item.hours}</span>
-                          </div>
-                        ))}
-                     </div>
-                  </div>
-                  <div className="bg-pau-darkBlue p-10 rounded-3xl text-white shadow-xl">
-                     <h3 className="text-2xl font-serif font-bold text-pau-gold mb-8">Academic Support</h3>
-                     <div className="space-y-6">
-                        {[
-                          { dept: "Law Library (Online)", hours: "24 / 7 Access" },
-                          { dept: "Reference Librarian", hours: "Mon - Fri, 11 AM - 8 PM (PST)" },
-                          { dept: "Academic Success Center", hours: "By Appointment Only" },
-                          { dept: "IT Support Desk", hours: "Mon - Sat, 8 AM - 10 PM (PST)" }
-                        ].map((item, i) => (
-                          <div key={i} className="flex justify-between items-start pb-4 border-b border-white/10">
-                             <span className="font-bold text-gray-200">{item.dept}</span>
-                             <span className="text-pau-gold text-sm">{item.hours}</span>
-                          </div>
-                        ))}
-                     </div>
-                  </div>
-               </div>
-            </SectionWrapper>
-          </>
-        );
-
-      case 'contact-info':
-        return (
-          <>
-            <PageHeader title="Contact Information" subtitle="Direct channels to our departments." icon={PhoneIcon} />
-            <SectionWrapper>
-               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                  <div className="p-10 bg-white rounded-2xl border border-gray-100 shadow-sm text-center">
-                     <MapPinIcon className="h-12 w-12 text-pau-blue mx-auto mb-6" />
-                     <h4 className="text-xl font-bold mb-4">Mailing Address</h4>
-                     <p className="text-gray-500 font-light leading-relaxed">123 University Drive<br/>Santa Clara, CA 95050<br/>United States</p>
-                  </div>
-                  <div className="p-10 bg-white rounded-2xl border border-gray-100 shadow-sm text-center">
-                     <PhoneIcon className="h-12 w-12 text-pau-blue mx-auto mb-6" />
-                     <h4 className="text-xl font-bold mb-4">Phone Support</h4>
-                     <p className="text-gray-500 font-light leading-relaxed">Main Line: (408) 555-0100<br/>Admissions: (408) 555-0199<br/>Registrar: (408) 555-0102</p>
-                  </div>
-                  <div className="p-10 bg-white rounded-2xl border border-gray-100 shadow-sm text-center">
-                     <EnvelopeIcon className="h-12 w-12 text-pau-blue mx-auto mb-6" />
-                     <h4 className="text-xl font-bold mb-4">Email Inquiry</h4>
-                     <p className="text-gray-500 font-light leading-relaxed">General: info@pau.edu<br/>Admissions: apply@pau.edu<br/>Support: it@pau.edu</p>
-                  </div>
-               </div>
-            </SectionWrapper>
-          </>
-        );
-
-      case 'request-info':
-        return (
-          <>
-            <PageHeader title="Request Information" subtitle="Discover your future at PAU Law." icon={PaperAirplaneIcon} />
-            <SectionWrapper>
-               <div className="max-w-4xl mx-auto bg-white p-12 lg:p-20 rounded-3xl shadow-premium border border-gray-100">
-                  <h3 className="text-3xl font-serif font-bold text-pau-darkBlue mb-10">Candidate Inquiry Form</h3>
-                  <form className="space-y-8" onSubmit={(e) => { e.preventDefault(); alert('Your request has been submitted successfully.'); }}>
-                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div>
-                           <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Full Name</label>
-                           <input type="text" required className="w-full p-4 bg-gray-50 border border-gray-100 rounded-lg outline-none focus:ring-2 focus:ring-pau-blue/5 focus:border-pau-blue transition-all" />
-                        </div>
-                        <div>
-                           <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Email Address</label>
-                           <input type="email" required className="w-full p-4 bg-gray-50 border border-gray-100 rounded-lg outline-none focus:ring-2 focus:ring-pau-blue/5 focus:border-pau-blue transition-all" />
-                        </div>
-                     </div>
-                     <button type="submit" className="w-full bg-pau-blue text-white py-5 rounded-lg font-bold uppercase tracking-widest shadow-lg hover:bg-pau-gold transition-all">Submit Request</button>
-                  </form>
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                  <InfoCard icon={AcademicCapIcon} title="Undergrad Degree" content="A Bachelor's degree required from an accredited institution." />
+                  <InfoCard icon={PencilSquareIcon} title="Personal Statement" content="A 500-word essay explaining your motivation for legal study." />
                </div>
             </SectionWrapper>
           </>
@@ -432,81 +622,14 @@ export default function App() {
       case 'tuition-fees':
         return (
           <>
-            <PageHeader title="Tuition & Fees" subtitle="Transparent pricing for your legal education." icon={CurrencyDollarIcon} />
-            <SectionWrapper title="2024-2025 Academic Year">
-               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
-                  <div className="bg-white p-10 rounded-3xl shadow-premium border border-gray-100">
-                     <h3 className="text-2xl font-serif font-bold text-pau-blue mb-8">Base Tuition</h3>
+            <PageHeader title={"Tuition &\nFees"} subtitle="Invest in your future with competitive pricing." icon={CurrencyDollarIcon} />
+            <SectionWrapper title="2024-2025 Schedule">
+               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                  <div className="bg-white p-12 rounded-[50px] shadow-premium border border-gray-50">
+                     <h3 className="text-3xl font-serif font-bold text-pau-blue mb-10">Base Rates</h3>
                      <div className="space-y-6">
-                        <div className="flex justify-between items-center pb-4 border-b border-gray-50">
-                           <span className="text-gray-600">Per Credit Unit</span>
-                           <span className="text-xl font-bold text-pau-darkBlue">$520</span>
-                        </div>
-                        <div className="flex justify-between items-center pb-4 border-b border-gray-50">
-                           <span className="text-gray-600">Annual Tuition (approx.)</span>
-                           <span className="text-xl font-bold text-pau-darkBlue">$12,500</span>
-                        </div>
-                     </div>
-                  </div>
-                  <div className="bg-pau-darkBlue p-10 rounded-3xl shadow-xl text-white">
-                     <h3 className="text-2xl font-serif font-bold text-pau-gold mb-8">Mandatory Fees</h3>
-                     <div className="space-y-6">
-                        <div className="flex justify-between items-center pb-4 border-b border-white/10">
-                           <span className="text-gray-300">Registration (Annual)</span>
-                           <span className="text-xl font-bold">$250</span>
-                        </div>
-                        <div className="flex justify-between items-center pb-4 border-b border-white/10">
-                           <span className="text-gray-300">Tech & Library Access</span>
-                           <span className="text-xl font-bold">$300</span>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </SectionWrapper>
-          </>
-        );
-
-      case 'payment-plan':
-        return (
-          <>
-            <PageHeader title="Payment Plans" subtitle="Flexible options to fit your financial life." icon={CreditCardIcon} />
-            <SectionWrapper>
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-                  <InfoCard 
-                    icon={BanknotesIcon} 
-                    title="Full Annual Payment" 
-                    content="Pay your entire year's tuition upfront and receive a 5% discount on your base tuition fees."
-                  />
-                  <InfoCard 
-                    icon={ArrowPathIcon} 
-                    title="Semester Installments" 
-                    content="Divide your annual tuition into two semester payments due at the start of Fall and Spring."
-                  />
-               </div>
-            </SectionWrapper>
-          </>
-        );
-
-      case 'refund-policy':
-        return (
-          <>
-            <PageHeader title="Refund Policy" subtitle="Fairness and transparency in withdrawals." icon={ShieldCheckIcon} />
-            <SectionWrapper>
-               <div className="max-w-4xl mx-auto">
-                  <div className="bg-white p-12 rounded-3xl shadow-premium border border-gray-100 mb-12">
-                     <h3 className="text-2xl font-serif font-bold text-pau-blue mb-8">Tuition Refund Schedule</h3>
-                     <div className="space-y-2">
-                        {[
-                          { period: "Before first day of classes", refund: "100% of Tuition" },
-                          { period: "Within Week 1 of Semester", refund: "90% of Tuition" },
-                          { period: "Weeks 2 through 4 of Semester", refund: "50% of Tuition" },
-                          { period: "After Week 8", refund: "No Refund" }
-                        ].map((row, i) => (
-                          <div key={i} className={`flex justify-between items-center p-5 rounded-lg ${i % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}>
-                             <span className="font-bold text-gray-700">{row.period}</span>
-                             <span className="text-pau-blue font-extrabold">{row.refund}</span>
-                          </div>
-                        ))}
+                        <div className="flex justify-between border-b pb-4"><span className="text-gray-600">Per Unit</span><span className="font-bold">$520</span></div>
+                        <div className="flex justify-between border-b pb-4"><span className="text-gray-600">Annual Estimate</span><span className="font-bold">$12,500</span></div>
                      </div>
                   </div>
                </div>
@@ -515,76 +638,13 @@ export default function App() {
         );
 
       case 'admissions':
-        return <Admissions content={{ title: "Admissions Gateway", intro: "Start your journey toward becoming a licensed advocate in California.", requirementsTitle: "Core Requirements", requirements: ["Conferred Bachelor's Degree", "LSAT or GRE Scores", "Personal Statement"], tuitionTitle: "Tuition & Investment", tuitionInfo: "Affordable legal education without compromising quality.", tuitionCost: "$12,500", deadlinesTitle: "Key Dates", deadlines: [{ term: "Fall 2024", date: "July 15", type: "Priority" }], faqTitle: "FAQs", faqs: [] }} shared={sharedContent} />;
-
-      case 'app-steps':
-        return (
-          <>
-            <PageHeader title="Application Steps" subtitle="A clear roadmap for your law school application." icon={NumberedListIcon} />
-            <SectionWrapper title="Your Journey to PAU Law">
-               <div className="max-w-4xl mx-auto space-y-12">
-                  {[
-                    { step: 1, title: "Create an LSAC Account", desc: "Most applications must be submitted via the Law School Admission Council (LSAC). Register at lsac.org to begin." },
-                    { step: 2, title: "Register for the CAS", desc: "The Credential Assembly Service (CAS) centralizes your transcripts, letters of rec, and scores." },
-                    { step: 3, title: "Take the LSAT or GRE", desc: "Ensure your scores are transmitted to PAU Law (Institution Code: 4921)." },
-                    { step: 4, title: "Submit Transcripts", desc: "Request official transcripts from all post-secondary institutions attended." },
-                    { step: 5, title: "Draft Personal Statement", desc: "A 2-3 page essay detailing your motivation for pursuing law and your unique background." },
-                    { step: 6, title: "Final Submission", desc: "Complete the online application and pay the $60 application fee (fee waivers available)." }
-                  ].map((s) => (
-                    <div key={s.step} className="flex gap-8 group">
-                       <div className="flex-shrink-0 w-16 h-16 rounded-full bg-pau-light border-2 border-pau-gold/30 flex items-center justify-center text-2xl font-serif font-bold text-pau-blue group-hover:bg-pau-gold group-hover:text-white transition-all">
-                          {s.step}
-                       </div>
-                       <div className="pt-2">
-                          <h3 className="text-xl font-bold text-pau-darkBlue mb-2">{s.title}</h3>
-                          <p className="text-gray-600 leading-relaxed font-light">{s.desc}</p>
-                       </div>
-                    </div>
-                  ))}
-               </div>
-            </SectionWrapper>
-          </>
-        );
+        return <Admissions content={{ title: "Admissions Portal", intro: "Your gateway to a global legal career.", requirementsTitle: "Prerequisites", requirements: ["Bachelor's Degree", "LSAT Score"], tuitionTitle: "Financial Investment", tuitionInfo: "Designed for accessibility.", tuitionCost: "$12,500", deadlinesTitle: "Priority Deadlines", deadlines: [{ term: "Fall 2024", date: "July 15", type: "Priority" }], faqTitle: "FAQs", faqs: [] }} shared={sharedContent} />;
 
       case 'academics':
-        return <Academics onNavigate={handleNavigate} content={{ title: "Academic Excellence", intro: "A rigorous, tech-driven approach to legal education.", programsTitle: "Degree Programs", programs: [{ name: "Juris Doctor (JD)", description: "4-year bar-qualifying program." }], concentrationsTitle: "Concentrations", concentrations: ["Tech Law", "Civil Litigation", "Corporate Law"] }} />;
-
-      case 'curriculum-schedule':
-        return (
-          <>
-            <PageHeader title="Curriculum Roadmap" subtitle="A structured 4-year path to your Juris Doctor." icon={MapIcon} />
-            <SectionWrapper title="JD Degree Sequence">
-               <div className="space-y-10">
-                  {[
-                    { year: "1L: Foundations", subjects: ["Torts", "Contracts", "Criminal Law", "Legal Writing"], focus: "Mastering the fundamentals of legal reasoning." },
-                    { year: "2L: Breadth", subjects: ["Property Law", "Civil Procedure", "Constitutional Law", "FYLSX Prep"], focus: "Expanding into regulatory and procedural law. Preparation for the Baby Bar." },
-                    { year: "3L: Specialization", subjects: ["Evidence", "Business Associations", "Wills & Trusts", "Electives"], focus: "Developing expertise in specific practice areas." },
-                    { year: "4L: Mastery", subjects: ["Criminal Procedure", "Remedies", "Bar Review Course", "Clinical Externship"], focus: "Intensive Bar exam preparation and practical clinical experience." }
-                  ].map((level, idx) => (
-                    <div key={idx} className="bg-white p-10 rounded-2xl shadow-premium border border-gray-100 flex flex-col md:flex-row gap-8 items-start hover:border-pau-gold transition-colors">
-                       <div className="md:w-1/4">
-                          <h3 className="text-3xl font-serif font-bold text-pau-blue mb-2">{level.year}</h3>
-                          <div className="h-1 w-10 bg-pau-gold"></div>
-                       </div>
-                       <div className="md:w-3/4">
-                          <p className="text-gray-600 mb-6 italic">{level.focus}</p>
-                          <div className="grid grid-cols-2 gap-4">
-                             {level.subjects.map((sub, sIdx) => (
-                               <div key={sIdx} className="flex items-center text-sm font-bold text-pau-darkBlue">
-                                  <ArrowRightIcon className="h-4 w-4 mr-2 text-pau-gold" /> {sub}
-                               </div>
-                             ))}
-                          </div>
-                       </div>
-                    </div>
-                  ))}
-               </div>
-            </SectionWrapper>
-          </>
-        );
+        return <Academics onNavigate={handleNavigate} content={{ title: "Academic Excellence", intro: "A rigorous approach to U.S. Law.", programsTitle: "Degree Programs", programs: [{ name: "JD", description: "4-year bar-qualifying Juris Doctor degree." }], concentrationsTitle: "Specializations", concentrations: ["Technology Law", "Civil Litigation"] }} />;
 
       case 'faculty':
-        return <Faculty content={{ title: "Faculty", intro: "Distinguished scholars and legal practitioners.", facultyList: FACULTY_DATA }} shared={sharedContent} />;
+        return <Faculty content={{ title: "Our Faculty", intro: "Distinguished legal scholars and practicing specialists.", facultyList: FACULTY_DATA }} shared={sharedContent} />;
 
       case 'admin':
         return <Admin home={MOCK_HOME_CONTENT} setHome={() => {}} admissions={{ requirements: [] }} setAdmissions={() => {}} academics={{ programs: [], concentrations: [] }} setAcademics={() => {}} faculty={{ facultyList: FACULTY_DATA }} setFaculty={() => {}} notices={{ notices: NEWS_DATA }} setNotices={() => {}} />;
@@ -592,9 +652,8 @@ export default function App() {
       default:
         return (
           <div className="pt-60 pb-40 text-center animate-fade-in">
-            <h2 className="text-3xl font-serif text-pau-darkBlue">Coming Soon</h2>
-            <p className="text-gray-400 mt-4 font-light">We are finalizing the content for this section.</p>
-            <button onClick={() => handleNavigate('home')} className="mt-12 bg-pau-gold text-white px-8 py-3 rounded-full font-bold hover:bg-pau-blue transition-all">Return Home</button>
+            <h2 className="text-3xl font-serif text-pau-darkBlue">Building Your Experience</h2>
+            <button onClick={() => handleNavigate('home')} className="mt-12 bg-pau-gold text-white px-10 py-4 rounded-full font-bold">Return to Campus</button>
           </div>
         );
     }

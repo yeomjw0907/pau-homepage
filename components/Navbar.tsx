@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { SupportedLanguage, Page, SharedContent } from '../types';
-import { GlobeAltIcon, ChevronDownIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { GlobeAltIcon, ChevronDownIcon, Bars3Icon, XMarkIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 
 interface NavbarProps {
   currentLang: SupportedLanguage;
@@ -29,6 +29,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [scrolled, setScrolled] = useState(false);
   
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [mobileExpandedSection, setMobileExpandedSection] = useState<string | null>(null);
   const timeoutRef = useRef<any>(null);
 
   useEffect(() => {
@@ -38,6 +39,13 @@ export const Navbar: React.FC<NavbarProps> = ({
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Close mobile menu when navigating
+  const navigateAndClose = (page: Page) => {
+    onNavigate(page);
+    setIsMobileMenuOpen(false);
+    setMobileExpandedSection(null);
+  };
 
   const handleMouseEnter = (menu: string) => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -81,7 +89,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   
   const dropdownBaseClass = "absolute left-0 mt-4 bg-white rounded-2xl shadow-[0_25px_60px_rgba(0,0,0,0.25)] ring-1 ring-black/10 py-8 z-[100] transform origin-top-left transition-all duration-300 border border-gray-200 animate-fade-in-up";
 
-  // Active Submenu Item Helper
+  // Desktop Submenu Item Helper
   const SubmenuBtn = ({ page, label }: { page: Page, label: string }) => {
     const isActive = currentPage === page;
     return (
@@ -101,10 +109,43 @@ export const Navbar: React.FC<NavbarProps> = ({
     );
   };
 
+  // Mobile Menu Item Helper
+  const MobileSection = ({ title, id, children }: { title: string, id: string, children: React.ReactNode }) => {
+    const isOpen = mobileExpandedSection === id;
+    return (
+      <div className="border-b border-gray-100 last:border-0">
+        <button 
+          onClick={() => setMobileExpandedSection(isOpen ? null : id)}
+          className="w-full flex items-center justify-between py-5 text-left"
+        >
+          <span className={`text-sm font-extrabold tracking-widest uppercase transition-colors ${isOpen ? 'text-pau-blue' : 'text-gray-900'}`}>
+            {title}
+          </span>
+          <ChevronDownIcon className={`h-4 w-4 text-pau-gold transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+        </button>
+        <div className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-[500px] pb-5' : 'max-h-0'}`}>
+          <div className="flex flex-col space-y-4 pl-4 border-l-2 border-pau-gold/20">
+            {children}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const MobileSubLink = ({ page, label }: { page: Page, label: string }) => (
+    <button 
+      onClick={() => navigateAndClose(page)}
+      className={`text-[15px] font-medium text-left py-1 transition-colors ${currentPage === page ? 'text-pau-gold font-bold' : 'text-gray-500 active:text-pau-blue'}`}
+    >
+      {label}
+    </button>
+  );
+
   return (
     <nav className={`fixed w-full top-0 z-50 transition-all duration-500 ${navBgClass}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
+          {/* Logo Section */}
           <div 
             className="flex-shrink-0 cursor-pointer group flex items-center gap-3"
             onClick={() => onNavigate('home')}
@@ -116,14 +157,14 @@ export const Navbar: React.FC<NavbarProps> = ({
                  <h1 className={`${logoTitleClass} font-bold text-xl tracking-tighter leading-none font-sans transition-colors duration-500`}>
                    PACIFIC AMERICAN
                  </h1>
-                 <h2 className={`${logoSubtitleClass} font-medium text-[10px] tracking-[0.45em] leading-none font-sans mt-1.5 uppercase transition-colors duration-500`}>
+                 <h2 className={`${logoSubtitleClass} font-medium text-[10px] tracking-[0.45em] mt-1.5 uppercase transition-colors duration-500`}>
                    School of Law
                  </h2>
             </div>
           </div>
 
+          {/* Desktop Nav Items */}
           <div className="hidden md:flex items-center space-x-1">
-            
             {/* ABOUT */}
             <div className="relative group" onMouseEnter={() => handleMouseEnter('about')} onMouseLeave={handleMouseLeave}>
               <button className={navLinkClass(['history-mission', 'president-welcome', 'dean-message', 'school-form', 'faqs', 'bar-reg', 'disclosure', 'catalog', 'faculty', 'admin-staffs'].includes(currentPage))}>
@@ -276,7 +317,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
           </div>
 
-           <div className="flex items-center md:hidden">
+          {/* Mobile Toggle Button */}
+          <div className="flex items-center md:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className={`inline-flex items-center justify-center p-2 rounded-md focus:outline-none transition-colors ${isTransparent ? 'text-white hover:bg-white/20' : 'text-gray-700 hover:text-pau-blue hover:bg-gray-50'}`}
@@ -291,18 +333,91 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
       </div>
 
-       {isMobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 shadow-2xl absolute w-full left-0 max-h-[80vh] overflow-y-auto z-[200]">
-          <div className="p-8 space-y-6">
-            <button onClick={() => { onNavigate('home'); setIsMobileMenuOpen(false); }} className={`block w-full text-left text-lg font-serif font-bold ${currentPage === 'home' ? 'text-pau-gold' : 'text-pau-blue'}`}>{shared.nav.home}</button>
-            <div>
-              <p className="text-[10px] font-extrabold text-pau-gold uppercase tracking-widest mb-3">{shared.nav.about}</p>
-              <div className="grid grid-cols-2 gap-4">
-                 <button onClick={() => onNavigate('history-mission')} className={`text-sm font-bold text-left ${currentPage === 'history-mission' ? 'text-pau-blue underline decoration-pau-gold underline-offset-4' : 'text-gray-800'}`}>History</button>
-                 <button onClick={() => onNavigate('faculty')} className={`text-sm font-bold text-left ${currentPage === 'faculty' ? 'text-pau-blue underline decoration-pau-gold underline-offset-4' : 'text-gray-800'}`}>Faculty</button>
-                 <button onClick={() => onNavigate('bar-reg')} className={`text-sm font-bold text-left ${currentPage === 'bar-reg' ? 'text-pau-blue underline decoration-pau-gold underline-offset-4' : 'text-gray-800'}`}>Compliance</button>
-              </div>
+      {/* MOBILE MENU OVERLAY */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden bg-white fixed inset-0 top-[72px] z-[200] overflow-y-auto border-t border-gray-100 shadow-inner flex flex-col">
+          <div className="p-6 space-y-4 flex-grow">
+            
+            {/* Quick Home Link */}
+            <button 
+              onClick={() => navigateAndClose('home')} 
+              className={`w-full text-left text-xl font-serif font-bold py-4 border-b border-gray-100 flex items-center justify-between ${currentPage === 'home' ? 'text-pau-gold' : 'text-pau-blue'}`}
+            >
+              {shared.nav.home}
+              <ChevronRightIcon className="h-5 w-5 opacity-20" />
+            </button>
+
+            {/* Mobile About */}
+            <MobileSection title={shared.nav.about} id="about">
+              <MobileSubLink page="history-mission" label={shared.nav.historyMission} />
+              <MobileSubLink page="president-welcome" label={shared.nav.presidentWelcome} />
+              <MobileSubLink page="dean-message" label={shared.nav.deanMessage} />
+              <MobileSubLink page="faculty" label={shared.nav.faculty} />
+              <MobileSubLink page="admin-staffs" label={shared.nav.adminStaffs} />
+              <MobileSubLink page="bar-reg" label={shared.nav.barReg} />
+              <MobileSubLink page="disclosure" label={shared.nav.disclosure} />
+              <MobileSubLink page="catalog" label={shared.nav.catalog} />
+              <MobileSubLink page="faqs" label={shared.nav.faqs} />
+            </MobileSection>
+
+            {/* Mobile Academics */}
+            <MobileSection title={shared.nav.academics} id="academics">
+              <MobileSubLink page="academics" label="Overview" />
+              <MobileSubLink page="academic-calendar" label={shared.nav.academicCalendar} />
+              <MobileSubLink page="bar-info" label={shared.nav.barInfo} />
+              <MobileSubLink page="curriculum-schedule" label={shared.nav.curriculum} />
+              <MobileSubLink page="course-desc" label={shared.nav.courseDesc} />
+              <MobileSubLink page="grad-reqs" label={shared.nav.gradReqs} />
+            </MobileSection>
+
+            {/* Mobile Admissions */}
+            <MobileSection title={shared.nav.admissions} id="admissions">
+              <MobileSubLink page="apply-now" label={shared.nav.applyNow} />
+              <MobileSubLink page="admissions" label="Admissions Home" />
+              <MobileSubLink page="admission-reqs" label={shared.nav.admissionReqs} />
+              <MobileSubLink page="app-steps" label={shared.nav.appSteps} />
+              <MobileSubLink page="tech-reqs" label={shared.nav.techReqs} />
+            </MobileSection>
+
+            {/* Mobile Tuition */}
+            <MobileSection title={shared.nav.tuition} id="tuition">
+              <MobileSubLink page="tuition-fees" label={shared.nav.tuitionFees} />
+              <MobileSubLink page="payment-plan" label={shared.nav.paymentPlan} />
+              <MobileSubLink page="refund-policy" label={shared.nav.refundPolicy} />
+            </MobileSection>
+
+            {/* Mobile Contact */}
+            <MobileSection title={shared.nav.contact} id="contact">
+              <MobileSubLink page="contact-info" label={shared.nav.contactInfo} />
+              <MobileSubLink page="office-hours" label={shared.nav.officeHours} />
+              <MobileSubLink page="request-info" label={shared.nav.requestInfo} />
+            </MobileSection>
+
+            {/* Mobile Language Section */}
+            <div className="pt-8 border-t border-gray-100">
+               <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6">Language Settings</p>
+               <div className="grid grid-cols-2 gap-3">
+                 {LANGUAGES.map(lang => (
+                   <button 
+                     key={lang}
+                     onClick={() => onLanguageChange(lang)}
+                     className={`text-xs py-3 px-4 rounded-xl border text-center transition-all ${currentLang === lang ? 'bg-pau-blue text-white border-pau-blue font-bold shadow-md' : 'bg-gray-50 border-gray-100 text-gray-600'}`}
+                   >
+                     {lang === 'Chinese (Simplified)' ? 'Chinese' : lang}
+                   </button>
+                 ))}
+               </div>
             </div>
+          </div>
+          
+          {/* Bottom Call to Action */}
+          <div className="p-6 bg-pau-darkBlue">
+            <button 
+              onClick={() => navigateAndClose('admissions')}
+              className="w-full py-5 bg-pau-gold text-white text-xs font-bold uppercase tracking-[0.2em] rounded-xl shadow-lg"
+            >
+              Start Application
+            </button>
           </div>
         </div>
       )}
