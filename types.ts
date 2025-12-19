@@ -190,12 +190,6 @@ export interface ConsumerInfoContent {
   }[];
 }
 
-export enum ImageSize {
-  Size_1K = '1K',
-  Size_2K = '2K',
-  Size_4K = '4K'
-}
-
 export interface SharedContent {
   nav: {
     home: string;
@@ -278,6 +272,13 @@ export interface SharedContent {
     aboutPauNews: string;
     aboutPauNewsDetail: string;
   };
+}
+
+// Added ImageSize enum for architectural visualization
+export enum ImageSize {
+  Size_1K = '1K',
+  Size_2K = '2K',
+  Size_4K = '4K'
 }
 
 // Default Shared Content

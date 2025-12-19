@@ -117,7 +117,7 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ shared, onClinicClick,
             <div className="w-12 h-[2px] bg-pau-gold mb-8"></div>
             <p className="text-[10px] font-bold tracking-widest uppercase text-pau-gold mb-6">Our Founding Mission</p>
             <blockquote className="text-3xl font-serif font-bold leading-relaxed mb-12">
-              "As educational borders dissolve, we nurture global leaders with critical perspectives. We are a platform for shaping thoughtful, solution-oriented professionals."
+              "Pacific American University School of Law is a <span className="text-pau-gold">Registered Unaccredited Correspondence Law School</span> with the Committee of Bar Examiners of The State Bar of California."
             </blockquote>
             <div className="flex items-center space-x-4 opacity-60">
               <div className="w-8 h-px bg-white"></div>
@@ -126,7 +126,7 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ shared, onClinicClick,
           </div>
           <div className="bg-white p-16 lg:p-24 text-gray-900 flex flex-col justify-center">
             <p className="text-sm text-gray-500 font-light leading-relaxed mb-12">
-              To redefine legal education by breaking down geographic barriers and empowering talented students worldwide.
+              Pacific American University School of Law is a <strong>Registered Unaccredited Correspondence Law School</strong> with the Committee of Bar Examiners of The State Bar of California. We offer a high-quality, 100% online Juris Doctor (J.D.) program designed to overcome geographic barriers.
             </p>
             <div className="space-y-10">
               {[
