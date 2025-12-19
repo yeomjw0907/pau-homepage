@@ -97,10 +97,46 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
             <div className="max-w-5xl mx-auto px-6 py-20">
                <div className="space-y-16">
                   {[
-                    { year: "First Year (1L)", courses: ["Torts I & II", "Contracts I & II", "Criminal Law", "Legal Writing & Research", "FYLSX Preparation"] },
-                    { year: "Second Year (2L)", courses: ["Real Property I & II", "Civil Procedure I & II", "Professional Responsibility", "Business Associations"] },
-                    { year: "Third Year (3L)", courses: ["Evidence I & II", "Constitutional Law I & II", "Criminal Procedure", "Electives"] },
-                    { year: "Fourth Year (4L)", courses: ["Wills & Trusts", "Community Property", "Remedies", "Bar Exam Intensive Review"] }
+                    { 
+                      year: "First Year (1L)", 
+                      courses: [
+                        "Introduction to Law", 
+                        "Contracts I & II", 
+                        "Torts I & II", 
+                        "Criminal Law", 
+                        "Legal Writing & Analysis", 
+                        "FYLSX Review"
+                      ] 
+                    },
+                    { 
+                      year: "Second Year (2L)", 
+                      courses: [
+                        "Civil Procedure", 
+                        "Property", 
+                        "Remedies", 
+                        "Criminal Procedure"
+                      ] 
+                    },
+                    { 
+                      year: "Third Year (3L)", 
+                      courses: [
+                        "Evidence", 
+                        "Constitutional Law", 
+                        "Business Associations", 
+                        "Community Property"
+                      ] 
+                    },
+                    { 
+                      year: "Fourth Year (4L)", 
+                      courses: [
+                        "Professional Responsibility", 
+                        "Wills & Succession", 
+                        "California Civil Procedure", 
+                        "California Evidence",
+                        "Advanced Legal Research & Writing",
+                        "Practical Competency Training"
+                      ] 
+                    }
                   ].map((row, i) => (
                     <div key={i} className="relative group">
                        <div className="absolute -left-4 top-0 bottom-0 w-1 bg-pau-gold/20 group-hover:bg-pau-gold transition-colors"></div>
