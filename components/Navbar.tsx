@@ -291,7 +291,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       </div>
                       <div>
                         <h4 className="text-[11px] font-extrabold text-pau-goldDark uppercase tracking-widest border-b-2 border-pau-gold/10 pb-3 mb-4 flex items-center">
-                          <IdentificationIcon className="h-3 w-3 mr-2" /> Records & Admin
+                          <IdentificationIcon className="h-3 w-3 mr-2" /> Records
                         </h4>
                         <ul className="space-y-3">
                           <li><SubmenuBtn page="home" label="Populi" external /></li>
