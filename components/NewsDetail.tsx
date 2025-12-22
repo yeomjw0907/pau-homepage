@@ -11,6 +11,7 @@ interface NewsDetailProps {
 
 export const NewsDetail: React.FC<NewsDetailProps> = ({ item, onBack, shared }) => {
   const images = item.images && item.images.length > 0 ? item.images : ((item as any).imageUrl ? [(item as any).imageUrl] : []);
+  const isNewsletter = item.category === 'Newsletter';
 
   return (
     <div className="bg-white min-h-screen pt-44 pb-16 px-4 sm:px-6 lg:px-8">
@@ -25,12 +26,13 @@ export const NewsDetail: React.FC<NewsDetailProps> = ({ item, onBack, shared }) 
           <span className="font-bold text-sm uppercase tracking-wide">{shared.buttons.backToList}</span>
         </button>
 
-        <article className="bg-white">
+        <article className={`bg-white ${isNewsletter ? 'newsletter-layout' : ''}`}>
           <header className="mb-10 pb-10 border-b border-gray-100">
             <div className="flex flex-wrap items-center gap-4 text-sm mb-6">
               <span className={`flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider
                 ${item.category === 'Event' ? 'bg-blue-50 text-blue-700 border border-blue-100' :
                   item.category === 'Academic' ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' :
+                  item.category === 'Newsletter' ? 'bg-pau-blue text-white' :
                   'bg-gray-50 text-gray-600 border border-gray-200'
                 }`}>
                 <TagIcon className="h-3 w-3 mr-1.5" />
@@ -64,9 +66,8 @@ export const NewsDetail: React.FC<NewsDetailProps> = ({ item, onBack, shared }) 
             )}
           </header>
 
-          {/* Render Rich Text Content Safely */}
           <div 
-            className="prose prose-lg prose-blue text-gray-700 leading-relaxed font-sans max-w-none mb-16"
+            className={`prose prose-lg prose-blue text-gray-700 leading-relaxed font-sans max-w-none mb-16 ${isNewsletter ? 'prose-newsletter' : ''}`}
             dangerouslySetInnerHTML={{ __html: item.body }}
           />
           
@@ -78,6 +79,51 @@ export const NewsDetail: React.FC<NewsDetailProps> = ({ item, onBack, shared }) 
           </div>
         </article>
       </div>
+      <style>{`
+        .prose-newsletter h3 {
+          font-family: 'Libre Baskerville', serif;
+          color: #002855;
+          border-bottom: 2px solid #B38B59;
+          padding-bottom: 0.5rem;
+          margin-top: 3.5rem;
+          font-size: 1.625rem;
+          line-height: 1.2;
+        }
+        .prose-newsletter p {
+          margin-bottom: 1.25rem;
+        }
+        .prose-newsletter ul {
+          margin-top: 1rem;
+          margin-bottom: 1.5rem;
+          padding-left: 0;
+          list-style: none;
+        }
+        .prose-newsletter li {
+          position: relative;
+          padding-left: 1.5rem;
+          margin-bottom: 0.5rem;
+        }
+        .prose-newsletter li::before {
+          content: "•";
+          position: absolute;
+          left: 0.25rem;
+          color: #B38B59;
+          font-weight: bold;
+        }
+        .prose-newsletter hr {
+          margin: 3rem 0;
+          border-top: 1px solid #e2e8f0;
+        }
+        .prose-newsletter blockquote {
+          border-left: 4px solid #B38B59;
+          padding: 1.5rem 2rem;
+          background: #f8fafc;
+          border-radius: 0 1rem 1rem 0;
+          font-style: italic;
+          color: #4a5568;
+          margin: 2rem 0;
+        }
+      `}</style>
     </div>
   );
 };

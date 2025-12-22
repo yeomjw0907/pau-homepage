@@ -112,32 +112,50 @@ const App: React.FC = () => {
 
   const [weeklyDictaContent, setWeeklyDictaContent] = useState({
     title: 'Weekly Dicta',
-    intro: 'Official announcements and student life updates for the PAU community.',
+    intro: 'Official announcements and updates for the PAU School of Law community.',
     notices: [
       {
-        id: 'wd-1',
-        title: 'Spring 2026 Semester Registration Now Live',
-        date: 'Nov 15, 2025',
-        summary: 'Enrollment for the Spring 2026 trimester is officially open for all returning and incoming students.',
-        body: '<p>Pacific American University is pleased to announce that registration for the Spring 2026 semester is now officially open via Populi. Students should consult the Academic Calendar for deadline information and ensure all prerequisites for upper-division courses are met.</p>',
-        category: 'Academic',
-        isPinned: true
-      },
-      {
-        id: 'wd-2',
-        title: 'New Library Database Access: Westlaw Precision',
-        date: 'Nov 12, 2025',
-        summary: 'All PAU students now have access to the latest Westlaw Precision AI features for legal research.',
-        body: '<p>The Law Library has successfully integrated Westlaw Precision. This updated suite includes advanced AI-driven research capabilities, enhanced Shepardizing tools, and faster document analysis. Training sessions will be held next Tuesday at 5 PM PST via Zoom.</p>',
-        category: 'General'
-      },
-      {
-        id: 'wd-3',
-        title: 'Moot Court Competition Results',
-        date: 'Nov 10, 2025',
-        summary: 'Congratulations to our 3L finalists in the Fall 2025 Moot Court Invitational.',
-        body: '<p>Last week\'s Moot Court competition showcased exceptional advocacy skills from our 3L class. Special congratulations to the winning team for their outstanding oral arguments on the 4th Amendment implications of biometric surveillance.</p>',
-        category: 'Event'
+        id: 'wd-2025-02-03',
+        title: 'The Weekly Dicta — February 3, 2025',
+        date: 'February 3, 2025',
+        summary: 'Learning, Serving, and Leading Together. Important dates for midterms, writing competition, and administrative deadlines.',
+        category: 'Newsletter',
+        isPinned: true,
+        body: `
+          <p>Dear PAUSL Students, Faculty, and Staff,</p>
+          <p>Warm greetings to each of you across our global learning community. As we advance through the term, we continue to build momentum — growing in knowledge, developing as leaders, and supporting one another from every corner of the world. Here are the key updates and opportunities for the week ahead.</p>
+          
+          <h3>📅 Important Dates This Week</h3>
+          <p><strong>Tuesday, February 4</strong><br>Student Success Workshop: Mastering Outlining for Midterms<br>Time: 5:00 PM PST | Location: Zoom (link in Populi)</p>
+          <p><strong>Wednesday, February 5</strong><br>Legal Writing Club: Using Precedent Effectively in Persuasive Writing<br>Time: 6:00 PM PST | Location: Zoom</p>
+          <p style="color: #e53e3e;"><strong>⚠️ Deadline for Accommodation Requests for Midterms</strong></p>
+          <p><strong>Friday, February 7</strong><br>Midterm Exam Schedules Posted<br>Check Course Documents in Populi for each class.</p>
+
+          <h3>🎓 Academic Reminders</h3>
+          <p><strong>Midterm Exams — Week of February 10</strong><br>Please review all exam instructions in advance. Students studying outside the U.S.: remember to confirm your local time-zone equivalents.</p>
+
+          <h3>✍️ PAUSL Writing Competition: Now Open!</h3>
+          <p><strong>"Innovative Approaches to Cross-Border Civil Dispute Resolution."</strong></p>
+          <ul>
+            <li><strong>Deadline:</strong> March 1</li>
+            <li><strong>Prize:</strong> $250 tuition credit + publication</li>
+            <li><strong>Eligibility:</strong> Open to all PAUSL JD and non-JD students</li>
+          </ul>
+
+          <h3>🌐 Community Highlights</h3>
+          <ul>
+            <li><strong>New Student Group Launch:</strong> The Global Justice Forum begins this month—details to come.</li>
+            <li><strong>Faculty Spotlight:</strong> Professor Kim recently published new scholarship on international mediation models.</li>
+          </ul>
+
+          <h3>💰 Financial & Administrative Deadlines</h3>
+          <p><strong>February 10:</strong> Tuition Installment Due. Submit via Populi Billing to avoid late fees.</p>
+          <p><strong>February 15:</strong> FAFSA Priority Deadline. Required for all U.S. students seeking aid.</p>
+
+          <hr>
+          <p><em>"As we continue our journey together, remember that legal education is not only the pursuit of knowledge, but also the preparation for a life of service. Your dedication, your voices, and your commitment to justice are building the community we envision at PAUSL."</em></p>
+          <p><strong>— The PAUSL Administrative Team</strong></p>
+        `
       }
     ]
   });
