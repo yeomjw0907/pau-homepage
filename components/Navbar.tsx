@@ -110,7 +110,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   // Mobile Menu Item Helper
-  const MobileSection = ({ title, id, children }: { title: string, id: string, children: React.ReactNode }) => {
+  const MobileSection = ({ title, id, children }: { title: string, id: string, children?: React.ReactNode }) => {
     const isOpen = mobileExpandedSection === id;
     return (
       <div className="border-b border-gray-100 last:border-0">

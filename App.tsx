@@ -123,32 +123,48 @@ const App: React.FC = () => {
     intro: 'Our professors are leaders in legal theory and practitioners with real-world impact.', 
     facultyList: [
       { 
-        name: "Michael Marino, Esq.", 
+        name: "Michael Marino", 
         title: "Professor of Law", 
-        education: "J.D., University of San Francisco", 
-        bio: "Specialist in Legal Writing and FYLSX preparation with over 15 years of legal experience.", 
-        expertise: ["Legal Writing", "FYLSX Specialist"] 
-      },
-      { 
-        name: "Jonathan H. Levy", 
-        title: "Professor of Law", 
-        education: "J.D., Georgetown University Law Center", 
-        bio: "Expert in Tort law with a focus on consumer protection and civil liability.", 
-        expertise: ["Torts"] 
+        education: ["B.A., UC Berkeley", "J.D., University of San Francisco"], 
+        bio: "Specialist in Legal Writing and FYLSX preparation with over 15 years of legal experience. Professor Marino has helped hundreds of students navigate the 'Baby Bar' with a focus on structured essay writing and rigorous analytical thinking.\n\nHe currently serves as the lead coordinator for the First-Year Success Program, providing intensive support to 1L students during their foundational year.", 
+        expertise: ["J.D."],
+        phone: "213.674.7176",
+        email: "mmarino@paucal.org",
+        category: "Faculty",
+        photoUrl: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?fit=crop&w=400&h=400&q=80"
       },
       { 
         name: "Shandrea P. Williams", 
         title: "Professor of Law", 
-        education: "J.D., Howard University School of Law", 
-        bio: "Specializes in Contract law and commercial transactions.", 
-        expertise: ["Contracts"] 
+        education: ["B.S., Spelman College", "J.D., Howard University School of Law"], 
+        bio: "Professor Williams specializes in Contract law and commercial transactions. Before joining the faculty, she served as corporate counsel for a Fortune 500 technology firm, where she managed multi-million dollar procurement agreements and intellectual property licenses.\n\nAt PAUSL, she brings this real-world perspective into the classroom, teaching students how to draft precise, enforceable agreements in a digital-first economy.", 
+        expertise: ["J.D."],
+        phone: "213.674.7177",
+        email: "swilliams@paucal.org",
+        category: "Faculty",
+        photoUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?fit=crop&w=400&h=400&q=80"
       },
       { 
-        name: "John Chandler", 
-        title: "Professor of Law", 
-        education: "J.D., Stanford Law School", 
-        bio: "Dedicated scholar in Criminal Law and procedure.", 
-        expertise: ["Criminal Law"] 
+        name: "Andrew McRee", 
+        title: "Assistant Dean for Student & Career Services", 
+        education: ["B.A., University of Tennessee", "M.A., University of Texas", "J.D., University of Memphis School of Law"], 
+        bio: "Andrew McRee serves as the Assistant Dean for Student and Career Services. He earned his Bachelor of Arts from the University of Tennessee, Masters of Higher Education Administration from the University of Texas, and his Juris Doctorate from the University of Memphis School of Law.\n\nMcRee is an active member of the Tennessee Bar Association, a member of the Barristers organization, and chair of the Barrister’s Habitat for Humanity Committee.", 
+        expertise: ["J.D."],
+        phone: "213.674.7174",
+        email: "amcree@paucal.org",
+        category: "Staff",
+        photoUrl: "https://images.unsplash.com/photo-1560250097-0b93528c311a?fit=crop&w=400&h=400&q=80"
+      },
+      { 
+        name: "Stephen M. Adkins", 
+        title: "Director of Admissions", 
+        education: ["B.A., San Francisco State University", "M.A., Howard University", "J.D., Howard University School of Law", "Ph.D., Georgetown University"], 
+        bio: "Dr. Stephen Adkins is a dedicated administrator with a deep commitment to legal education access. He oversees the strategic recruitment and enrollment processes at PAUSL, ensuring that our community reflects a diverse range of perspectives and experiences.", 
+        expertise: ["Ph.D."],
+        phone: "213.674.7175",
+        email: "sadkins@paucal.org",
+        category: "Staff",
+        photoUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?fit=crop&w=400&h=400&q=80"
       }
     ] 
   });
@@ -397,35 +413,8 @@ const App: React.FC = () => {
         );
 
       case 'faculty':
-        // Use the dedicated Faculty component for the faculty page
-        return <Faculty content={facultyContent} shared={shared} />;
-
       case 'admin-staffs':
-        return (
-          <>
-            <PageHeader title={"Admin &\nStaff"} subtitle="The leadership team dedicated to student success." icon={UserCircleIcon} />
-            <SectionWrapper title="University Leadership">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                {[
-                  { name: "Dr. Hyun Joo Kang", role: "President & CEO" },
-                  { name: "Phillip Bohl", role: "Associate Dean" },
-                  { name: "Nam Hwan Jung", role: "Dean of Admissions" },
-                  { name: "Joyee J. Jea", role: "IT and Marketing Director" }
-                ].map((staff, i) => (
-                  <div key={i} className="flex items-center gap-6 p-8 bg-white rounded-3xl border border-gray-100 shadow-premium hover:shadow-xl transition-all">
-                    <div className="w-16 h-16 bg-pau-light rounded-2xl flex items-center justify-center text-pau-gold">
-                       <IdentificationIcon className="h-8 w-8" />
-                    </div>
-                    <div>
-                       <h4 className="text-xl font-serif font-bold text-pau-darkBlue">{staff.name}</h4>
-                       <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mt-1">{staff.role}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </SectionWrapper>
-          </>
-        );
+        return <Faculty content={facultyContent} shared={shared} currentPage={currentPage} onNavigate={handleNavigate} />;
 
       case 'admissions':
       case 'apply-now':

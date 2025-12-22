@@ -1,5 +1,4 @@
 
-
 export type SupportedLanguage = 
   | 'English' 
   | 'Spanish' 
@@ -137,9 +136,13 @@ export interface AcademicsContent {
 export interface FacultyMember {
   name: string;
   title: string;
-  education: string;
+  education: string[];
   bio: string;
   expertise: string[];
+  phone?: string;
+  email?: string;
+  photoUrl?: string;
+  category?: 'Faculty' | 'Staff';
 }
 
 export interface FacultyContent {
