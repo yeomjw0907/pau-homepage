@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { 
   Page, 
@@ -52,14 +53,14 @@ import {
   ArrowDownTrayIcon,
   ArrowRightIcon,
   ClipboardDocumentListIcon,
-  IdentificationIcon
+  IdentificationIcon,
+  NewspaperIcon
 } from '@heroicons/react/24/outline';
 
 const PageHeader: React.FC<{ title: string; subtitle: string; icon: any }> = ({ title, subtitle, icon: Icon }) => (
   <div className="bg-pau-darkBlue pt-32 md:pt-44 pb-12 md:pb-20 px-6 text-center">
     <div className="max-w-4xl mx-auto">
       <Icon className="h-10 md:h-16 w-10 md:w-16 text-pau-gold mx-auto mb-4 md:mb-6" />
-      {/* Responsive font size: text-2xl/3xl for mobile, text-5xl for desktop */}
       <h1 className="text-2xl sm:text-3xl md:text-5xl font-serif font-bold text-white whitespace-pre-line leading-snug md:leading-tight">{title}</h1>
       <p className="mt-4 md:mt-6 text-sm md:text-xl text-gray-300 font-light max-w-2xl mx-auto">{subtitle}</p>
     </div>
@@ -107,6 +108,38 @@ const App: React.FC = () => {
     title: 'Campus Notices', 
     intro: 'Stay informed about upcoming events, academic deadlines, and policy changes.', 
     notices: [] 
+  });
+
+  const [weeklyDictaContent, setWeeklyDictaContent] = useState({
+    title: 'Weekly Dicta',
+    intro: 'Official announcements and student life updates for the PAU community.',
+    notices: [
+      {
+        id: 'wd-1',
+        title: 'Spring 2026 Semester Registration Now Live',
+        date: 'Nov 15, 2025',
+        summary: 'Enrollment for the Spring 2026 trimester is officially open for all returning and incoming students.',
+        body: '<p>Pacific American University is pleased to announce that registration for the Spring 2026 semester is now officially open via Populi. Students should consult the Academic Calendar for deadline information and ensure all prerequisites for upper-division courses are met.</p>',
+        category: 'Academic',
+        isPinned: true
+      },
+      {
+        id: 'wd-2',
+        title: 'New Library Database Access: Westlaw Precision',
+        date: 'Nov 12, 2025',
+        summary: 'All PAU students now have access to the latest Westlaw Precision AI features for legal research.',
+        body: '<p>The Law Library has successfully integrated Westlaw Precision. This updated suite includes advanced AI-driven research capabilities, enhanced Shepardizing tools, and faster document analysis. Training sessions will be held next Tuesday at 5 PM PST via Zoom.</p>',
+        category: 'General'
+      },
+      {
+        id: 'wd-3',
+        title: 'Moot Court Competition Results',
+        date: 'Nov 10, 2025',
+        summary: 'Congratulations to our 3L finalists in the Fall 2025 Moot Court Invitational.',
+        body: '<p>Last week\'s Moot Court competition showcased exceptional advocacy skills from our 3L class. Special congratulations to the winning team for their outstanding oral arguments on the 4th Amendment implications of biometric surveillance.</p>',
+        category: 'Event'
+      }
+    ]
   });
 
   const [facultyContent, setFacultyContent] = useState({ 
@@ -396,6 +429,9 @@ const App: React.FC = () => {
       
       case 'notices':
         return <NoticeBoard content={noticesContent} onNewsClick={setSelectedNews} shared={shared} />;
+
+      case 'weekly-dicta':
+        return <NoticeBoard content={weeklyDictaContent} onNewsClick={setSelectedNews} shared={shared} />;
 
       case 'contact-info':
         return (

@@ -15,6 +15,7 @@ export type Page =
   | 'academics' | 'academic-calendar' | 'bar-info' | 'curriculum-schedule' | 'course-desc' | 'counseling' | 'grad-reqs'
   | 'admissions' | 'apply-now' | 'app-steps' | 'admission-reqs' | 'transfer-int' | 'tech-reqs'
   | 'tuition' | 'tuition-fees' | 'payment-plan' | 'refund-policy'
+  | 'my-pausl' | 'weekly-dicta'
   | 'contact' | 'office-hours' | 'contact-info' | 'request-info'
   | 'centers' | 'clinic-detail' | 'faculty' | 'news' | 'notices' | 'news-detail' | 'library' | 'careers' | 'consumer-info' | 'admin';
 
@@ -36,7 +37,7 @@ export interface NewsItem {
   date: string;
   summary: string;
   body: string; 
-  category: 'Academic' | 'Event' | 'General' | 'Career';
+  category: 'Academic' | 'Event' | 'General' | 'Career' | 'Newsletter';
   images?: string[]; 
   isPinned?: boolean;
 }
@@ -200,6 +201,7 @@ export interface SharedContent {
     admissions: string;
     academics: string;
     tuition: string;
+    myPausl: string;
     contact: string;
     language: string;
     historyMission: string;
@@ -229,6 +231,7 @@ export interface SharedContent {
     officeHours: string;
     contactInfo: string;
     requestInfo: string;
+    weeklyDicta: string;
   };
   footer: {
     schoolDesc: string;
@@ -292,6 +295,7 @@ export const DEFAULT_SHARED_CONTENT: SharedContent = {
     admissions: "Admissions",
     academics: "Academics",
     tuition: "Tuition",
+    myPausl: "My PAUSL",
     contact: "Contact",
     language: "Language",
     historyMission: "History & Mission",
@@ -321,6 +325,7 @@ export const DEFAULT_SHARED_CONTENT: SharedContent = {
     officeHours: "Office Hours",
     contactInfo: "Contact Info",
     requestInfo: "Request Info",
+    weeklyDicta: "Weekly Dicta",
   },
   footer: {
     schoolDesc: "Pacific American University School of Law is dedicated to providing high-quality, accessible legal education through innovative distance learning methods.",

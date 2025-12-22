@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { SupportedLanguage, Page, SharedContent } from '../types';
-import { GlobeAltIcon, ChevronDownIcon, Bars3Icon, XMarkIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
+import { GlobeAltIcon, ChevronDownIcon, Bars3Icon, XMarkIcon, ChevronRightIcon, AcademicCapIcon, BookOpenIcon, IdentificationIcon, CurrencyDollarIcon, ComputerDesktopIcon, ShoppingBagIcon, DocumentTextIcon, BanknotesIcon, CreditCardIcon, ClipboardDocumentListIcon } from '@heroicons/react/24/outline';
 
 interface NavbarProps {
   currentLang: SupportedLanguage;
@@ -40,7 +40,6 @@ export const Navbar: React.FC<NavbarProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu when navigating
   const navigateAndClose = (page: Page) => {
     onNavigate(page);
     setIsMobileMenuOpen(false);
@@ -89,12 +88,18 @@ export const Navbar: React.FC<NavbarProps> = ({
   
   const dropdownBaseClass = "absolute left-0 mt-4 bg-white rounded-2xl shadow-[0_25px_60px_rgba(0,0,0,0.25)] ring-1 ring-black/10 py-8 z-[100] transform origin-top-left transition-all duration-300 border border-gray-200 animate-fade-in-up";
 
-  // Desktop Submenu Item Helper
-  const SubmenuBtn = ({ page, label }: { page: Page, label: string }) => {
+  const SubmenuBtn = ({ page, label, external }: { page: Page, label: string, external?: boolean }) => {
     const isActive = currentPage === page;
     return (
       <button 
-        onClick={() => { onNavigate(page); setActiveDropdown(null); }} 
+        onClick={() => { 
+          if (external) {
+            onNavigate('home'); 
+          } else {
+            onNavigate(page); 
+          }
+          setActiveDropdown(null); 
+        }} 
         className={`relative text-[15px] transition-all text-left w-full group flex items-center py-1 ${
           isActive ? 'text-pau-blue font-extrabold' : 'text-gray-600 hover:text-pau-blue font-semibold'
         }`}
@@ -102,14 +107,14 @@ export const Navbar: React.FC<NavbarProps> = ({
         {isActive && (
           <span className="absolute -left-4 w-1 h-4 bg-pau-gold rounded-full"></span>
         )}
-        <span className={isActive ? 'pl-1' : 'group-hover:translate-x-1 transition-transform'}>
+        <span className={isActive ? 'pl-1' : 'group-hover:translate-x-1 transition-transform flex items-center'}>
           {label}
+          {external && <span className="ml-2 text-[8px] bg-gray-50 text-gray-400 px-1.5 py-0.5 rounded uppercase tracking-widest font-bold">Ext</span>}
         </span>
       </button>
     );
   };
 
-  // Mobile Menu Item Helper
   const MobileSection = ({ title, id, children }: { title: string, id: string, children?: React.ReactNode }) => {
     const isOpen = mobileExpandedSection === id;
     return (
@@ -123,7 +128,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </span>
           <ChevronDownIcon className={`h-4 w-4 text-pau-gold transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
         </button>
-        <div className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-[500px] pb-5' : 'max-h-0'}`}>
+        <div className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-[1000px] pb-5' : 'max-h-0'}`}>
           <div className="flex flex-col space-y-4 pl-4 border-l-2 border-pau-gold/20">
             {children}
           </div>
@@ -132,12 +137,12 @@ export const Navbar: React.FC<NavbarProps> = ({
     );
   };
 
-  const MobileSubLink = ({ page, label }: { page: Page, label: string }) => (
+  const MobileSubLink = ({ page, label, external }: { page: Page, label: string, external?: boolean }) => (
     <button 
-      onClick={() => navigateAndClose(page)}
+      onClick={() => external ? navigateAndClose('home') : navigateAndClose(page)}
       className={`text-[15px] font-medium text-left py-1 transition-colors ${currentPage === page ? 'text-pau-gold font-bold' : 'text-gray-500 active:text-pau-blue'}`}
     >
-      {label}
+      {label} {external && <span className="text-[9px] text-gray-300 ml-1">(External)</span>}
     </button>
   );
 
@@ -145,7 +150,6 @@ export const Navbar: React.FC<NavbarProps> = ({
     <nav className={`fixed w-full top-0 z-50 transition-all duration-500 ${navBgClass}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
-          {/* Logo Section */}
           <div 
             className="flex-shrink-0 cursor-pointer group flex items-center gap-3"
             onClick={() => onNavigate('home')}
@@ -163,9 +167,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
           </div>
 
-          {/* Desktop Nav Items */}
           <div className="hidden md:flex items-center space-x-1">
-            {/* ABOUT */}
             <div className="relative group" onMouseEnter={() => handleMouseEnter('about')} onMouseLeave={handleMouseLeave}>
               <button className={navLinkClass(['history-mission', 'president-welcome', 'dean-message', 'school-form', 'faqs', 'bar-reg', 'disclosure', 'catalog', 'faculty', 'admin-staffs'].includes(currentPage))}>
                 {shared.nav.about}
@@ -211,7 +213,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               )}
             </div>
 
-            {/* ACADEMICS */}
             <div className="relative group" onMouseEnter={() => handleMouseEnter('academics')} onMouseLeave={handleMouseLeave}>
               <button className={navLinkClass(['academics', 'academic-calendar', 'bar-info', 'curriculum-schedule', 'course-desc', 'counseling', 'grad-reqs'].includes(currentPage))}>
                 {shared.nav.academics}
@@ -232,7 +233,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               )}
             </div>
 
-            {/* ADMISSIONS */}
             <div className="relative group" onMouseEnter={() => handleMouseEnter('admissions')} onMouseLeave={handleMouseLeave}>
               <button className={navLinkClass(['admissions', 'apply-now', 'app-steps', 'admission-reqs', 'transfer-int', 'tech-reqs'].includes(currentPage))}>
                 {shared.nav.admissions}
@@ -255,7 +255,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               )}
             </div>
 
-            {/* TUITION */}
             <div className="relative group" onMouseEnter={() => handleMouseEnter('tuition')} onMouseLeave={handleMouseLeave}>
               <button className={navLinkClass(['tuition', 'tuition-fees', 'payment-plan', 'refund-policy'].includes(currentPage))}>
                 {shared.nav.tuition}
@@ -272,7 +271,61 @@ export const Navbar: React.FC<NavbarProps> = ({
               )}
             </div>
 
-            {/* CONTACT */}
+            {/* MY PAUSL Dropdown */}
+            <div className="relative group" onMouseEnter={() => handleMouseEnter('mypausl')} onMouseLeave={handleMouseLeave}>
+              <button className={navLinkClass(['weekly-dicta'].includes(currentPage))}>
+                {shared.nav.myPausl}
+                <ChevronDownIcon className="ml-1 h-3.5 w-3.5 stroke-[3]" />
+              </button>
+              {activeDropdown === 'mypausl' && (
+                <div className={`${dropdownBaseClass} w-[600px]`}>
+                  <div className="grid grid-cols-2 gap-10 px-10">
+                    <div className="space-y-6">
+                      <div>
+                        <h4 className="text-[11px] font-extrabold text-pau-goldDark uppercase tracking-widest border-b-2 border-pau-gold/10 pb-3 mb-4 flex items-center">
+                          <BookOpenIcon className="h-3 w-3 mr-2" /> Student Life
+                        </h4>
+                        <ul className="space-y-3">
+                          <li><SubmenuBtn page="weekly-dicta" label="Weekly Dicta" /></li>
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 className="text-[11px] font-extrabold text-pau-goldDark uppercase tracking-widest border-b-2 border-pau-gold/10 pb-3 mb-4 flex items-center">
+                          <IdentificationIcon className="h-3 w-3 mr-2" /> Records & Admin
+                        </h4>
+                        <ul className="space-y-3">
+                          <li><SubmenuBtn page="home" label="Populi" external /></li>
+                          <li><SubmenuBtn page="home" label="Transcripts" external /></li>
+                          <li><SubmenuBtn page="home" label="Finance Office" external /></li>
+                          <li><SubmenuBtn page="home" label="Course Enrollment" external /></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div className="space-y-6">
+                      <div>
+                        <h4 className="text-[11px] font-extrabold text-pau-goldDark uppercase tracking-widest border-b-2 border-pau-gold/10 pb-3 mb-4 flex items-center">
+                          <ComputerDesktopIcon className="h-3 w-3 mr-2" /> Legal Tools
+                        </h4>
+                        <ul className="space-y-3">
+                          <li><SubmenuBtn page="home" label="Westlaw" external /></li>
+                          <li><SubmenuBtn page="home" label="CALI" external /></li>
+                          <li><SubmenuBtn page="home" label="ExamSoft" external /></li>
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 className="text-[11px] font-extrabold text-pau-goldDark uppercase tracking-widest border-b-2 border-pau-gold/10 pb-3 mb-4 flex items-center">
+                          <ShoppingBagIcon className="h-3 w-3 mr-2" /> Marketplace
+                        </h4>
+                        <ul className="space-y-3">
+                          <li><SubmenuBtn page="home" label="Student Store (PAUSL Gear)" external /></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
             <div className="relative group" onMouseEnter={() => handleMouseEnter('contact')} onMouseLeave={handleMouseLeave}>
               <button className={navLinkClass(['contact', 'office-hours', 'contact-info', 'request-info'].includes(currentPage))}>
                 {shared.nav.contact}
@@ -289,7 +342,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               )}
             </div>
 
-            {/* Language Selector */}
             <div className={`relative ml-4 pl-4 border-l ${isTransparent ? 'border-white/20' : 'border-gray-200'}`}>
               <button 
                 onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
@@ -317,7 +369,6 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
           </div>
 
-          {/* Mobile Toggle Button */}
           <div className="flex items-center md:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -333,12 +384,10 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
       </div>
 
-      {/* MOBILE MENU OVERLAY */}
       {isMobileMenuOpen && (
         <div className="md:hidden bg-white fixed inset-0 top-[72px] z-[200] overflow-y-auto border-t border-gray-100 shadow-inner flex flex-col">
           <div className="p-6 space-y-4 flex-grow">
             
-            {/* Quick Home Link */}
             <button 
               onClick={() => navigateAndClose('home')} 
               className={`w-full text-left text-xl font-serif font-bold py-4 border-b border-gray-100 flex items-center justify-between ${currentPage === 'home' ? 'text-pau-gold' : 'text-pau-blue'}`}
@@ -347,7 +396,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               <ChevronRightIcon className="h-5 w-5 opacity-20" />
             </button>
 
-            {/* Mobile About */}
             <MobileSection title={shared.nav.about} id="about">
               <MobileSubLink page="history-mission" label={shared.nav.historyMission} />
               <MobileSubLink page="president-welcome" label={shared.nav.presidentWelcome} />
@@ -360,7 +408,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               <MobileSubLink page="faqs" label={shared.nav.faqs} />
             </MobileSection>
 
-            {/* Mobile Academics */}
             <MobileSection title={shared.nav.academics} id="academics">
               <MobileSubLink page="academics" label="Overview" />
               <MobileSubLink page="academic-calendar" label={shared.nav.academicCalendar} />
@@ -370,7 +417,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               <MobileSubLink page="grad-reqs" label={shared.nav.gradReqs} />
             </MobileSection>
 
-            {/* Mobile Admissions */}
             <MobileSection title={shared.nav.admissions} id="admissions">
               <MobileSubLink page="apply-now" label={shared.nav.applyNow} />
               <MobileSubLink page="admissions" label="Admissions Home" />
@@ -379,21 +425,31 @@ export const Navbar: React.FC<NavbarProps> = ({
               <MobileSubLink page="tech-reqs" label={shared.nav.techReqs} />
             </MobileSection>
 
-            {/* Mobile Tuition */}
             <MobileSection title={shared.nav.tuition} id="tuition">
               <MobileSubLink page="tuition-fees" label={shared.nav.tuitionFees} />
               <MobileSubLink page="payment-plan" label={shared.nav.paymentPlan} />
               <MobileSubLink page="refund-policy" label={shared.nav.refundPolicy} />
             </MobileSection>
 
-            {/* Mobile Contact */}
+            {/* Mobile My PAUSL Section */}
+            <MobileSection title={shared.nav.myPausl} id="mypausl">
+              <MobileSubLink page="weekly-dicta" label="Weekly Dicta" />
+              <MobileSubLink page="home" label="Populi" external />
+              <MobileSubLink page="home" label="Westlaw" external />
+              <MobileSubLink page="home" label="CALI" external />
+              <MobileSubLink page="home" label="ExamSoft" external />
+              <MobileSubLink page="home" label="Transcripts" external />
+              <MobileSubLink page="home" label="Finance Office" external />
+              <MobileSubLink page="home" label="Course Enrollment" external />
+              <MobileSubLink page="home" label="Student Store (PAUSL Gear)" external />
+            </MobileSection>
+
             <MobileSection title={shared.nav.contact} id="contact">
               <MobileSubLink page="contact-info" label={shared.nav.contactInfo} />
               <MobileSubLink page="office-hours" label={shared.nav.officeHours} />
               <MobileSubLink page="request-info" label={shared.nav.requestInfo} />
             </MobileSection>
 
-            {/* Mobile Language Section */}
             <div className="pt-8 border-t border-gray-100">
                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6">Language Settings</p>
                <div className="grid grid-cols-2 gap-3">
@@ -410,7 +466,6 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
           </div>
           
-          {/* Bottom Call to Action */}
           <div className="p-6 bg-pau-darkBlue">
             <button 
               onClick={() => navigateAndClose('admissions')}
