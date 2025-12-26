@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { HomeContent, Clinic, SharedContent, Page } from '../types';
 import { 
   ArrowRightIcon, 
@@ -9,12 +9,13 @@ import {
   BuildingLibraryIcon, 
   GlobeAsiaAustraliaIcon, 
   UserGroupIcon, 
-  CheckBadgeIcon, 
   ClockIcon, 
-  ComputerDesktopIcon, 
   AcademicCapIcon, 
-  PresentationChartBarIcon, 
-  BanknotesIcon 
+  BanknotesIcon, 
+  XMarkIcon,
+  BriefcaseIcon,
+  BookOpenIcon,
+  CheckBadgeIcon
 } from '@heroicons/react/24/outline';
 
 interface InfoSectionProps {
@@ -25,7 +26,8 @@ interface InfoSectionProps {
 }
 
 export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onClinicClick, onNavigate }) => {
-  
+  const [activePath, setActivePath] = useState<any | null>(null);
+
   const missionFeatures = [
     { 
       icon: LightBulbIcon, 
@@ -66,32 +68,68 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
     { 
       icon: GlobeAmericasIcon, 
       title: "International Business", 
-      desc: "Navigate the complex landscape of global commerce and trade." 
+      desc: "Navigate the complex landscape of global commerce and trade.",
+      image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop",
+      details: {
+        overview: "Prepare for a high-stakes career facilitating transactions between entities in different countries. This path focuses on the legal frameworks that govern international commerce, mergers and acquisitions, and joint ventures.",
+        roles: ["International Contract Manager", "Trade Compliance Officer", "Global Business Developer", "Cross-Border Transaction Specialist"],
+        courses: ["Contracts I & II", "Business Associations", "International Business Transactions", "Commercial Law"]
+      }
     },
     { 
       icon: BuildingLibraryIcon, 
       title: "Corporate Governance", 
-      desc: "Advise boards and executives on fiduciary duties and ethical compliance." 
+      desc: "Advise boards and executives on fiduciary duties and ethical compliance.",
+      image: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2070&auto=format&fit=crop",
+      details: {
+        overview: "Corporate governance professionals ensure that companies operate within the law and adhere to ethical standards. This role is critical for maintaining investor confidence and managing corporate liability.",
+        roles: ["Corporate Secretary", "Ethics & Compliance Director", "Board Advisor", "ESG (Environmental, Social, Governance) Consultant"],
+        courses: ["Business Associations", "Professional Responsibility", "Securities Regulation", "Real Property"]
+      }
     },
     { 
       icon: ScaleIcon, 
       title: "Legal Consulting", 
-      desc: "Provide strategic legal insight to non-legal entities and organizations." 
+      desc: "Provide strategic legal insight to non-legal entities and organizations.",
+      image: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=2070&auto=format&fit=crop",
+      details: {
+        overview: "Leverage your J.D. to provide specialized advice to consulting firms, NGOs, and corporations. This path emphasizes problem-solving, risk assessment, and strategic planning rather than traditional litigation.",
+        roles: ["Management Consultant", "Legal Operations Manager", "Risk Analyst", "Policy Advisor"],
+        courses: ["Torts I & II", "Civil Procedure", "Legal Writing & Analysis", "Evidence"]
+      }
     },
     { 
       icon: GlobeAsiaAustraliaIcon, 
       title: "Cross-border Trade", 
-      desc: "Master the regulations governing imports, exports, and tariffs." 
+      desc: "Master the regulations governing imports, exports, and tariffs.",
+      image: "https://images.unsplash.com/photo-1578575437130-527eed3abbec?q=80&w=2070&auto=format&fit=crop",
+      details: {
+        overview: "Become an expert in the movement of goods, services, and capital across borders. This field requires deep knowledge of WTO rules, regional trade agreements (like USMCA), and customs regulations.",
+        roles: ["Customs Broker", "Import/Export Control Analyst", "Supply Chain Compliance Manager", "Trade Policy Specialist"],
+        courses: ["Constitutional Law", "Administrative Law", "International Law", "Contracts"]
+      }
     },
     { 
       icon: ScaleIcon, 
       title: "Regulatory Affairs", 
-      desc: "Ensure compliance with government agencies like the FDA, SEC, and EPA." 
+      desc: "Ensure compliance with government agencies like the FDA, SEC, and EPA.",
+      image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070&auto=format&fit=crop",
+      details: {
+        overview: "Regulatory affairs specialists act as the liaison between private industry and government regulatory agencies. They ensure that products and practices meet all safety, efficacy, and reporting standards.",
+        roles: ["Regulatory Affairs Manager", "Compliance Auditor", "Government Relations Officer", "Quality Assurance Lead"],
+        courses: ["Administrative Law", "Torts", "Health Law (Elective)", "Environmental Law (Elective)"]
+      }
     },
     { 
       icon: AcademicCapIcon, 
       title: "U.S. Graduate Study", 
-      desc: "Pursue advanced degrees like an LL.M. or S.J.D. at top universities." 
+      desc: "Pursue advanced degrees like an LL.M. or S.J.D. at top universities.",
+      image: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2070&auto=format&fit=crop",
+      details: {
+        overview: "For international students, the PAU J.D. serves as a robust foundation for admission into specialized LL.M. (Master of Laws) or S.J.D. programs at ABA-accredited universities in the United States.",
+        roles: ["Legal Scholar / Academic", "Specialized Practitioner (Tax, IP)", "Judicial Clerkship", "Think Tank Researcher"],
+        courses: ["Advanced Legal Research & Writing", "Constitutional Law", "Jurisprudence", "All Core Bar Courses"]
+      }
     }
   ];
 
@@ -228,7 +266,7 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
                 {[
                   { val: "100%", label: "Online Coursework", sub: "Fully Remote" },
                   { val: "66%", label: "Asynchronous", sub: "Flexible Schedule" },
-                  { val: "11:1", label: "Student-Faculty Ratio", sub: "Personal Attention" },
+                  { val: "15:1", label: "Student-Faculty Ratio", sub: "Personal Attention" },
                   { val: "Included", label: "Bar Prep Support", sub: "Comprehensive" }
                 ].map((stat, i) => (
                   <div key={i} className="bg-[#051626] p-10 flex flex-col justify-center group hover:bg-white/5 transition-colors">
@@ -253,7 +291,11 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {careerPaths.map((path, i) => (
-                <div key={i} className="bg-white p-8 border border-gray-100 hover:border-pau-gold/50 hover:shadow-lg transition-all duration-300 group cursor-pointer">
+                <div 
+                  key={i} 
+                  onClick={() => setActivePath(path)}
+                  className="bg-white p-8 border border-gray-100 hover:border-pau-gold/50 hover:shadow-lg transition-all duration-300 group cursor-pointer"
+                >
                    <div className="w-10 h-10 rounded bg-blue-50 text-pau-blue flex items-center justify-center mb-6 group-hover:bg-pau-blue group-hover:text-white transition-colors">
                       <path.icon className="h-5 w-5" />
                    </div>
@@ -304,6 +346,136 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
             </div>
          </div>
       </section>
+
+      {/* 6. CAREER PATH MODAL (REDESIGNED) */}
+      {activePath && (
+        <div className="fixed inset-0 z-[100] overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+          <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:p-0">
+            {/* Darker Overlay with Blur */}
+            <div 
+              className="fixed inset-0 bg-pau-darkBlue/80 backdrop-blur-md transition-opacity" 
+              onClick={() => setActivePath(null)}
+              aria-hidden="true"
+            ></div>
+
+            {/* Premium Modal Content */}
+            {/* Removed border from the container for cleaner look as requested */}
+            <div className="relative inline-block align-bottom bg-white rounded-3xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl w-full animate-fade-in-up">
+              
+              {/* Image Header with Gradient Overlay */}
+              <div className="relative h-80 w-full overflow-hidden bg-pau-darkBlue">
+                <img 
+                  src={activePath.image} 
+                  alt={activePath.title}
+                  className="w-full h-full object-cover transform scale-105"
+                  onError={(e) => {
+                    // Fallback if image fails
+                    (e.target as HTMLImageElement).style.display = 'none';
+                    (e.target as HTMLImageElement).parentElement!.classList.add('bg-gradient-to-br', 'from-pau-darkBlue', 'to-pau-blue');
+                  }}
+                />
+                {/* Gradient for text readability */}
+                <div className="absolute inset-0 bg-gradient-to-t from-pau-darkBlue via-pau-darkBlue/60 to-transparent"></div>
+                
+                {/* Content Overlay */}
+                <div className="absolute bottom-0 left-0 w-full px-8 md:px-12 py-10 z-10">
+                   <div className="flex items-end justify-between">
+                     <div>
+                        <span className="inline-block px-3 py-1 bg-white/10 text-pau-gold text-[10px] font-bold uppercase tracking-[0.2em] rounded-full mb-4 border border-white/20 backdrop-blur-md shadow-sm">
+                          Career Pathway
+                        </span>
+                        <h3 className="text-3xl md:text-5xl font-serif font-bold text-white mb-2 tracking-tight drop-shadow-md">
+                          {activePath.title}
+                        </h3>
+                     </div>
+                     
+                     {/* Floating Glass Icon Badge */}
+                     <div className="hidden md:flex h-20 w-20 bg-white/10 rounded-2xl items-center justify-center border border-white/20 backdrop-blur-md shadow-xl mb-2">
+                       <activePath.icon className="h-10 w-10 text-white" />
+                     </div>
+                   </div>
+                </div>
+
+                <button 
+                  onClick={() => setActivePath(null)}
+                  className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors bg-black/20 hover:bg-black/40 backdrop-blur-sm rounded-full p-2 z-20"
+                >
+                  <XMarkIcon className="h-6 w-6" />
+                </button>
+              </div>
+
+              {/* Body Content */}
+              <div className="bg-gray-50 px-8 md:px-12 py-10">
+                
+                {/* Overview Card */}
+                <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 mb-8">
+                  <h4 className="text-xs font-bold text-pau-gold uppercase tracking-widest mb-4 flex items-center">
+                    <LightBulbIcon className="h-4 w-4 mr-2" /> Strategic Overview
+                  </h4>
+                  <p className="text-lg md:text-xl text-gray-700 leading-relaxed font-serif font-light">
+                    "{activePath.details.overview}"
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                  {/* Roles Card */}
+                  <div className="bg-white p-8 rounded-2xl shadow-sm border-t-4 border-pau-blue hover:shadow-md transition-shadow">
+                     <div className="flex items-center mb-6">
+                       <div className="p-2 bg-blue-50 text-pau-blue rounded-lg mr-3">
+                          <BriefcaseIcon className="h-6 w-6" />
+                       </div>
+                       <h4 className="text-lg font-bold text-pau-darkBlue font-serif">Potential Roles</h4>
+                     </div>
+                     <div className="flex flex-wrap gap-2">
+                       {activePath.details.roles.map((role: string, i: number) => (
+                         <span key={i} className="px-4 py-2 bg-gray-50 text-gray-600 rounded-lg text-xs font-bold uppercase tracking-wide border border-gray-100 hover:bg-pau-blue hover:text-white hover:border-pau-blue transition-colors cursor-default">
+                           {role}
+                         </span>
+                       ))}
+                     </div>
+                  </div>
+
+                  {/* Courses Card */}
+                  <div className="bg-white p-8 rounded-2xl shadow-sm border-t-4 border-pau-gold hover:shadow-md transition-shadow">
+                     <div className="flex items-center mb-6">
+                       <div className="p-2 bg-yellow-50 text-pau-gold rounded-lg mr-3">
+                          <BookOpenIcon className="h-6 w-6" />
+                       </div>
+                       <h4 className="text-lg font-bold text-pau-darkBlue font-serif">Curriculum Focus</h4>
+                     </div>
+                     <ul className="space-y-3">
+                       {activePath.details.courses.map((course: string, i: number) => (
+                         <li key={i} className="flex items-start text-sm text-gray-600 group">
+                           <CheckBadgeIcon className="h-5 w-5 text-gray-300 group-hover:text-pau-gold mr-3 flex-shrink-0 transition-colors" />
+                           <span className="group-hover:text-gray-900 transition-colors">{course}</span>
+                         </li>
+                       ))}
+                     </ul>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Footer Action */}
+              <div className="bg-white px-8 md:px-12 py-6 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
+                  <p className="text-xs text-gray-400 italic">
+                    *Elective offerings are subject to academic year availability.
+                  </p>
+                  <button 
+                    onClick={() => {
+                      setActivePath(null);
+                      onNavigate('academics');
+                    }}
+                    className="inline-flex items-center justify-center px-8 py-3 bg-pau-darkBlue text-white text-xs font-bold uppercase tracking-widest rounded-full hover:bg-pau-gold hover:text-pau-darkBlue transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                  >
+                    View Academic Catalog <ArrowRightIcon className="ml-2 h-4 w-4" />
+                  </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );
