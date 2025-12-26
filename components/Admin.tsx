@@ -7,7 +7,8 @@ import {
   FacultyContent,
   FacultyMember,
   NoticesContent,
-  NewsItem
+  NewsItem,
+  GlobalAlert
 } from '../types';
 import { 
   UserGroupIcon, 
@@ -29,8 +30,12 @@ import {
   UserCircleIcon,
   BookOpenIcon,
   IdentificationIcon,
-  // Added missing XMarkIcon import
-  XMarkIcon
+  XMarkIcon,
+  MegaphoneIcon,
+  ExclamationTriangleIcon,
+  CurrencyDollarIcon,
+  GlobeAltIcon,
+  ComputerDesktopIcon
 } from '@heroicons/react/24/outline';
 import { BookmarkIcon as BookmarkSolidIcon } from '@heroicons/react/24/solid';
 
@@ -204,15 +209,31 @@ const MultiImageUploader = ({ images, onUpdate }: { images: string[], onUpdate: 
   );
 };
 
+interface AdminProps {
+  home: HomeContent;
+  setHome: (c: HomeContent) => void;
+  admissions: AdmissionsContent;
+  setAdmissions: (c: AdmissionsContent) => void;
+  academics: AcademicsContent;
+  setAcademics: (c: AcademicsContent) => void;
+  faculty: FacultyContent;
+  setFaculty: (c: FacultyContent) => void;
+  notices: NoticesContent;
+  setNotices: (c: NoticesContent) => void;
+  globalAlert: GlobalAlert;
+  setGlobalAlert: (a: GlobalAlert) => void;
+}
+
 // --- Main Admin Dashboard ---
-export const Admin = ({ 
+export const Admin: React.FC<AdminProps> = ({ 
   home, setHome, 
   admissions, setAdmissions, 
   academics, setAcademics, 
   faculty, setFaculty, 
-  notices, setNotices 
-}: any) => {
-  const [activeTab, setActiveTab] = useState('news');
+  notices, setNotices,
+  globalAlert, setGlobalAlert
+}) => {
+  const [activeTab, setActiveTab] = useState('general');
   const [showToast, setShowToast] = useState(false);
 
   const triggerToast = () => {
@@ -272,28 +293,14 @@ export const Admin = ({
         <h2 className="text-2xl font-serif font-bold text-pau-darkBlue">{title}</h2>
         <p className="text-sm text-gray-400 font-medium">{subtitle}</p>
       </div>
-      <button 
-        onClick={onBtnClick}
-        className="flex items-center justify-center bg-pau-blue text-white px-6 py-3 rounded-full text-sm font-bold shadow-lg hover:bg-pau-darkBlue transition-all"
-      >
-        <PlusIcon className="h-4 w-4 mr-2" /> {btnLabel}
-      </button>
-    </div>
-  );
-
-  const CardWrapper = ({ item, index, onRemove, onPinToggle, isPinned, type }: any) => (
-    <div className={`relative p-8 border-2 rounded-3xl bg-white transition-all mb-12 ${isPinned ? 'border-pau-gold shadow-xl' : 'border-gray-100 shadow-sm'}`}>
-      <div className="absolute -top-5 right-8 flex items-center gap-3">
+      {btnLabel && (
         <button 
-          onClick={onPinToggle}
-          className={`p-3 rounded-full shadow-lg border-2 ${isPinned ? 'bg-pau-gold text-white border-white' : 'bg-white text-gray-300 border-gray-100 hover:text-pau-gold'}`}
+          onClick={onBtnClick}
+          className="flex items-center justify-center bg-pau-blue text-white px-6 py-3 rounded-full text-sm font-bold shadow-lg hover:bg-pau-darkBlue transition-all"
         >
-          {isPinned ? <BookmarkSolidIcon className="h-5 w-5" /> : <BookmarkOutlineIcon className="h-5 w-5" />}
+          <PlusIcon className="h-4 w-4 mr-2" /> {btnLabel}
         </button>
-        <button onClick={onRemove} className="p-3 bg-white text-red-400 border-2 border-gray-100 rounded-full hover:bg-red-50 hover:text-red-600 shadow-lg transition-all">
-          <TrashIcon className="h-5 w-5" />
-        </button>
-      </div>
+      )}
     </div>
   );
 
@@ -322,6 +329,8 @@ export const Admin = ({
           {/* Sidebar Nav */}
           <div className="lg:col-span-1 space-y-3">
             {[
+              { id: 'general', label: 'Site Settings', icon: ComputerDesktopIcon },
+              { id: 'admissions', label: 'Admissions Data', icon: UserGroupIcon },
               { id: 'news', label: 'Latest News', icon: NewspaperIcon },
               { id: 'notices', label: 'Notice Board', icon: BellIcon },
               { id: 'faculty', label: 'Faculty Profiles', icon: UserCircleIcon },
@@ -345,7 +354,154 @@ export const Admin = ({
           {/* Main Content Area */}
           <div className="lg:col-span-3 bg-white rounded-3xl shadow-soft border border-gray-100 min-h-[900px] overflow-hidden">
             
-            {/* 1. LATEST NEWS */}
+            {/* 0. GENERAL SETTINGS (NEW) */}
+            {activeTab === 'general' && (
+              <div className="p-10 animate-fade-in">
+                 <SectionHeader title="Global Site Settings" subtitle="Manage emergency alerts and homepage branding" />
+                 
+                 {/* Global Alert */}
+                 <div className={`p-8 rounded-2xl border-2 mb-12 transition-colors ${globalAlert.active ? 'bg-red-50 border-red-100' : 'bg-gray-50 border-gray-100'}`}>
+                    <div className="flex justify-between items-center mb-6">
+                       <h3 className="font-bold text-pau-darkBlue flex items-center">
+                         <MegaphoneIcon className="h-5 w-5 mr-2 text-pau-gold" />
+                         Global Alert Banner
+                       </h3>
+                       <label className="relative inline-flex items-center cursor-pointer">
+                          <input type="checkbox" checked={globalAlert.active} onChange={(e) => setGlobalAlert({...globalAlert, active: e.target.checked})} className="sr-only peer" />
+                          <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pau-gold"></div>
+                          <span className="ml-3 text-sm font-medium text-gray-900">{globalAlert.active ? 'Active' : 'Inactive'}</span>
+                        </label>
+                    </div>
+                    <div className="space-y-4">
+                      <input 
+                        type="text" 
+                        placeholder="Alert Message (e.g., Campus closed due to weather)" 
+                        className="w-full p-4 border border-gray-200 rounded-lg"
+                        value={globalAlert.message}
+                        onChange={(e) => setGlobalAlert({...globalAlert, message: e.target.value})}
+                      />
+                      <div className="flex gap-4">
+                        {['info', 'warning', 'emergency'].map((type) => (
+                          <button
+                            key={type}
+                            onClick={() => setGlobalAlert({...globalAlert, type: type as any})}
+                            className={`px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider border-2 transition-all ${
+                              globalAlert.type === type 
+                              ? 'border-pau-blue bg-pau-blue text-white' 
+                              : 'border-gray-200 text-gray-400 hover:border-gray-300'
+                            }`}
+                          >
+                            {type}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                 </div>
+
+                 {/* Hero Branding */}
+                 <div className="p-8 rounded-2xl bg-white border border-gray-100">
+                    <h3 className="font-bold text-pau-darkBlue mb-6 flex items-center">
+                      <ComputerDesktopIcon className="h-5 w-5 mr-2 text-pau-gold" />
+                      Homepage Hero
+                    </h3>
+                    <div className="space-y-6">
+                       <div>
+                         <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 block">Hero Headline</label>
+                         <textarea 
+                           rows={2} 
+                           className="w-full p-4 bg-gray-50 border border-gray-200 rounded-lg font-serif font-bold text-lg text-pau-darkBlue"
+                           value={home.heroTitle}
+                           onChange={(e) => setHome({...home, heroTitle: e.target.value})}
+                         />
+                       </div>
+                       <div>
+                         <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 block">Hero Subtitle</label>
+                         <textarea 
+                           rows={2} 
+                           className="w-full p-4 bg-gray-50 border border-gray-200 rounded-lg text-sm"
+                           value={home.heroSubtitle}
+                           onChange={(e) => setHome({...home, heroSubtitle: e.target.value})}
+                         />
+                       </div>
+                    </div>
+                 </div>
+              </div>
+            )}
+
+            {/* 1. ADMISSIONS (NEW) */}
+            {activeTab === 'admissions' && (
+              <div className="p-10 animate-fade-in">
+                <SectionHeader 
+                  title="Admissions Management" 
+                  subtitle="Update deadlines and tuition fees"
+                  btnLabel="Add Deadline"
+                  onBtnClick={() => setAdmissions({ ...admissions, deadlines: [...admissions.deadlines, { term: 'New Term', date: '', type: 'Regular Decision' }] })}
+                />
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                   <div className="bg-pau-blue/5 p-8 rounded-3xl border border-pau-blue/10">
+                      <h3 className="text-sm font-bold text-pau-blue uppercase tracking-widest mb-6 flex items-center">
+                        <CurrencyDollarIcon className="h-5 w-5 mr-2" /> Tuition Control
+                      </h3>
+                      <div>
+                        <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 block">Annual Tuition Cost</label>
+                        <input 
+                          type="text" 
+                          className="w-full p-4 bg-white border border-gray-200 rounded-lg font-bold text-xl text-green-600"
+                          value={admissions.tuitionCost}
+                          onChange={(e) => setAdmissions({...admissions, tuitionCost: e.target.value})}
+                        />
+                      </div>
+                      <div className="mt-4">
+                        <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 block">Tuition Info Blurb</label>
+                        <textarea 
+                          rows={3} 
+                          className="w-full p-4 bg-white border border-gray-200 rounded-lg text-sm"
+                          value={admissions.tuitionInfo}
+                          onChange={(e) => setAdmissions({...admissions, tuitionInfo: e.target.value})}
+                        />
+                      </div>
+                   </div>
+                   
+                   <div className="bg-white p-8 rounded-3xl border border-gray-100">
+                      <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6 flex items-center">
+                        <CalendarIcon className="h-5 w-5 mr-2" /> Application Deadlines
+                      </h3>
+                      <div className="space-y-4">
+                         {admissions.deadlines.map((dl, i) => (
+                           <div key={i} className="flex gap-3 items-center group">
+                              <input 
+                                type="text" 
+                                className="w-1/3 p-3 bg-gray-50 border border-gray-200 rounded text-sm font-bold" 
+                                value={dl.term} 
+                                onChange={(e) => {
+                                  const newDL = [...admissions.deadlines];
+                                  newDL[i].term = e.target.value;
+                                  setAdmissions({...admissions, deadlines: newDL});
+                                }}
+                              />
+                              <input 
+                                type="text" 
+                                className="w-1/3 p-3 bg-gray-50 border border-gray-200 rounded text-sm" 
+                                value={dl.date} 
+                                onChange={(e) => {
+                                  const newDL = [...admissions.deadlines];
+                                  newDL[i].date = e.target.value;
+                                  setAdmissions({...admissions, deadlines: newDL});
+                                }}
+                              />
+                              <button onClick={() => setAdmissions({...admissions, deadlines: admissions.deadlines.filter((_, idx) => idx !== i)})} className="p-2 text-gray-300 hover:text-red-500">
+                                <TrashIcon className="h-5 w-5" />
+                              </button>
+                           </div>
+                         ))}
+                      </div>
+                   </div>
+                </div>
+              </div>
+            )}
+
+            {/* 2. LATEST NEWS */}
             {activeTab === 'news' && (
               <div className="p-10 animate-fade-in">
                 <SectionHeader 
@@ -389,7 +545,7 @@ export const Admin = ({
               </div>
             )}
 
-            {/* 2. NOTICE BOARD */}
+            {/* 3. NOTICE BOARD */}
             {activeTab === 'notices' && (
               <div className="p-10 animate-fade-in">
                 <SectionHeader 
@@ -429,7 +585,7 @@ export const Admin = ({
               </div>
             )}
 
-            {/* 3. FACULTY PROFILES */}
+            {/* 4. FACULTY PROFILES */}
             {activeTab === 'faculty' && (
               <div className="p-10 animate-fade-in">
                 <SectionHeader 
@@ -482,7 +638,7 @@ export const Admin = ({
               </div>
             )}
 
-            {/* 4. CURRICULUM (ACADEMICS) */}
+            {/* 5. CURRICULUM (ACADEMICS) */}
             {activeTab === 'academics' && (
               <div className="p-10 animate-fade-in">
                 <SectionHeader 

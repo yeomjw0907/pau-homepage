@@ -15,7 +15,8 @@ import {
   ShieldCheckIcon,
   BriefcaseIcon,
   DocumentDuplicateIcon,
-  ClockIcon
+  ClockIcon,
+  UserGroupIcon
 } from '@heroicons/react/24/outline';
 
 interface AcademicsProps {
@@ -72,6 +73,13 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
       desc: "Detailed descriptions of core and elective law courses.",
       icon: ListBulletIcon,
       color: "text-emerald-500"
+    },
+    {
+      id: 'counseling' as Page,
+      title: "Academic Counseling",
+      desc: "One-on-one guidance to ensure your academic success.",
+      icon: ChatBubbleLeftEllipsisIcon,
+      color: "text-rose-500"
     },
     {
       id: 'grad-reqs' as Page,
@@ -253,6 +261,51 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
           </>
         );
 
+      case 'counseling':
+        return (
+          <>
+            <SubPageHeader 
+              title="Academic Counseling" 
+              subtitle="Personalized support to guide your law school journey." 
+              icon={ChatBubbleLeftEllipsisIcon}
+              onBack={() => onNavigate('academics')}
+            />
+            <div className="max-w-5xl mx-auto px-6 py-20">
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                  <div className="space-y-6">
+                    <h3 className="text-3xl font-serif font-bold text-pau-darkBlue">Dedicated to Your Success</h3>
+                    <p className="text-gray-600 leading-relaxed font-light">
+                      At PAU School of Law, we understand that online learning requires discipline and support. Our Academic Counseling office provides personalized guidance to help you manage your course load, prepare for exams, and balance your studies with professional and personal commitments.
+                    </p>
+                    <ul className="space-y-4 pt-4">
+                      {[
+                        "Individualized Study Plans",
+                        "FYLSX Preparation Strategy",
+                        "Performance Analysis & Feedback",
+                        "Time Management Coaching"
+                      ].map((item, i) => (
+                        <li key={i} className="flex items-center text-pau-blue font-medium">
+                          <CheckBadgeIcon className="h-5 w-5 mr-3 text-pau-gold" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="bg-pau-light p-10 rounded-3xl border border-gray-100 shadow-lg text-center">
+                     <UserGroupIcon className="h-16 w-16 text-pau-gold mx-auto mb-6" />
+                     <h4 className="text-xl font-bold text-pau-darkBlue mb-4">Schedule an Appointment</h4>
+                     <p className="text-sm text-gray-500 mb-8">
+                       Counseling sessions are available via Zoom or phone. Current students can book directly through the student portal.
+                     </p>
+                     <button className="bg-pau-blue text-white px-8 py-3 rounded-full font-bold uppercase text-xs tracking-widest hover:bg-pau-darkBlue transition-colors shadow-md">
+                       Book Session
+                     </button>
+                  </div>
+               </div>
+            </div>
+          </>
+        );
+
       default:
         // Overview (default 'academics')
         return (
@@ -286,24 +339,24 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
                   <span className="text-pau-gold font-bold tracking-widest uppercase text-xs">Academic Portal</span>
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
                   {academicPortals.map((portal) => (
                     <button
                       key={portal.id}
                       onClick={() => onNavigate(portal.id)}
-                      className="group bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:border-pau-blue/20 transition-all duration-500 text-left flex flex-col h-full"
+                      className="group bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:border-pau-blue/20 transition-all duration-500 text-left flex flex-col h-full"
                     >
-                      <div className={`p-4 bg-gray-50 rounded-xl mb-6 group-hover:bg-pau-blue group-hover:text-white transition-all duration-300 ${portal.color}`}>
-                        <portal.icon className="h-8 w-8 stroke-1" />
+                      <div className={`p-3 bg-gray-50 rounded-xl mb-4 group-hover:bg-pau-blue group-hover:text-white transition-all duration-300 w-fit ${portal.color}`}>
+                        <portal.icon className="h-6 w-6 stroke-1" />
                       </div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-3 font-serif group-hover:text-pau-blue transition-colors">
+                      <h3 className="text-lg font-bold text-gray-900 mb-2 font-serif group-hover:text-pau-blue transition-colors">
                         {portal.title}
                       </h3>
-                      <p className="text-gray-500 text-sm leading-relaxed mb-8 flex-grow">
+                      <p className="text-gray-500 text-xs leading-relaxed mb-6 flex-grow">
                         {portal.desc}
                       </p>
-                      <div className="flex items-center text-xs font-bold text-pau-gold uppercase tracking-widest group-hover:translate-x-2 transition-transform">
-                        Explore Section <ArrowRightIcon className="ml-2 h-4 w-4" />
+                      <div className="flex items-center text-[10px] font-bold text-pau-gold uppercase tracking-widest group-hover:translate-x-1 transition-transform">
+                        View <ArrowRightIcon className="ml-1 h-3 w-3" />
                       </div>
                     </button>
                   ))}

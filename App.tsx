@@ -7,7 +7,9 @@ import {
   DEFAULT_SHARED_CONTENT, 
   MOCK_HOME_CONTENT, 
   Clinic, 
-  NewsItem 
+  NewsItem,
+  GlobalAlert,
+  AdmissionsContent
 } from './types';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
@@ -34,7 +36,7 @@ import {
   CheckBadgeIcon, 
   ArrowPathIcon, 
   ExclamationCircleIcon,
-  ClockIcon,
+  ClockIcon, 
   PhoneIcon,
   MapPinIcon,
   EnvelopeIcon,
@@ -54,7 +56,8 @@ import {
   ArrowRightIcon,
   ClipboardDocumentListIcon,
   IdentificationIcon,
-  NewspaperIcon
+  NewspaperIcon,
+  ChatBubbleBottomCenterTextIcon
 } from '@heroicons/react/24/outline';
 
 const PageHeader: React.FC<{ title: string; subtitle: string; icon: any }> = ({ title, subtitle, icon: Icon }) => (
@@ -96,6 +99,23 @@ const DocumentLink: React.FC<{ title: string; type?: string }> = ({ title, type 
   </div>
 );
 
+// Generic Page Component for static text content
+const GenericPage: React.FC<{ 
+  title: string; 
+  subtitle: string; 
+  icon: any; 
+  content: React.ReactNode 
+}> = ({ title, subtitle, icon, content }) => (
+  <>
+    <PageHeader title={title} subtitle={subtitle} icon={icon} />
+    <SectionWrapper>
+      <div className="max-w-4xl mx-auto prose prose-lg prose-blue text-gray-600">
+        {content}
+      </div>
+    </SectionWrapper>
+  </>
+);
+
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<Page>('home');
   const [currentLang, setCurrentLang] = useState<SupportedLanguage>('English');
@@ -103,7 +123,31 @@ const App: React.FC = () => {
   const [selectedClinic, setSelectedClinic] = useState<Clinic | null>(null);
   const [selectedNews, setSelectedNews] = useState<NewsItem | null>(null);
   
+  // Global State for Content
   const [homeContent, setHomeContent] = useState(MOCK_HOME_CONTENT);
+  const [globalAlert, setGlobalAlert] = useState<GlobalAlert>({
+    active: false,
+    message: '',
+    type: 'info'
+  });
+
+  const [admissionsContent, setAdmissionsContent] = useState<AdmissionsContent>({
+    title: 'Admissions',
+    intro: 'Start your journey toward a legal career with Pacific American University.',
+    deadlinesTitle: 'Application Deadlines',
+    deadlines: [{ term: 'Fall 2026', date: 'August 1, 2026', type: 'Regular Decision' }],
+    requirementsTitle: 'Admission Requirements',
+    requirements: ['Bachelor\'s Degree from an accredited institution', 'Personal Statement', 'Two Letters of Recommendation', 'LSAT Score (Optional)', 'Official Transcripts'],
+    tuitionTitle: 'Tuition & Value',
+    tuitionInfo: 'One of the most accessible JD programs in California. We believe in providing high-quality legal education without the crushing debt burden.',
+    tuitionCost: '$9,000',
+    faqTitle: 'Admissions FAQ',
+    faqs: [
+      { question: 'Is the program 100% online?', answer: 'Yes, PAU Law offers a fully online J.D. program designed for working professionals.' },
+      { question: 'Do I need to take the LSAT?', answer: 'While LSAT scores are considered if submitted, they are not mandatory for admission. We evaluate candidates holistically.' }
+    ]
+  });
+
   const [noticesContent, setNoticesContent] = useState({ 
     title: 'Campus Notices', 
     intro: 'Stay informed about upcoming events, academic deadlines, and policy changes.', 
@@ -293,6 +337,25 @@ const App: React.FC = () => {
   };
 
   const renderContent = () => {
+    if (currentPage === 'admin') {
+      return (
+        <Admin 
+          home={homeContent} 
+          setHome={setHomeContent}
+          admissions={admissionsContent}
+          setAdmissions={setAdmissionsContent}
+          academics={academicsContent}
+          setAcademics={setAcademicsContent}
+          faculty={facultyContent}
+          setFaculty={setFacultyContent}
+          notices={noticesContent}
+          setNotices={setNoticesContent}
+          globalAlert={globalAlert}
+          setGlobalAlert={setGlobalAlert}
+        />
+      );
+    }
+
     if (selectedNews) {
       return <NewsDetail item={selectedNews} onBack={() => setSelectedNews(null)} shared={shared} />;
     }
@@ -301,6 +364,7 @@ const App: React.FC = () => {
     }
 
     switch (currentPage) {
+      // --- HOME & MAIN SECTIONS ---
       case 'home':
         return (
           <>
@@ -310,6 +374,7 @@ const App: React.FC = () => {
           </>
         );
 
+      // --- ABOUT SECTION PAGES ---
       case 'history-mission':
         return (
           <>
@@ -360,6 +425,27 @@ const App: React.FC = () => {
           </>
         );
 
+      case 'dean-message':
+        return (
+          <GenericPage
+            title="Dean's Message"
+            subtitle="Academic leadership committed to student outcomes."
+            icon={AcademicCapIcon}
+            content={
+              <>
+                <p className="lead">To the Future Advocates of Tomorrow,</p>
+                <p>Welcome to Pacific American University School of Law. As Dean, I am honored to lead an institution that is reshaping the landscape of legal education.</p>
+                <p>We are not just an online law school; we are a community of scholars, practitioners, and students united by a common goal: to master the law and use it to effect positive change. Our curriculum is rigorous, designed to challenge you and prepare you for the realities of modern legal practice.</p>
+                <p>Whether you aspire to practice in a courtroom, a corporate boardroom, or a public interest organization, your journey starts here. We are committed to providing you with the tools, mentorship, and opportunities you need to succeed.</p>
+                <div className="mt-8 border-t border-gray-200 pt-6">
+                  <p className="font-bold text-pau-darkBlue text-xl font-serif">Elena Rodriguez</p>
+                  <p className="text-sm text-gray-500 uppercase tracking-widest mt-1">Dean, School of Law</p>
+                </div>
+              </>
+            }
+          />
+        );
+
       case 'school-form':
         return (
           <>
@@ -370,6 +456,8 @@ const App: React.FC = () => {
                   <DocumentLink title="Transcript Request Form" />
                   <DocumentLink title="Notice of Cancellation / Withdrawal" />
                   <DocumentLink title="Credit Card Authorization Form" />
+                  <DocumentLink title="Grade Appeal Petition" />
+                  <DocumentLink title="Leave of Absence Request" />
                </div>
             </SectionWrapper>
           </>
@@ -389,6 +477,14 @@ const App: React.FC = () => {
                     { 
                       q: "Can I take the Bar Exam?", 
                       a: "Graduates are eligible to sit for the California Bar Examination, provided they meet all other State Bar requirements." 
+                    },
+                    {
+                      q: "What technical equipment do I need?",
+                      a: "Students must have a computer with reliable high-speed internet access, a webcam, and a microphone to participate in live sessions and access course materials."
+                    },
+                    {
+                      q: "Is financial aid available?",
+                      a: "PAU offers competitive tuition rates and flexible payment plans. We do not participate in federal financial aid programs (Title IV) at this time."
                     }
                   ].map((faq, i) => (
                     <div key={i} className="bg-white p-6 md:p-12 rounded-2xl md:rounded-[40px] shadow-premium border border-gray-50">
@@ -417,77 +513,354 @@ const App: React.FC = () => {
                       Pacific American University School of Law is registered with the Committee of Bar Examiners as an Unaccredited Correspondence Law School.
                     </p>
                   </div>
+                  <div className="mt-12 text-gray-600 leading-relaxed">
+                    <p className="mb-4">
+                      The method of instruction at this law school for the Juris Doctor (J.D.) degree program is principally by correspondence.
+                    </p>
+                    <p>
+                      Students studying at this law school who successfully complete the first-year law study must pass the First-Year Law Students' Examination required by Business and Professions Code §6060(h) and Rule 4.3(I) of the Rules of the State Bar of California as part of the requirements to qualify to take the California Bar Examination. A student who passes the First-Year Law Students' Examination within three (3) administrations of the examination after first becoming eligible to take it will receive credit for all legal studies completed to the time the examination is passed. A student who does not pass the examination within three (3) administrations of the examination after first becoming eligible to take it must be promptly disqualified from the law school's J.D. degree program. If the dismissed student subsequently passes the examination, the student is eligible for re-enrollment in this law school's J.D. degree program, but will receive no credit for any legal studies completed prior to the time of passing the examination.
+                    </p>
+                  </div>
                </div>
             </SectionWrapper>
           </>
         );
 
-      case 'faculty':
-      case 'admin-staffs':
-        return <Faculty content={facultyContent} shared={shared} currentPage={currentPage} onNavigate={handleNavigate} />;
-
-      case 'admissions':
-      case 'apply-now':
-        return <Admissions content={{
-          title: 'Admissions',
-          intro: 'Start your journey toward a legal career with Pacific American University.',
-          deadlinesTitle: 'Application Deadlines',
-          deadlines: [{ term: 'Fall 2026', date: 'August 1, 2026', type: 'Regular Decision' }],
-          requirementsTitle: 'Admission Requirements',
-          requirements: ['Bachelor\'s Degree', 'Personal Statement', 'Letters of Recommendation'],
-          tuitionTitle: 'Tuition & Value',
-          tuitionInfo: 'One of the most accessible JD programs in California.',
-          tuitionCost: '$9,000',
-          faqTitle: 'Admissions FAQ',
-          faqs: [{ question: 'Is it online?', answer: 'Yes, 100% online.' }]
-        }} shared={shared} />;
-      
-      case 'academics':
-        return <Academics content={academicsContent} onNavigate={handleNavigate} currentPage={currentPage} />;
-      
-      case 'notices':
-        return <NoticeBoard content={noticesContent} onNewsClick={setSelectedNews} shared={shared} />;
-
-      case 'weekly-dicta':
-        return <NoticeBoard content={weeklyDictaContent} onNewsClick={setSelectedNews} shared={shared} />;
-
-      case 'contact-info':
+      case 'disclosure':
         return (
           <>
-            <PageHeader title={"Contact\nInformation"} subtitle="Direct lines to our offices." icon={PhoneIcon} />
-            <SectionWrapper title="Connect with PAUSL">
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 max-w-6xl mx-auto">
-                  <div className="bg-white p-6 md:p-10 rounded-2xl md:rounded-[40px] shadow-premium border border-gray-100 flex items-start gap-4 md:gap-6">
-                    <MapPinIcon className="h-5 md:h-6 w-5 md:w-6 text-pau-blue" />
-                    <div>
-                       <h4 className="text-[9px] md:text-xs font-bold text-gray-400 uppercase tracking-widest mb-1 md:mb-2">Campus Address</h4>
-                       <p className="text-sm md:text-lg text-pau-darkBlue font-medium">3435 Wilshire Blvd. Suite 430<br />Los Angeles, CA 90010</p>
-                    </div>
+            <PageHeader title={"Disclosure"} subtitle="Transparency in our educational offering." icon={DocumentDuplicateIcon} />
+            <SectionWrapper>
+              <div className="max-w-4xl mx-auto space-y-8">
+                 <p className="text-lg text-gray-700 leading-relaxed">
+                   Pacific American University School of Law makes the following disclosures as required by the State Bar of California Guidelines for Unaccredited Law School Rules.
+                 </p>
+                 <div className="p-8 bg-gray-50 border-l-4 border-pau-darkBlue">
+                   <h3 className="font-bold text-pau-darkBlue mb-4">Guideline 2.3(D) Compliance</h3>
+                   <p className="text-sm text-gray-600">
+                     The law school has not applied for accreditation in the last five years. The school’s assets and resources are primarily dedicated to providing distance legal education.
+                   </p>
+                 </div>
+                 <a href="#" className="inline-flex items-center text-pau-gold font-bold uppercase tracking-widest text-xs hover:underline">
+                   Download Full Disclosure Statement <ArrowRightIcon className="ml-2 h-4 w-4" />
+                 </a>
+              </div>
+            </SectionWrapper>
+          </>
+        );
+
+      case 'catalog':
+        return (
+          <>
+             <PageHeader title={"School\nCatalog"} subtitle="Complete guide to policies and programs." icon={BookOpenIcon} />
+             <SectionWrapper>
+               <div className="max-w-4xl mx-auto flex flex-col items-center">
+                  <div className="w-48 h-64 bg-gray-200 shadow-2xl mb-10 flex items-center justify-center rounded-r-2xl border-l-8 border-pau-darkBlue relative overflow-hidden group cursor-pointer hover:scale-105 transition-transform duration-500">
+                     <div className="absolute inset-0 bg-gradient-to-br from-pau-blue to-pau-darkBlue"></div>
+                     <div className="relative z-10 text-center text-white p-4">
+                       <span className="block text-4xl font-serif font-bold mb-2">2025</span>
+                       <span className="text-[10px] uppercase tracking-[0.2em] block">Academic Catalog</span>
+                     </div>
                   </div>
-                  <div className="bg-pau-darkBlue p-6 md:p-10 rounded-2xl md:rounded-[40px] text-white flex items-start gap-4 md:gap-6">
-                    <PhoneIcon className="h-5 md:h-6 w-5 md:w-6 text-pau-gold" />
-                    <div>
-                       <h4 className="text-[9px] md:text-xs font-bold text-pau-gold/60 uppercase tracking-widest mb-1 md:mb-2">Direct Line</h4>
-                       <p className="text-sm md:text-lg font-medium">Tel: (213) 674-7174</p>
-                    </div>
+                  <button className="bg-pau-gold text-white px-10 py-4 rounded-full font-bold uppercase text-xs tracking-widest hover:bg-pau-darkBlue transition-colors shadow-lg">
+                    Download PDF Catalog
+                  </button>
+               </div>
+             </SectionWrapper>
+          </>
+        );
+
+      case 'admin-staffs':
+      case 'faculty':
+        return (
+          <Faculty content={facultyContent} shared={shared} currentPage={currentPage} onNavigate={handleNavigate} />
+        );
+
+      case 'consumer-info':
+        return <ConsumerInfo content={{
+          title: "Consumer Information",
+          intro: "Essential data regarding our academic program, student body, and outcomes.",
+          sections: [
+            {
+              id: "student-body",
+              title: "Student Body Diversity",
+              content: "PAU Law is committed to fostering a diverse academic environment.",
+              tableData: [
+                { label: "Female Students", value: "54%" },
+                { label: "Male Students", value: "45%" },
+                { label: "Non-Binary / Other", value: "1%" },
+                { label: "Minority Representation", value: "62%" }
+              ]
+            },
+            {
+              id: "refund-policy",
+              title: "Refund Policy",
+              content: "Students have the right to cancel their enrollment agreement and obtain a refund of charges paid through attendance at the first class session, or the seventh day after enrollment, whichever is later."
+            }
+          ]
+        }} />;
+
+      // --- ACADEMICS SECTIONS ---
+      case 'academics':
+      case 'curriculum-schedule':
+      case 'bar-info':
+      case 'course-desc':
+      case 'counseling':
+      case 'grad-reqs':
+        return (
+          <Academics content={academicsContent} onNavigate={handleNavigate} currentPage={currentPage} />
+        );
+
+      case 'centers':
+        return <Centers content={{
+          title: "Centers of Excellence",
+          intro: "Specialized institutes fostering deep expertise in critical legal fields.",
+          clinics: homeContent.clinics
+        }} onClinicClick={setSelectedClinic} shared={shared} />;
+      
+      case 'library':
+        return <Library content={{
+          title: "Law Library",
+          intro: "Your gateway to comprehensive legal research resources.",
+          sections: [
+            { title: "Digital Collections", content: "Access Westlaw, LexisNexis, and HeinOnline from anywhere 24/7." },
+            { title: "Research Guides", content: "Curated pathfinders for specific areas of law including Torts, Contracts, and Civil Procedure." },
+            { title: "Reference Support", content: "Schedule a Zoom consultation with our reference librarians for research strategy assistance." }
+          ]
+        }} shared={shared} />;
+
+      case 'academic-calendar':
+        return <Calendar content={{
+          title: "Academic Calendar",
+          intro: "Key dates and deadlines for the 2026-2027 academic year.",
+          events: [
+            { date: "Aug 25, 2026", event: "Fall Semester Begins", type: "Academic" },
+            { date: "Sept 7, 2026", event: "Labor Day (No Classes)", type: "Holiday" },
+            { date: "Nov 26-27, 2026", event: "Thanksgiving Break", type: "Holiday" },
+            { date: "Dec 14-18, 2026", event: "Final Examinations", type: "Exam" }
+          ]
+        }} shared={shared} />;
+
+      // --- ADMISSIONS SECTIONS ---
+      case 'admissions':
+      case 'apply-now':
+        return <Admissions content={admissionsContent} shared={shared} />;
+      
+      case 'careers':
+        return <Careers content={{
+          title: "Career Services",
+          intro: "Empowering you to launch a successful legal career.",
+          stats: [
+             { label: "Employment Rate", value: "92%" },
+             { label: "Bar Pass Rate", value: "85%" },
+             { label: "Alumni Network", value: "2000+" }
+          ],
+          services: [
+            { title: "Resume & Cover Letter Review", description: "Expert feedback to make your application materials stand out." },
+            { title: "Mock Interviews", description: "Practice your interview skills with practicing attorneys." }
+          ]
+        }} />;
+
+      case 'notices':
+        return <NoticeBoard content={noticesContent} onNewsClick={setSelectedNews} shared={shared} />;
+      
+      case 'weekly-dicta':
+        return <HomeNews title={weeklyDictaContent.title} newsItems={weeklyDictaContent.notices} onNewsClick={setSelectedNews} onNavigate={handleNavigate} shared={shared} />;
+
+      // --- TUITION & OTHER ---
+      case 'tuition-fees':
+      case 'payment-plan':
+      case 'refund-policy':
+      case 'tuition':
+        return (
+          <>
+             <PageHeader title={"Tuition &\nFinancial Services"} subtitle="Investing in your future with transparent costs." icon={BanknotesIcon} />
+             <SectionWrapper>
+               <div className="max-w-4xl mx-auto space-y-12">
+                  <div className="bg-white p-8 rounded-2xl shadow-premium border border-gray-100 flex flex-col md:flex-row gap-8 items-center">
+                     <div className="flex-shrink-0 p-6 bg-green-50 rounded-full">
+                       <CurrencyDollarIcon className="h-12 w-12 text-green-600" />
+                     </div>
+                     <div>
+                       <h3 className="text-2xl font-bold text-pau-darkBlue mb-2">J.D. Program Tuition</h3>
+                       <p className="text-gray-600 leading-relaxed mb-4">
+                         Tuition is charged on a per-unit basis. The current rate is <span className="font-bold text-green-700">$300 per unit</span>.
+                       </p>
+                       <p className="text-sm text-gray-500">Estimated annual tuition for a full-time student (24 units): <span className="font-bold text-gray-800">$7,200</span>.</p>
+                     </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                     <div className="bg-gray-50 p-8 rounded-2xl border border-gray-200">
+                        <h4 className="font-bold text-pau-blue mb-4 flex items-center">
+                          <CreditCardIcon className="h-5 w-5 mr-2" /> Payment Options
+                        </h4>
+                        <ul className="space-y-3 text-sm text-gray-600">
+                          <li>• Pay in full per semester</li>
+                          <li>• Monthly installment plan (4 payments/semester)</li>
+                          <li>• Employer reimbursement deferment</li>
+                        </ul>
+                     </div>
+                     <div className="bg-gray-50 p-8 rounded-2xl border border-gray-200">
+                        <h4 className="font-bold text-pau-blue mb-4 flex items-center">
+                          <DocumentCheckIcon className="h-5 w-5 mr-2" /> Refund Policy
+                        </h4>
+                        <p className="text-sm text-gray-600">
+                          100% refund if withdrawn by the 1st week of classes. Prorated refunds available up to the 60% point of the semester.
+                        </p>
+                     </div>
+                  </div>
+               </div>
+             </SectionWrapper>
+          </>
+        );
+
+      case 'contact':
+      case 'contact-info':
+      case 'office-hours':
+      case 'request-info':
+        return (
+          <>
+            <PageHeader title={"Contact\nUs"} subtitle="We are here to assist you." icon={PhoneIcon} />
+            <SectionWrapper>
+               <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+                  <div className="md:col-span-1 space-y-8">
+                     <div>
+                       <h3 className="text-sm font-bold text-pau-gold uppercase tracking-widest mb-4">Mailing Address</h3>
+                       <div className="flex items-start text-gray-600">
+                          <MapPinIcon className="h-5 w-5 mr-3 mt-0.5 flex-shrink-0" />
+                          <p>123 University Drive<br/>Santa Clara, CA 95050</p>
+                       </div>
+                     </div>
+                     <div>
+                       <h3 className="text-sm font-bold text-pau-gold uppercase tracking-widest mb-4">Phone & Email</h3>
+                       <div className="space-y-3 text-gray-600">
+                          <div className="flex items-center"><PhoneIcon className="h-5 w-5 mr-3" /> (408) 555-0199</div>
+                          <div className="flex items-center"><EnvelopeIcon className="h-5 w-5 mr-3" /> admissions@pau.edu</div>
+                       </div>
+                     </div>
+                     <div>
+                       <h3 className="text-sm font-bold text-pau-gold uppercase tracking-widest mb-4">Office Hours</h3>
+                       <div className="flex items-start text-gray-600">
+                          <ClockIcon className="h-5 w-5 mr-3 mt-0.5 flex-shrink-0" />
+                          <div>
+                            <p>Mon - Fri: 9:00 AM - 5:00 PM PST</p>
+                            <p>Sat - Sun: Closed</p>
+                          </div>
+                       </div>
+                     </div>
+                  </div>
+                  
+                  <div className="md:col-span-2 bg-gray-50 p-8 rounded-2xl border border-gray-100">
+                     <h3 className="text-2xl font-serif font-bold text-pau-darkBlue mb-6">Send us a Message</h3>
+                     <form className="space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                           <div>
+                             <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">First Name</label>
+                             <input type="text" className="w-full p-3 border border-gray-300 rounded-lg focus:ring-pau-blue focus:border-pau-blue" />
+                           </div>
+                           <div>
+                             <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Last Name</label>
+                             <input type="text" className="w-full p-3 border border-gray-300 rounded-lg focus:ring-pau-blue focus:border-pau-blue" />
+                           </div>
+                        </div>
+                        <div>
+                           <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Email Address</label>
+                           <input type="email" className="w-full p-3 border border-gray-300 rounded-lg focus:ring-pau-blue focus:border-pau-blue" />
+                        </div>
+                        <div>
+                           <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Message</label>
+                           <textarea rows={4} className="w-full p-3 border border-gray-300 rounded-lg focus:ring-pau-blue focus:border-pau-blue"></textarea>
+                        </div>
+                        <button className="bg-pau-gold text-white px-8 py-3 rounded font-bold uppercase text-xs tracking-widest hover:bg-pau-darkBlue transition-colors shadow-md">
+                          Submit Inquiry
+                        </button>
+                     </form>
                   </div>
                </div>
             </SectionWrapper>
           </>
+        );
+
+      case 'tech-reqs':
+        return (
+          <GenericPage
+            title="Technology Requirements"
+            subtitle="Ensuring you are connected for success."
+            icon={ComputerDesktopIcon}
+            content={
+              <>
+                <h3>Hardware Requirements</h3>
+                <ul>
+                  <li>Computer (PC or Mac) less than 4 years old</li>
+                  <li>Webcam (internal or external)</li>
+                  <li>Microphone and speakers (headset recommended)</li>
+                  <li>Minimum 8GB RAM</li>
+                </ul>
+                <h3>Software & Connectivity</h3>
+                <ul>
+                  <li>High-speed internet connection (Broadband/Fiber recommended)</li>
+                  <li>Google Chrome or Mozilla Firefox browser</li>
+                  <li>Microsoft Office Suite (Student license provided)</li>
+                  <li>Adobe Acrobat Reader</li>
+                </ul>
+              </>
+            }
+          />
+        );
+      
+      case 'admission-reqs':
+        return <Admissions content={admissionsContent} shared={shared} />;
+      
+      case 'app-steps':
+        return (
+          <GenericPage 
+            title="Application Steps" 
+            subtitle="Your roadmap to enrollment."
+            icon={ClipboardDocumentListIcon}
+            content={
+              <ol>
+                <li><strong>Submit Online Application:</strong> Complete the form via LSAC or our direct portal.</li>
+                <li><strong>Request Transcripts:</strong> Have official transcripts sent from all undergraduate institutions.</li>
+                <li><strong>Personal Statement:</strong> Upload a 2-3 page essay describing your motivation for studying law.</li>
+                <li><strong>Letters of Recommendation:</strong> Two letters from academic or professional sources.</li>
+                <li><strong>Interview:</strong> Selected candidates will be invited for a Zoom interview with the Admissions Committee.</li>
+              </ol>
+            }
+          />
+        );
+
+      case 'transfer-int':
+        return (
+          <GenericPage
+            title="Transfer & International"
+            subtitle="Joining PAU from another institution or country."
+            icon={GlobeAltIcon}
+            content={
+              <>
+                <p>PAU welcomes transfer students from other state-accredited or ABA-accredited law schools. Transfer credit is evaluated on a case-by-case basis.</p>
+                <h3>International Applicants</h3>
+                <p>Applicants with degrees from outside the U.S. must have their transcripts evaluated by a credential evaluation service (e.g., WES, LSAC CAS).</p>
+                <p><strong>TOEFL Requirement:</strong> Non-native English speakers must demonstrate proficiency with a minimum TOEFL score of 90 (iBT).</p>
+              </>
+            }
+          />
         );
 
       default:
+        // Fallback
         return (
           <div className="pt-44 pb-20 text-center">
-            <h1 className="text-2xl font-serif font-bold text-pau-blue mb-4">Under Construction</h1>
-            <button onClick={() => handleNavigate('home')} className="mt-4 md:mt-8 text-pau-gold font-bold uppercase tracking-widest border-b border-pau-gold text-xs">Back to Home</button>
+            <h1 className="text-4xl text-gray-300 font-bold">Page Under Construction</h1>
+            <p className="mt-4 text-gray-500">The requested page "{currentPage}" is currently being updated.</p>
+            <button onClick={() => setCurrentPage('home')} className="mt-8 text-pau-blue hover:underline">Return Home</button>
           </div>
         );
     }
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className={`min-h-screen bg-gray-50 flex flex-col font-sans text-gray-900 ${isTranslating ? 'opacity-50 pointer-events-none' : ''}`}>
       <Navbar 
         currentLang={currentLang} 
         onLanguageChange={setCurrentLang} 
@@ -495,10 +868,13 @@ const App: React.FC = () => {
         currentPage={currentPage}
         onNavigate={handleNavigate}
         shared={shared}
+        globalAlert={globalAlert}
       />
-      <main>
+      
+      <main className="flex-grow">
         {renderContent()}
       </main>
+
       <Footer onNavigate={handleNavigate} shared={shared} />
     </div>
   );

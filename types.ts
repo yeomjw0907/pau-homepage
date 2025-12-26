@@ -19,6 +19,12 @@ export type Page =
   | 'contact' | 'office-hours' | 'contact-info' | 'request-info'
   | 'centers' | 'clinic-detail' | 'faculty' | 'news' | 'notices' | 'news-detail' | 'library' | 'careers' | 'consumer-info' | 'admin';
 
+export interface GlobalAlert {
+  active: boolean;
+  message: string;
+  type: 'info' | 'warning' | 'emergency';
+}
+
 export interface Statistic {
   label: string;
   value: string;
@@ -232,6 +238,10 @@ export interface SharedContent {
     contactInfo: string;
     requestInfo: string;
     weeklyDicta: string;
+    library: string;
+    centers: string;
+    careers: string;
+    consumerInfo: string;
   };
   footer: {
     schoolDesc: string;
@@ -244,6 +254,7 @@ export interface SharedContent {
     rightsReserved: string;
     accreditation: string;
     disclosure: string;
+    year: number; // Added dynamic year support
   };
   buttons: {
     applyNow: string;
@@ -326,6 +337,10 @@ export const DEFAULT_SHARED_CONTENT: SharedContent = {
     contactInfo: "Contact Info",
     requestInfo: "Request Info",
     weeklyDicta: "Weekly Dicta",
+    library: "Law Library",
+    centers: "Centers of Excellence",
+    careers: "Career Services",
+    consumerInfo: "Consumer Information",
   },
   footer: {
     schoolDesc: "Pacific American University School of Law is dedicated to providing high-quality, accessible legal education through innovative distance learning methods.",
@@ -338,6 +353,7 @@ export const DEFAULT_SHARED_CONTENT: SharedContent = {
     rightsReserved: "Pacific American University. All Rights Reserved.",
     accreditation: "Accreditation",
     disclosure: "Pacific American University is a private institution. The JD program is registered with the State Bar of California.",
+    year: new Date().getFullYear(),
   },
   buttons: {
     applyNow: "Apply Now",
