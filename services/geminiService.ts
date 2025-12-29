@@ -6,6 +6,23 @@ import { SupportedLanguage, ImageSize } from "../types";
 const translationCache = new Map<string, any>();
 
 /**
+ * Helper to extract JSON from a potentially markdown-wrapped string
+ */
+const extractJson = (text: string): string => {
+  let cleanText = text.trim();
+  // Remove markdown code blocks if present
+  cleanText = cleanText.replace(/```json\n?|\n?```/g, '');
+  // Find the first '{' and last '}' to handle any preamble/postscript text
+  const firstBrace = cleanText.indexOf('{');
+  const lastBrace = cleanText.lastIndexOf('}');
+  
+  if (firstBrace !== -1 && lastBrace !== -1) {
+    return cleanText.substring(firstBrace, lastBrace + 1);
+  }
+  return cleanText;
+};
+
+/**
  * Translates site content dynamically using Gemini 3 Flash.
  * Optimized with caching and concise prompting for maximum performance.
  */
@@ -13,10 +30,6 @@ export const translateContent = async <T>(
   currentContent: T,
   targetLanguage: SupportedLanguage
 ): Promise<T> => {
-  if (targetLanguage === 'English') {
-    return currentContent;
-  }
-
   // Generate a cache key based on language and content fingerprint
   const contentString = JSON.stringify(currentContent);
   const cacheKey = `${targetLanguage}_${contentString.length}_${contentString.slice(0, 20)}`;
@@ -29,21 +42,23 @@ export const translateContent = async <T>(
   // Always create a new GoogleGenAI instance right before making an API call
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
-  // Optimized prompt: Minimal instructions to reduce latency and processing time
-  const prompt = `Translate JSON to ${targetLanguage}. 
-Keep keys. Keep names like "Juris Doctor", "LLM", "Silicon Valley".
-Return ONLY raw JSON.
+  // Use System Instruction for better role adherence
+  const systemInstruction = `You are a professional translator for the Pacific American University School of Law website.
+Your task is to translate the values of the provided JSON object into ${targetLanguage}.
 
-JSON:
-${contentString}`;
+Rules:
+1. PRESERVE STRUCTURE: Do not change any keys in the JSON object. Return the exact same JSON structure.
+2. PRESERVE NAMES: Do not translate proper names such as "Pacific American University", "Juris Doctor", "J.D.", "LL.M.", "Silicon Valley", "Westlaw", "LexisNexis", "Populi", or people's names.
+3. PRESERVE HTML: If a value contains HTML tags (like <p>, <strong>, <ul>), keep the tags exactly as they are and only translate the text content inside them.
+4. OUTPUT: Return ONLY the raw valid JSON string. Do not include markdown formatting (like \`\`\`json) or any conversational text.`;
 
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
-      contents: prompt,
+      contents: contentString,
       config: {
+        systemInstruction: systemInstruction,
         responseMimeType: 'application/json',
-        // Lower temperature for faster, more deterministic output
         temperature: 0.1,
       }
     });
@@ -51,7 +66,10 @@ ${contentString}`;
     const text = response.text;
     if (!text) throw new Error("No translation returned");
     
-    const translated = JSON.parse(text) as T;
+    // Robust extraction
+    const cleanedJsonString = extractJson(text);
+    
+    const translated = JSON.parse(cleanedJsonString) as T;
     
     // Persist in memory cache
     translationCache.set(cacheKey, translated);

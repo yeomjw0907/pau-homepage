@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Page, 
   SupportedLanguage, 
@@ -28,6 +27,7 @@ import { Careers } from './components/Careers';
 import { Calendar } from './components/Calendar';
 import { ConsumerInfo } from './components/ConsumerInfo';
 import { Admin } from './components/Admin';
+import { TranslationOverlay } from './components/TranslationOverlay';
 import { translateContent } from './services/geminiService';
 import { 
   CurrencyDollarIcon, 
@@ -57,7 +57,11 @@ import {
   ClipboardDocumentListIcon,
   IdentificationIcon,
   NewspaperIcon,
-  ChatBubbleBottomCenterTextIcon
+  ChatBubbleBottomCenterTextIcon,
+  DocumentCheckIcon,
+  ComputerDesktopIcon,
+  BuildingOffice2Icon,
+  InboxArrowDownIcon
 } from '@heroicons/react/24/outline';
 
 const PageHeader: React.FC<{ title: string; subtitle: string; icon: any }> = ({ title, subtitle, icon: Icon }) => (
@@ -123,6 +127,9 @@ const App: React.FC = () => {
   const [selectedClinic, setSelectedClinic] = useState<Clinic | null>(null);
   const [selectedNews, setSelectedNews] = useState<NewsItem | null>(null);
   
+  // Ref to track previous language to prevent initial English translation or loops
+  const prevLangRef = useRef<SupportedLanguage>('English');
+
   // Global State for Content
   const [homeContent, setHomeContent] = useState(MOCK_HOME_CONTENT);
   const [globalAlert, setGlobalAlert] = useState<GlobalAlert>({
@@ -315,15 +322,52 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const handleTranslation = async () => {
-      if (currentLang === 'English') return;
+      // Don't translate on initial mount if already English
+      if (currentLang === 'English' && prevLangRef.current === 'English') return;
+      
       setIsTranslating(true);
+      
+      // Helper to translate safely
+      const translateSafe = async <T extends unknown>(content: T, lang: SupportedLanguage): Promise<T> => {
+        try {
+          return await translateContent(content, lang);
+        } catch (e) {
+          console.error(`Failed to translate section to ${lang}`, e);
+          return content; // Fallback to original content on error
+        }
+      };
+
       try {
-        const translated = await translateContent(MOCK_HOME_CONTENT, currentLang);
-        setHomeContent(translated);
+        // Execute translations sequentially to prevent rate limiting (429 Errors)
+        // 1. Core Home Content
+        const translatedHome = await translateSafe(homeContent, currentLang);
+        setHomeContent(translatedHome);
+
+        // 2. Admissions
+        const translatedAdmissions = await translateSafe(admissionsContent, currentLang);
+        setAdmissionsContent(translatedAdmissions);
+
+        // 3. Academics
+        const translatedAcademics = await translateSafe(academicsContent, currentLang);
+        setAcademicsContent(translatedAcademics);
+
+        // 4. Faculty (Can be large)
+        const translatedFaculty = await translateSafe(facultyContent, currentLang);
+        setFacultyContent(translatedFaculty);
+
+        // 5. Notices
+        const translatedNotices = await translateSafe(noticesContent, currentLang);
+        setNoticesContent(translatedNotices);
+
+        // 6. Weekly Dicta (HTML content)
+        const translatedWeeklyDicta = await translateSafe(weeklyDictaContent, currentLang);
+        setWeeklyDictaContent(translatedWeeklyDicta);
+
       } catch (err) {
-        console.error("Translation failed", err);
+        console.error("Translation process failed", err);
       } finally {
         setIsTranslating(false);
+        prevLangRef.current = currentLang;
       }
     };
     handleTranslation();
@@ -669,8 +713,109 @@ const App: React.FC = () => {
 
       // --- TUITION & OTHER ---
       case 'tuition-fees':
+        return (
+          <>
+            <PageHeader title={"Tuition &\nCosts"} subtitle="Transparent pricing for your legal education." icon={CurrencyDollarIcon} />
+            <SectionWrapper title="Schedule of Charges">
+              <div className="max-w-4xl mx-auto">
+                <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 mb-12">
+                  <div className="bg-pau-blue p-6 text-white text-center">
+                    <h3 className="text-xl font-bold font-serif uppercase tracking-widest">2026-2027 Academic Year</h3>
+                  </div>
+                  <div className="p-8">
+                    <div className="grid grid-cols-2 gap-y-6 text-sm md:text-base">
+                      <div className="font-bold text-pau-darkBlue">Tuition (per unit)</div>
+                      <div className="text-right text-gray-600 font-mono">$300.00</div>
+                      <div className="col-span-2 h-px bg-gray-100"></div>
+                      
+                      <div className="font-bold text-pau-darkBlue">Registration Fee (per semester)</div>
+                      <div className="text-right text-gray-600 font-mono">$50.00</div>
+                      <div className="col-span-2 h-px bg-gray-100"></div>
+
+                      <div className="font-bold text-pau-darkBlue">Student Services Fee</div>
+                      <div className="text-right text-gray-600 font-mono">$100.00</div>
+                      <div className="col-span-2 h-px bg-gray-100"></div>
+
+                      <div className="font-bold text-pau-darkBlue">Library Access Fee</div>
+                      <div className="text-right text-gray-600 font-mono">$150.00</div>
+                      
+                      <div className="col-span-2 mt-6 p-4 bg-green-50 rounded-lg flex justify-between items-center border border-green-100">
+                        <span className="font-bold text-green-800 uppercase tracking-wide">Estimated Annual Total (24 Units)</span>
+                        <span className="font-bold text-xl text-green-700 font-mono">$7,800.00</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-400 text-center">* Tuition and fees are subject to change. Books and supplies are not included.</p>
+              </div>
+            </SectionWrapper>
+          </>
+        );
+
       case 'payment-plan':
+        return (
+          <>
+            <PageHeader title={"Payment\nPlans"} subtitle="Flexible options to manage your investment." icon={CreditCardIcon} />
+            <SectionWrapper title="Financial Options">
+              <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+                {[
+                  { title: "Pay in Full", desc: "Pay the full semester tuition upfront.", detail: "0% Interest", note: "Best Value" },
+                  { title: "Monthly Installments", desc: "Divide tuition into 4 monthly payments per semester.", detail: "$50 Setup Fee", note: "Most Popular" },
+                  { title: "Employer Deferral", desc: "Defer payment until 30 days after grades are posted.", detail: "Company Sponsorship", note: "For Working Pros" }
+                ].map((plan, i) => (
+                  <div key={i} className="bg-white p-8 rounded-2xl shadow-soft border border-gray-100 hover:shadow-xl hover:border-pau-gold transition-all group">
+                    <div className="w-12 h-12 bg-pau-light rounded-full flex items-center justify-center mb-6 group-hover:bg-pau-blue group-hover:text-white transition-colors">
+                      <CreditCardIcon className="h-6 w-6 text-pau-blue group-hover:text-white" />
+                    </div>
+                    <h3 className="text-xl font-bold text-pau-darkBlue mb-2 font-serif">{plan.title}</h3>
+                    <p className="text-gray-500 text-sm mb-6 min-h-[40px]">{plan.desc}</p>
+                    <div className="pt-6 border-t border-gray-100 flex justify-between items-center">
+                      <span className="font-bold text-pau-gold text-xs uppercase tracking-wider">{plan.detail}</span>
+                      <span className="px-2 py-1 bg-gray-100 text-gray-500 text-[10px] uppercase font-bold rounded">{plan.note}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </SectionWrapper>
+          </>
+        );
+
       case 'refund-policy':
+        return (
+          <>
+            <PageHeader title={"Refund\nPolicy"} subtitle="Fair and transparent withdrawal guidelines." icon={DocumentCheckIcon} />
+            <SectionWrapper title="Withdrawal & Cancellations">
+              <div className="max-w-4xl mx-auto space-y-10">
+                <div className="p-8 bg-blue-50 border-l-4 border-pau-blue rounded-r-xl">
+                  <h3 className="font-bold text-pau-blue mb-2 text-lg">Buyer's Right to Cancel</h3>
+                  <p className="text-gray-700 leading-relaxed">
+                    You have the right to cancel this agreement and obtain a refund of charges paid through attendance at the first class session, or the seventh day after enrollment, whichever is later.
+                  </p>
+                </div>
+                
+                <div className="bg-white p-8 border border-gray-200 rounded-2xl">
+                  <h4 className="font-bold text-pau-darkBlue mb-6 text-xl font-serif">Pro-Rata Refund Schedule</h4>
+                  <div className="space-y-4">
+                    {[
+                      { time: "Before 1st day of class", refund: "100%" },
+                      { time: "1st week of class (Drop/Add)", refund: "100%" },
+                      { time: "Through 25% of the term", refund: "75%" },
+                      { time: "Through 50% of the term", refund: "50%" },
+                      { time: "Through 60% of the term", refund: "25%" },
+                      { time: "After 60% of the term", refund: "0%" },
+                    ].map((item, i) => (
+                      <div key={i} className="flex justify-between items-center py-3 border-b border-gray-100 last:border-0 hover:bg-gray-50 px-2 rounded transition-colors">
+                        <span className="text-gray-600 font-medium">{item.time}</span>
+                        <span className="font-bold text-pau-darkBlue">{item.refund}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </SectionWrapper>
+          </>
+        );
+
       case 'tuition':
         return (
           <>
@@ -691,8 +836,8 @@ const App: React.FC = () => {
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                     <div className="bg-gray-50 p-8 rounded-2xl border border-gray-200">
-                        <h4 className="font-bold text-pau-blue mb-4 flex items-center">
+                     <button onClick={() => handleNavigate('payment-plan')} className="text-left bg-gray-50 p-8 rounded-2xl border border-gray-200 hover:border-pau-gold hover:shadow-md transition-all group">
+                        <h4 className="font-bold text-pau-blue mb-4 flex items-center group-hover:text-pau-gold transition-colors">
                           <CreditCardIcon className="h-5 w-5 mr-2" /> Payment Options
                         </h4>
                         <ul className="space-y-3 text-sm text-gray-600">
@@ -700,82 +845,231 @@ const App: React.FC = () => {
                           <li>• Monthly installment plan (4 payments/semester)</li>
                           <li>• Employer reimbursement deferment</li>
                         </ul>
-                     </div>
-                     <div className="bg-gray-50 p-8 rounded-2xl border border-gray-200">
-                        <h4 className="font-bold text-pau-blue mb-4 flex items-center">
+                     </button>
+                     <button onClick={() => handleNavigate('refund-policy')} className="text-left bg-gray-50 p-8 rounded-2xl border border-gray-200 hover:border-pau-gold hover:shadow-md transition-all group">
+                        <h4 className="font-bold text-pau-blue mb-4 flex items-center group-hover:text-pau-gold transition-colors">
                           <DocumentCheckIcon className="h-5 w-5 mr-2" /> Refund Policy
                         </h4>
                         <p className="text-sm text-gray-600">
                           100% refund if withdrawn by the 1st week of classes. Prorated refunds available up to the 60% point of the semester.
                         </p>
-                     </div>
+                     </button>
                   </div>
                </div>
              </SectionWrapper>
           </>
         );
 
-      case 'contact':
-      case 'contact-info':
       case 'office-hours':
+        return (
+          <>
+            <PageHeader title={"Office\nHours"} subtitle="We are available to assist you during these times." icon={ClockIcon} />
+            <SectionWrapper title="Operating Schedule">
+              <div className="max-w-4xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  {[
+                    { dept: "General Administration", hours: ["Mon-Fri: 9:00 AM - 5:00 PM PST", "Sat-Sun: Closed"], icon: BuildingOffice2Icon },
+                    { dept: "Admissions Office", hours: ["Mon-Fri: 8:00 AM - 6:00 PM PST", "Sat: By Appointment Only"], icon: UserGroupIcon },
+                    { dept: "Registrar & Records", hours: ["Mon-Thu: 10:00 AM - 4:00 PM PST", "Fri: 10:00 AM - 2:00 PM PST"], icon: ClipboardDocumentListIcon },
+                    { dept: "IT Support Helpdesk", hours: ["Mon-Sun: 7:00 AM - 10:00 PM PST", "Online Ticket: 24/7"], icon: ComputerDesktopIcon },
+                  ].map((item, i) => (
+                    <div key={i} className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:border-pau-blue transition-colors">
+                      <div className="flex items-center mb-6">
+                        <div className="p-3 bg-pau-light text-pau-blue rounded-lg mr-4">
+                          <item.icon className="h-6 w-6" />
+                        </div>
+                        <h3 className="text-lg font-bold text-pau-darkBlue">{item.dept}</h3>
+                      </div>
+                      <ul className="space-y-3">
+                        {item.hours.map((h, idx) => (
+                          <li key={idx} className="flex items-start text-sm text-gray-600">
+                             <ClockIcon className="h-4 w-4 mr-2 mt-0.5 text-pau-gold" />
+                             {h}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-8 p-4 bg-blue-50 text-blue-800 text-xs text-center rounded-lg border border-blue-100">
+                  * Note: All times are in Pacific Standard Time (PST). Office hours may vary during holidays and semester breaks.
+                </div>
+              </div>
+            </SectionWrapper>
+          </>
+        );
+
+      case 'contact-info':
+        return (
+          <>
+            <PageHeader title={"Contact\nInformation"} subtitle="Reach out to the right department." icon={PhoneIcon} />
+            <SectionWrapper>
+               <div className="max-w-5xl mx-auto">
+                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-16">
+                    <div className="lg:col-span-1 bg-white p-8 rounded-2xl border border-gray-100 shadow-lg h-fit">
+                       <h3 className="text-sm font-bold text-pau-gold uppercase tracking-widest mb-6">Mailing Address</h3>
+                       <div className="flex items-start text-gray-700 mb-8">
+                          <MapPinIcon className="h-5 w-5 mr-3 mt-1 flex-shrink-0 text-pau-blue" />
+                          <div>
+                            <p className="font-bold text-pau-darkBlue">Pacific American University</p>
+                            <p>School of Law</p>
+                            <p>123 University Drive</p>
+                            <p>Santa Clara, CA 95050</p>
+                          </div>
+                       </div>
+                       <h3 className="text-sm font-bold text-pau-gold uppercase tracking-widest mb-6">Main Line</h3>
+                       <div className="flex items-center text-gray-700">
+                          <PhoneIcon className="h-5 w-5 mr-3 text-pau-blue" />
+                          <p className="font-bold">(408) 555-0199</p>
+                       </div>
+                    </div>
+                    
+                    <div className="lg:col-span-2">
+                       <h3 className="text-2xl font-serif font-bold text-pau-darkBlue mb-8">Department Directory</h3>
+                       <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+                          {[
+                            { name: "Admissions Office", email: "admissions@pau.edu", phone: "Ext. 101" },
+                            { name: "Registrar's Office", email: "registrar@pau.edu", phone: "Ext. 102" },
+                            { name: "Student Services", email: "studentservices@pau.edu", phone: "Ext. 103" },
+                            { name: "Financial Aid", email: "finance@pau.edu", phone: "Ext. 104" },
+                            { name: "Technical Support", email: "support@pau.edu", phone: "Ext. 200" },
+                            { name: "Law Library", email: "library@pau.edu", phone: "Ext. 300" },
+                          ].map((dept, i) => (
+                            <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between p-6 border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors">
+                               <div className="mb-2 sm:mb-0">
+                                 <h4 className="font-bold text-pau-darkBlue">{dept.name}</h4>
+                               </div>
+                               <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 text-sm text-gray-600">
+                                  <a href={`mailto:${dept.email}`} className="flex items-center hover:text-pau-blue transition-colors">
+                                    <EnvelopeIcon className="h-4 w-4 mr-2 text-gray-400" /> {dept.email}
+                                  </a>
+                                  <span className="flex items-center">
+                                    <PhoneIcon className="h-4 w-4 mr-2 text-gray-400" /> {dept.phone}
+                                  </span>
+                               </div>
+                            </div>
+                          ))}
+                       </div>
+                    </div>
+                 </div>
+                 
+                 {/* Map Placeholder */}
+                 <div className="w-full h-80 bg-gray-100 rounded-2xl overflow-hidden relative border border-gray-200">
+                    <img 
+                      src="https://images.unsplash.com/photo-1524661135-423995f22d0b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" 
+                      alt="Map Location" 
+                      className="w-full h-full object-cover opacity-50 grayscale hover:grayscale-0 transition-all duration-700"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                       <button className="bg-white px-6 py-3 rounded-full shadow-lg font-bold text-pau-blue flex items-center hover:scale-105 transition-transform">
+                          <MapPinIcon className="h-5 w-5 mr-2 text-red-500" /> View on Google Maps
+                       </button>
+                    </div>
+                 </div>
+               </div>
+            </SectionWrapper>
+          </>
+        );
+
       case 'request-info':
+        return (
+          <>
+             <PageHeader title={"Request\nInformation"} subtitle="Tell us how we can help you." icon={InboxArrowDownIcon} />
+             <SectionWrapper>
+                <div className="max-w-4xl mx-auto">
+                   <div className="bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-gray-100">
+                     <div className="text-center mb-10">
+                       <h3 className="text-2xl font-serif font-bold text-pau-darkBlue mb-4">Send us a Message</h3>
+                       <p className="text-gray-500">Fill out the form below and our team will get back to you within 24 hours.</p>
+                     </div>
+                     <form className="space-y-8">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                           <div>
+                             <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">First Name</label>
+                             <input type="text" className="w-full p-4 border border-gray-200 bg-gray-50 rounded-xl focus:bg-white focus:ring-2 focus:ring-pau-blue/20 focus:border-pau-blue transition-all" placeholder="Jane" />
+                           </div>
+                           <div>
+                             <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Last Name</label>
+                             <input type="text" className="w-full p-4 border border-gray-200 bg-gray-50 rounded-xl focus:bg-white focus:ring-2 focus:ring-pau-blue/20 focus:border-pau-blue transition-all" placeholder="Doe" />
+                           </div>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                          <div>
+                             <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Email Address</label>
+                             <input type="email" className="w-full p-4 border border-gray-200 bg-gray-50 rounded-xl focus:bg-white focus:ring-2 focus:ring-pau-blue/20 focus:border-pau-blue transition-all" placeholder="jane@example.com" />
+                          </div>
+                          <div>
+                             <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Inquiry Type</label>
+                             <select className="w-full p-4 border border-gray-200 bg-gray-50 rounded-xl focus:bg-white focus:ring-2 focus:ring-pau-blue/20 focus:border-pau-blue transition-all text-gray-600">
+                                <option>General Admission</option>
+                                <option>Program Details (J.D.)</option>
+                                <option>Tuition & Financial Aid</option>
+                                <option>Technical Issue</option>
+                                <option>Other</option>
+                             </select>
+                          </div>
+                        </div>
+                        <div>
+                           <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Message</label>
+                           <textarea rows={5} className="w-full p-4 border border-gray-200 bg-gray-50 rounded-xl focus:bg-white focus:ring-2 focus:ring-pau-blue/20 focus:border-pau-blue transition-all" placeholder="How can we assist you today?"></textarea>
+                        </div>
+                        <div className="flex justify-end">
+                          <button className="bg-pau-gold text-white px-10 py-4 rounded-xl font-bold uppercase text-xs tracking-widest hover:bg-pau-darkBlue transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                            Submit Inquiry
+                          </button>
+                        </div>
+                     </form>
+                  </div>
+                </div>
+             </SectionWrapper>
+          </>
+        );
+
+      case 'contact':
         return (
           <>
             <PageHeader title={"Contact\nUs"} subtitle="We are here to assist you." icon={PhoneIcon} />
             <SectionWrapper>
-               <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
-                  <div className="md:col-span-1 space-y-8">
-                     <div>
-                       <h3 className="text-sm font-bold text-pau-gold uppercase tracking-widest mb-4">Mailing Address</h3>
-                       <div className="flex items-start text-gray-600">
-                          <MapPinIcon className="h-5 w-5 mr-3 mt-0.5 flex-shrink-0" />
-                          <p>123 University Drive<br/>Santa Clara, CA 95050</p>
-                       </div>
-                     </div>
-                     <div>
-                       <h3 className="text-sm font-bold text-pau-gold uppercase tracking-widest mb-4">Phone & Email</h3>
-                       <div className="space-y-3 text-gray-600">
-                          <div className="flex items-center"><PhoneIcon className="h-5 w-5 mr-3" /> (408) 555-0199</div>
-                          <div className="flex items-center"><EnvelopeIcon className="h-5 w-5 mr-3" /> admissions@pau.edu</div>
-                       </div>
-                     </div>
-                     <div>
-                       <h3 className="text-sm font-bold text-pau-gold uppercase tracking-widest mb-4">Office Hours</h3>
-                       <div className="flex items-start text-gray-600">
-                          <ClockIcon className="h-5 w-5 mr-3 mt-0.5 flex-shrink-0" />
-                          <div>
-                            <p>Mon - Fri: 9:00 AM - 5:00 PM PST</p>
-                            <p>Sat - Sun: Closed</p>
-                          </div>
-                       </div>
-                     </div>
+               <div className="max-w-6xl mx-auto">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                     <button onClick={() => handleNavigate('office-hours')} className="p-8 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-xl hover:border-pau-blue/30 transition-all group text-left">
+                        <div className="w-12 h-12 bg-blue-50 text-pau-blue rounded-xl flex items-center justify-center mb-6 group-hover:bg-pau-blue group-hover:text-white transition-colors">
+                           <ClockIcon className="h-6 w-6" />
+                        </div>
+                        <h3 className="text-xl font-bold text-pau-darkBlue mb-2 font-serif">Office Hours</h3>
+                        <p className="text-gray-500 text-sm mb-4">View operating hours for all university departments.</p>
+                        <span className="text-xs font-bold text-pau-gold uppercase tracking-wider group-hover:underline">View Schedule &rarr;</span>
+                     </button>
+
+                     <button onClick={() => handleNavigate('contact-info')} className="p-8 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-xl hover:border-pau-blue/30 transition-all group text-left">
+                        <div className="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center mb-6 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                           <BuildingOffice2Icon className="h-6 w-6" />
+                        </div>
+                        <h3 className="text-xl font-bold text-pau-darkBlue mb-2 font-serif">Department Directory</h3>
+                        <p className="text-gray-500 text-sm mb-4">Find direct contact information for Admissions, IT, and more.</p>
+                        <span className="text-xs font-bold text-pau-gold uppercase tracking-wider group-hover:underline">Browse Directory &rarr;</span>
+                     </button>
+
+                     <button onClick={() => handleNavigate('request-info')} className="p-8 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-xl hover:border-pau-blue/30 transition-all group text-left">
+                        <div className="w-12 h-12 bg-green-50 text-green-600 rounded-xl flex items-center justify-center mb-6 group-hover:bg-green-600 group-hover:text-white transition-colors">
+                           <InboxArrowDownIcon className="h-6 w-6" />
+                        </div>
+                        <h3 className="text-xl font-bold text-pau-darkBlue mb-2 font-serif">Send a Message</h3>
+                        <p className="text-gray-500 text-sm mb-4">Have a specific question? Submit an inquiry form directly.</p>
+                        <span className="text-xs font-bold text-pau-gold uppercase tracking-wider group-hover:underline">Start Inquiry &rarr;</span>
+                     </button>
                   </div>
-                  
-                  <div className="md:col-span-2 bg-gray-50 p-8 rounded-2xl border border-gray-100">
-                     <h3 className="text-2xl font-serif font-bold text-pau-darkBlue mb-6">Send us a Message</h3>
-                     <form className="space-y-6">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                           <div>
-                             <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">First Name</label>
-                             <input type="text" className="w-full p-3 border border-gray-300 rounded-lg focus:ring-pau-blue focus:border-pau-blue" />
-                           </div>
-                           <div>
-                             <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Last Name</label>
-                             <input type="text" className="w-full p-3 border border-gray-300 rounded-lg focus:ring-pau-blue focus:border-pau-blue" />
-                           </div>
-                        </div>
-                        <div>
-                           <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Email Address</label>
-                           <input type="email" className="w-full p-3 border border-gray-300 rounded-lg focus:ring-pau-blue focus:border-pau-blue" />
-                        </div>
-                        <div>
-                           <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Message</label>
-                           <textarea rows={4} className="w-full p-3 border border-gray-300 rounded-lg focus:ring-pau-blue focus:border-pau-blue"></textarea>
-                        </div>
-                        <button className="bg-pau-gold text-white px-8 py-3 rounded font-bold uppercase text-xs tracking-widest hover:bg-pau-darkBlue transition-colors shadow-md">
-                          Submit Inquiry
-                        </button>
-                     </form>
+
+                  <div className="bg-pau-darkBlue rounded-3xl p-12 text-center text-white relative overflow-hidden">
+                     <div className="relative z-10">
+                       <h2 className="text-3xl font-serif font-bold mb-6">Need Immediate Assistance?</h2>
+                       <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
+                         Our admissions team is available to answer your questions by phone during regular business hours.
+                       </p>
+                       <a href="tel:+14085550199" className="inline-flex items-center bg-white text-pau-darkBlue px-8 py-4 rounded-full font-bold text-lg hover:bg-pau-gold hover:text-white transition-colors shadow-lg">
+                          <PhoneIcon className="h-6 w-6 mr-3" /> (408) 555-0199
+                       </a>
+                     </div>
                   </div>
                </div>
             </SectionWrapper>
@@ -860,7 +1154,9 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className={`min-h-screen bg-gray-50 flex flex-col font-sans text-gray-900 ${isTranslating ? 'opacity-50 pointer-events-none' : ''}`}>
+    <div className="min-h-screen bg-gray-50 flex flex-col font-sans text-gray-900">
+      {isTranslating && <TranslationOverlay lang={currentLang} />}
+      
       <Navbar 
         currentLang={currentLang} 
         onLanguageChange={setCurrentLang} 

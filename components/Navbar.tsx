@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { SupportedLanguage, Page, SharedContent, GlobalAlert } from '../types';
 import { GlobeAltIcon, ChevronDownIcon, Bars3Icon, XMarkIcon, ChevronRightIcon, AcademicCapIcon, BookOpenIcon, IdentificationIcon, CurrencyDollarIcon, ComputerDesktopIcon, ShoppingBagIcon, DocumentTextIcon, BanknotesIcon, CreditCardIcon, ClipboardDocumentListIcon, ExclamationTriangleIcon, InformationCircleIcon, MegaphoneIcon } from '@heroicons/react/24/outline';
@@ -65,6 +66,14 @@ export const Navbar: React.FC<NavbarProps> = ({
     timeoutRef.current = setTimeout(() => {
       setActiveDropdown(null);
     }, 200);
+  };
+
+  const toggleDropdown = (menu: string) => {
+    if (activeDropdown === menu) {
+      setActiveDropdown(null);
+    } else {
+      setActiveDropdown(menu);
+    }
   };
 
   const isTransparent = currentPage === 'home' && !scrolled;
@@ -196,9 +205,12 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div className="hidden md:flex items-center space-x-1">
               {/* 1. ABOUT */}
               <div className="relative group" onMouseEnter={() => handleMouseEnter('about')} onMouseLeave={handleMouseLeave}>
-                <button className={navLinkClass(['history-mission', 'president-welcome', 'dean-message', 'school-form', 'faqs', 'bar-reg', 'disclosure', 'catalog', 'faculty', 'admin-staffs', 'consumer-info'].includes(currentPage))}>
+                <button 
+                  onClick={() => toggleDropdown('about')}
+                  className={navLinkClass(['history-mission', 'president-welcome', 'dean-message', 'school-form', 'faqs', 'bar-reg', 'disclosure', 'catalog', 'faculty', 'admin-staffs', 'consumer-info'].includes(currentPage))}
+                >
                   {shared.nav.about}
-                  <ChevronDownIcon className="ml-1 h-3.5 w-3.5 stroke-[3]" />
+                  <ChevronDownIcon className={`ml-1 h-3.5 w-3.5 stroke-[3] transition-transform ${activeDropdown === 'about' ? 'rotate-180' : ''}`} />
                 </button>
                 {activeDropdown === 'about' && (
                   <DropdownWrapper widthClass="w-[750px]">
@@ -243,9 +255,12 @@ export const Navbar: React.FC<NavbarProps> = ({
 
               {/* 2. ACADEMICS */}
               <div className="relative group" onMouseEnter={() => handleMouseEnter('academics')} onMouseLeave={handleMouseLeave}>
-                <button className={navLinkClass(['academics', 'academic-calendar', 'bar-info', 'curriculum-schedule', 'course-desc', 'counseling', 'grad-reqs', 'centers', 'library'].includes(currentPage))}>
+                <button 
+                  onClick={() => toggleDropdown('academics')}
+                  className={navLinkClass(['academics', 'academic-calendar', 'bar-info', 'curriculum-schedule', 'course-desc', 'counseling', 'grad-reqs', 'centers', 'library'].includes(currentPage))}
+                >
                   {shared.nav.academics}
-                  <ChevronDownIcon className="ml-1 h-3.5 w-3.5 stroke-[3]" />
+                  <ChevronDownIcon className={`ml-1 h-3.5 w-3.5 stroke-[3] transition-transform ${activeDropdown === 'academics' ? 'rotate-180' : ''}`} />
                 </button>
                 {activeDropdown === 'academics' && (
                   <DropdownWrapper widthClass="w-72">
@@ -266,9 +281,12 @@ export const Navbar: React.FC<NavbarProps> = ({
 
               {/* 3. ADMISSIONS */}
               <div className="relative group" onMouseEnter={() => handleMouseEnter('admissions')} onMouseLeave={handleMouseLeave}>
-                <button className={navLinkClass(['admissions', 'apply-now', 'app-steps', 'admission-reqs', 'transfer-int', 'tech-reqs', 'careers'].includes(currentPage))}>
+                <button 
+                  onClick={() => toggleDropdown('admissions')}
+                  className={navLinkClass(['admissions', 'apply-now', 'app-steps', 'admission-reqs', 'transfer-int', 'tech-reqs', 'careers'].includes(currentPage))}
+                >
                   {shared.nav.admissions}
-                  <ChevronDownIcon className="ml-1 h-3.5 w-3.5 stroke-[3]" />
+                  <ChevronDownIcon className={`ml-1 h-3.5 w-3.5 stroke-[3] transition-transform ${activeDropdown === 'admissions' ? 'rotate-180' : ''}`} />
                 </button>
                 {activeDropdown === 'admissions' && (
                   <DropdownWrapper widthClass="w-72">
@@ -288,14 +306,17 @@ export const Navbar: React.FC<NavbarProps> = ({
                 )}
               </div>
 
-              {/* 4. TUITION */}
+              {/* 4. TUITION - FIXED: Added onClick toggle and increased width */}
               <div className="relative group" onMouseEnter={() => handleMouseEnter('tuition')} onMouseLeave={handleMouseLeave}>
-                <button className={navLinkClass(['tuition', 'tuition-fees', 'payment-plan', 'refund-policy'].includes(currentPage))}>
+                <button 
+                  onClick={() => toggleDropdown('tuition')}
+                  className={navLinkClass(['tuition', 'tuition-fees', 'payment-plan', 'refund-policy'].includes(currentPage))}
+                >
                   {shared.nav.tuition}
-                  <ChevronDownIcon className="ml-1 h-3.5 w-3.5 stroke-[3]" />
+                  <ChevronDownIcon className={`ml-1 h-3.5 w-3.5 stroke-[3] transition-transform ${activeDropdown === 'tuition' ? 'rotate-180' : ''}`} />
                 </button>
                 {activeDropdown === 'tuition' && (
-                  <DropdownWrapper widthClass="w-64">
+                  <DropdownWrapper widthClass="w-72">
                     <div className="px-10 space-y-4">
                       <SubmenuBtn page="tuition-fees" label={shared.nav.tuitionFees} />
                       <SubmenuBtn page="payment-plan" label={shared.nav.paymentPlan} />
@@ -307,9 +328,12 @@ export const Navbar: React.FC<NavbarProps> = ({
 
               {/* 5. MY PAUSL */}
               <div className="relative group" onMouseEnter={() => handleMouseEnter('mypausl')} onMouseLeave={handleMouseLeave}>
-                <button className={navLinkClass(['weekly-dicta'].includes(currentPage))}>
+                <button 
+                  onClick={() => toggleDropdown('mypausl')}
+                  className={navLinkClass(['weekly-dicta'].includes(currentPage))}
+                >
                   {shared.nav.myPausl}
-                  <ChevronDownIcon className="ml-1 h-3.5 w-3.5 stroke-[3]" />
+                  <ChevronDownIcon className={`ml-1 h-3.5 w-3.5 stroke-[3] transition-transform ${activeDropdown === 'mypausl' ? 'rotate-180' : ''}`} />
                 </button>
                 {activeDropdown === 'mypausl' && (
                   <DropdownWrapper widthClass="w-[600px]">
@@ -362,9 +386,12 @@ export const Navbar: React.FC<NavbarProps> = ({
 
               {/* 6. CONTACT */}
               <div className="relative group" onMouseEnter={() => handleMouseEnter('contact')} onMouseLeave={handleMouseLeave}>
-                <button className={navLinkClass(['contact', 'office-hours', 'contact-info', 'request-info'].includes(currentPage))}>
+                <button 
+                  onClick={() => toggleDropdown('contact')}
+                  className={navLinkClass(['contact', 'office-hours', 'contact-info', 'request-info'].includes(currentPage))}
+                >
                   {shared.nav.contact}
-                  <ChevronDownIcon className="ml-1 h-3.5 w-3.5 stroke-[3]" />
+                  <ChevronDownIcon className={`ml-1 h-3.5 w-3.5 stroke-[3] transition-transform ${activeDropdown === 'contact' ? 'rotate-180' : ''}`} />
                 </button>
                 {activeDropdown === 'contact' && (
                   <DropdownWrapper widthClass="w-64">
