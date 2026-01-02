@@ -216,14 +216,15 @@ const App: React.FC = () => {
     intro: 'Our professors are leaders in legal theory and practitioners with real-world impact.', 
     facultyList: [
       { 
-        name: "Michael Marino, Esq.", 
+        name: "Michael Marino", 
+        credential: "Esq.",
         title: "Faculty (Teaches: Legal Writing and Analysis, FYLSX Review)", 
         education: [
           "J.D., St. John's University School of Law (2007)",
           "B.B.A., The George Washington University (2004)"
         ], 
         bio: "Attorney Licensed in California and New York (2007).\n\nAdjunct Professor, New York Law School (2008-2012); Creating and Designing Legal Education Program (Marino Legal Academy) (2009-present).", 
-        expertise: ["J.D."],
+        expertise: ["Legal Writing", "FYLSX Review"],
         phone: "(213) 674-7174",
         email: "mmarino@paucal.org",
         category: "Faculty",
@@ -231,6 +232,7 @@ const App: React.FC = () => {
       },
       { 
         name: "Jonathan H. Levy", 
+        credential: "Ph.D., J.D.",
         title: "Faculty (Teaches: Introduction to Law, Torts I & II)", 
         education: [
           "Ph.D. in Political Science, University of Cincinnati (2006)",
@@ -239,7 +241,7 @@ const App: React.FC = () => {
           "B.A., San Francisco State University"
         ], 
         bio: "Attorney Licensed in California (1992).\n\nAdjunct Professor, Kaplan University (2009-2017); Adjunct Professor, South University (2023-present).", 
-        expertise: ["Ph.D."],
+        expertise: ["Introduction to Law", "Torts"],
         phone: "(213) 674-7174",
         email: "jlevy@paucal.org",
         category: "Faculty",
@@ -247,13 +249,14 @@ const App: React.FC = () => {
       },
       { 
         name: "Shandrea P. Williams", 
+        credential: "J.D.",
         title: "Faculty (Teaches: Contracts I & II)", 
         education: [
           "J.D., Loyola University School of Law (1994)",
           "B.A., Southern Agricultural & Mechanical University (1991)"
         ], 
         bio: "Attorney Licensed in Louisiana (1994).\n\nAssociate Professor, Southern University Law Center (2021-present); Co-Director, Common Law Bar Program, Southern University Law Center (2022-present); Professor, Concord Law School at Purdue University Global (2017-2023).", 
-        expertise: ["J.D."],
+        expertise: ["Contracts"],
         phone: "(213) 674-7174",
         email: "swilliams@paucal.org",
         category: "Faculty",
@@ -261,34 +264,37 @@ const App: React.FC = () => {
       },
       { 
         name: "John Chandler", 
+        credential: "J.D.",
         title: "Faculty (Teaches: Criminal Law)", 
         education: [
           "J.D., Loyola Marymount University School of Law (1993)",
           "B.A., California State University (1989)"
         ], 
         bio: "Attorney Licensed in California (1993).\n\nProfessor, Westwood College (2010-2014); Adjunct Instructor, Paloma College (2008-2010); Adjunct Instructor, Rancho Santiago Community College (1997-2006; 2007-2009).", 
-        expertise: ["J.D."],
+        expertise: ["Criminal Law"],
         phone: "(213) 674-7174",
         email: "jchandler@paucal.org",
         category: "Faculty",
         photoUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?fit=crop&w=400&h=400&q=80"
       },
       { 
-        name: "Hyun Joo Kang, S.J.D.", 
+        name: "Hyun Joo Kang", 
+        credential: "S.J.D.",
         title: "CEO & President", 
         education: [
           "LL.M. thesis & S.J.D., Indiana University Maurer School of Law (2010)",
           "LL.B., LL.M., PhD. coursework completed, Ewha Womans University"
         ], 
         bio: "President of Pacific American University (2022-present); Adjunct Professor at Kookmin University (2019-2022); Senior Advisor, I-Sung Labor Law Firm (2019-2022); Senior Researcher at Korea Labor Institute (1996-2004).", 
-        expertise: ["S.J.D."],
+        expertise: ["Educational Leadership", "Labor Law"],
         phone: "(213) 674-7174",
         email: "hjkang@paucal.org",
         category: "Staff",
         photoUrl: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?fit=crop&w=400&h=400&q=80"
       },
       { 
-        name: "Phillip Bohl, J.D., M.L.I.S.", 
+        name: "Phillip Bohl", 
+        credential: "J.D., M.L.I.S.",
         title: "Associate Dean of the School of Law", 
         education: [
           "J.D., Pepperdine University School of Law (1992)",
@@ -296,14 +302,15 @@ const App: React.FC = () => {
           "B.A., Oral Roberts University (1989)"
         ], 
         bio: "Attorney Licensed in California.\n\nAssistant Dean, Legal Technology Initiatives, Pepperdine University School of Law (2023-2024); Assistant Dean, Information Services, Pepperdine University School of Law (2012-2023); Director of Information Services, Pepperdine University School of Law (2001-2012).", 
-        expertise: ["J.D."],
+        expertise: ["Legal Technology", "Information Services"],
         phone: "(213) 674-7174",
         email: "pbohl@paucal.org",
         category: "Staff",
         photoUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?fit=crop&w=400&h=400&q=80"
       },
       { 
-        name: "Nam Hwan Jung, Ed.D.", 
+        name: "Nam Hwan Jung", 
+        credential: "Ed.D.",
         title: "Dean of Admissions", 
         education: [
           "Ed.D, LaSalle University Graduate School (1997)",
@@ -311,14 +318,15 @@ const App: React.FC = () => {
           "B.A., Kyungpook National University (1977)"
         ], 
         bio: "Director, Korea Admissions Research Institute (2000-present); Professor, Hoseo University (1999-2022); Admissions Officer, Hoseo University (2016-2022).", 
-        expertise: ["Ed.D."],
+        expertise: ["Admissions Management", "Higher Education"],
         phone: "(213) 674-7174",
         email: "nhjung@paucal.org",
         category: "Staff",
         photoUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?fit=crop&w=400&h=400&q=80"
       },
       { 
-        name: "Joyee J. Jea, J.D., LL.M.", 
+        name: "Joyee J. Jea", 
+        credential: "J.D., LL.M.",
         title: "IT and Marketing Director", 
         education: [
           "LL.M., Regent University School of Law (2017)",
@@ -326,7 +334,7 @@ const App: React.FC = () => {
           "B.A. in Mechanical Engineering and Electronic Engineering, Handong Global University (2007)"
         ], 
         bio: "Marketing Manager, Seoul National University of Science and Tech. IACF (2024); Lab Startup Innovator, Sungkyunkwan University Startup Center (2023); Patent Agent, Novick, Kim & Lee PLLC (2013-2014).", 
-        expertise: ["J.D."],
+        expertise: ["Digital Marketing", "IT Systems"],
         phone: "(213) 674-7174",
         email: "jjea@paucal.org",
         category: "Staff",
@@ -475,7 +483,10 @@ const App: React.FC = () => {
                     <div className="w-full aspect-[3/4] bg-gray-200 rounded-2xl md:rounded-[40px] overflow-hidden shadow-2xl relative text-pau-blue flex items-center justify-center">
                       <UserIcon className="h-24 md:h-32 w-24 md:w-32 text-gray-300" />
                       <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-pau-darkBlue/90 to-transparent p-6 md:p-8">
-                         <p className="text-white font-serif font-bold text-lg md:text-xl leading-tight">Dr. Hyun Joo Kang</p>
+                         <div className="flex items-baseline gap-2">
+                           <p className="text-white font-serif font-bold text-lg md:text-xl leading-tight">Hyun Joo Kang</p>
+                           <span className="text-sm text-gray-300 italic">S.J.D.</span>
+                         </div>
                          <p className="text-pau-gold text-[9px] md:text-[10px] font-bold uppercase tracking-widest mt-1">President, PAU</p>
                       </div>
                     </div>
@@ -488,7 +499,10 @@ const App: React.FC = () => {
                       <p>Our mission is to lower barriers to legal education through innovation. We believe professional legal training should be accessible regardless of geographic location.</p>
                       <p>By merging American-style instruction with flexible delivery, we prepare students for success in the evolving legal landscape.</p>
                       <div className="pt-6 md:pt-8 border-t border-gray-100">
-                        <p className="font-serif text-2xl md:text-3xl text-pau-blue">Dr. Hyun Joo Kang</p>
+                        <div className="flex items-baseline gap-3">
+                          <p className="font-serif text-2xl md:text-3xl text-pau-blue">Hyun Joo Kang</p>
+                          <span className="text-lg text-gray-500 italic">S.J.D.</span>
+                        </div>
                         <p className="text-[10px] md:text-xs font-bold text-pau-gold uppercase tracking-[0.2em] mt-2">President & CEO, PAU</p>
                       </div>
                     </div>

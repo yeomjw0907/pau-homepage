@@ -142,6 +142,7 @@ export interface AcademicsContent {
 
 export interface FacultyMember {
   name: string;
+  credential?: string;
   title: string;
   education: string[];
   bio: string;

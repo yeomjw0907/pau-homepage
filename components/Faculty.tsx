@@ -35,9 +35,17 @@ const FacultyItem: React.FC<FacultyItemProps> = ({
       {/* Content Column */}
       <div className="flex-grow">
         <div className="mb-6 md:mb-8 text-center md:text-left">
-          <h3 className="text-xl md:text-3xl font-serif font-bold text-pau-darkBlue mb-2 leading-tight">
-            {prof.name}{prof.expertise.length > 0 ? `, ${prof.expertise[0] === 'J.D.' ? 'J.D.' : 'Ph.D.'}` : ''}
-          </h3>
+          {/* Name and Credential separated */}
+          <div className="flex flex-col md:flex-row md:items-baseline md:gap-3 mb-2">
+            <h3 className="text-xl md:text-3xl font-serif font-bold text-pau-darkBlue leading-tight">
+              {prof.name}
+            </h3>
+            {prof.credential && (
+              <span className="text-sm md:text-lg font-light text-gray-500 italic mt-1 md:mt-0">
+                {prof.credential}
+              </span>
+            )}
+          </div>
           <p className="text-pau-blue font-bold mb-4 md:mb-6 text-[10px] md:text-sm uppercase tracking-[0.15em] md:border-l-2 md:border-pau-gold md:pl-4">
             {prof.title}
           </p>
