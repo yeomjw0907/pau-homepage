@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { LibraryContent, SharedContent } from '../types';
-import { BookOpenIcon, ClockIcon, ComputerDesktopIcon, XMarkIcon, ChatBubbleLeftRightIcon, BookmarkIcon } from '@heroicons/react/24/outline';
+import { BookOpenIcon, ClockIcon, ComputerDesktopIcon, XMarkIcon, ChatBubbleLeftRightIcon, BookmarkIcon, CheckBadgeIcon } from '@heroicons/react/24/outline';
 
 interface LibraryProps {
   content: LibraryContent;

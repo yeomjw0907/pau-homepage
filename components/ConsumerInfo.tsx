@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { ConsumerInfoContent } from '../types';
-import { InformationCircleIcon, DocumentCheckIcon } from '@heroicons/react/24/outline';
+import { InformationCircleIcon, DocumentCheckIcon, ArrowDownTrayIcon } from '@heroicons/react/24/outline';
 
 interface ConsumerInfoProps {
   content: ConsumerInfoContent;
@@ -23,10 +23,14 @@ export const ConsumerInfo: React.FC<ConsumerInfoProps> = ({ content }) => {
         <div className="space-y-12">
           {content.sections.map((section) => (
             <div key={section.id} id={section.id} className="scroll-mt-24">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center border-b border-gray-100 pb-2">
+              <h2 className="text-2xl font-bold text-gray-900 mb-2 flex items-center border-b border-gray-100 pb-2">
                 <DocumentCheckIcon className="h-6 w-6 text-pau-blue mr-2" />
                 {section.title}
               </h2>
+              
+              {section.subtitle && (
+                <p className="text-sm text-gray-500 italic mb-6">{section.subtitle}</p>
+              )}
               
               {section.content && (
                 <div className="prose prose-blue text-gray-600 mb-6 whitespace-pre-wrap">
@@ -35,7 +39,7 @@ export const ConsumerInfo: React.FC<ConsumerInfoProps> = ({ content }) => {
               )}
 
               {section.tableData && (
-                <div className="bg-white shadow-sm rounded-lg border border-gray-200 overflow-hidden">
+                <div className="bg-white shadow-sm rounded-lg border border-gray-200 overflow-hidden mb-6">
                   <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
                       <tr>
@@ -60,6 +64,19 @@ export const ConsumerInfo: React.FC<ConsumerInfoProps> = ({ content }) => {
                       ))}
                     </tbody>
                   </table>
+                </div>
+              )}
+
+              {section.hasDownloadButton && (
+                <div className="mt-6">
+                  <a
+                    href="/assets/documents/disclosure.pdf"
+                    download
+                    className="inline-flex items-center px-6 py-3 border-2 border-pau-blue text-pau-blue font-semibold rounded-lg hover:bg-pau-blue hover:text-white transition-all duration-300 shadow-sm hover:shadow-md group"
+                  >
+                    <ArrowDownTrayIcon className="h-5 w-5 mr-2 group-hover:animate-bounce" />
+                    Download Full Disclosure Statement
+                  </a>
                 </div>
               )}
             </div>

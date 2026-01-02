@@ -1,13 +1,106 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Page, SharedContent } from '../types';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 
 interface FooterProps {
   onNavigate: (page: Page) => void;
   shared: SharedContent;
 }
 
+type ModalType = 'privacy' | 'terms' | 'accessibility' | null;
+
 export const Footer: React.FC<FooterProps> = ({ onNavigate, shared }) => {
+  const [activeModal, setActiveModal] = useState<ModalType>(null);
+
+  const modalContent = {
+    privacy: {
+      title: 'Privacy Policy',
+      content: `Pacific American University School of Law respects your privacy and is committed to protecting your personal information.
+
+Information We Collect:
+We collect personal information that you provide when applying to the law school, registering for courses, or contacting our offices. This may include your name, contact information, educational history, and other relevant data.
+
+How We Use Your Information:
+• To process your application and enrollment
+• To provide educational services and support
+• To communicate important updates and information
+• To comply with legal and regulatory requirements
+• To improve our programs and services
+
+Data Protection:
+Your personal information is securely stored and protected. We implement appropriate technical and organizational measures to safeguard your data against unauthorized access, alteration, or disclosure.
+
+Your Rights:
+You have the right to access, correct, or request deletion of your personal information. To exercise these rights or if you have any questions, please contact us at info@paucal.org.
+
+Third-Party Sharing:
+We do not sell or rent your personal information to third parties. We may share information with service providers who assist in our operations, but only as necessary and under strict confidentiality agreements.
+
+Last Updated: January 2026`
+    },
+    terms: {
+      title: 'Terms of Use',
+      content: `Welcome to the Pacific American University School of Law website. By accessing and using this website, you agree to the following terms and conditions.
+
+Acceptable Use:
+This website is provided for informational and educational purposes. You agree to use this site only for lawful purposes and in a manner that does not infringe upon the rights of others or restrict their use of the site.
+
+Intellectual Property:
+All content on this website, including text, graphics, logos, images, and software, is the property of Pacific American University School of Law and is protected by copyright, trademark, and other intellectual property laws. Unauthorized reproduction, distribution, or modification of any content is strictly prohibited.
+
+Accuracy of Information:
+While we strive to ensure that all information on this website is accurate and up-to-date, we make no warranties or representations regarding the completeness or accuracy of the information. Academic policies, procedures, and requirements are subject to change.
+
+Links to Third-Party Sites:
+This website may contain links to external websites. We are not responsible for the content, privacy policies, or practices of third-party sites.
+
+Limitation of Liability:
+Pacific American University School of Law shall not be liable for any direct, indirect, incidental, or consequential damages arising from your use of this website.
+
+Governing Law:
+These Terms of Use are governed by the laws of the State of California.
+
+Contact:
+For questions about these terms, please contact us at info@paucal.org.
+
+Last Updated: January 2026`
+    },
+    accessibility: {
+      title: 'Accessibility Statement',
+      content: `Pacific American University School of Law is committed to ensuring digital accessibility for people with disabilities. We are continually working to improve the accessibility and usability of our website for all users.
+
+Our Commitment:
+We strive to conform to the Web Content Accessibility Guidelines (WCAG) 2.1, Level AA standards. These guidelines explain how to make web content more accessible for people with disabilities and user-friendly for everyone.
+
+Measures We Take:
+• Providing alternative text for images
+• Using clear and consistent navigation
+• Ensuring sufficient color contrast
+• Making content accessible via keyboard navigation
+• Providing captions and transcripts for multimedia content
+• Using clear and simple language
+• Organizing content with proper heading structures
+
+Ongoing Efforts:
+We regularly review our website and implement improvements to enhance accessibility. We welcome feedback and are dedicated to providing an inclusive experience for all users.
+
+Third-Party Content:
+While we strive to ensure accessibility throughout our website, some content may be provided by third parties and may not be fully under our control.
+
+Feedback and Contact:
+If you encounter any accessibility barriers or have suggestions for improvement, please contact us:
+
+Email: info@paucal.org
+Phone: (213) 674-7174
+
+We will make every effort to respond to your feedback promptly and work to resolve any issues.
+
+Last Updated: January 2026`
+    }
+  };
+
   return (
+    <>
     <footer className="bg-pau-darkBlue text-white pt-20 pb-10 px-6 font-sans">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 lg:gap-16 border-b border-white/10 pb-20">
         {/* University Info */}
@@ -110,11 +203,56 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, shared }) => {
         <div className="flex flex-wrap gap-x-6 gap-y-2 mt-4 md:mt-0 justify-center md:justify-end">
           <button onClick={() => onNavigate('admin')} className="hover:text-gray-400 transition-colors">Admin Dashboard</button>
           <button onClick={() => onNavigate('consumer-info')} className="hover:text-gray-400 transition-colors">Consumer Information</button>
-          <button onClick={() => alert('Privacy Policy\n\nPacific American University School of Law respects your privacy. We collect and use personal information only as necessary to provide educational services and comply with legal requirements. Your data is protected and never sold to third parties.')} className="hover:text-gray-400 transition-colors">Privacy Policy</button>
-          <button onClick={() => alert('Terms of Use\n\nBy accessing this website, you agree to use it for lawful purposes only. All content is protected by copyright. Unauthorized reproduction or distribution is prohibited.')} className="hover:text-gray-400 transition-colors">Terms of Use</button>
-          <button onClick={() => alert('Accessibility Statement\n\nPacific American University School of Law is committed to ensuring digital accessibility for people with disabilities. We are continually improving the user experience for everyone and applying relevant accessibility standards.')} className="hover:text-gray-400 transition-colors">Accessibility</button>
+          <button onClick={() => setActiveModal('privacy')} className="hover:text-gray-400 transition-colors">Privacy Policy</button>
+          <button onClick={() => setActiveModal('terms')} className="hover:text-gray-400 transition-colors">Terms of Use</button>
+          <button onClick={() => setActiveModal('accessibility')} className="hover:text-gray-400 transition-colors">Accessibility</button>
         </div>
       </div>
     </footer>
+
+    {/* Modal */}
+    {activeModal && (
+      <div className="fixed inset-0 z-50 overflow-y-auto" role="dialog" aria-modal="true">
+        <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+          <div 
+            className="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity backdrop-blur-sm" 
+            onClick={() => setActiveModal(null)}
+            aria-hidden="true"
+          ></div>
+          <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+          <div className="inline-block align-bottom bg-white rounded-xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl w-full">
+            <div className="bg-pau-darkBlue px-6 py-5 sm:px-8">
+              <div className="flex justify-between items-center text-white">
+                <h3 className="text-lg font-bold">{modalContent[activeModal].title}</h3>
+                <button 
+                  type="button" 
+                  onClick={() => setActiveModal(null)} 
+                  className="text-white/70 hover:text-white transition-colors"
+                >
+                  <XMarkIcon className="h-6 w-6" />
+                </button>
+              </div>
+            </div>
+            
+            <div className="px-6 py-8 sm:px-8 max-h-[60vh] overflow-y-auto">
+              <div className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
+                {modalContent[activeModal].content}
+              </div>
+            </div>
+
+            <div className="bg-gray-50 px-6 py-4 sm:px-8 border-t border-gray-100 flex justify-end">
+              <button 
+                type="button" 
+                onClick={() => setActiveModal(null)} 
+                className="inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-6 py-2.5 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )}
+    </>
   );
 };

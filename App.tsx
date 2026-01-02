@@ -20,7 +20,7 @@ import { Faculty } from './components/Faculty';
 import { HomeNews } from './components/HomeNews';
 import { NoticeBoard } from './components/NoticeBoard';
 import { NewsDetail } from './components/NewsDetail';
-import { Centers } from './components/Centers';
+import { StudentResources } from './components/StudentResources';
 import { ClinicDetail } from './components/ClinicDetail';
 import { Library } from './components/Library';
 import { Careers } from './components/Careers';
@@ -142,7 +142,11 @@ const App: React.FC = () => {
     title: 'Admissions',
     intro: 'Start your journey toward a legal career with Pacific American University.',
     deadlinesTitle: 'Application Deadlines',
-    deadlines: [{ term: 'Fall 2026', date: 'August 1, 2026', type: 'Regular Decision' }],
+    deadlines: [
+      { term: 'Winter Intake', date: 'Starts January (Deadline: mid-November)', type: '1L Students' },
+      { term: 'Spring Intake', date: 'Starts April (Deadline: mid-February)', type: '1L Students' },
+      { term: 'Fall Intake', date: 'Starts September (Deadline: mid-July)', type: '1L Students' }
+    ],
     requirementsTitle: 'Admission Requirements',
     requirements: ['Bachelor\'s Degree from an accredited institution', 'Personal Statement', 'Two Letters of Recommendation', 'LSAT Score (Optional)', 'Official Transcripts'],
     tuitionTitle: 'Tuition & Value',
@@ -150,7 +154,7 @@ const App: React.FC = () => {
     tuitionCost: '$9,000',
     faqTitle: 'Admissions FAQ',
     faqs: [
-      { question: 'Is the program 100% online?', answer: 'Yes, PAU Law offers a fully online J.D. program designed for working professionals.' },
+      { question: 'Is the program 100% online?', answer: 'Yes. PAUSL is a Registered Unaccredited Correspondence Law School. All lectures and coursework are delivered 100% online through our Learning Management System, Populi, allowing you to study from anywhere in the world.' },
       { question: 'Do I need to take the LSAT?', answer: 'While LSAT scores are considered if submitted, they are not mandatory for admission. We evaluate candidates holistically.' }
     ]
   });
@@ -459,14 +463,103 @@ const App: React.FC = () => {
       case 'history-mission':
         return (
           <>
-            <PageHeader title={"Mission &\nIdentity"} subtitle="Forging excellence in legal education for a global community." icon={GlobeAmericasIcon} />
-            <SectionWrapper title="Our Institutional Status">
-              <div className="max-w-4xl mx-auto space-y-8 md:space-y-12">
-                <div className="bg-pau-light p-6 md:p-10 rounded-2xl md:rounded-[40px] border-l-4 md:border-l-8 border-pau-gold shadow-premium">
-                  <h3 className="text-sm md:text-lg font-bold text-pau-blue uppercase tracking-widest mb-4">Official Designation</h3>
-                  <p className="text-base md:text-xl text-gray-700 leading-relaxed font-light">
-                    Pacific American University School of Law is a <span className="font-bold text-pau-darkBlue">Registered Unaccredited Correspondence Law School</span> in the State of California.
-                  </p>
+            <PageHeader title={"Mission &\nIdentity"} subtitle="Nurturing impactful leaders for a global society." icon={GlobeAmericasIcon} />
+            
+            {/* Mission Statement Section */}
+            <SectionWrapper>
+              <div className="max-w-5xl mx-auto">
+                <div className="bg-gradient-to-br from-pau-darkBlue to-pau-blue p-10 md:p-16 rounded-3xl shadow-2xl relative overflow-hidden">
+                  {/* Decorative Elements */}
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-pau-gold opacity-5 rounded-full -mr-32 -mt-32"></div>
+                  <div className="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-5 rounded-full -ml-24 -mb-24"></div>
+                  
+                  <div className="relative z-10">
+                    <div className="flex items-center mb-8">
+                      <div className="w-16 h-16 bg-pau-gold rounded-full flex items-center justify-center mr-4">
+                        <GlobeAmericasIcon className="h-8 w-8 text-pau-darkBlue" />
+                      </div>
+                      <h2 className="text-2xl md:text-3xl font-serif font-bold text-white">Our Mission</h2>
+                    </div>
+                    
+                    <blockquote className="text-lg md:text-2xl text-white leading-relaxed font-light italic border-l-4 border-pau-gold pl-6">
+                      The mission of Pacific American University ("PAU") is to nurture impactful, balanced-minded leaders, who are equipped to resolve complex global issues, making a positive impact on the growth of a healthy and inclusive society through a student-centered academic community and programs.
+                    </blockquote>
+                  </div>
+                </div>
+              </div>
+            </SectionWrapper>
+
+            {/* Core Values Section */}
+            <SectionWrapper title="Our Core Values">
+              <div className="max-w-6xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  {/* Value 1 */}
+                  <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-2xl hover:border-pau-gold transition-all duration-300 group">
+                    <div className="w-14 h-14 bg-pau-light rounded-xl flex items-center justify-center mb-6 group-hover:bg-pau-gold transition-colors">
+                      <svg className="w-7 h-7 text-pau-blue group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-serif font-bold text-pau-darkBlue mb-3">Student-Centered</h3>
+                    <p className="text-gray-600 leading-relaxed">
+                      We prioritize individual student growth and success through personalized support and flexible learning pathways.
+                    </p>
+                  </div>
+
+                  {/* Value 2 */}
+                  <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-2xl hover:border-pau-gold transition-all duration-300 group">
+                    <div className="w-14 h-14 bg-pau-light rounded-xl flex items-center justify-center mb-6 group-hover:bg-pau-gold transition-colors">
+                      <svg className="w-7 h-7 text-pau-blue group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-serif font-bold text-pau-darkBlue mb-3">Global Perspective</h3>
+                    <p className="text-gray-600 leading-relaxed">
+                      We foster understanding of international legal systems and prepare students to address complex global challenges.
+                    </p>
+                  </div>
+
+                  {/* Value 3 */}
+                  <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-2xl hover:border-pau-gold transition-all duration-300 group">
+                    <div className="w-14 h-14 bg-pau-light rounded-xl flex items-center justify-center mb-6 group-hover:bg-pau-gold transition-colors">
+                      <svg className="w-7 h-7 text-pau-blue group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-serif font-bold text-pau-darkBlue mb-3">Inclusive Excellence</h3>
+                    <p className="text-gray-600 leading-relaxed">
+                      We cultivate a diverse and welcoming community that values every perspective and promotes equitable access to legal education.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </SectionWrapper>
+
+            {/* Institutional Status Section */}
+            <SectionWrapper title="Institutional Status">
+              <div className="max-w-4xl mx-auto">
+                <div className="bg-gradient-to-r from-gray-50 to-white p-8 md:p-12 rounded-3xl shadow-xl border-2 border-gray-200 relative">
+                  <div className="absolute -top-6 left-8">
+                    <div className="bg-pau-darkBlue px-6 py-3 rounded-full shadow-lg">
+                      <span className="text-xs font-bold text-pau-gold uppercase tracking-widest">Official Designation</span>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-4">
+                    <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
+                      Pacific American University School of Law is registered with the Committee of Bar Examiners of the State Bar of California as a{' '}
+                      <span className="font-bold text-pau-darkBlue bg-pau-light px-3 py-1 rounded">Registered Unaccredited Correspondence Law School</span>.
+                    </p>
+                    <p className="text-lg md:text-xl text-gray-700 leading-relaxed mt-6">
+                      PAUSL is not accredited by the State Bar of California or the American Bar Association.
+                    </p>
+                    
+                    <div className="mt-8 pt-6 border-t border-gray-200">
+                      <p className="text-sm text-gray-500 italic">
+                        This designation reflects our commitment to transparency and compliance with California legal education requirements.
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </SectionWrapper>
@@ -671,18 +764,25 @@ const App: React.FC = () => {
             {
               id: "student-body",
               title: "Student Body Diversity",
-              content: "PAU Law is committed to fostering a diverse academic environment.",
+              content: "PAU Law is committed to fostering a diverse academic environment. As a newly established program starting in 2026, historical student data is not yet available.",
               tableData: [
-                { label: "Female Students", value: "54%" },
-                { label: "Male Students", value: "45%" },
-                { label: "Non-Binary / Other", value: "1%" },
-                { label: "Minority Representation", value: "62%" }
+                { label: "Female Students", value: "N/A (New Program)" },
+                { label: "Male Students", value: "N/A (New Program)" },
+                { label: "Non-Binary / Other", value: "N/A (New Program)" },
+                { label: "Minority Representation", value: "N/A (New Program)" }
               ]
             },
             {
               id: "refund-policy",
               title: "Refund Policy",
-              content: "Students have the right to cancel their enrollment agreement and obtain a refund of charges paid through attendance at the first class session, or the seventh day after enrollment, whichever is later."
+              content: "A student is entitled to receive a full refund of all payments made if they withdraw or cancel their enrollment within seven (7) days, by midnight (PST), from the date the Enrollment Agreement was signed.\n\nIf a student withdraws after instruction has begun, they are eligible for a prorated refund based on the unused portion of tuition and other refundable charges. Refundable tuition and fees refer to the remaining tuition and fees charged after deducting non-refundable fees that have already been retained."
+            },
+            {
+              id: "disclosure",
+              title: "Disclosure",
+              subtitle: "Transparency in our educational offering.",
+              content: "Pacific American University School of Law makes the following disclosures as required by the State Bar of California Guidelines for Unaccredited Law School Rules.\n\nGuideline 2.3(D) Compliance\nThe law school has not applied for accreditation in the last five years. The school's assets and resources are primarily dedicated to providing distance legal education.",
+              hasDownloadButton: true
             }
           ]
         }} />;
@@ -699,11 +799,28 @@ const App: React.FC = () => {
         );
 
       case 'centers':
-        return <Centers content={{
-          title: "Centers of Excellence",
-          intro: "Specialized institutes fostering deep expertise in critical legal fields.",
-          clinics: homeContent.clinics
-        }} onClinicClick={setSelectedClinic} shared={shared} />;
+      case 'student-resources':
+        return <StudentResources 
+          title="Student Success & Resources"
+          subtitle="Comprehensive support systems designed to ensure academic achievement and professional growth."
+          resources={[
+            {
+              title: "Academic Success Program (ASP)",
+              description: "A dedicated program designed to support students in mastering legal concepts and improving exam performance. It includes mandatory sessions for students on academic probation and offers personalized guidance on legal writing, case analysis, and MBE strategies.",
+              icon: "academic"
+            },
+            {
+              title: "Online Legal Research (Westlaw & CALI)",
+              description: "All students receive full access to Westlaw, the world's leading online legal research service, and a membership to CALI (Center for Computer-Assisted Legal Instruction), providing over 1,300 interactive tutorials across 32 legal subject areas.",
+              icon: "research"
+            },
+            {
+              title: "Delta Theta Phi Law Fraternity",
+              description: "PAUSL hosts a chapter of Delta Theta Phi, one of the nation's oldest legal fraternities. Members gain access to a global network of legal professionals, leadership opportunities, and eligibility for scholarships and awards.",
+              icon: "fraternity"
+            }
+          ]}
+        />;
       
       case 'library':
         return <Library content={{

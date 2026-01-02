@@ -17,7 +17,7 @@ export type Page =
   | 'tuition' | 'tuition-fees' | 'payment-plan' | 'refund-policy'
   | 'my-pausl' | 'weekly-dicta'
   | 'contact' | 'office-hours' | 'contact-info' | 'request-info'
-  | 'centers' | 'clinic-detail' | 'faculty' | 'news' | 'notices' | 'news-detail' | 'library' | 'careers' | 'consumer-info' | 'admin';
+  | 'centers' | 'student-resources' | 'clinic-detail' | 'faculty' | 'news' | 'notices' | 'news-detail' | 'library' | 'careers' | 'consumer-info' | 'admin';
 
 export interface GlobalAlert {
   active: boolean;
@@ -196,8 +196,10 @@ export interface ConsumerInfoContent {
   sections: {
     id: string;
     title: string;
+    subtitle?: string;
     content?: string;
     tableData?: { label: string; value: string }[];
+    hasDownloadButton?: boolean;
   }[];
 }
 
@@ -339,7 +341,7 @@ export const DEFAULT_SHARED_CONTENT: SharedContent = {
     requestInfo: "Request Info",
     weeklyDicta: "Weekly Dicta",
     library: "Law Library",
-    centers: "Centers of Excellence",
+    centers: "Student Success & Resources",
     careers: "Career Services",
     consumerInfo: "Consumer Information",
   },
@@ -372,7 +374,7 @@ export const DEFAULT_SHARED_CONTENT: SharedContent = {
     chatLibrarian: "Chat with Librarian",
     reserveRoom: "Reserve Room",
     downloadCalendar: "Download Calendar",
-    applyLsac: "Apply via LSAC",
+    applyLsac: "Apply Online",
   },
   labels: {
     interestedInClinic: "Interested in this Clinic?",

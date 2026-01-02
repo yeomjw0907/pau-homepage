@@ -257,7 +257,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <div className="relative group" onMouseEnter={() => handleMouseEnter('academics')} onMouseLeave={handleMouseLeave}>
                 <button 
                   onClick={() => toggleDropdown('academics')}
-                  className={navLinkClass(['academics', 'academic-calendar', 'bar-info', 'curriculum-schedule', 'course-desc', 'counseling', 'grad-reqs', 'centers', 'library'].includes(currentPage))}
+                  className={navLinkClass(['academics', 'academic-calendar', 'bar-info', 'curriculum-schedule', 'course-desc', 'counseling', 'grad-reqs', 'centers', 'student-resources', 'library'].includes(currentPage))}
                 >
                   {shared.nav.academics}
                   <ChevronDownIcon className={`ml-1 h-3.5 w-3.5 stroke-[3] transition-transform ${activeDropdown === 'academics' ? 'rotate-180' : ''}`} />
