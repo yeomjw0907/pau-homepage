@@ -64,40 +64,97 @@ export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
           {/* Main Info Column */}
           <div className="lg:col-span-2 space-y-16">
             
-            {/* Requirements */}
+            {/* Admissions Standards */}
             <section className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
               <h2 className="text-3xl font-serif font-bold text-pau-blue mb-8 flex items-center">
                 <span className="w-8 h-1 bg-pau-gold mr-4"></span>
-                {content.requirementsTitle}
+                Admissions Standards
               </h2>
               <div className="bg-white rounded-xl shadow-soft border border-gray-100 p-8">
-                <ul className="space-y-6">
-                  {content.requirements.map((req, idx) => (
-                    <li key={idx} className="flex items-start group">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
-                        <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
-                      </div>
-                      <span className="text-gray-700 text-lg pt-0.5">{req}</span>
-                    </li>
-                  ))}
+                <p className="text-gray-700 text-lg leading-relaxed">
+                  Applicants must demonstrate strong academic performance, typically reflected in their undergraduate GPA (minimum of 2.0). PAUSL employs a holistic admissions process that evaluates not only academic achievements but also personal qualities and the applicant's potential to contribute to the legal profession.
+                </p>
+              </div>
+            </section>
+
+            {/* LSAT Requirement */}
+            <section className="animate-fade-in mt-12" style={{ animationDelay: '0.15s' }}>
+              <h2 className="text-3xl font-serif font-bold text-pau-blue mb-8 flex items-center">
+                <span className="w-8 h-1 bg-pau-gold mr-4"></span>
+                LSAT Requirement
+              </h2>
+              <div className="bg-white rounded-xl shadow-soft border border-gray-100 p-8">
+                <p className="text-gray-700 text-lg leading-relaxed">
+                  PAUSL does not require applicants to submit scores from the Law School Admission Test (LSAT) but applicants are encouraged to take the LSAT because it is a reliable predictor of student performance in law school. The LSAT scores assist in demonstrating an applicant's capacity for successful law study and program completion.
+                </p>
+              </div>
+            </section>
+
+            {/* English Language Requirement */}
+            <section className="animate-fade-in mt-12" style={{ animationDelay: '0.2s' }}>
+              <h2 className="text-3xl font-serif font-bold text-pau-blue mb-8 flex items-center">
+                <span className="w-8 h-1 bg-pau-gold mr-4"></span>
+                English Language Requirement (International Applicants)
+              </h2>
+              <div className="bg-white rounded-xl shadow-soft border border-gray-100 p-8">
+                <p className="text-gray-700 text-lg leading-relaxed mb-6">
+                  International applicants who are non-native speaker of English must demonstrate English proficiency by one of the following:
+                </p>
+                <ul className="space-y-4">
+                  <li className="flex items-start group">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
+                      <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
+                    </div>
+                    <span className="text-gray-700 text-lg pt-0.5">Completion of at least two years of study at a college or university where the language of instruction was English.</span>
+                  </li>
+                  <li className="flex items-start group">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
+                      <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
+                    </div>
+                    <span className="text-gray-700 text-lg pt-0.5">Submitting a passing score from the Test of English as a Foreign Language (TOEFL): At least 79 (internet-based test).</span>
+                  </li>
+                  <li className="flex items-start group">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
+                      <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
+                    </div>
+                    <span className="text-gray-700 text-lg pt-0.5">Submitting a passing score on the International English Language Testing System (IELTS): 6.0 or higher for the overall band.</span>
+                  </li>
+                  <li className="flex items-start group">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
+                      <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
+                    </div>
+                    <span className="text-gray-700 text-lg pt-0.5">Submitting a passing score on the Duolingo English Test: 105 or higher.</span>
+                  </li>
                 </ul>
               </div>
             </section>
 
-            {/* Tuition */}
-            <section className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            {/* Tuition & Fees */}
+            <section className="animate-fade-in mt-12" style={{ animationDelay: '0.25s' }}>
               <div className="relative overflow-hidden bg-pau-blue rounded-xl p-10 text-white shadow-lg">
                 <div className="absolute top-0 right-0 opacity-10 transform translate-x-1/4 -translate-y-1/4">
                    <CurrencyDollarIcon className="h-64 w-64" />
                 </div>
                 <div className="relative z-10">
-                  <h2 className="text-3xl font-serif font-bold mb-6">{content.tuitionTitle}</h2>
-                  <p className="text-blue-100 mb-8 leading-relaxed text-lg max-w-2xl">
-                    {content.tuitionInfo}
-                  </p>
-                  <div className="inline-block bg-white/10 backdrop-blur-sm rounded-lg px-6 py-4 border border-white/20">
-                    <span className="text-4xl font-bold text-white block mb-1">{content.tuitionCost}</span>
-                    <span className="text-sm font-medium text-pau-gold uppercase tracking-wider">Per Academic Year</span>
+                  <h2 className="text-3xl font-serif font-bold mb-8">Tuition & Fees</h2>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg px-6 py-4 border border-white/20">
+                      <span className="text-3xl font-bold text-white block mb-1">$3,000.00</span>
+                      <span className="text-sm font-medium text-pau-gold uppercase tracking-wider">Trimester Tuition</span>
+                    </div>
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg px-6 py-4 border border-white/20">
+                      <span className="text-3xl font-bold text-white block mb-1">$9,000.00</span>
+                      <span className="text-sm font-medium text-pau-gold uppercase tracking-wider">Annual Tuition (3 trimesters)</span>
+                    </div>
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg px-6 py-4 border border-white/20">
+                      <span className="text-3xl font-bold text-white block mb-1">$36,000.00</span>
+                      <span className="text-sm font-medium text-pau-gold uppercase tracking-wider">Total Tuition (Four years)</span>
+                    </div>
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg px-6 py-4 border border-white/20">
+                      <span className="text-3xl font-bold text-white block mb-1">$70.00</span>
+                      <span className="text-sm font-medium text-pau-gold uppercase tracking-wider">Application Fee (Non-refundable)</span>
+                    </div>
                   </div>
                 </div>
               </div>

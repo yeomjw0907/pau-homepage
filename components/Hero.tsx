@@ -47,7 +47,7 @@ export const Hero: React.FC<HeroProps> = ({ content, shared, onNavigate }) => {
           <div className="flex flex-col md:flex-row items-start gap-8 mb-12">
             <div className="hidden md:block w-16 h-px bg-pau-gold/50 mt-6"></div>
             <p className="text-base md:text-xl text-gray-200 font-light leading-relaxed max-w-2xl drop-shadow-md border-l-2 md:border-l-0 border-pau-gold/50 pl-4 md:pl-0">
-              Overcome geographic boundaries through innovation. Master American law from anywhere with our flexible, technology-driven J.D. program designed for the modern era.
+              The mission of Pacific American University ("PAU") is to nurture impactful, balanced-minded leaders, who are equipped to resolve complex global issues, making a positive impact on the growth of a healthy and inclusive society through a student-centered academic community and programs.
             </p>
           </div>
 

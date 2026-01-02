@@ -70,6 +70,42 @@ export const Library: React.FC<LibraryProps> = ({ content, shared }) => {
           ))}
         </div>
 
+        {/* Legal Research Resources */}
+        <div className="mt-20 bg-white rounded-2xl shadow-soft border border-gray-100 p-10">
+          <h2 className="text-3xl font-serif font-bold text-pau-darkBlue mb-8 text-center border-b border-gray-100 pb-6">
+            Legal Research Resources
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="text-center p-6 border border-gray-100 rounded-xl hover:shadow-md transition-all">
+              <div className="w-16 h-16 bg-pau-light rounded-full flex items-center justify-center mx-auto mb-4">
+                <BookOpenIcon className="h-8 w-8 text-pau-blue" />
+              </div>
+              <h3 className="text-xl font-bold text-pau-darkBlue mb-3">Westlaw</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Access to the world's largest online law library.
+              </p>
+            </div>
+            <div className="text-center p-6 border border-gray-100 rounded-xl hover:shadow-md transition-all">
+              <div className="w-16 h-16 bg-pau-light rounded-full flex items-center justify-center mx-auto mb-4">
+                <ComputerDesktopIcon className="h-8 w-8 text-pau-blue" />
+              </div>
+              <h3 className="text-xl font-bold text-pau-darkBlue mb-3">CALI</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Center for Computer-Assisted Legal Instruction: Access to over 1,300 interactive tutorials.
+              </p>
+            </div>
+            <div className="text-center p-6 border border-gray-100 rounded-xl hover:shadow-md transition-all">
+              <div className="w-16 h-16 bg-pau-light rounded-full flex items-center justify-center mx-auto mb-4">
+                <CheckBadgeIcon className="h-8 w-8 text-pau-blue" />
+              </div>
+              <h3 className="text-xl font-bold text-pau-darkBlue mb-3">ExamSoft</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Secure exam delivery software.
+              </p>
+            </div>
+          </div>
+        </div>
+
         <div className="mt-20 bg-pau-light rounded-2xl p-12 text-center border border-gray-100">
           <h2 className="text-3xl font-serif font-bold text-pau-blue mb-6">Research Assistance</h2>
           <p className="text-gray-600 mb-10 text-lg max-w-2xl mx-auto">Our reference librarians are available to assist with complex legal research questions.</p>

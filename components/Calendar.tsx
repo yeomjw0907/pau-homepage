@@ -20,6 +20,45 @@ export const Calendar: React.FC<CalendarProps> = ({ content, shared }) => {
       </div>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        {/* Academic Start Dates Section */}
+        <div className="mb-12 bg-white shadow-soft rounded-2xl border border-gray-100 p-8">
+          <h2 className="text-2xl font-serif font-bold text-pau-darkBlue mb-6 border-b border-gray-100 pb-4">
+            Academic Calendar & Start Dates
+          </h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-lg font-bold text-pau-blue mb-3">Incoming First-Year (1L)</h3>
+              <div className="flex flex-wrap gap-3">
+                {["January", "April", "September"].map((month, idx) => (
+                  <span key={idx} className="px-4 py-2 bg-pau-light text-pau-darkBlue rounded-lg font-semibold text-sm border border-pau-gold/20">
+                    {month}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-pau-blue mb-3">Second-Year (2L) & Third-Year (3L)</h3>
+              <div className="flex flex-wrap gap-3">
+                {["March", "July", "November"].map((month, idx) => (
+                  <span key={idx} className="px-4 py-2 bg-pau-light text-pau-darkBlue rounded-lg font-semibold text-sm border border-pau-gold/20">
+                    {month}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-pau-blue mb-3">Fourth-Year (4L)</h3>
+              <div className="flex flex-wrap gap-3">
+                {["January", "July", "November"].map((month, idx) => (
+                  <span key={idx} className="px-4 py-2 bg-pau-light text-pau-darkBlue rounded-lg font-semibold text-sm border border-pau-gold/20">
+                    {month}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="bg-white shadow-soft rounded-2xl border border-gray-100 overflow-hidden">
           <ul role="list" className="divide-y divide-gray-100">
             {content.events.map((event, idx) => (

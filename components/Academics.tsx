@@ -212,23 +212,48 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
               onBack={() => onNavigate('academics')}
             />
             <div className="max-w-5xl mx-auto px-6 py-20">
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                  {[
-                    { title: "Academic Units", icon: DocumentDuplicateIcon, detail: "Successful completion of at least 84 semester units of law study." },
-                    { title: "Residency", icon: ClockIcon, detail: "Minimum of four (4) years of law study with regular attendance." },
-                    { title: "Core Curriculum", icon: BookOpenIcon, detail: "Passing grades in all mandatory foundational courses including Professional Responsibility." },
-                    { title: "GPA Standing", icon: CheckBadgeIcon, detail: "Maintenance of a cumulative GPA of 2.0 or higher throughout the program." }
-                  ].map((req, i) => (
-                    <div key={i} className="bg-white p-10 rounded-3xl border border-gray-100 shadow-card flex gap-6">
-                       <div className="p-3 bg-pau-light text-pau-blue rounded-xl h-fit">
-                          <req.icon className="h-6 w-6" />
-                       </div>
-                       <div>
-                          <h4 className="text-xl font-serif font-bold text-pau-darkBlue mb-2">{req.title}</h4>
-                          <p className="text-gray-500 text-sm leading-relaxed font-light">{req.detail}</p>
-                       </div>
-                    </div>
-                  ))}
+               <div className="bg-white rounded-2xl shadow-soft border border-gray-100 p-10 mb-12">
+                 <p className="text-gray-700 text-lg leading-relaxed mb-8">
+                   In order to obtain a J.D. degree from PAUSL, students must fulfill the following requirements:
+                 </p>
+                 <ul className="space-y-6">
+                   <li className="flex items-start group">
+                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
+                       <CheckBadgeIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
+                     </div>
+                     <span className="text-gray-700 text-lg pt-0.5">Complete a minimum of 864 hours of study annually, spanning forty-eight (48) to fifty-two (52) consecutive weeks, for a total of four (4) years.</span>
+                   </li>
+                   <li className="flex items-start group">
+                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
+                       <CheckBadgeIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
+                     </div>
+                     <span className="text-gray-700 text-lg pt-0.5">Each course entails a minimum of 140 Credit Hours (comprising three (3) units with forty-five (45) hours of class time/academic engagement and a minimum of ninety (90) study hours).</span>
+                   </li>
+                   <li className="flex items-start group">
+                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
+                       <CheckBadgeIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
+                     </div>
+                     <span className="text-gray-700 text-lg pt-0.5">Successfully pass the State Bar of California's First-Year Law Students' Examination (FYLSX) following the completion of their first year of study.</span>
+                   </li>
+                   <li className="flex items-start group">
+                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
+                       <CheckBadgeIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
+                     </div>
+                     <span className="text-gray-700 text-lg pt-0.5">Maintain a cumulative grade point average of 2.0 or higher throughout their tenure at the law school.</span>
+                   </li>
+                   <li className="flex items-start group">
+                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
+                       <CheckBadgeIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
+                     </div>
+                     <span className="text-gray-700 text-lg pt-0.5">Satisfy all financial obligations by paying tuition, fees, and any outstanding charges.</span>
+                   </li>
+                   <li className="flex items-start group">
+                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
+                       <CheckBadgeIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
+                     </div>
+                     <span className="text-gray-700 text-lg pt-0.5">Successfully pass all required courses to qualify for the J.D. degree.</span>
+                   </li>
+                 </ul>
                </div>
             </div>
           </>
@@ -333,6 +358,16 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
             </div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+              {/* J.D. Program Overview */}
+              <div className="mb-20 max-w-4xl mx-auto">
+                <h2 className="text-4xl font-serif font-bold text-pau-darkBlue mb-8 text-center">J.D. Program Overview</h2>
+                <div className="bg-white rounded-2xl shadow-soft border border-gray-100 p-10">
+                  <p className="text-gray-700 text-lg leading-relaxed">
+                    The J.D. degree is a law school program designed to prepare students for law practice in California. Typically, law students must complete a J.D. degree to qualify for the bar exam and, upon passing, become licensed attorneys. As a State Bar of California registered correspondence law school, this J.D. Program is a part-time, four-year curriculum, enabling students to work full-time while studying law.
+                  </p>
+                </div>
+              </div>
+
               <div className="mb-32">
                 <div className="flex items-center space-x-4 mb-12">
                   <span className="h-px w-12 bg-pau-gold"></span>
