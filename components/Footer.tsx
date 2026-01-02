@@ -107,12 +107,12 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, shared }) => {
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-600 border-t border-white/5 pt-8">
         {/* Source: Catalog Page 48 (Copyright) */}
         <p>&copy; 2026-2027 Pacific American University School of Law. All rights reserved.</p>
-        <div className="flex space-x-6 mt-4 md:mt-0">
+        <div className="flex flex-wrap gap-x-6 gap-y-2 mt-4 md:mt-0 justify-center md:justify-end">
           <button onClick={() => onNavigate('admin')} className="hover:text-gray-400 transition-colors">Admin Dashboard</button>
-          <button className="hover:text-gray-400">Consumer Information</button>
-          <button className="hover:text-gray-400">Privacy Policy</button>
-          <button className="hover:text-gray-400">Terms of Use</button>
-          <button className="hover:text-gray-400">Accessibility</button>
+          <button onClick={() => onNavigate('consumer-info')} className="hover:text-gray-400 transition-colors">Consumer Information</button>
+          <button onClick={() => alert('Privacy Policy\n\nPacific American University School of Law respects your privacy. We collect and use personal information only as necessary to provide educational services and comply with legal requirements. Your data is protected and never sold to third parties.')} className="hover:text-gray-400 transition-colors">Privacy Policy</button>
+          <button onClick={() => alert('Terms of Use\n\nBy accessing this website, you agree to use it for lawful purposes only. All content is protected by copyright. Unauthorized reproduction or distribution is prohibited.')} className="hover:text-gray-400 transition-colors">Terms of Use</button>
+          <button onClick={() => alert('Accessibility Statement\n\nPacific American University School of Law is committed to ensuring digital accessibility for people with disabilities. We are continually improving the user experience for everyone and applying relevant accessibility standards.')} className="hover:text-gray-400 transition-colors">Accessibility</button>
         </div>
       </div>
     </footer>
