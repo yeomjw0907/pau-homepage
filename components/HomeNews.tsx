@@ -24,9 +24,9 @@ export const HomeNews: React.FC<HomeNewsProps> = ({ title, newsItems, onNewsClic
     },
     {
       id: 'n2',
-      title: "Trimester System",
+      title: "Academic Calendar & Start Dates",
       date: "2026-2027",
-      summary: "Academic year begins in January, April, and September.",
+      summary: "Incoming First-Year (1L): January, April, or September\n\nSecond-Year (2L) & Third-Year (3L): March, July, or November\n\nFourth-Year (4L): January, July, or November",
       icon: ClockIcon,
       category: 'Academic',
       targetPage: 'academic-calendar' as Page
@@ -94,7 +94,7 @@ export const HomeNews: React.FC<HomeNewsProps> = ({ title, newsItems, onNewsClic
                      {item.title}
                    </h3>
 
-                   <p className="text-gray-500 mb-8 flex-grow text-sm leading-relaxed">
+                   <p className="text-gray-500 mb-8 flex-grow text-sm leading-relaxed whitespace-pre-line">
                      {item.summary}
                    </p>
                    

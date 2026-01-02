@@ -122,8 +122,8 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
     },
     { 
       icon: AcademicCapIcon, 
-      title: "U.S. Graduate Study", 
-      desc: "Pursue advanced degrees like an LL.M. or S.J.D. at top universities.",
+      title: "Graduate Study", 
+      desc: "Pursue advanced degrees at prestigious universities in US, Canada and London.",
       image: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2070&auto=format&fit=crop",
       details: {
         overview: "For international students, the PAU J.D. serves as a robust foundation for admission into specialized LL.M. (Master of Laws) or S.J.D. programs at ABA-accredited universities in the United States.",
@@ -168,23 +168,22 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
             <div className="w-8 h-1 bg-pau-gold mb-8"></div>
             
             <span className="text-[10px] font-bold tracking-[0.25em] uppercase text-pau-gold mb-6 block opacity-90">
-              Our Vision
+              Our Mission
             </span>
             
             <blockquote className="text-xl md:text-2xl font-serif leading-relaxed mb-10 text-white font-medium">
-              "As educational borders dissolve, we nurture global leaders with critical perspectives. We are a platform for shaping thoughtful, solution-oriented professionals prepared to engage with the world's most pressing challenges."
+              "As educational borders dissolve, we nurture global leaders with balanced, critical perspectives. We are a platform for shaping thoughtful, solution-oriented professionals prepared to engage with the world's most pressing challenges."
             </blockquote>
             
             <div className="flex items-center space-x-3">
                <div className="w-8 h-px bg-gray-600"></div>
-               <span className="text-[10px] uppercase tracking-widest text-gray-400 font-bold italic">Office of the Dean</span>
+               <span className="text-[10px] uppercase tracking-widest text-gray-400 font-bold italic">Office of the President</span>
             </div>
           </div>
 
           {/* Right: Mission (White) */}
-          {/* Increased top padding (pt-14 md:pt-16) to ensure 'Our Core Mission' is not too close to the top edge */}
+          {/* Increased top padding (pt-14 md:pt-16) to ensure content is not too close to the top edge */}
           <div className="lg:col-span-3 bg-white p-10 md:p-12 pt-14 md:pt-16 flex flex-col">
-             <h2 className="text-3xl font-serif font-bold text-pau-darkBlue mb-6">Our Core Mission</h2>
              <p className="text-gray-500 font-light mb-10 leading-relaxed text-sm md:text-base border-b border-gray-100 pb-8">
                To redefine legal education by breaking down geographic barriers and empowering talented students worldwide.
              </p>
@@ -312,42 +311,7 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
          </div>
       </section>
 
-      {/* 5. CENTERS OF EXCELLENCE */}
-      <section className="py-24 bg-white">
-         <div className="max-w-7xl mx-auto px-4 md:px-6">
-            <div className="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-gray-100 pb-8">
-               <div>
-                 <h2 className="text-3xl md:text-4xl font-serif font-bold text-pau-darkBlue mb-4">Centers of Excellence</h2>
-                 <p className="text-gray-500 font-light">Real-world experience in the areas that matter most.</p>
-               </div>
-               <button 
-                onClick={() => onNavigate('centers')}
-                className="mt-6 md:mt-0 flex items-center px-6 py-3 border border-gray-200 text-xs font-bold uppercase tracking-widest text-gray-600 hover:bg-pau-darkBlue hover:text-white transition-all"
-               >
-                 View All Centers <ArrowRightIcon className="ml-2 h-3 w-3" />
-               </button>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-               {clinicList.map((clinic, i) => (
-                 <div key={i} className="border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 group cursor-pointer" onClick={() => onClinicClick(clinic)}>
-                    <div className="mb-6 p-3 bg-gray-50 w-fit rounded-lg group-hover:bg-pau-gold group-hover:text-white transition-colors text-gray-400">
-                      <BuildingLibraryIcon className="h-6 w-6" />
-                    </div>
-                    <h3 className="text-xl font-bold text-pau-darkBlue mb-3 font-serif">{clinic.title}</h3>
-                    <p className="text-sm text-gray-500 leading-relaxed font-light mb-8 line-clamp-3">
-                      {clinic.description}
-                    </p>
-                    <div className="flex items-center text-[10px] font-bold uppercase tracking-widest text-gray-400 group-hover:text-pau-blue transition-colors">
-                      Learn More <ArrowRightIcon className="ml-2 h-3 w-3" />
-                    </div>
-                 </div>
-               ))}
-            </div>
-         </div>
-      </section>
-
-      {/* 6. CAREER PATH MODAL (REDESIGNED) */}
+      {/* 5. CAREER PATH MODAL (REDESIGNED) */}
       {activePath && (
         <div className="fixed inset-0 z-[100] overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
           <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:p-0">

@@ -176,5 +176,5 @@ This is a university project. For any questions or issues, please contact the PA
 ---
 
 <div align="center">
-  <p>Built with ❤️ for future lawyers</p>
+  <p>Built with ❤️ by onecation</p>
 </div>

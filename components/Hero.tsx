@@ -38,7 +38,7 @@ export const Hero: React.FC<HeroProps> = ({ content, shared, onNavigate }) => {
           </div>
 
           {/* Main Headline */}
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-bold leading-[1.1] mb-8 text-white drop-shadow-xl tracking-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-bold leading-[1.6] mb-8 text-white drop-shadow-xl tracking-tight">
             Legal Education <br />
             <span className="text-white">Without Borders</span>
           </h1>
