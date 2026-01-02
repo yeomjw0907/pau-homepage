@@ -93,7 +93,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, shared }) => {
             Note: This exact wording is required for unaccredited law schools in California. 
         */}
         <p className="text-[10px] text-gray-500 leading-relaxed font-light text-justify mb-4">
-          The Pacific American University School of Law is registered with the Committee of Bar Examiners of the State Bar of California as an unaccredited correspondence law school. 
+          Pacific American University School of Law is registered with the Committee of Bar Examiners of the State Bar of California as an unaccredited correspondence law school. 
           PAUSL is not accredited by the State Bar of California or the American Bar Association.
         </p>
 

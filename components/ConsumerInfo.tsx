@@ -66,7 +66,23 @@ export const ConsumerInfo: React.FC<ConsumerInfoProps> = ({ content }) => {
           ))}
         </div>
 
-        <div className="mt-16 p-6 bg-blue-50 border border-blue-100 rounded-lg text-sm text-blue-800">
+        {/* State Bar Registration & Accreditation Status */}
+        <div className="mt-16 bg-white shadow-soft rounded-2xl border border-gray-100 p-10">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center border-b border-gray-100 pb-4">
+            <DocumentCheckIcon className="h-6 w-6 text-pau-blue mr-2" />
+            State Bar Registration & Accreditation Status
+          </h2>
+          <div className="space-y-4 text-gray-700 leading-relaxed">
+            <p>
+              Pacific American University School of Law is registered with the Committee of Bar Examiners of the State Bar of California as an unaccredited correspondence law school. PAUSL is not accredited by the State Bar of California or the American Bar Association.
+            </p>
+            <p>
+              Study at, or graduation from, this law school may not qualify a student to take the bar examination or to satisfy the requirements for admission to practice in jurisdictions other than California. A student intending to seek admission to practice law in a jurisdiction other than California should contact the admitting authority in that jurisdiction for information regarding the legal education requirements in that jurisdiction for admission to the practice of law.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-8 p-6 bg-blue-50 border border-blue-100 rounded-lg text-sm text-blue-800">
           <p className="font-bold mb-2">Note regarding accuracy:</p>
           <p>
             The information provided on this page is compiled in accordance with the guidelines set forth by the Committee of Bar Examiners of the State Bar of California. Pacific American University School of Law certifies that the data presented here is accurate and current as of the last reporting period.
