@@ -15,10 +15,10 @@ This is the official website for **Pacific American University School of Law**, 
 - 🎓 **Academic Programs** - J.D. curriculum, bar exam information, and course catalog
 - 👨‍🏫 **Faculty Profiles** - Comprehensive faculty and staff directory
 - 📚 **Digital Library** - Access to legal research resources and study rooms
-- 🏢 **Career Services** - On-Campus Interview (OCI) registration and job placement
-- 🏛️ **Legal Clinics & Centers** - Hands-on clinical programs
-- 📅 **Academic Calendar** - Important dates and deadlines
-- 🎨 **AI Campus Visualizer** - Architectural concept generator using Gemini AI
+- 🏢 **Career Services** - Job placement support and career guidance
+- 🎯 **Student Success & Resources** - Academic support programs and professional networking
+- 📅 **Academic Calendar** - Cohort-specific start dates and key deadlines
+- ℹ️ **Consumer Information** - Transparency and compliance disclosures
 
 ---
 
@@ -41,20 +41,12 @@ This is the official website for **Pacific American University School of Law**, 
    npm install
    ```
 
-3. **Set up environment variables (optional)**
-   
-   For the AI Campus Visualizer feature, create a `.env.local` file:
-   ```bash
-   GEMINI_API_KEY=your_gemini_api_key_here
-   ```
-   > Note: The app will work without this key, but the Campus Visualizer will require user-selected API keys.
-
-4. **Run the development server**
+3. **Run the development server**
    ```bash
    npm run dev
    ```
 
-5. **Open your browser**
+4. **Open your browser**
    Navigate to `http://localhost:5173`
 
 ---
@@ -66,7 +58,6 @@ This is the official website for **Pacific American University School of Law**, 
 - **Build Tool:** Vite
 - **Styling:** Tailwind CSS
 - **Icons:** Heroicons
-- **AI Integration:** Google Gemini API (for image generation)
 
 ---
 
@@ -74,34 +65,35 @@ This is the official website for **Pacific American University School of Law**, 
 
 ```
 pau-homepage/
-├── components/           # React components
-│   ├── Academics.tsx    # Academic programs page
-│   ├── Admissions.tsx   # Admissions information
-│   ├── Faculty.tsx      # Faculty directory
-│   ├── Admin.tsx        # Admin dashboard for content management
-│   ├── HomeNews.tsx     # News section
-│   ├── Library.tsx      # Library resources
+├── components/                # React components
+│   ├── Academics.tsx         # Academic programs page
+│   ├── Admissions.tsx        # Admissions information
+│   ├── Faculty.tsx           # Faculty directory
+│   ├── Admin.tsx             # Admin dashboard for content management
+│   ├── StudentResources.tsx  # Student success programs
+│   ├── HomeNews.tsx          # News section
+│   ├── Library.tsx           # Library resources
+│   ├── Calendar.tsx          # Academic calendar with cohort filtering
 │   └── ...
-├── services/            # API services
-│   └── geminiService.ts # Gemini AI integration
-├── types.ts             # TypeScript type definitions
-├── metadata.json        # Site content and configuration
-├── App.tsx              # Main application component
-└── index.tsx            # Application entry point
+├── types.ts                   # TypeScript type definitions
+├── metadata.json              # Site content and configuration
+├── App.tsx                    # Main application component
+└── index.tsx                  # Application entry point
 ```
 
 ---
 
 ## 🔧 Admin Features
 
-The site includes a built-in **Admin Dashboard** accessible at `/admin` (in the app navigation):
+The site includes a built-in **Admin Dashboard** accessible via the footer navigation:
 
-- ✏️ Edit homepage hero text
-- 📰 Manage news articles with rich text editor
+- ✏️ Edit homepage hero text and mission statement
+- 📰 Manage news articles and announcements
 - 📢 Create and manage campus notices
-- 👥 Update faculty profiles and bios
+- 👥 Update faculty and administration profiles
 - 📚 Modify academic program details
 - 🚨 Configure global alert banners
+- 📅 Update academic calendar and deadlines
 
 ---
 
@@ -113,16 +105,16 @@ All content is stored in `metadata.json` and can be edited through the admin int
 ### 2. **Responsive Design**
 Fully optimized for desktop, tablet, and mobile devices.
 
-### 3. **AI-Powered Campus Visualization**
-Generate architectural concepts for future campus expansions using Gemini's image generation capabilities.
+### 3. **Cohort-Based Academic Calendar**
+Personalized calendar views for 1L, 2L/3L, and 4L students with specific start dates and deadlines.
 
 ### 4. **Multi-Language Support**
 Translation overlay system (Korean/English) built-in for global accessibility.
 
-### 5. **Interactive Forms**
-- LSAC application gateway
-- Clinic inquiry forms
-- OCI registration
+### 5. **Interactive Application Process**
+- Online application with cohort selection
+- Intake period selection (Winter/Spring/Fall)
+- Automated deadline notifications
 - Library room reservations
 
 ---
@@ -137,6 +129,19 @@ To update site content without coding:
 4. Click "Sync Updates Live" to save
 
 All changes are automatically reflected across the site.
+
+---
+
+## 📚 Catalog Compliance
+
+This website is designed to accurately reflect the information in the official Pacific American University School of Law Catalog. Key compliance features include:
+
+- **State Bar Registration Disclosure** - Mandatory legal notices displayed prominently
+- **Consumer Information** - Transparent disclosure of student outcomes and policies
+- **Accurate Program Information** - J.D. requirements, tuition, and admission standards
+- **Cohort-Specific Calendars** - Start dates vary by student year (1L, 2L/3L, 4L)
+
+All content is regularly reviewed to ensure accuracy and compliance with California State Bar requirements for unaccredited law schools.
 
 ---
 
@@ -169,9 +174,11 @@ This is a university project. For any questions or issues, please contact the PA
 
 ## 🔗 Links
 
-- 🌐 [Official University Website](#)
-- 📧 [Contact Admissions](mailto:admissions@pau.edu)
-- 📞 Phone: (555) 123-4567
+- 🌐 Official Website: [www.paucal.org](https://www.paucal.org)
+- 📧 Contact Admissions: [admissions@paucal.org](mailto:admissions@paucal.org)
+- 📧 General Inquiries: [info@paucal.org](mailto:info@paucal.org)
+- 📞 Phone: (213) 674-7174
+- 📍 Address: 3435 Wilshire Blvd. Suite 430, Los Angeles, CA 90010
 
 ---
 
