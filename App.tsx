@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useTransition } from 'react';
 import { 
   Page, 
   SupportedLanguage, 
@@ -125,6 +125,7 @@ const App: React.FC = () => {
   const [currentLang, setCurrentLang] = useState<SupportedLanguage>('English');
   const [isTranslating, setIsTranslating] = useState(false);
   const [selectedClinic, setSelectedClinic] = useState<Clinic | null>(null);
+  const [isPending, startTransition] = useTransition();
   const [selectedNews, setSelectedNews] = useState<NewsItem | null>(null);
   
   // Ref to track previous language to prevent initial English translation or loops
@@ -375,11 +376,14 @@ const App: React.FC = () => {
       setIsTranslating(true);
       
       // Helper to translate safely
-      const translateSafe = async <T extends unknown>(content: T, lang: SupportedLanguage): Promise<T> => {
+      const translateSafe = async <T extends unknown>(content: T, lang: SupportedLanguage, sectionName: string): Promise<T> => {
         try {
-          return await translateContent(content, lang);
+          console.log(`[Translation] Starting translation for ${sectionName} to ${lang}`);
+          const result = await translateContent(content, lang);
+          console.log(`[Translation] Successfully translated ${sectionName}`);
+          return result;
         } catch (e) {
-          console.error(`Failed to translate section to ${lang}`, e);
+          console.error(`[Translation] Failed to translate ${sectionName} to ${lang}:`, e);
           return content; // Fallback to original content on error
         }
       };
@@ -387,31 +391,38 @@ const App: React.FC = () => {
       try {
         // Execute translations sequentially to prevent rate limiting (429 Errors)
         // 1. Core Home Content
-        const translatedHome = await translateSafe(homeContent, currentLang);
+        const translatedHome = await translateSafe(homeContent, currentLang, 'Home Content');
         setHomeContent(translatedHome);
 
         // 2. Admissions
-        const translatedAdmissions = await translateSafe(admissionsContent, currentLang);
+        const translatedAdmissions = await translateSafe(admissionsContent, currentLang, 'Admissions');
         setAdmissionsContent(translatedAdmissions);
 
         // 3. Academics
-        const translatedAcademics = await translateSafe(academicsContent, currentLang);
+        const translatedAcademics = await translateSafe(academicsContent, currentLang, 'Academics');
         setAcademicsContent(translatedAcademics);
 
         // 4. Faculty (Can be large)
-        const translatedFaculty = await translateSafe(facultyContent, currentLang);
+        const translatedFaculty = await translateSafe(facultyContent, currentLang, 'Faculty');
         setFacultyContent(translatedFaculty);
 
         // 5. Notices
-        const translatedNotices = await translateSafe(noticesContent, currentLang);
+        const translatedNotices = await translateSafe(noticesContent, currentLang, 'Notices');
         setNoticesContent(translatedNotices);
 
         // 6. Weekly Dicta (HTML content)
-        const translatedWeeklyDicta = await translateSafe(weeklyDictaContent, currentLang);
+        const translatedWeeklyDicta = await translateSafe(weeklyDictaContent, currentLang, 'Weekly Dicta');
         setWeeklyDictaContent(translatedWeeklyDicta);
 
+        console.log(`[Translation] All translations completed for ${currentLang}`);
       } catch (err) {
-        console.error("Translation process failed", err);
+        console.error("[Translation] Translation process failed:", err);
+        // Show user-friendly error message
+        setGlobalAlert({
+          active: true,
+          message: `Translation to ${currentLang} failed. Please try again or refresh the page.`,
+          type: 'error'
+        });
       } finally {
         setIsTranslating(false);
         prevLangRef.current = currentLang;
@@ -421,10 +432,16 @@ const App: React.FC = () => {
   }, [currentLang]);
 
   const handleNavigate = (page: Page) => {
-    setCurrentPage(page);
-    setSelectedClinic(null);
-    setSelectedNews(null);
-    window.scrollTo(0, 0);
+    // Use startTransition to make navigation non-blocking
+    startTransition(() => {
+      setCurrentPage(page);
+      setSelectedClinic(null);
+      setSelectedNews(null);
+    });
+    // Defer scroll to next frame to avoid blocking
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   };
 
   const renderContent = () => {

@@ -40,7 +40,12 @@ export const translateContent = async <T>(
   }
 
   // Always create a new GoogleGenAI instance right before making an API call
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    console.error("Gemini API key is not configured. Please set GEMINI_API_KEY in .env.local");
+    throw new Error("API key not found");
+  }
+  const ai = new GoogleGenAI({ apiKey });
 
   // Use System Instruction for better role adherence
   const systemInstruction = `You are a professional translator for the Pacific American University School of Law website.
@@ -90,7 +95,12 @@ export const generateArchitecturalImage = async (
   size: ImageSize
 ): Promise<string> => {
   // Always create a new GoogleGenAI instance right before making an API call to ensure it uses the most up-to-date API key
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    console.error("Gemini API key is not configured. Please set GEMINI_API_KEY in .env.local");
+    throw new Error("API key not found");
+  }
+  const ai = new GoogleGenAI({ apiKey });
 
   try {
     const response = await ai.models.generateContent({
