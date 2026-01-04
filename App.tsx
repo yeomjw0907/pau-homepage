@@ -389,47 +389,108 @@ const App: React.FC = () => {
       };
 
       try {
-        // Execute translations sequentially to prevent rate limiting (429 Errors)
-        // 1. Core Home Content
-        const translatedHome = await translateSafe(homeContent, currentLang, 'Home Content');
-        setHomeContent(translatedHome);
+        // Determine which content is needed for current page (priority translation)
+        const getPriorityContent = () => {
+          switch (currentPage) {
+            case 'home':
+              return { content: homeContent, setter: setHomeContent, name: 'Home Content' };
+            case 'admissions':
+            case 'apply-now':
+            case 'app-steps':
+            case 'admission-reqs':
+            case 'transfer-int':
+            case 'tech-reqs':
+              return { content: admissionsContent, setter: setAdmissionsContent, name: 'Admissions' };
+            case 'academics':
+            case 'academic-calendar':
+            case 'bar-info':
+            case 'curriculum-schedule':
+            case 'course-desc':
+            case 'counseling':
+            case 'grad-reqs':
+              return { content: academicsContent, setter: setAcademicsContent, name: 'Academics' };
+            case 'faculty':
+            case 'admin-staffs':
+              return { content: facultyContent, setter: setFacultyContent, name: 'Faculty' };
+            case 'weekly-dicta':
+            case 'notices':
+            case 'news':
+            case 'news-detail':
+              return { content: weeklyDictaContent, setter: setWeeklyDictaContent, name: 'Weekly Dicta' };
+            default:
+              return { content: homeContent, setter: setHomeContent, name: 'Home Content' };
+          }
+        };
 
-        // 2. Admissions
-        const translatedAdmissions = await translateSafe(admissionsContent, currentLang, 'Admissions');
-        setAdmissionsContent(translatedAdmissions);
+        const priority = getPriorityContent();
+        
+        // Phase 1: Translate current page content immediately (target: <1 second)
+        const priorityPromise = translateSafe(priority.content, currentLang, priority.name);
+        priorityPromise.then(result => {
+          priority.setter(result);
+          // Hide loading overlay once priority content is ready
+          setIsTranslating(false);
+        }).catch(err => {
+          console.error(`[Translation] Priority content (${priority.name}) translation failed`, err);
+          setIsTranslating(false);
+        });
 
-        // 3. Academics
-        const translatedAcademics = await translateSafe(academicsContent, currentLang, 'Academics');
-        setAcademicsContent(translatedAcademics);
+        // Phase 2: Translate remaining content in background (non-blocking)
+        // Don't await these - let them complete in background
+        const backgroundPromises = [];
 
-        // 4. Faculty (Can be large)
-        const translatedFaculty = await translateSafe(facultyContent, currentLang, 'Faculty');
-        setFacultyContent(translatedFaculty);
+        if (priority.name !== 'Home Content') {
+          backgroundPromises.push(
+            translateSafe(homeContent, currentLang, 'Home Content').then(setHomeContent).catch(() => {})
+          );
+        }
+        if (priority.name !== 'Admissions') {
+          backgroundPromises.push(
+            translateSafe(admissionsContent, currentLang, 'Admissions').then(setAdmissionsContent).catch(() => {})
+          );
+        }
+        if (priority.name !== 'Academics') {
+          backgroundPromises.push(
+            translateSafe(academicsContent, currentLang, 'Academics').then(setAcademicsContent).catch(() => {})
+          );
+        }
+        if (priority.name !== 'Faculty') {
+          backgroundPromises.push(
+            translateSafe(facultyContent, currentLang, 'Faculty').then(setFacultyContent).catch(() => {})
+          );
+        }
+        if (priority.name !== 'Weekly Dicta') {
+          backgroundPromises.push(
+            translateSafe(weeklyDictaContent, currentLang, 'Weekly Dicta').then(setWeeklyDictaContent).catch(() => {})
+          );
+          backgroundPromises.push(
+            translateSafe(noticesContent, currentLang, 'Notices').then(setNoticesContent).catch(() => {})
+          );
+        }
 
-        // 5. Notices
-        const translatedNotices = await translateSafe(noticesContent, currentLang, 'Notices');
-        setNoticesContent(translatedNotices);
+        // Wait for priority content (should complete in <1 second)
+        await priorityPromise.catch(() => {});
 
-        // 6. Weekly Dicta (HTML content)
-        const translatedWeeklyDicta = await translateSafe(weeklyDictaContent, currentLang, 'Weekly Dicta');
-        setWeeklyDictaContent(translatedWeeklyDicta);
+        // Background translations continue without blocking
+        Promise.allSettled(backgroundPromises).then(() => {
+          console.log(`[Translation] All background translations completed for ${currentLang}`);
+        });
 
-        console.log(`[Translation] All translations completed for ${currentLang}`);
+        console.log(`[Translation] Priority translation completed for ${currentLang}`);
       } catch (err) {
         console.error("[Translation] Translation process failed:", err);
-        // Show user-friendly error message
+        setIsTranslating(false);
         setGlobalAlert({
           active: true,
           message: `Translation to ${currentLang} failed. Please try again or refresh the page.`,
           type: 'error'
         });
       } finally {
-        setIsTranslating(false);
         prevLangRef.current = currentLang;
       }
     };
     handleTranslation();
-  }, [currentLang]);
+  }, [currentLang, currentPage]);
 
   const handleNavigate = (page: Page) => {
     // Use startTransition to make navigation non-blocking

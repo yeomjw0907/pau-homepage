@@ -5,6 +5,71 @@ import { SupportedLanguage, ImageSize } from "../types";
 // In-memory cache for translations to avoid redundant API calls and improve speed
 const translationCache = new Map<string, any>();
 
+// Load cache from localStorage on initialization
+const loadCacheFromStorage = () => {
+  try {
+    const stored = localStorage.getItem('translationCache');
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      Object.entries(parsed).forEach(([key, value]) => {
+        translationCache.set(key, value);
+      });
+      console.debug(`[Performance] Loaded ${Object.keys(parsed).length} cached translations from localStorage`);
+    }
+  } catch (e) {
+    console.warn('[Performance] Failed to load translation cache from localStorage', e);
+  }
+};
+
+// Save cache to localStorage with size limit protection
+const saveCacheToStorage = () => {
+  try {
+    const cacheObj = Object.fromEntries(translationCache);
+    const cacheString = JSON.stringify(cacheObj);
+    
+    // Check size (localStorage has ~5-10MB limit, but we'll be conservative)
+    const sizeInMB = new Blob([cacheString]).size / (1024 * 1024);
+    if (sizeInMB > 2) {
+      console.warn(`[Performance] Translation cache is too large (${sizeInMB.toFixed(2)}MB), clearing old entries`);
+      // Keep only the 50 most recent entries
+      const entries = Array.from(translationCache.entries());
+      translationCache.clear();
+      entries.slice(-50).forEach(([key, value]) => {
+        translationCache.set(key, value);
+      });
+      const reducedCache = Object.fromEntries(translationCache);
+      localStorage.setItem('translationCache', JSON.stringify(reducedCache));
+    } else {
+      localStorage.setItem('translationCache', cacheString);
+    }
+  } catch (e) {
+    // Handle QuotaExceededError or other storage errors
+    if (e instanceof DOMException && e.name === 'QuotaExceededError') {
+      console.warn('[Performance] localStorage quota exceeded, clearing old cache entries');
+      // Clear half of the cache
+      const entries = Array.from(translationCache.entries());
+      translationCache.clear();
+      entries.slice(-Math.floor(entries.length / 2)).forEach(([key, value]) => {
+        translationCache.set(key, value);
+      });
+      try {
+        const reducedCache = Object.fromEntries(translationCache);
+        localStorage.setItem('translationCache', JSON.stringify(reducedCache));
+      } catch (e2) {
+        console.warn('[Performance] Failed to save reduced cache, clearing localStorage', e2);
+        localStorage.removeItem('translationCache');
+      }
+    } else {
+      console.warn('[Performance] Failed to save translation cache to localStorage', e);
+    }
+  }
+};
+
+// Initialize cache from storage
+if (typeof window !== 'undefined') {
+  loadCacheFromStorage();
+}
+
 /**
  * Helper to extract JSON from a potentially markdown-wrapped string
  */
@@ -30,9 +95,16 @@ export const translateContent = async <T>(
   currentContent: T,
   targetLanguage: SupportedLanguage
 ): Promise<T> => {
-  // Generate a cache key based on language and content fingerprint
+  // Generate a more accurate cache key using content hash
   const contentString = JSON.stringify(currentContent);
-  const cacheKey = `${targetLanguage}_${contentString.length}_${contentString.slice(0, 20)}`;
+  // Simple hash function for cache key (more accurate than length + slice)
+  let hash = 0;
+  for (let i = 0; i < contentString.length; i++) {
+    const char = contentString.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32-bit integer
+  }
+  const cacheKey = `${targetLanguage}_${Math.abs(hash)}`;
   
   if (translationCache.has(cacheKey)) {
     console.debug(`[Performance] Returning cached translation for ${targetLanguage}`);
@@ -81,8 +153,11 @@ Rules:
     
     const translated = JSON.parse(cleanedJsonString) as T;
     
-    // Persist in memory cache
+    // Persist in memory cache and localStorage
     translationCache.set(cacheKey, translated);
+    if (typeof window !== 'undefined') {
+      saveCacheToStorage();
+    }
     
     return translated;
   } catch (error) {

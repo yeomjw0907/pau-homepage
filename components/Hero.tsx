@@ -15,13 +15,15 @@ export const Hero: React.FC<HeroProps> = ({ content, shared, onNavigate }) => {
       {/* Background Image - Keeping the existing image as requested */}
       <div className="absolute inset-0 z-0">
         <img
-          className="w-full h-full object-cover animate-fade-in scale-105 transform transition-transform duration-[20s] hover:scale-110 brightness-[0.85]"
+          className="w-full h-full object-cover animate-fade-in scale-105 transform brightness-[0.85]"
           src="https://lh3.googleusercontent.com/gps-cs-s/AG0ilSwk0a6soHRrVgCr9F0rREJzwmJ6ku_WZkAaAZsT45aBYhQduQ2FlBCCxDf0JrB6VB2FY55tUN5RzBkMKIz9V7D5CNTludL-D5zt3HV9WiKB96MGlHDM4tp1-n0yhCcGqca_dne54A=s3000-rw"
           alt="Pacific American University Law Campus"
+          loading="eager"
+          decoding="async"
         />
         {/* Gradient Overlay for Text Readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#051626]/90 via-[#051626]/40 to-transparent z-10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#051626] via-transparent to-black/30 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#051626]/90 via-[#051626]/40 to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#051626] via-transparent to-black/30 z-10 pointer-events-none" />
       </div>
 
       {/* Hero Content */}
