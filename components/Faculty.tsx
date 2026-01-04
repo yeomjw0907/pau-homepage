@@ -4,19 +4,28 @@ import { PlusIcon, MinusIcon, UserIcon } from '@heroicons/react/24/outline';
 
 interface FacultyItemProps {
   prof: FacultyMember;
+  isTeachesExpanded: boolean;
   isEdExpanded: boolean;
   isBioExpanded: boolean;
+  onToggleTeaches: (name: string) => void;
   onToggleEd: (name: string) => void;
   onToggleBio: (name: string) => void;
 }
 
 const FacultyItem: React.FC<FacultyItemProps> = ({ 
   prof, 
+  isTeachesExpanded,
   isEdExpanded, 
   isBioExpanded, 
+  onToggleTeaches,
   onToggleEd, 
   onToggleBio 
 }) => {
+  // Extract "Teaches" part from title
+  const teachesMatch = prof.title.match(/Teaches:\s*(.+?)\)?$/i);
+  const teachesContent = teachesMatch ? teachesMatch[1].replace(/\s*\)\s*$/, '').trim() : null;
+  const displayTitle = teachesMatch ? prof.title.replace(/\s*\(Teaches:.*?\)/i, '').trim() : prof.title;
+  
   return (
     <div className="py-8 md:py-12 border-b border-gray-100 last:border-0 flex flex-col md:flex-row gap-6 md:gap-12 group animate-fade-in">
       {/* Photo Column */}
@@ -47,7 +56,7 @@ const FacultyItem: React.FC<FacultyItemProps> = ({
             )}
           </div>
           <p className="text-pau-blue font-bold mb-4 md:mb-6 text-[10px] md:text-sm uppercase tracking-[0.15em] md:border-l-2 md:border-pau-gold md:pl-4">
-            {prof.title}
+            {displayTitle}
           </p>
           
           <div className="flex flex-col space-y-2 text-[12px] md:text-sm text-gray-500 font-medium bg-gray-50/50 p-4 rounded-xl border border-gray-100 text-left">
@@ -69,6 +78,29 @@ const FacultyItem: React.FC<FacultyItemProps> = ({
         </div>
 
         <div className="space-y-1">
+          {teachesContent && (
+            <div className="border-t border-gray-100">
+              <button 
+                onClick={() => onToggleTeaches(prof.name)}
+                className="w-full py-3 flex items-center justify-between text-left"
+              >
+                <span className="text-[9px] md:text-xs font-bold text-pau-darkBlue uppercase tracking-[0.15em]">Courses Taught</span>
+                <div className={`p-1 border rounded transition-colors ${isTeachesExpanded ? 'border-pau-gold' : 'border-gray-200'}`}>
+                  {isTeachesExpanded ? <MinusIcon className="h-3 w-3 text-pau-gold" /> : <PlusIcon className="h-3 w-3 text-gray-400" />}
+                </div>
+              </button>
+              <div className={`grid transition-all duration-300 ease-in-out ${isTeachesExpanded ? 'grid-rows-[1fr] opacity-100 pb-3' : 'grid-rows-[0fr] opacity-0'}`}>
+                <div className="overflow-hidden">
+                  <div className="pl-4 border-l border-pau-gold/20 ml-1">
+                    <p className="text-[13px] text-gray-600 font-light leading-relaxed">
+                      {teachesContent}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           <div className="border-t border-gray-100">
             <button 
               onClick={() => onToggleEd(prof.name)}
@@ -124,6 +156,7 @@ interface FacultyProps {
 }
 
 export const Faculty: React.FC<FacultyProps> = ({ content, shared, currentPage, onNavigate }) => {
+  const [expandedTeaches, setExpandedTeaches] = useState<Record<string, boolean>>({});
   const [expandedEducation, setExpandedEducation] = useState<Record<string, boolean>>({});
   const [expandedBio, setExpandedBio] = useState<Record<string, boolean>>({});
   const [activeTab, setActiveTab] = useState<'Faculty' | 'Staff'>('Faculty');
@@ -139,6 +172,10 @@ export const Faculty: React.FC<FacultyProps> = ({ content, shared, currentPage, 
   const handleTabChange = (tab: 'Faculty' | 'Staff') => {
     setActiveTab(tab);
     onNavigate(tab === 'Faculty' ? 'faculty' : 'admin-staffs');
+  };
+
+  const toggleTeaches = (name: string) => {
+    setExpandedTeaches(prev => ({ ...prev, [name]: !prev[name] }));
   };
 
   const toggleEducation = (name: string) => {
@@ -212,8 +249,10 @@ export const Faculty: React.FC<FacultyProps> = ({ content, shared, currentPage, 
                     <FacultyItem 
                       key={member.name} 
                       prof={member} 
+                      isTeachesExpanded={!!expandedTeaches[member.name]}
                       isEdExpanded={!!expandedEducation[member.name]}
                       isBioExpanded={!!expandedBio[member.name]}
+                      onToggleTeaches={toggleTeaches}
                       onToggleEd={toggleEducation}
                       onToggleBio={toggleBio}
                     />

@@ -173,16 +173,18 @@ const App: React.FC = () => {
         id: 'wd-2025-02-03',
         title: 'The Weekly Dicta — February 3, 2025',
         date: 'February 3, 2025',
-        summary: 'Learning, Serving, and Leading Together. Important dates for midterms, writing competition, and administrative deadlines.',
+        summary: 'Learning, Serving, and Leading Together — Pacific American University School of Law. Important dates for midterms, writing competition, and administrative deadlines.',
         category: 'Newsletter',
         isPinned: true,
         body: `
+          <p><strong>Learning, Serving, and Leading Together — Pacific American University School of Law</strong></p>
+          
           <p>Dear PAUSL Students, Faculty, and Staff,</p>
           <p>Warm greetings to each of you across our global learning community. As we advance through the term, we continue to build momentum — growing in knowledge, developing as leaders, and supporting one another from every corner of the world. Here are the key updates and opportunities for the week ahead.</p>
           
           <h3>📅 Important Dates This Week</h3>
-          <p><strong>Tuesday, February 4</strong><br>Student Success Workshop: Mastering Outlining for Midterms<br>Time: 5:00 PM PST | Location: Zoom (link in Populi)</p>
-          <p><strong>Wednesday, February 5</strong><br>Legal Writing Club: Using Precedent Effectively in Persuasive Writing<br>Time: 6:00 PM PST | Location: Zoom</p>
+          <p><strong>Tuesday, February 4</strong><br>Student Success Workshop: <em>Mastering Outlining for Midterms</em><br>Time: 5:00 PM PST | Location: Zoom (link in Populi)</p>
+          <p><strong>Wednesday, February 5</strong><br>Legal Writing Club<br>Topic: <em>Using Precedent Effectively in Persuasive Writing</em><br>Time: 6:00 PM PST | Location: Zoom</p>
           <p style="color: #e53e3e;"><strong>⚠️ Deadline for Accommodation Requests for Midterms</strong></p>
           <p><strong>Friday, February 7</strong><br>Midterm Exam Schedules Posted<br>Check Course Documents in Populi for each class.</p>
 
@@ -190,25 +192,32 @@ const App: React.FC = () => {
           <p><strong>Midterm Exams — Week of February 10</strong><br>Please review all exam instructions in advance. Students studying outside the U.S.: remember to confirm your local time-zone equivalents.</p>
 
           <h3>✍️ PAUSL Writing Competition: Now Open!</h3>
+          <p>This year's theme:</p>
           <p><strong>"Innovative Approaches to Cross-Border Civil Dispute Resolution."</strong></p>
           <ul>
-            <li><strong>Deadline:</strong> March 1</li>
+            <li><strong>Deadline:</strong> <strong>March 1</strong></li>
             <li><strong>Prize:</strong> $250 tuition credit + publication</li>
             <li><strong>Eligibility:</strong> Open to all PAUSL JD and non-JD students</li>
           </ul>
 
           <h3>🌐 Community Highlights</h3>
           <ul>
-            <li><strong>New Student Group Launch:</strong> The Global Justice Forum begins this month—details to come.</li>
+            <li><strong>New Student Group Launch:</strong> <em>The Global Justice Forum</em> begins this month—details to come.</li>
             <li><strong>Faculty Spotlight:</strong> Professor Kim recently published new scholarship on international mediation models.</li>
           </ul>
+          <p>Have something to celebrate or share? Submit your announcements for next week's edition!</p>
 
           <h3>💰 Financial & Administrative Deadlines</h3>
-          <p><strong>February 10:</strong> Tuition Installment Due. Submit via Populi Billing to avoid late fees.</p>
-          <p><strong>February 15:</strong> FAFSA Priority Deadline. Required for all U.S. students seeking aid.</p>
+          <p><strong>February 10 — Tuition Installment Due</strong><br>Submit payments via Populi Billing to avoid late fees.</p>
+          <p><strong>February 15 — FAFSA Priority Deadline (U.S. Students)</strong><br>We strongly recommend submitting early for timely processing.</p>
+          <p><strong>International Student Financial Documentation</strong><br>Upload updates through the Student Services portal on an ongoing basis.</p>
 
-          <hr>
+          <h3>💬 A Message for the Week</h3>
           <p><em>"As we continue our journey together, remember that legal education is not only the pursuit of knowledge, but also the preparation for a life of service. Your dedication, your voices, and your commitment to justice are building the community we envision at PAUSL."</em></p>
+          
+          <p>If you have items for next week's Weekly Dicta, please email <a href="mailto:admin@paucal.org" style="color: #2563eb; text-decoration: underline;">admin@paucal.org</a> by Thursday at noon.</p>
+          
+          <p>Wishing you a productive, connected, and meaningful week ahead.</p>
           <p><strong>— The PAUSL Administrative Team</strong></p>
         `
       }
@@ -222,30 +231,27 @@ const App: React.FC = () => {
       { 
         name: "Michael Marino", 
         credential: "Esq.",
-        title: "Faculty (Teaches: Legal Writing and Analysis, FYLSX Review)", 
+        title: "Faculty (Teaches: Legal Writing, First-Year Skills, Bar Preparation)", 
         education: [
-          "J.D., St. John's University School of Law (2007)",
-          "B.B.A., The George Washington University (2004)"
+          "J.D., St. John's University School of Law (2004)",
+          "B.A., The George Washington University (2000)"
         ], 
-        bio: "Attorney Licensed in California and New York (2007).\n\nAdjunct Professor, New York Law School (2008-2012); Creating and Designing Legal Education Program (Marino Legal Academy) (2009-present).", 
-        expertise: ["Legal Writing", "FYLSX Review"],
-        phone: "(213) 674-7174",
-        email: "mmarino@paucal.org",
+        bio: "Academic and Teaching Experience:\nMarino Legal Academy\nManaging Director | 2009 – Present\n● Lead curriculum design and academic programming for legal writing, first-year skills, and bar examination preparation across multiple jurisdictions\n● Teach and lecture on legal writing, issue spotting, rule synthesis, and exam-ready analytical structure\n● Develop instructional materials and assessment frameworks to support early law students and bar candidates\n● Oversee faculty, academic content, and regulatory compliance for a third-generation legal education organization founded in 1946\n\nAdjunct Professor / Legal Educator\nNew York Law School | Pacific American University\n● Taught Legal Writing, First-Year Skills, and Bar Preparation courses\n● Instructed students on essay organization, analytical clarity, time management, and exam performance\n● Provided academic support and mentoring to first-year and at-risk law students\n\nAcademic Support and Bar Passage Outcomes\n● Member of the academic support team that helped increase New York Law School's bar passage rate from the low-50 percent range to 94 percent\n\nPublications\n● Author and contributor, Westlaw's McKinney's Forms\n○ Draft and update commentary and forms relating to New York civil practice and procedure\n\nProfessional Legal Experience\nGraham Management LLC | Montecito, CA\nGeneral Counsel | 2019 – Present\n● Advise on legal compliance, contracts, intellectual property, and risk management\n● Draft and negotiate licensing, service, and sponsorship agreements\n● Manage trademark registration, licensing, and enforcement\n● Coordinate with outside counsel on litigation and regulatory matters\n\nSchwartz & Perry LLP | New York, NY\nAttorney | 2008 – 2009\n● Drafted and reviewed employment and service agreements\n● Assisted with litigation support, discovery, and document production\n● Conducted legal research on labor and intellectual property issues\n\nNew York Yankees | Bronx, NY\nLegal Intern | 2006\n● Assisted with licensing and sponsorship agreements\n● Conducted research on intellectual property and regulatory compliance\n\nLeadership and Service\nCold Spring School District | Montecito, CA\nBoard President | 2018 – Present\n● Provide governance oversight for district operations, compliance, and budgeting\n● Named 2024 Board Member of the Year, Small School Districts' Association (SSDA)\n\nProfessional Memberships\n● State Bar of California\n● New York State Bar", 
+        expertise: ["Legal Writing", "First-Year Skills", "Bar Preparation", "Legal Education", "Contracts", "Intellectual Property", "Risk Management", "Legal Compliance", "Trademark Registration", "Licensing and Enforcement"],
+        phone: "(917) 673-9618",
+        email: "MMarino@MarinoLegal.com",
         category: "Faculty",
         photoUrl: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?fit=crop&w=400&h=400&q=80"
       },
       { 
-        name: "Jonathan H. Levy", 
+        name: "Jonathan Levy", 
         credential: "Ph.D., J.D.",
-        title: "Faculty (Teaches: Introduction to Law, Torts I & II)", 
+        title: "Faculty (Teaches: Torts, International and Administrative Law, Introduction to Jurisprudence, Contracts, Family Law, Immigration, Legal Research, Bankruptcy, Copyrights, Evidence, Legal Ethics, Estates and Trusts, Constitutional Law)", 
         education: [
-          "Ph.D. in Political Science, University of Cincinnati (2006)",
-          "M.A. in Political Science, University of Cincinnati (1991)",
-          "J.D., Taft Law School (1991)",
-          "B.A., San Francisco State University"
+          "Ph.D. in Political Science, University of Cincinnati (2006)"
         ], 
-        bio: "Attorney Licensed in California (1992).\n\nAdjunct Professor, Kaplan University (2009-2017); Adjunct Professor, South University (2023-present).", 
-        expertise: ["Introduction to Law", "Torts"],
+        bio: "Qualifications\n● Dual qualified California Lawyer (Attorney) and English Solicitor\n● Practiced law in California and internationally for over 30 years\n\nAcademic and Teaching Experience\nSeveral Regionally Accredited Universities\nInstructor | 2006 – Present\n● Awarded PhD in Political Science (University of Cincinnati, 2006)\n● Instructed classes in Torts, International and Administrative Law, Introduction to Jurisprudence, Contracts, Family Law, Immigration, Legal Research, Bankruptcy, Copyrights, Evidence, Legal Ethics, Estates and Trusts and Constitutional Law since 2006\n\nLegal Practice as Attorney\n● Concentrates on cross-border issues including litigation, finance, securities, crypto assets, federal and company law\n\nLegal Practice as Solicitor\n● Focuses on the British overseas territories, capital markets, EU and national constitutional claims and petitions and bilateral and multilateral trade agreements and international organisations and tribunals", 
+        expertise: ["Torts", "International and Administrative Law", "Introduction to Jurisprudence", "Contracts", "Family Law", "Immigration", "Legal Research", "Bankruptcy", "Copyrights", "Evidence", "Legal Ethics", "Estates and Trusts", "Constitutional Law", "Cross-border Issues", "Litigation", "Finance", "Securities", "Crypto Assets", "Federal and Company Law", "British Overseas Territories", "Capital Markets", "EU and National Constitutional Claims", "Bilateral and Multilateral Trade Agreements", "International Organisations and Tribunals"],
         phone: "(213) 674-7174",
         email: "jlevy@paucal.org",
         category: "Faculty",
@@ -259,7 +265,7 @@ const App: React.FC = () => {
           "J.D., Loyola University School of Law (1994)",
           "B.A., Southern Agricultural & Mechanical University (1991)"
         ], 
-        bio: "Attorney Licensed in Louisiana (1994).\n\nAssociate Professor, Southern University Law Center (2021-present); Co-Director, Common Law Bar Program, Southern University Law Center (2022-present); Professor, Concord Law School at Purdue University Global (2017-2023).", 
+        bio: "Qualifications\n● Attorney Licensed in Louisiana (1994)\n\nAcademic and Teaching Experience\nSouthern University Law Center\nAssociate Professor | 2021 – Present\nCo-Director, Common Law Bar Program | 2022 – Present\n\nConcord Law School at Purdue University Global\nProfessor | 2017 – 2023", 
         expertise: ["Contracts"],
         phone: "(213) 674-7174",
         email: "swilliams@paucal.org",
@@ -267,15 +273,15 @@ const App: React.FC = () => {
         photoUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?fit=crop&w=400&h=400&q=80"
       },
       { 
-        name: "John Chandler", 
+        name: "John Jack Chandler", 
         credential: "J.D.",
-        title: "Faculty (Teaches: Criminal Law)", 
+        title: "Faculty (Teaches: Criminal Law, Legal Liability, Criminal Justice)", 
         education: [
-          "J.D., Loyola Marymount University School of Law (1993)",
-          "B.A., California State University (1989)"
+          "J.D., Loyola Law School, Los Angeles",
+          "B.A. in Criminal Justice, CSUF"
         ], 
-        bio: "Attorney Licensed in California (1993).\n\nProfessor, Westwood College (2010-2014); Adjunct Instructor, Paloma College (2008-2010); Adjunct Instructor, Rancho Santiago Community College (1997-2006; 2007-2009).", 
-        expertise: ["Criminal Law"],
+        bio: "Law Enforcement Experience\nSouthern California\nLaw Enforcement Officer and Legal Attorney | 30 years\n● Work experience involved street policing, undercover work, SWAT training, divisional administration and in-house legal management\n\nLegal Practice\nPrivate Attorney and Legal Instructor | 25 years\n● Successful private attorney and legal instructor in both criminal law and legal liability\n\nTeaching Experience\nSantiago Canyon College | Palomar College | Westwood College\nInstructor | Assistant Chair to Criminal Justice\n● Instructed criminal law and related criminal justice courses\n\nUS Virgin Islands\nInstructor\n● Taught legal courses after retirement from law enforcement and legal practice", 
+        expertise: ["Criminal Law", "Legal Liability", "Criminal Justice", "Law Enforcement", "Street Policing", "Undercover Work", "SWAT Training", "Divisional Administration", "In-house Legal Management"],
         phone: "(213) 674-7174",
         email: "jchandler@paucal.org",
         category: "Faculty",
@@ -287,9 +293,9 @@ const App: React.FC = () => {
         title: "CEO & President", 
         education: [
           "LL.M. thesis & S.J.D., Indiana University Maurer School of Law (2010)",
-          "LL.B., LL.M., PhD. coursework completed, Ewha Womans University"
+          "LL.B., LL.M., Ph.D. coursework completed, Ewha Womans University"
         ], 
-        bio: "President of Pacific American University (2022-present); Adjunct Professor at Kookmin University (2019-2022); Senior Advisor, I-Sung Labor Law Firm (2019-2022); Senior Researcher at Korea Labor Institute (1996-2004).", 
+        bio: "Administrative Experience\nPacific American University\nPresident | 2022 – Present\n\nAcademic Experience\nKookmin University\nAdjunct Professor | 2019 – 2022\n\nProfessional Experience\nI-Sung Labor Law Firm\nSenior Advisor | 2019 – 2022\n\nKorea Labor Institute\nSenior Researcher | 1996 – 2004", 
         expertise: ["Educational Leadership", "Labor Law"],
         phone: "(213) 674-7174",
         email: "hjkang@paucal.org",
@@ -302,10 +308,10 @@ const App: React.FC = () => {
         title: "Associate Dean of the School of Law", 
         education: [
           "J.D., Pepperdine University School of Law (1992)",
-          "Master of Library and Information Science, San Jose State University (1999)",
+          "M.L.I.S., San Jose State University (1999)",
           "B.A., Oral Roberts University (1989)"
         ], 
-        bio: "Attorney Licensed in California.\n\nAssistant Dean, Legal Technology Initiatives, Pepperdine University School of Law (2023-2024); Assistant Dean, Information Services, Pepperdine University School of Law (2012-2023); Director of Information Services, Pepperdine University School of Law (2001-2012).", 
+        bio: "Qualifications\n● Attorney Licensed in California\n\nAdministrative Experience\nPepperdine University School of Law\nAssistant Dean, Legal Technology Initiatives | 2023 – 2024\nAssistant Dean, Information Services | 2012 – 2023\nDirector of Information Services | 2001 – 2012", 
         expertise: ["Legal Technology", "Information Services"],
         phone: "(213) 674-7174",
         email: "pbohl@paucal.org",
@@ -317,11 +323,11 @@ const App: React.FC = () => {
         credential: "Ed.D.",
         title: "Dean of Admissions", 
         education: [
-          "Ed.D, LaSalle University Graduate School (1997)",
+          "Ed.D., LaSalle University Graduate School (1997)",
           "M.A., Dankook University Graduate School (1995)",
           "B.A., Kyungpook National University (1977)"
         ], 
-        bio: "Director, Korea Admissions Research Institute (2000-present); Professor, Hoseo University (1999-2022); Admissions Officer, Hoseo University (2016-2022).", 
+        bio: "Administrative Experience\nKorea Admissions Research Institute\nDirector | 2000 – Present\n\nAcademic Experience\nHoseo University\nProfessor | 1999 – 2022\nAdmissions Officer | 2016 – 2022", 
         expertise: ["Admissions Management", "Higher Education"],
         phone: "(213) 674-7174",
         email: "nhjung@paucal.org",
@@ -335,9 +341,9 @@ const App: React.FC = () => {
         education: [
           "LL.M., Regent University School of Law (2017)",
           "J.D., Handong International Law School (2017)",
-          "B.A. in Mechanical Engineering and Electronic Engineering, Handong Global University (2007)"
+          "B.A., Mechanical Engineering and Electronic Engineering, Handong Global University (2007)"
         ], 
-        bio: "Marketing Manager, Seoul National University of Science and Tech. IACF (2024); Lab Startup Innovator, Sungkyunkwan University Startup Center (2023); Patent Agent, Novick, Kim & Lee PLLC (2013-2014).", 
+        bio: "Professional Experience\nSeoul National University of Science and Tech. IACF\nMarketing Manager | 2024\n\nSungkyunkwan University Startup Center\nLab Startup Innovator | 2023\n\nNovick, Kim & Lee PLLC\nPatent Agent | 2013 – 2014", 
         expertise: ["Digital Marketing", "IT Systems"],
         phone: "(213) 674-7174",
         email: "jjea@paucal.org",

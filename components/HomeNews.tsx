@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { NewsItem, SharedContent, Page } from '../types';
-import { CalendarDaysIcon, ArrowLongRightIcon, InformationCircleIcon, ClipboardDocumentCheckIcon, ClockIcon } from '@heroicons/react/24/outline';
+import { CalendarDaysIcon, ArrowLongRightIcon, InformationCircleIcon, ClipboardDocumentCheckIcon, ClockIcon, NewspaperIcon } from '@heroicons/react/24/outline';
 
 interface HomeNewsProps {
   title: string;
@@ -12,6 +12,8 @@ interface HomeNewsProps {
 }
 
 export const HomeNews: React.FC<HomeNewsProps> = ({ title, newsItems, onNewsClick, onNavigate, shared }) => {
+  const isWeeklyDicta = title === 'Weekly Dicta';
+  
   const staticAdmissionsNews = [
     {
       id: 'n1',
@@ -39,6 +41,15 @@ export const HomeNews: React.FC<HomeNewsProps> = ({ title, newsItems, onNewsClic
       icon: InformationCircleIcon,
       category: 'Compliance',
       targetPage: 'bar-info' as Page
+    },
+    {
+      id: 'n4',
+      title: "Weekly Dicta",
+      date: "February 3, 2025",
+      summary: "Learning, Serving, and Leading Together. Official announcements and updates for the PAU School of Law community.",
+      icon: NewspaperIcon,
+      category: 'Newsletter',
+      targetPage: 'weekly-dicta' as Page
     }
   ];
 
@@ -50,31 +61,100 @@ export const HomeNews: React.FC<HomeNewsProps> = ({ title, newsItems, onNewsClic
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16">
           <div>
-             <div className="flex items-center space-x-2 mb-3">
-               <span className="h-px w-8 bg-pau-gold"></span>
-               <span className="text-pau-gold font-bold tracking-widest uppercase text-xs">University Updates</span>
-             </div>
-             <h2 className="text-4xl font-serif font-bold text-pau-darkBlue">Admissions & Announcements</h2>
+             {!isWeeklyDicta && (
+               <div className="flex items-center space-x-2 mb-3">
+                 <span className="h-px w-8 bg-pau-gold"></span>
+                 <span className="text-pau-gold font-bold tracking-widest uppercase text-xs">University Updates</span>
+               </div>
+             )}
+             <h2 className="text-4xl font-serif font-bold text-pau-darkBlue">{title}</h2>
           </div>
-          <button 
-            onClick={() => onNavigate('notices')}
-            className="hidden md:block px-8 py-3 border border-gray-200 text-sm font-bold text-gray-600 rounded-full hover:border-pau-blue hover:text-white hover:bg-pau-blue transition-all bg-white shadow-sm"
-          >
-             View All Announcements
-          </button>
+          {!isWeeklyDicta && (
+            <button 
+              onClick={() => onNavigate('notices')}
+              className="hidden md:block px-8 py-3 border border-gray-200 text-sm font-bold text-gray-600 rounded-full hover:border-pau-blue hover:text-white hover:bg-pau-blue transition-all bg-white shadow-sm"
+            >
+               View All Announcements
+            </button>
+          )}
         </div>
         
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {staticAdmissionsNews.map((item, idx) => {
-             const Icon = item.icon;
-             return (
-               <article 
-                 key={item.id} 
-                 className={`flex flex-col bg-white h-full rounded-xl shadow-sm border border-gray-100 hover:shadow-card hover:-translate-y-2 transition-all duration-300 group overflow-hidden cursor-pointer`}
-                 style={{ transitionDelay: `${idx * 50}ms` }}
-                 onClick={() => onNavigate(item.targetPage)}
-               >
-                 <div className="h-48 w-full bg-pau-light relative flex items-center justify-center">
+        {isWeeklyDicta ? (
+          // Weekly Dicta 페이지: 게시판 형태로 표시
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {newsItems.map((item, idx) => {
+              return (
+                <article 
+                  key={item.id} 
+                  className="flex flex-col bg-white h-full rounded-xl shadow-sm border border-gray-100 hover:shadow-card hover:-translate-y-2 transition-all duration-300 group overflow-hidden cursor-pointer animate-fade-in-up"
+                  style={{ transitionDelay: `${idx * 50}ms` }}
+                  onClick={() => onNewsClick(item)}
+                >
+                  {/* 헤더 이미지 영역 */}
+                  <div className="h-48 w-full bg-gradient-to-br from-pau-darkBlue via-pau-blue to-pau-blue relative flex items-center justify-center overflow-hidden">
+                    <div className="absolute inset-0 opacity-20">
+                      <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')] bg-cover bg-center" />
+                    </div>
+                    <NewspaperIcon className="h-16 w-16 text-pau-gold/60 group-hover:text-pau-gold transition-colors duration-500 relative z-10" />
+                    
+                    {/* 카테고리 배지 */}
+                    <div className="absolute top-4 left-4 z-10">
+                      <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border shadow-sm bg-white/90 backdrop-blur-sm text-pau-blue border-blue-50">
+                        {item.category}
+                      </span>
+                    </div>
+                    
+                    {/* Pinned 배지 */}
+                    {item.isPinned && (
+                      <div className="absolute top-4 right-4 z-10">
+                        <span className="px-3 py-1 bg-pau-gold/90 text-white text-xs font-bold uppercase tracking-wider rounded-full border border-pau-gold shadow-sm">
+                          Pinned
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* 본문 영역 */}
+                  <div className="p-8 flex flex-col flex-grow">
+                    <div className="flex items-center text-gray-400 text-xs font-medium mb-4">
+                      <CalendarDaysIcon className="h-3 w-3 mr-1.5 text-pau-gold" />
+                      {item.date}
+                    </div>
+                    
+                    <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-pau-blue transition-colors leading-tight font-serif line-clamp-2">
+                      {item.title}
+                    </h3>
+
+                    <p className="text-gray-500 mb-8 flex-grow text-sm leading-relaxed line-clamp-3">
+                      {item.summary}
+                    </p>
+                    
+                    <div className="mt-auto pt-6 border-t border-gray-50 flex items-center justify-between">
+                      <span className="text-xs font-bold text-gray-400 group-hover:text-pau-darkBlue transition-colors uppercase tracking-wide">
+                        Read More
+                      </span>
+                      <div className="w-8 h-8 rounded-full border border-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-pau-blue group-hover:text-white group-hover:border-pau-blue transition-all duration-300">
+                        <ArrowLongRightIcon className="h-4 w-4 transform group-hover:translate-x-0.5 transition-transform" />
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {/* 홈페이지: staticAdmissionsNews 표시 */}
+            {staticAdmissionsNews.map((item, idx) => {
+              const Icon = item.icon;
+              return (
+                <article 
+                  key={item.id} 
+                  className={`flex flex-col bg-white h-full rounded-xl shadow-sm border border-gray-100 hover:shadow-card hover:-translate-y-2 transition-all duration-300 group overflow-hidden cursor-pointer`}
+                  style={{ transitionDelay: `${idx * 50}ms` }}
+                  onClick={() => onNavigate(item.targetPage)}
+                >
+                  <div className="h-48 w-full bg-pau-light relative flex items-center justify-center">
                     <Icon className="h-16 w-16 text-pau-gold/40 group-hover:text-pau-gold transition-colors duration-500" />
                     
                     <div className="absolute top-4 left-4">
@@ -82,35 +162,36 @@ export const HomeNews: React.FC<HomeNewsProps> = ({ title, newsItems, onNewsClic
                         {item.category}
                       </span>
                     </div>
-                 </div>
+                  </div>
 
-                 <div className="p-8 flex flex-col flex-grow">
-                   <div className="flex items-center text-gray-400 text-xs font-medium mb-4">
+                  <div className="p-8 flex flex-col flex-grow">
+                    <div className="flex items-center text-gray-400 text-xs font-medium mb-4">
                       <CalendarDaysIcon className="h-3 w-3 mr-1.5 text-pau-gold" />
                       {item.date}
-                   </div>
-                   
-                   <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-pau-blue transition-colors leading-tight font-serif">
-                     {item.title}
-                   </h3>
+                    </div>
+                    
+                    <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-pau-blue transition-colors leading-tight font-serif">
+                      {item.title}
+                    </h3>
 
-                   <p className="text-gray-500 mb-8 flex-grow text-sm leading-relaxed whitespace-pre-line">
-                     {item.summary}
-                   </p>
-                   
-                   <div className="mt-auto pt-6 border-t border-gray-50 flex items-center justify-between">
-                     <span className="text-xs font-bold text-gray-400 group-hover:text-pau-darkBlue transition-colors uppercase tracking-wide">
-                       Learn More
-                     </span>
-                     <div className="w-8 h-8 rounded-full border border-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-pau-blue group-hover:text-white group-hover:border-pau-blue transition-all duration-300">
+                    <p className="text-gray-500 mb-8 flex-grow text-sm leading-relaxed whitespace-pre-line">
+                      {item.summary}
+                    </p>
+                    
+                    <div className="mt-auto pt-6 border-t border-gray-50 flex items-center justify-between">
+                      <span className="text-xs font-bold text-gray-400 group-hover:text-pau-darkBlue transition-colors uppercase tracking-wide">
+                        Learn More
+                      </span>
+                      <div className="w-8 h-8 rounded-full border border-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-pau-blue group-hover:text-white group-hover:border-pau-blue transition-all duration-300">
                         <ArrowLongRightIcon className="h-4 w-4 transform group-hover:translate-x-0.5 transition-transform" />
-                     </div>
-                   </div>
-                 </div>
-               </article>
-             );
-          })}
-        </div>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        )}
       </div>
     </section>
   )
