@@ -241,7 +241,7 @@ const App: React.FC = () => {
         phone: "(917) 673-9618",
         email: "MMarino@MarinoLegal.com",
         category: "Faculty",
-        photoUrl: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?fit=crop&w=400&h=400&q=80"
+        photoUrl: "/images/faculty-michael-marino.jpg"
       },
       { 
         name: "Jonathan Levy", 
@@ -255,7 +255,7 @@ const App: React.FC = () => {
         phone: "(213) 674-7174",
         email: "jlevy@paucal.org",
         category: "Faculty",
-        photoUrl: "https://images.unsplash.com/photo-1560250097-0b93528c311a?fit=crop&w=400&h=400&q=80"
+        photoUrl: "/images/faculty-jonathan-levy.jpg"
       },
       { 
         name: "Shandrea P. Williams", 
@@ -270,7 +270,7 @@ const App: React.FC = () => {
         phone: "(213) 674-7174",
         email: "swilliams@paucal.org",
         category: "Faculty",
-        photoUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?fit=crop&w=400&h=400&q=80"
+        photoUrl: "/images/faculty-shandrea-williams.jpg"
       },
       { 
         name: "John Jack Chandler", 
@@ -285,7 +285,7 @@ const App: React.FC = () => {
         phone: "(213) 674-7174",
         email: "jchandler@paucal.org",
         category: "Faculty",
-        photoUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?fit=crop&w=400&h=400&q=80"
+        photoUrl: "/images/faculty-john-chandler.jpg"
       },
       { 
         name: "Hyun Joo Kang", 
@@ -300,7 +300,7 @@ const App: React.FC = () => {
         phone: "(213) 674-7174",
         email: "hjkang@paucal.org",
         category: "Staff",
-        photoUrl: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?fit=crop&w=400&h=400&q=80"
+        photoUrl: "/images/president-hyun-joo-kang.jpg"
       },
       { 
         name: "Phillip Bohl", 
@@ -332,7 +332,7 @@ const App: React.FC = () => {
         phone: "(213) 674-7174",
         email: "nhjung@paucal.org",
         category: "Staff",
-        photoUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?fit=crop&w=400&h=400&q=80"
+        photoUrl: "/images/admin-nam-hwan-jung.jpg"
       },
       { 
         name: "Joyee J. Jea", 
@@ -348,7 +348,7 @@ const App: React.FC = () => {
         phone: "(213) 674-7174",
         email: "jjea@paucal.org",
         category: "Staff",
-        photoUrl: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?fit=crop&w=400&h=400&q=80"
+        photoUrl: "/images/admin-joyee-jea.jpg"
       }
     ] 
   });
@@ -579,8 +579,12 @@ const App: React.FC = () => {
             <SectionWrapper>
               <div className="max-w-5xl mx-auto flex flex-col md:flex-row gap-10 md:gap-16 items-center">
                   <div className="w-full sm:w-2/3 md:w-1/3 flex-shrink-0">
-                    <div className="w-full aspect-[3/4] bg-gray-200 rounded-2xl md:rounded-[40px] overflow-hidden shadow-2xl relative text-pau-blue flex items-center justify-center">
-                      <UserIcon className="h-24 md:h-32 w-24 md:w-32 text-gray-300" />
+                    <div className="w-full aspect-[3/4] bg-gray-200 rounded-2xl md:rounded-[40px] overflow-hidden shadow-2xl relative">
+                      <img 
+                        src="/images/president-hyun-joo-kang.jpg" 
+                        alt="Hyun Joo Kang" 
+                        className="w-full h-full object-cover"
+                      />
                       <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-pau-darkBlue/90 to-transparent p-6 md:p-8">
                          <div className="flex items-baseline gap-2">
                            <p className="text-white font-serif font-bold text-lg md:text-xl leading-tight">Hyun Joo Kang</p>
