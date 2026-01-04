@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useTransition } from 'react';
 import { FacultyContent, SharedContent, FacultyMember, Page } from '../types';
 import { PlusIcon, MinusIcon, UserIcon } from '@heroicons/react/24/outline';
 
@@ -169,22 +169,32 @@ export const Faculty: React.FC<FacultyProps> = ({ content, shared, currentPage, 
     }
   }, [currentPage]);
 
-  const handleTabChange = (tab: 'Faculty' | 'Staff') => {
-    setActiveTab(tab);
+  const [isPending, startTransition] = useTransition();
+
+  const handleTabChange = useCallback((tab: 'Faculty' | 'Staff') => {
+    startTransition(() => {
+      setActiveTab(tab);
+    });
     onNavigate(tab === 'Faculty' ? 'faculty' : 'admin-staffs');
-  };
+  }, [onNavigate]);
 
-  const toggleTeaches = (name: string) => {
-    setExpandedTeaches(prev => ({ ...prev, [name]: !prev[name] }));
-  };
+  const toggleTeaches = useCallback((name: string) => {
+    startTransition(() => {
+      setExpandedTeaches(prev => ({ ...prev, [name]: !prev[name] }));
+    });
+  }, []);
 
-  const toggleEducation = (name: string) => {
-    setExpandedEducation(prev => ({ ...prev, [name]: !prev[name] }));
-  };
+  const toggleEducation = useCallback((name: string) => {
+    startTransition(() => {
+      setExpandedEducation(prev => ({ ...prev, [name]: !prev[name] }));
+    });
+  }, []);
 
-  const toggleBio = (name: string) => {
-    setExpandedBio(prev => ({ ...prev, [name]: !prev[name] }));
-  };
+  const toggleBio = useCallback((name: string) => {
+    startTransition(() => {
+      setExpandedBio(prev => ({ ...prev, [name]: !prev[name] }));
+    });
+  }, []);
 
   const filteredProfiles = content.facultyList.filter(prof => 
     activeTab === 'Faculty' ? prof.category === 'Faculty' : prof.category === 'Staff'

@@ -40,9 +40,14 @@ export const translateContent = async <T>(
   }
 
   // Always create a new GoogleGenAI instance right before making an API call
-  const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    console.error("Gemini API key is not configured. Please set GEMINI_API_KEY in .env.local");
+  // Try multiple ways to get the API key (works in both local and Vercel)
+  const apiKey = process.env.API_KEY || 
+                 process.env.GEMINI_API_KEY || 
+                 (typeof import.meta !== 'undefined' && import.meta.env?.VITE_GEMINI_API_KEY) ||
+                 '';
+  
+  if (!apiKey || apiKey === 'undefined' || apiKey === 'null') {
+    console.error("Gemini API key is not configured. Please set GEMINI_API_KEY in environment variables.");
     throw new Error("API key not found");
   }
   const ai = new GoogleGenAI({ apiKey });
@@ -95,9 +100,14 @@ export const generateArchitecturalImage = async (
   size: ImageSize
 ): Promise<string> => {
   // Always create a new GoogleGenAI instance right before making an API call to ensure it uses the most up-to-date API key
-  const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    console.error("Gemini API key is not configured. Please set GEMINI_API_KEY in .env.local");
+  // Try multiple ways to get the API key (works in both local and Vercel)
+  const apiKey = process.env.API_KEY || 
+                 process.env.GEMINI_API_KEY || 
+                 (typeof import.meta !== 'undefined' && import.meta.env?.VITE_GEMINI_API_KEY) ||
+                 '';
+  
+  if (!apiKey || apiKey === 'undefined' || apiKey === 'null') {
+    console.error("Gemini API key is not configured. Please set GEMINI_API_KEY in environment variables.");
     throw new Error("API key not found");
   }
   const ai = new GoogleGenAI({ apiKey });

@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useTransition } from 'react';
 import { HomeContent, Clinic, SharedContent, Page } from '../types';
 import { 
   ArrowRightIcon, 
@@ -27,6 +27,7 @@ interface InfoSectionProps {
 
 export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onClinicClick, onNavigate }) => {
   const [activePath, setActivePath] = useState<any | null>(null);
+  const [isPending, startTransition] = useTransition();
 
   const missionFeatures = [
     { 
@@ -292,7 +293,7 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
               {careerPaths.map((path, i) => (
                 <div 
                   key={i} 
-                  onClick={() => setActivePath(path)}
+                  onClick={() => startTransition(() => setActivePath(path))}
                   className="bg-white p-8 border border-gray-100 hover:border-pau-gold/50 hover:shadow-lg transition-all duration-300 group cursor-pointer"
                 >
                    <div className="w-10 h-10 rounded bg-blue-50 text-pau-blue flex items-center justify-center mb-6 group-hover:bg-pau-blue group-hover:text-white transition-colors">
