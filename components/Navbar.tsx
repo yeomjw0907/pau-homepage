@@ -131,7 +131,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         )}
         <span className={isActive ? 'pl-1' : 'group-hover:translate-x-1 transition-transform flex items-center'}>
           {label}
-          {external && <span className="ml-2 text-[8px] bg-gray-50 text-gray-400 px-1.5 py-0.5 rounded uppercase tracking-widest font-bold">Ext</span>}
+          {external && <span className="ml-2 text-[8px] bg-gray-50 text-gray-400 px-1.5 py-0.5 rounded uppercase tracking-widest font-bold">EXT</span>}
         </span>
       </button>
     );
@@ -225,7 +225,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       setActiveDropdown(null);
                     }
                   }}
-                  className={navLinkClass(['history-mission', 'president-welcome', 'dean-message', 'school-form', 'faqs', 'bar-reg', 'disclosure', 'catalog', 'faculty', 'admin-staffs'/*, 'consumer-info'*/].includes(currentPage))}
+                  className={navLinkClass(['history-mission', 'bar-reg', 'disclosure', 'president-welcome', 'dean-message', 'admin-staffs', 'faculty', 'catalog', 'school-form', 'faqs'/*, 'consumer-info'*/].includes(currentPage))}
                   aria-label={`${shared.nav.about} menu`}
                   aria-expanded={activeDropdown === 'about'}
                   aria-haspopup="true"
@@ -234,41 +234,19 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <ChevronDownIcon className={`ml-1 h-3.5 w-3.5 stroke-[3] transition-transform ${activeDropdown === 'about' ? 'rotate-180' : ''}`} aria-hidden="true" />
                 </button>
                 {activeDropdown === 'about' && (
-                  <DropdownWrapper widthClass="w-[750px]">
-                    <div className="grid grid-cols-3 gap-10 px-10">
-                      <div className="space-y-6">
-                        <div>
-                          <h4 className="text-[11px] font-extrabold text-pau-goldDark uppercase tracking-widest border-b-2 border-pau-gold/10 pb-3 mb-4">Our Identity</h4>
-                          <ul className="space-y-3">
-                            <li><SubmenuBtn page="history-mission" label={shared.nav.historyMission} /></li>
-                            <li><SubmenuBtn page="president-welcome" label={shared.nav.presidentWelcome} /></li>
-                            <li><SubmenuBtn page="dean-message" label={shared.nav.deanMessage} /></li>
-                          </ul>
-                        </div>
-                        <div>
-                          <h4 className="text-[11px] font-extrabold text-pau-goldDark uppercase tracking-widest border-b-2 border-pau-gold/10 pb-3 mb-4">Resources</h4>
-                          <ul className="space-y-3">
-                            <li><SubmenuBtn page="school-form" label={shared.nav.schoolForm} /></li>
-                            <li><SubmenuBtn page="faqs" label={shared.nav.faqs} /></li>
-                          </ul>
-                        </div>
-                      </div>
-                      <div className="space-y-6">
-                        <h4 className="text-[11px] font-extrabold text-pau-goldDark uppercase tracking-widest border-b-2 border-pau-gold/10 pb-3 mb-4">Governance & Compliance</h4>
-                        <ul className="space-y-3">
-                          <li><SubmenuBtn page="bar-reg" label={shared.nav.barReg} /></li>
-                          <li><SubmenuBtn page="disclosure" label={shared.nav.disclosure} /></li>
-                          <li><SubmenuBtn page="catalog" label={shared.nav.catalog} /></li>
-                          {/* <li><SubmenuBtn page="consumer-info" label={shared.nav.consumerInfo} /></li> */}
-                        </ul>
-                      </div>
-                      <div className="space-y-6">
-                        <h4 className="text-[11px] font-extrabold text-pau-goldDark uppercase tracking-widest border-b-2 border-pau-gold/10 pb-3 mb-4">Our People</h4>
-                        <ul className="space-y-3">
-                          <li><SubmenuBtn page="faculty" label={shared.nav.faculty} /></li>
-                          <li><SubmenuBtn page="admin-staffs" label={shared.nav.adminStaffs} /></li>
-                        </ul>
-                      </div>
+                  <DropdownWrapper widthClass="w-72">
+                    <div className="px-10 space-y-4">
+                      <SubmenuBtn page="history-mission" label={shared.nav.historyMission} />
+                      <SubmenuBtn page="bar-reg" label={shared.nav.barReg} />
+                      <SubmenuBtn page="disclosure" label={shared.nav.disclosure} />
+                      <SubmenuBtn page="president-welcome" label={shared.nav.presidentWelcome} />
+                      <SubmenuBtn page="dean-message" label={shared.nav.deanMessage} />
+                      <SubmenuBtn page="admin-staffs" label={shared.nav.adminStaffs} />
+                      <SubmenuBtn page="faculty" label={shared.nav.faculty} />
+                      <SubmenuBtn page="catalog" label={shared.nav.catalog} />
+                      <SubmenuBtn page="school-form" label={shared.nav.schoolForm} />
+                      <SubmenuBtn page="faqs" label={shared.nav.faqs} />
+                      {/* <SubmenuBtn page="consumer-info" label={shared.nav.consumerInfo} /> */}
                     </div>
                   </DropdownWrapper>
                 )}
@@ -372,49 +350,17 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <ChevronDownIcon className={`ml-1 h-3.5 w-3.5 stroke-[3] transition-transform ${activeDropdown === 'mypausl' ? 'rotate-180' : ''}`} />
                 </button>
                 {activeDropdown === 'mypausl' && (
-                  <DropdownWrapper widthClass="w-[600px]">
-                    <div className="grid grid-cols-2 gap-10 px-10">
-                      <div className="space-y-6">
-                        <div>
-                          <h4 className="text-[11px] font-extrabold text-pau-goldDark uppercase tracking-widest border-b-2 border-pau-gold/10 pb-3 mb-4 flex items-center">
-                            <BookOpenIcon className="h-3 w-3 mr-2" /> Student Life
-                          </h4>
-                          <ul className="space-y-3">
-                            <li><SubmenuBtn page="weekly-dicta" label="Weekly Dicta" /></li>
-                          </ul>
-                        </div>
-                        <div>
-                          <h4 className="text-[11px] font-extrabold text-pau-goldDark uppercase tracking-widest border-b-2 border-pau-gold/10 pb-3 mb-4 flex items-center">
-                            <IdentificationIcon className="h-3 w-3 mr-2" /> Records
-                          </h4>
-                          <ul className="space-y-3">
-                            <li><SubmenuBtn page="home" label="Populi" external /></li>
-                            <li><SubmenuBtn page="home" label="Transcripts" external /></li>
-                            <li><SubmenuBtn page="home" label="Finance Office" external /></li>
-                            <li><SubmenuBtn page="home" label="Course Enrollment" external /></li>
-                          </ul>
-                        </div>
-                      </div>
-                      <div className="space-y-6">
-                        <div>
-                          <h4 className="text-[11px] font-extrabold text-pau-goldDark uppercase tracking-widest border-b-2 border-pau-gold/10 pb-3 mb-4 flex items-center">
-                            <ComputerDesktopIcon className="h-3 w-3 mr-2" /> Legal Tools
-                          </h4>
-                          <ul className="space-y-3">
-                            <li><SubmenuBtn page="home" label="Westlaw" external /></li>
-                            <li><SubmenuBtn page="home" label="CALI" external /></li>
-                            <li><SubmenuBtn page="home" label="ExamSoft" external /></li>
-                          </ul>
-                        </div>
-                        <div>
-                          <h4 className="text-[11px] font-extrabold text-pau-goldDark uppercase tracking-widest border-b-2 border-pau-gold/10 pb-3 mb-4 flex items-center">
-                            <ShoppingBagIcon className="h-3 w-3 mr-2" /> Marketplace
-                          </h4>
-                          <ul className="space-y-3">
-                            <li><SubmenuBtn page="home" label="Student Store (PAUSL Gear)" external /></li>
-                          </ul>
-                        </div>
-                      </div>
+                  <DropdownWrapper widthClass="w-72">
+                    <div className="px-10 space-y-4">
+                      <SubmenuBtn page="weekly-dicta" label="Weekly Dicta" />
+                      <SubmenuBtn page="home" label="Populi" external />
+                      <SubmenuBtn page="home" label="Westlaw" external />
+                      <SubmenuBtn page="home" label="CALI" external />
+                      <SubmenuBtn page="home" label="ExamSoft" external />
+                      <SubmenuBtn page="home" label="Transcripts" external />
+                      <SubmenuBtn page="home" label="Finance Office" external />
+                      <SubmenuBtn page="home" label="Course Enrollment" external />
+                      <SubmenuBtn page="home" label="Student Store (PAUSL Gear)" external />
                     </div>
                   </DropdownWrapper>
                 )}
@@ -518,15 +464,16 @@ export const Navbar: React.FC<NavbarProps> = ({
 
               <MobileSection title={shared.nav.about} id="about">
                 <MobileSubLink page="history-mission" label={shared.nav.historyMission} />
-                <MobileSubLink page="president-welcome" label={shared.nav.presidentWelcome} />
-                <MobileSubLink page="dean-message" label={shared.nav.deanMessage} />
-                <MobileSubLink page="faculty" label={shared.nav.faculty} />
-                <MobileSubLink page="admin-staffs" label={shared.nav.adminStaffs} />
                 <MobileSubLink page="bar-reg" label={shared.nav.barReg} />
                 <MobileSubLink page="disclosure" label={shared.nav.disclosure} />
+                <MobileSubLink page="president-welcome" label={shared.nav.presidentWelcome} />
+                <MobileSubLink page="dean-message" label={shared.nav.deanMessage} />
+                <MobileSubLink page="admin-staffs" label={shared.nav.adminStaffs} />
+                <MobileSubLink page="faculty" label={shared.nav.faculty} />
                 <MobileSubLink page="catalog" label={shared.nav.catalog} />
-                {/* <MobileSubLink page="consumer-info" label={shared.nav.consumerInfo} /> */}
+                <MobileSubLink page="school-form" label={shared.nav.schoolForm} />
                 <MobileSubLink page="faqs" label={shared.nav.faqs} />
+                {/* <MobileSubLink page="consumer-info" label={shared.nav.consumerInfo} /> */}
               </MobileSection>
 
               <MobileSection title={shared.nav.academics} id="academics">

@@ -70,7 +70,10 @@ import {
   DocumentCheckIcon,
   ComputerDesktopIcon,
   BuildingOffice2Icon,
-  InboxArrowDownIcon
+  InboxArrowDownIcon,
+  PlusIcon,
+  MinusIcon,
+  ExclamationCircleIcon
 } from '@heroicons/react/24/outline';
 
 
@@ -80,6 +83,7 @@ const App: React.FC = () => {
   const [selectedClinic, setSelectedClinic] = useState<Clinic | null>(null);
   const [, startTransition] = useTransition();
   const [selectedNews, setSelectedNews] = useState<NewsItem | null>(null);
+  const [disclosureOpenSections, setDisclosureOpenSections] = useState<Record<number, boolean>>({});
 
   // Global State for Content
   const [homeContent, setHomeContent] = useState(MOCK_HOME_CONTENT);
@@ -387,7 +391,7 @@ const App: React.FC = () => {
       case 'dean-message':
         return (
           <GenericPage
-            title="Dean's Message"
+            title="Message from the Dean"
             subtitle="Academic leadership committed to student outcomes."
             icon={AcademicCapIcon}
             content={
@@ -463,46 +467,443 @@ const App: React.FC = () => {
       case 'bar-reg':
         return (
           <>
-            <PageHeader title={"Bar\nRegistration"} subtitle="Official status in California." icon={ShieldCheckIcon} />
-            <SectionWrapper title="Approval & Registration">
-               <div className="max-w-4xl mx-auto">
-                  <div className="bg-white p-6 md:p-12 rounded-2xl md:rounded-[50px] border-l-4 md:border-l-[12px] border-pau-gold shadow-premium">
-                    <h3 className="text-xl md:text-2xl font-serif font-bold text-pau-blue mb-4">Committee Status</h3>
-                    <p className="text-sm md:text-xl text-gray-600 leading-relaxed font-light">
-                      Pacific American University School of Law is registered with the Committee of Bar Examiners as an Unaccredited Correspondence Law School.
-                    </p>
+            <PageHeader title={"California State Bar\nRegistration"} subtitle="Official status in California." icon={ShieldCheckIcon} />
+            <SectionWrapper>
+              <div className="max-w-5xl mx-auto space-y-16">
+                {/* 1. Registration Status */}
+                <div className="relative group">
+                  <div className="absolute -left-6 top-0 bottom-0 w-1 bg-pau-gold rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="bg-white p-10 md:p-14 rounded-3xl shadow-premium border-2 border-gray-100 hover:border-pau-gold/30 transition-all duration-300">
+                    <div className="flex items-start gap-6 mb-8">
+                      <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-pau-gold to-pau-goldDark rounded-2xl flex items-center justify-center shadow-lg">
+                        <ShieldCheckIcon className="h-8 w-8 text-white" />
+                      </div>
+                      <div className="flex-grow">
+                        <div className="flex items-center gap-3 mb-2">
+                          <span className="w-10 h-10 bg-pau-gold/10 text-pau-gold rounded-full flex items-center justify-center font-bold text-lg">1</span>
+                          <h2 className="text-3xl md:text-4xl font-serif font-bold text-pau-darkBlue">Registration Status</h2>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="space-y-4 text-gray-700 leading-relaxed pl-24">
+                      <p className="font-semibold text-xl text-pau-darkBlue mb-2">Registration as a Correspondence Law School</p>
+                      <p className="text-lg leading-relaxed">
+                        Pacific American University School of Law (PAUSL) is a correspondence law school registered with the Committee of Bar Examiners of the State Bar of California. As a registered unaccredited correspondence law school, PAUSL has the authority to grant the Juris Doctor (J.D.) degree. Graduates of the J.D. program who fulfill the requirements of the State Bar of California are eligible to take the California Bar Examination.
+                      </p>
+                    </div>
                   </div>
-                  <div className="mt-12 text-gray-600 leading-relaxed">
-                    <p className="mb-4">
-                      The method of instruction at this law school for the Juris Doctor (J.D.) degree program is principally by correspondence.
-                    </p>
-                    <p>
-                      Students studying at this law school who successfully complete the first-year law study must pass the First-Year Law Students' Examination required by Business and Professions Code §6060(h) and Rule 4.3(I) of the Rules of the State Bar of California as part of the requirements to qualify to take the California Bar Examination. A student who passes the First-Year Law Students' Examination within three (3) administrations of the examination after first becoming eligible to take it will receive credit for all legal studies completed to the time the examination is passed. A student who does not pass the examination within three (3) administrations of the examination after first becoming eligible to take it must be promptly disqualified from the law school's J.D. degree program. If the dismissed student subsequently passes the examination, the student is eligible for re-enrollment in this law school's J.D. degree program, but will receive no credit for any legal studies completed prior to the time of passing the examination.
-                    </p>
+                </div>
+
+                {/* 2. Law Student Registration */}
+                <div className="relative group">
+                  <div className="absolute -left-6 top-0 bottom-0 w-1 bg-pau-blue rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="bg-gradient-to-br from-pau-blue/5 via-pau-light to-white p-10 md:p-14 rounded-3xl shadow-lg border-2 border-pau-blue/20 hover:border-pau-blue/40 transition-all duration-300">
+                    <div className="flex items-start gap-6 mb-8">
+                      <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-pau-blue to-pau-darkBlue rounded-2xl flex items-center justify-center shadow-lg">
+                        <UserGroupIcon className="h-8 w-8 text-white" />
+                      </div>
+                      <div className="flex-grow">
+                        <div className="flex items-center gap-3 mb-2">
+                          <span className="w-10 h-10 bg-pau-blue/10 text-pau-blue rounded-full flex items-center justify-center font-bold text-lg">2</span>
+                          <h2 className="text-3xl md:text-4xl font-serif font-bold text-pau-darkBlue">Law Student Registration</h2>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="space-y-8 pl-24">
+                      <div>
+                        <h3 className="font-semibold text-xl text-pau-blue mb-4 flex items-center gap-2">
+                          <ClockIcon className="h-5 w-5" />
+                          Mandatory Registration within 90 Days
+                        </h3>
+                        <p className="text-gray-700 leading-relaxed text-lg">
+                          All students must register with the Committee of Bar Examiners of the State Bar of California. Registration must be completed online through the State Bar's website (calbar.ca.gov) within 90 days of commencing law studies.
+                        </p>
+                      </div>
+                      <div className="bg-white p-8 rounded-2xl border-2 border-pau-blue/30 shadow-md">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                          <div className="p-6 bg-gradient-to-br from-pau-blue/5 to-transparent rounded-xl border border-pau-blue/20">
+                            <p className="text-xs font-bold text-pau-blue uppercase tracking-widest mb-3">Registration Fee</p>
+                            <p className="text-3xl font-bold text-pau-blue mb-2">$150</p>
+                            <p className="text-sm text-gray-500 italic">(Subject to change by the State Bar)</p>
+                          </div>
+                          <div className="p-6 bg-gradient-to-br from-pau-gold/5 to-transparent rounded-xl border border-pau-gold/20">
+                            <p className="text-xs font-bold text-pau-gold uppercase tracking-widest mb-3">Requirement</p>
+                            <p className="text-gray-700 leading-relaxed">After registering, students must provide their Registration Number to the PAUSL Registrar's Office.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-               </div>
+                </div>
+
+                {/* 3. First-Year Law Students' Examination (FYLSX) */}
+                <div className="relative group">
+                  <div className="absolute -left-6 top-0 bottom-0 w-1 bg-pau-gold rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="bg-white p-10 md:p-14 rounded-3xl shadow-premium border-2 border-gray-100 hover:border-pau-gold/30 transition-all duration-300">
+                    <div className="flex items-start gap-6 mb-8">
+                      <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-pau-gold to-pau-goldDark rounded-2xl flex items-center justify-center shadow-lg">
+                        <DocumentCheckIcon className="h-8 w-8 text-white" />
+                      </div>
+                      <div className="flex-grow">
+                        <div className="flex items-center gap-3 mb-2">
+                          <span className="w-10 h-10 bg-pau-gold/10 text-pau-gold rounded-full flex items-center justify-center font-bold text-lg">3</span>
+                          <h2 className="text-3xl md:text-4xl font-serif font-bold text-pau-darkBlue">First-Year Law Students' Examination</h2>
+                        </div>
+                        <p className="text-sm text-gray-500 uppercase tracking-widest font-bold">FYLSX / "Baby Bar"</p>
+                      </div>
+                    </div>
+                    <div className="space-y-8 pl-24">
+                      <div>
+                        <h3 className="font-semibold text-xl text-pau-blue mb-4">The First-Year Law Students' Examination Requirement</h3>
+                        <p className="text-gray-700 leading-relaxed text-lg">
+                          Students attending an unaccredited law school must take and pass the First-Year Law Students' Examination (FYLSX) after completing their first year of law study (approximately 27 units).
+                        </p>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="bg-gradient-to-br from-pau-gold/10 to-pau-gold/5 p-8 rounded-2xl border-2 border-pau-gold/30 shadow-md hover:shadow-lg transition-all">
+                          <div className="flex items-center gap-3 mb-4">
+                            <div className="w-12 h-12 bg-pau-gold rounded-xl flex items-center justify-center">
+                              <CheckBadgeIcon className="h-6 w-6 text-white" />
+                            </div>
+                            <p className="text-sm font-bold text-pau-gold uppercase tracking-widest">Passing Requirement</p>
+                          </div>
+                          <p className="text-gray-700 leading-relaxed">Students must pass the FYLSX within three (3) administrations of the exam after becoming eligible to take it.</p>
+                        </div>
+                        <div className="bg-gradient-to-br from-pau-gold/10 to-pau-gold/5 p-8 rounded-2xl border-2 border-pau-gold/30 shadow-md hover:shadow-lg transition-all">
+                          <div className="flex items-center gap-3 mb-4">
+                            <div className="w-12 h-12 bg-pau-gold rounded-xl flex items-center justify-center">
+                              <AcademicCapIcon className="h-6 w-6 text-white" />
+                            </div>
+                            <p className="text-sm font-bold text-pau-gold uppercase tracking-widest">Credit Recognition</p>
+                          </div>
+                          <p className="text-gray-700 leading-relaxed">If the exam is passed within three administrations, the student receives credit for all law studies completed up to the time of passing. If passed later, only one year of credit will be awarded.</p>
+                        </div>
+                      </div>
+                      <div className="bg-gradient-to-r from-blue-50 to-pau-light p-8 rounded-2xl border-l-4 border-pau-blue shadow-md">
+                        <div className="flex items-start gap-4">
+                          <div className="flex-shrink-0 w-10 h-10 bg-pau-blue rounded-lg flex items-center justify-center">
+                            <DocumentTextIcon className="h-5 w-5 text-white" />
+                          </div>
+                          <div>
+                            <p className="text-sm font-bold text-pau-blue uppercase tracking-widest mb-2">Exemption</p>
+                            <p className="text-gray-700 leading-relaxed">Students who have completed at least two years of college work and subsequently passed the FYLSX (or are exempt based on State Bar rules) may proceed to upper-division studies.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 4. Qualifications for Admission to Practice Law in California */}
+                <div className="relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-pau-darkBlue via-pau-blue to-pau-darkBlue"></div>
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-pau-gold opacity-5 rounded-full -mr-32 -mt-32"></div>
+                  <div className="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-5 rounded-full -ml-24 -mb-24"></div>
+                  <div className="relative p-10 md:p-14 rounded-3xl text-white shadow-2xl border-2 border-white/10">
+                    <div className="flex items-start gap-6 mb-10">
+                      <div className="flex-shrink-0 w-16 h-16 bg-pau-gold rounded-2xl flex items-center justify-center shadow-xl">
+                        <CheckBadgeIcon className="h-8 w-8 text-pau-darkBlue" />
+                      </div>
+                      <div className="flex-grow">
+                        <div className="flex items-center gap-3 mb-2">
+                          <span className="w-10 h-10 bg-pau-gold/20 text-pau-gold rounded-full flex items-center justify-center font-bold text-lg">4</span>
+                          <h2 className="text-3xl md:text-4xl font-serif font-bold text-pau-gold">Qualifications for Admission to Practice Law in California</h2>
+                        </div>
+                        <p className="text-gray-300 text-lg mt-4">To be certified to the California Supreme Court for admission to practice law, a student must:</p>
+                      </div>
+                    </div>
+                    <div className="space-y-6 pl-24">
+                      {[
+                        { title: "Complete the J.D. Degree", desc: "Successfully finish the 4-year curriculum at PAUSL.", icon: AcademicCapIcon },
+                        { title: "Pass the FYLSX", desc: "Unless exempt under State Bar rules.", icon: DocumentCheckIcon },
+                        { title: "Moral Character Determination", desc: "Receive a positive moral character determination.", icon: ShieldCheckIcon },
+                        { title: "Multistate Professional Responsibility Examination (MPRE)", desc: "Achieve a passing score on the MPRE.", icon: DocumentTextIcon },
+                        { title: "California Bar Examination", desc: "Pass the final California Bar Examination.", icon: CheckBadgeIcon }
+                      ].map((item, idx) => (
+                        <div key={idx} className="flex items-start gap-4 group">
+                          <div className="flex-shrink-0 w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center group-hover:bg-pau-gold group-hover:scale-110 transition-all duration-300 border border-white/20">
+                            <item.icon className="h-6 w-6 text-pau-gold group-hover:text-pau-darkBlue transition-colors" />
+                          </div>
+                          <div className="flex-grow pt-1">
+                            <p className="font-semibold text-white text-lg mb-2 group-hover:text-pau-gold transition-colors">{item.title}</p>
+                            <p className="text-gray-300 leading-relaxed">{item.desc}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </SectionWrapper>
           </>
         );
 
       case 'disclosure':
+        const toggleDisclosureSection = (index: number) => {
+          setDisclosureOpenSections(prev => ({ ...prev, [index]: !prev[index] }));
+        };
+
         return (
           <>
-            <PageHeader title={"Disclosure"} subtitle="Transparency in our educational offering." icon={DocumentDuplicateIcon} />
+            <PageHeader title={"Disclosure\nStatement"} subtitle="Transparency in our educational offering." icon={DocumentDuplicateIcon} />
             <SectionWrapper>
-              <div className="max-w-4xl mx-auto space-y-8">
-                 <p className="text-lg text-gray-700 leading-relaxed">
-                   Pacific American University School of Law makes the following disclosures as required by the State Bar of California Guidelines for Unaccredited Law School Rules.
-                 </p>
-                 <div className="p-8 bg-gray-50 border-l-4 border-pau-darkBlue">
-                   <h3 className="font-bold text-pau-darkBlue mb-4">Guideline 2.3(D) Compliance</h3>
-                   <p className="text-sm text-gray-600">
-                     The law school has not applied for accreditation in the last five years. The school’s assets and resources are primarily dedicated to providing distance legal education.
-                   </p>
-                 </div>
-                 <a href="#" className="inline-flex items-center text-pau-gold font-bold uppercase tracking-widest text-xs hover:underline">
-                   Download Full Disclosure Statement <ArrowRightIcon className="ml-2 h-4 w-4" />
-                 </a>
+              <div className="max-w-5xl mx-auto space-y-4">
+                {/* 1. Instructional Method */}
+                <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                  <button
+                    onClick={() => toggleDisclosureSection(1)}
+                    className="w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none bg-white hover:bg-pau-blue/5 transition-colors"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 bg-pau-blue/10 rounded-lg flex items-center justify-center">
+                        <DocumentTextIcon className="h-5 w-5 text-pau-blue" />
+                      </div>
+                      <div>
+                        <span className="text-lg font-bold text-pau-darkBlue">1. Instructional Method</span>
+                        <p className="text-xs text-pau-blue/70 uppercase tracking-widest mt-1">Degree and Instructional Method Disclosure</p>
+                      </div>
+                    </div>
+                    <div className={`flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
+                      disclosureOpenSections[1] ? 'bg-pau-blue border-pau-blue text-white' : 'border-gray-300 text-gray-400'
+                    }`}>
+                      {disclosureOpenSections[1] ? (
+                        <MinusIcon className="h-5 w-5" />
+                      ) : (
+                        <PlusIcon className="h-5 w-5" />
+                      )}
+                    </div>
+                  </button>
+                  <div className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                    disclosureOpenSections[1] ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
+                  }`}>
+                    <div className="px-6 pb-6 pt-0 border-t border-gray-100">
+                      <div className="mt-4 space-y-4 text-gray-700 leading-relaxed">
+                        <p className="font-semibold text-lg text-pau-darkBlue">Method of Instruction</p>
+                        <p>
+                          The method of instruction at Pacific American University School of Law (PAUSL) for the Juris Doctor (J.D.) degree program is principally by correspondence. PAUSL is not accredited by the Committee of Bar Examiners of the State Bar of California, but is registered as an unaccredited correspondence law school.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 2. FYLSX Requirement */}
+                <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                  <button
+                    onClick={() => toggleDisclosureSection(2)}
+                    className="w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none bg-white hover:bg-pau-blue/5 transition-colors"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 bg-pau-gold/10 rounded-lg flex items-center justify-center">
+                        <DocumentCheckIcon className="h-5 w-5 text-pau-gold" />
+                      </div>
+                      <div>
+                        <span className="text-lg font-bold text-pau-darkBlue">2. First-Year Law Students' Examination (FYLSX)</span>
+                        <p className="text-xs text-pau-blue/70 uppercase tracking-widest mt-1">First-Year Law Students' Examination Requirement</p>
+                      </div>
+                    </div>
+                    <div className={`flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
+                      disclosureOpenSections[2] ? 'bg-pau-gold border-pau-gold text-white' : 'border-gray-300 text-gray-400'
+                    }`}>
+                      {disclosureOpenSections[2] ? (
+                        <MinusIcon className="h-5 w-5" />
+                      ) : (
+                        <PlusIcon className="h-5 w-5" />
+                      )}
+                    </div>
+                  </button>
+                  <div className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                    disclosureOpenSections[2] ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'
+                  }`}>
+                    <div className="px-6 pb-6 pt-0 border-t border-gray-100">
+                      <div className="mt-4 space-y-6 text-gray-700 leading-relaxed">
+                        <p>
+                          Students enrolled in the J.D. program must pass the First-Year Law Students' Examination (FYLSX) as required by Business and Professions Code section 6060(h).
+                        </p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="bg-pau-blue/5 p-5 rounded-lg border-l-4 border-pau-blue">
+                            <p className="font-semibold text-pau-blue mb-2">Eligibility and Credit</p>
+                            <p className="text-sm text-gray-700">A student who passes the FYLSX within three (3) administrations after first becoming eligible will receive credit for all legal studies completed up to the time of passing.</p>
+                          </div>
+                          <div className="bg-pau-gold/5 p-5 rounded-lg border-l-4 border-pau-gold">
+                            <p className="font-semibold text-pau-darkBlue mb-2">Consequences of Failure</p>
+                            <p className="text-sm text-gray-700">A student who does not pass within three administrations must be promptly disqualified from the J.D. program. If the student subsequently passes, they may re-enroll but will receive credit for only one year of study.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 3. Practice in Other Jurisdictions */}
+                <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                  <button
+                    onClick={() => toggleDisclosureSection(3)}
+                    className="w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none bg-white hover:bg-pau-blue/5 transition-colors"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 bg-pau-blue/10 rounded-lg flex items-center justify-center">
+                        <GlobeAltIcon className="h-5 w-5 text-pau-blue" />
+                      </div>
+                      <div>
+                        <span className="text-lg font-bold text-pau-darkBlue">3. Admission to Practice Law Outside California</span>
+                        <p className="text-xs text-pau-blue/70 uppercase tracking-widest mt-1">Practice in Other Jurisdictions Disclosure</p>
+                      </div>
+                    </div>
+                    <div className={`flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
+                      disclosureOpenSections[3] ? 'bg-pau-blue border-pau-blue text-white' : 'border-gray-300 text-gray-400'
+                    }`}>
+                      {disclosureOpenSections[3] ? (
+                        <MinusIcon className="h-5 w-5" />
+                      ) : (
+                        <PlusIcon className="h-5 w-5" />
+                      )}
+                    </div>
+                  </button>
+                  <div className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                    disclosureOpenSections[3] ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
+                  }`}>
+                    <div className="px-6 pb-6 pt-0 border-t border-gray-100">
+                      <div className="mt-4 space-y-4 text-gray-700 leading-relaxed">
+                        <p>
+                          Study at, or graduation from, this law school may not qualify a student to take the bar examination or to satisfy the requirements for admission to practice in jurisdictions other than California. Students intending to seek admission outside California should contact the relevant admitting authority for specific legal education requirements.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 4. Financial Status */}
+                <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                  <button
+                    onClick={() => toggleDisclosureSection(4)}
+                    className="w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none bg-white hover:bg-pau-blue/5 transition-colors"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 bg-pau-gold/10 rounded-lg flex items-center justify-center">
+                        <CurrencyDollarIcon className="h-5 w-5 text-pau-gold" />
+                      </div>
+                      <div>
+                        <span className="text-lg font-bold text-pau-darkBlue">4. PAUSL Financial Disclosures</span>
+                        <p className="text-xs text-pau-blue/70 uppercase tracking-widest mt-1">Financial Status (Projected 2026-2030)</p>
+                      </div>
+                    </div>
+                    <div className={`flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
+                      disclosureOpenSections[4] ? 'bg-pau-gold border-pau-gold text-white' : 'border-gray-300 text-gray-400'
+                    }`}>
+                      {disclosureOpenSections[4] ? (
+                        <MinusIcon className="h-5 w-5" />
+                      ) : (
+                        <PlusIcon className="h-5 w-5" />
+                      )}
+                    </div>
+                  </button>
+                  <div className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                    disclosureOpenSections[4] ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'
+                  }`}>
+                    <div className="px-6 pb-6 pt-0 border-t border-gray-100">
+                      <div className="mt-4">
+                        <p className="text-gray-700 leading-relaxed mb-6">
+                          PAUSL maintains assets in excess of liabilities to ensure institutional stability.
+                        </p>
+                        <div className="overflow-x-auto">
+                          <table className="w-full border-collapse">
+                            <thead>
+                              <tr className="bg-pau-darkBlue text-white">
+                                <th className="px-6 py-4 text-left font-bold">Year</th>
+                                <th className="px-6 py-4 text-right font-bold">Assets</th>
+                                <th className="px-6 py-4 text-right font-bold">Liabilities</th>
+                                <th className="px-6 py-4 text-right font-bold">Net Assets</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {[
+                                { year: '2026', assets: 379352, liabilities: 17486 },
+                                { year: '2027', assets: 951645, liabilities: 215422 },
+                                { year: '2028', assets: 2717265, liabilities: 631172 },
+                                { year: '2029', assets: 3124855, liabilities: 662731 },
+                                { year: '2030', assets: 3593583, liabilities: 695867 }
+                              ].map((row, idx) => {
+                                const netAssets = row.assets - row.liabilities;
+                                return (
+                                  <tr key={idx} className={`border-b border-gray-200 ${idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
+                                    <td className="px-6 py-4 font-bold text-pau-darkBlue">{row.year}</td>
+                                    <td className="px-6 py-4 text-right font-mono text-gray-700">${row.assets.toLocaleString()}</td>
+                                    <td className="px-6 py-4 text-right font-mono text-gray-700">${row.liabilities.toLocaleString()}</td>
+                                    <td className="px-6 py-4 text-right font-mono font-bold text-pau-blue">${netAssets.toLocaleString()}</td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 5. Pass Rates */}
+                <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                  <button
+                    onClick={() => toggleDisclosureSection(5)}
+                    className="w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none bg-white hover:bg-pau-blue/5 transition-colors"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 bg-pau-blue/10 rounded-lg flex items-center justify-center">
+                        <AcademicCapIcon className="h-5 w-5 text-pau-blue" />
+                      </div>
+                      <div>
+                        <span className="text-lg font-bold text-pau-darkBlue">5. Examination Pass Rates</span>
+                        <p className="text-xs text-pau-blue/70 uppercase tracking-widest mt-1">Examination Pass Rates Disclosure</p>
+                      </div>
+                    </div>
+                    <div className={`flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
+                      disclosureOpenSections[5] ? 'bg-pau-blue border-pau-blue text-white' : 'border-gray-300 text-gray-400'
+                    }`}>
+                      {disclosureOpenSections[5] ? (
+                        <MinusIcon className="h-5 w-5" />
+                      ) : (
+                        <PlusIcon className="h-5 w-5" />
+                      )}
+                    </div>
+                  </button>
+                  <div className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                    disclosureOpenSections[5] ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'
+                  }`}>
+                    <div className="px-6 pb-6 pt-0 border-t border-gray-100">
+                      <div className="mt-4 space-y-6">
+                        <div className="bg-pau-blue/5 p-6 rounded-lg border-l-4 border-pau-blue">
+                          <p className="font-semibold text-pau-blue mb-3 flex items-center gap-2">
+                            <ExclamationCircleIcon className="h-5 w-5" />
+                            California First-Year Law Students' Examination (FYLSX)
+                          </p>
+                          <p className="text-gray-700 mb-2">
+                            PAUSL expects its first eligible students to take the exam in 2027.
+                          </p>
+                          <div className="bg-white p-4 rounded border border-gray-200">
+                            <p className="text-sm text-gray-600 italic">
+                              <strong>Note:</strong> Previous years (2021-2025) are N/A as the program is newly established. Data will be available starting in 2027.
+                            </p>
+                          </div>
+                        </div>
+                        <div className="bg-pau-gold/5 p-6 rounded-lg border-l-4 border-pau-gold">
+                          <p className="font-semibold text-pau-darkBlue mb-3 flex items-center gap-2">
+                            <ExclamationCircleIcon className="h-5 w-5" />
+                            California Bar Examination
+                          </p>
+                          <p className="text-gray-700 mb-2">
+                            PAUSL expects its first eligible students to take the Bar Exam in 2030.
+                          </p>
+                          <div className="bg-white p-4 rounded border border-gray-200">
+                            <p className="text-sm text-gray-600 italic">
+                              <strong>Note:</strong> Previous years (2021-2025) are N/A as the program is newly established. Data will be available starting in 2030.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </SectionWrapper>
           </>
@@ -1027,7 +1428,7 @@ const App: React.FC = () => {
         return (
           <>
             <PageHeader 
-            title="Technology Requirements"
+            title="Technical Requirements"
             subtitle="Ensuring you are connected for success."
             icon={ComputerDesktopIcon}
             />
@@ -1154,7 +1555,7 @@ const App: React.FC = () => {
         return (
           <>
             <PageHeader 
-            title="Transfer & International"
+            title="Transfer and International Students"
             subtitle="Joining PAU from another institution or country."
             icon={GlobeAltIcon}
             />

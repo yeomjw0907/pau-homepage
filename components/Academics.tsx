@@ -61,14 +61,14 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
   const academicPortals = [
     {
       id: 'curriculum-schedule' as Page,
-      title: "Curriculum",
+      title: "Curriculum and Schedule",
       desc: "Comprehensive 4-year roadmap for J.D. candidates.",
       icon: MapIcon,
       color: "text-pau-gold"
     },
     {
       id: 'bar-info' as Page,
-      title: "Bar Info",
+      title: "The California State Bar",
       desc: "Information on FYLSX and California Bar Exam eligibility.",
       icon: CheckBadgeIcon,
       color: "text-blue-500"
@@ -82,7 +82,7 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
     },
     {
       id: 'counseling' as Page,
-      title: "Academic Counseling",
+      title: "Academic Counseling and Academic Support",
       desc: "One-on-one guidance to ensure your academic success.",
       icon: ChatBubbleLeftEllipsisIcon,
       color: "text-rose-500"
@@ -103,7 +103,7 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
         return (
           <>
             <SubPageHeader 
-              title="J.D. Curriculum" 
+              title="Curriculum and Schedule" 
               subtitle="A rigorous 4-year academic sequence structured for bar readiness." 
               icon={MapIcon}
               onBack={() => onNavigate('home')}
@@ -165,6 +165,12 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
                     </div>
                   ))}
                </div>
+               
+               {/* Schedule Section - TODO: Add schedule content */}
+               <div className="mt-20 pt-16 border-t border-gray-200">
+                 <h2 className="text-3xl font-serif font-bold text-pau-darkBlue mb-8">Schedule</h2>
+                 {/* TODO: 추후 처리 예정 - 스케줄 내용 추가 필요 */}
+               </div>
             </div>
           </>
         );
@@ -173,7 +179,7 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
         return (
           <>
             <SubPageHeader 
-              title="Bar Examination" 
+              title="The California State Bar" 
               subtitle="Compliance and requirements for California licensure." 
               icon={ShieldCheckIcon}
               onBack={() => onNavigate('home')}
@@ -296,7 +302,7 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
         return (
           <>
             <SubPageHeader 
-              title="Academic Counseling" 
+              title="Academic Counseling and Academic Support" 
               subtitle="Personalized support to guide your law school journey." 
               icon={ChatBubbleLeftEllipsisIcon}
               onBack={() => onNavigate('home')}
