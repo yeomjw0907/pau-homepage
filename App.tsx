@@ -1300,20 +1300,6 @@ const App: React.FC = () => {
                        </div>
                     </div>
                  </div>
-                 
-                 {/* Map Placeholder */}
-                 <div className="w-full h-80 bg-gray-100 rounded-2xl overflow-hidden relative border border-gray-200">
-                    <img 
-                      src="https://images.unsplash.com/photo-1524661135-423995f22d0b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" 
-                      alt="Map Location" 
-                      className="w-full h-full object-cover opacity-50 grayscale hover:grayscale-0 transition-all duration-700"
-                    />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                       <button className="bg-white px-6 py-3 rounded-full shadow-lg font-bold text-pau-blue flex items-center hover:scale-105 transition-transform">
-                          <MapPinIcon className="h-5 w-5 mr-2 text-red-500" /> View on Google Maps
-                       </button>
-                    </div>
-                 </div>
                </div>
             </SectionWrapper>
           </>

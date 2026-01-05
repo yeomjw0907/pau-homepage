@@ -166,10 +166,204 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
                   ))}
                </div>
                
-               {/* Schedule Section - TODO: Add schedule content */}
-               <div className="mt-20 pt-16 border-t border-gray-200">
-                 <h2 className="text-3xl font-serif font-bold text-pau-darkBlue mb-8">Schedule</h2>
-                 {/* TODO: 추후 처리 예정 - 스케줄 내용 추가 필요 */}
+               {/* Schedule Section */}
+               <div className="mt-20 pt-16 border-t-2 border-pau-gold/30">
+                 <div className="mb-10">
+                   <h2 className="text-3xl font-serif font-bold text-pau-darkBlue mb-3">Schedule of Required Courses</h2>
+                   <p className="text-gray-600 text-lg">Complete course schedule organized by year and trimester for the J.D. Program.</p>
+                 </div>
+                 
+                 {/* Schedule by Year */}
+                 <div className="space-y-12">
+                   {[
+                     {
+                       year: "1L",
+                       yearLabel: "First Year",
+                       color: "pau-blue",
+                       trimesters: [
+                         {
+                           name: "Fall (Sep.)",
+                           courses: [
+                             { classNum: "Law 100", className: "Introduction to Law", units: "1 unit", hours: "45 hours" },
+                             { classNum: "Law 101", className: "Contracts I", units: "3.5 units", hours: "157.5 hours" },
+                             { classNum: "Law 103", className: "Torts I", units: "3.5 units", hours: "157.5 hours" },
+                             { classNum: "Law 105", className: "Criminal Law", units: "3.5 units", hours: "157.5 hours" }
+                           ]
+                         },
+                         {
+                           name: "Winter (Jan.)",
+                           courses: [
+                             { classNum: "Law 100", className: "Introduction to Law", units: "1 unit", hours: "45 hours" },
+                             { classNum: "Law 101", className: "Contracts I", units: "3.5 units", hours: "157.5 hours" },
+                             { classNum: "Law 102", className: "Contracts II", units: "3.5 units", hours: "157.5 hours" },
+                             { classNum: "Law 103", className: "Torts I", units: "3.5 units", hours: "157.5 hours" },
+                             { classNum: "Law 104", className: "Torts II", units: "3.5 units", hours: "157.5 hours" },
+                             { classNum: "Law 105", className: "Criminal Law", units: "3.5 units", hours: "157.5 hours" },
+                             { classNum: "Law 106", className: "Legal Writing & Analysis", units: "2 units", hours: "90 hours" }
+                           ]
+                         },
+                         {
+                           name: "Spring (Apr.)",
+                           courses: [
+                             { classNum: "Law 100", className: "Introduction to Law", units: "1 unit", hours: "45 hours" },
+                             { classNum: "Law 101", className: "Contracts I", units: "3.5 units", hours: "157.5 hours" },
+                             { classNum: "Law 102", className: "Contracts II", units: "3.5 units", hours: "157.5 hours" },
+                             { classNum: "Law 103", className: "Torts I", units: "3.5 units", hours: "157.5 hours" },
+                             { classNum: "Law 104", className: "Torts II", units: "3.5 units", hours: "157.5 hours" },
+                             { classNum: "Law 105", className: "Criminal Law", units: "6 units", hours: "270 hours" },
+                             { classNum: "Law 106", className: "Legal Writing & Analysis", units: "2 units", hours: "90 hours" },
+                             { classNum: "Law 107", className: "FYLSX review", units: "3 units", hours: "135 hours" }
+                           ]
+                         }
+                       ]
+                     },
+                     {
+                       year: "2L",
+                       yearLabel: "Second Year",
+                       color: "pau-gold",
+                       trimesters: [
+                         {
+                           name: "Spring (Mar.)",
+                           courses: [
+                             { classNum: "Law 201", className: "Civil Procedure", units: "9 units", hours: "405 hours" }
+                           ]
+                         },
+                         {
+                           name: "Summer (Jul.)",
+                           courses: [
+                             { classNum: "Law 202", className: "Property", units: "9 units", hours: "405 hours" }
+                           ]
+                         },
+                         {
+                           name: "Fall (Nov.)",
+                           courses: [
+                             { classNum: "Law 203", className: "Remedies", units: "4 units", hours: "180 hours" },
+                             { classNum: "Law 204", className: "Criminal Procedure", units: "4 units", hours: "180 hours" }
+                           ]
+                         }
+                       ]
+                     },
+                     {
+                       year: "3L",
+                       yearLabel: "Third Year",
+                       color: "pau-blue",
+                       trimesters: [
+                         {
+                           name: "Spring (Mar.)",
+                           courses: [
+                             { classNum: "Law 301", className: "Evidence", units: "9 units", hours: "405 hours" }
+                           ]
+                         },
+                         {
+                           name: "Summer (Jul.)",
+                           courses: [
+                             { classNum: "Law 302", className: "Constitutional Law", units: "9 units", hours: "405 hours" }
+                           ]
+                         },
+                         {
+                           name: "Fall (Nov.)",
+                           courses: [
+                             { classNum: "Law 303", className: "Business Associations", units: "4 units", hours: "180 hours" },
+                             { classNum: "Law 304", className: "Community Property", units: "5 units", hours: "225 hours" }
+                           ]
+                         }
+                       ]
+                     },
+                     {
+                       year: "4L",
+                       yearLabel: "Fourth Year",
+                       color: "pau-gold",
+                       trimesters: [
+                         {
+                           name: "Winter (Jan.)",
+                           courses: [
+                             { classNum: "Law 401", className: "Professional Responsibility", units: "4 units", hours: "180 hours" },
+                             { classNum: "Law 402", className: "Wills & Succession", units: "5 units", hours: "225 hours" }
+                           ]
+                         },
+                         {
+                           name: "Summer (Jul.)",
+                           courses: [
+                             { classNum: "Law 403", className: "California Civil Procedure", units: "4 units", hours: "180 hours" },
+                             { classNum: "Law 404", className: "California Evidence", units: "4 units", hours: "180 hours" }
+                           ]
+                         },
+                         {
+                           name: "Fall (Nov.)",
+                           courses: [
+                             { classNum: "Law 405", className: "Advanced Legal Research & Writing", units: "3 units", hours: "135 hours" },
+                             { classNum: "Law 406", className: "Practical Competency Training", units: "6 units", hours: "270 hours" }
+                           ]
+                         }
+                       ]
+                     }
+                   ].map((yearData, yearIdx) => {
+                     const isBlue = yearData.color === "pau-blue";
+                     return (
+                     <div key={yearIdx} className="relative">
+                       {/* Year Header */}
+                       <div className="flex items-center gap-4 mb-6">
+                         <div className={`flex items-center justify-center w-16 h-16 rounded-xl font-bold text-xl border-2 ${
+                           isBlue 
+                             ? 'bg-pau-blue/10 text-pau-blue border-pau-blue/30' 
+                             : 'bg-pau-gold/10 text-pau-gold border-pau-gold/30'
+                         }`}>
+                           {yearData.year}
+                         </div>
+                         <div>
+                           <h3 className="text-2xl font-serif font-bold text-pau-darkBlue">{yearData.yearLabel}</h3>
+                           <p className="text-sm text-gray-500">Academic Year Schedule</p>
+                         </div>
+                       </div>
+
+                       {/* Trimesters */}
+                       <div className="space-y-6 ml-0 md:ml-20">
+                         {yearData.trimesters.map((trimester, triIdx) => (
+                           <div key={triIdx} className="relative">
+                             {/* Trimester Header */}
+                             <div className="flex items-center gap-3 mb-4">
+                               <div className={`w-3 h-3 rounded-full border-2 border-white shadow-sm ${
+                                 isBlue ? 'bg-pau-blue' : 'bg-pau-gold'
+                               }`}></div>
+                               <h4 className="text-lg font-bold text-pau-darkBlue">{trimester.name}</h4>
+                               <div className="flex-1 h-px bg-gradient-to-r from-gray-300 to-transparent"></div>
+                             </div>
+
+                             {/* Courses Grid */}
+                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ml-6">
+                               {trimester.courses.map((course, courseIdx) => (
+                                 <div 
+                                   key={courseIdx}
+                                   className="group bg-white border-2 border-gray-100 rounded-xl p-5 hover:border-pau-blue/50 hover:shadow-lg transition-all duration-300"
+                                 >
+                                   <div className="flex items-start justify-between mb-3">
+                                     <span className="font-mono text-sm font-bold text-pau-blue">{course.classNum}</span>
+                                     <div className="flex items-center gap-2">
+                                       <span className="text-xs bg-pau-gold/10 text-pau-darkBlue px-2 py-1 rounded font-semibold">{course.units}</span>
+                                     </div>
+                                   </div>
+                                   <h5 className="font-semibold text-pau-darkBlue mb-2 group-hover:text-pau-blue transition-colors">
+                                     {course.className}
+                                   </h5>
+                                   <div className="flex items-center gap-2 text-xs text-gray-500">
+                                     <ClockIcon className="h-4 w-4" />
+                                     <span>{course.hours}</span>
+                                   </div>
+                                 </div>
+                               ))}
+                             </div>
+                           </div>
+                         ))}
+                       </div>
+
+                       {/* Year Separator */}
+                       {yearIdx < 3 && (
+                         <div className="mt-12 pt-8 border-t border-gray-200"></div>
+                       )}
+                     </div>
+                     );
+                   })}
+                 </div>
                </div>
             </div>
           </>
