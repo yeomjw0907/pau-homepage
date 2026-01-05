@@ -22,7 +22,7 @@ export const HomeNews: React.FC<HomeNewsProps> = ({ title, newsItems, onNewsClic
       summary: "Accepting applications year-round for Winter, Spring, and Fall terms.",
       icon: ClipboardDocumentCheckIcon,
       category: 'Admissions',
-      targetPage: 'admissions' as Page
+      targetPage: 'apply-now' as Page
     },
     {
       id: 'n2',

@@ -207,7 +207,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <div className="relative group" onMouseEnter={() => handleMouseEnter('about')} onMouseLeave={handleMouseLeave}>
                 <button 
                   onClick={() => toggleDropdown('about')}
-                  className={navLinkClass(['history-mission', 'president-welcome', 'dean-message', 'school-form', 'faqs', 'bar-reg', 'disclosure', 'catalog', 'faculty', 'admin-staffs', 'consumer-info'].includes(currentPage))}
+                  className={navLinkClass(['history-mission', 'president-welcome', 'dean-message', 'school-form', 'faqs', 'bar-reg', 'disclosure', 'catalog', 'faculty', 'admin-staffs'/*, 'consumer-info'*/].includes(currentPage))}
                 >
                   {shared.nav.about}
                   <ChevronDownIcon className={`ml-1 h-3.5 w-3.5 stroke-[3] transition-transform ${activeDropdown === 'about' ? 'rotate-180' : ''}`} />
@@ -238,7 +238,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                           <li><SubmenuBtn page="bar-reg" label={shared.nav.barReg} /></li>
                           <li><SubmenuBtn page="disclosure" label={shared.nav.disclosure} /></li>
                           <li><SubmenuBtn page="catalog" label={shared.nav.catalog} /></li>
-                          <li><SubmenuBtn page="consumer-info" label={shared.nav.consumerInfo} /></li>
+                          {/* <li><SubmenuBtn page="consumer-info" label={shared.nav.consumerInfo} /></li> */}
                         </ul>
                       </div>
                       <div className="space-y-6">
@@ -257,7 +257,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <div className="relative group" onMouseEnter={() => handleMouseEnter('academics')} onMouseLeave={handleMouseLeave}>
                 <button 
                   onClick={() => toggleDropdown('academics')}
-                  className={navLinkClass(['academics', 'academic-calendar', 'bar-info', 'curriculum-schedule', 'course-desc', 'counseling', 'grad-reqs', 'centers', 'student-resources', 'library'].includes(currentPage))}
+                  className={navLinkClass([/*'academics',*/ 'academic-calendar', 'bar-info', 'curriculum-schedule', 'course-desc', 'counseling', 'grad-reqs'/*, 'centers', 'student-resources', 'library'*/].includes(currentPage))}
                 >
                   {shared.nav.academics}
                   <ChevronDownIcon className={`ml-1 h-3.5 w-3.5 stroke-[3] transition-transform ${activeDropdown === 'academics' ? 'rotate-180' : ''}`} />
@@ -265,9 +265,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                 {activeDropdown === 'academics' && (
                   <DropdownWrapper widthClass="w-72">
                     <div className="px-10 space-y-4">
-                      <SubmenuBtn page="academics" label="Overview" />
-                      <SubmenuBtn page="centers" label={shared.nav.centers} />
-                      <SubmenuBtn page="library" label={shared.nav.library} />
+                      {/* <SubmenuBtn page="academics" label="Overview" /> */}
+                      {/* <SubmenuBtn page="centers" label={shared.nav.centers} /> */}
+                      {/* <SubmenuBtn page="library" label={shared.nav.library} /> */}
                       <SubmenuBtn page="academic-calendar" label={shared.nav.academicCalendar} />
                       <SubmenuBtn page="bar-info" label={shared.nav.barInfo} />
                       <SubmenuBtn page="curriculum-schedule" label={shared.nav.curriculum} />
@@ -283,7 +283,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <div className="relative group" onMouseEnter={() => handleMouseEnter('admissions')} onMouseLeave={handleMouseLeave}>
                 <button 
                   onClick={() => toggleDropdown('admissions')}
-                  className={navLinkClass(['admissions', 'apply-now', 'app-steps', 'admission-reqs', 'transfer-int', 'tech-reqs', 'careers'].includes(currentPage))}
+                  className={navLinkClass([/*'admissions',*/ 'apply-now', 'app-steps', 'admission-reqs', 'transfer-int', 'tech-reqs'/*, 'careers'*/].includes(currentPage))}
                 >
                   {shared.nav.admissions}
                   <ChevronDownIcon className={`ml-1 h-3.5 w-3.5 stroke-[3] transition-transform ${activeDropdown === 'admissions' ? 'rotate-180' : ''}`} />
@@ -295,8 +295,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                         {shared.nav.applyNow}
                         {currentPage === 'apply-now' ? null : <span className="ml-2 w-1.5 h-1.5 rounded-full bg-pau-gold animate-pulse"></span>}
                       </button>
-                      <SubmenuBtn page="admissions" label="Admissions Home" />
-                      <SubmenuBtn page="careers" label={shared.nav.careers} />
+                      {/* <SubmenuBtn page="admissions" label="Admissions Home" /> */}
+                      {/* <SubmenuBtn page="careers" label={shared.nav.careers} /> */}
                       <SubmenuBtn page="app-steps" label={shared.nav.appSteps} />
                       <SubmenuBtn page="admission-reqs" label={shared.nav.admissionReqs} />
                       <SubmenuBtn page="transfer-int" label={shared.nav.transferInt} />
@@ -467,25 +467,26 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <MobileSubLink page="bar-reg" label={shared.nav.barReg} />
                 <MobileSubLink page="disclosure" label={shared.nav.disclosure} />
                 <MobileSubLink page="catalog" label={shared.nav.catalog} />
-                <MobileSubLink page="consumer-info" label={shared.nav.consumerInfo} />
+                {/* <MobileSubLink page="consumer-info" label={shared.nav.consumerInfo} /> */}
                 <MobileSubLink page="faqs" label={shared.nav.faqs} />
               </MobileSection>
 
               <MobileSection title={shared.nav.academics} id="academics">
-                <MobileSubLink page="academics" label="Overview" />
-                <MobileSubLink page="centers" label={shared.nav.centers} />
-                <MobileSubLink page="library" label={shared.nav.library} />
+                {/* <MobileSubLink page="academics" label="Overview" /> */}
+                {/* <MobileSubLink page="centers" label={shared.nav.centers} /> */}
+                {/* <MobileSubLink page="library" label={shared.nav.library} /> */}
                 <MobileSubLink page="academic-calendar" label={shared.nav.academicCalendar} />
                 <MobileSubLink page="bar-info" label={shared.nav.barInfo} />
                 <MobileSubLink page="curriculum-schedule" label={shared.nav.curriculum} />
                 <MobileSubLink page="course-desc" label={shared.nav.courseDesc} />
+                <MobileSubLink page="counseling" label={shared.nav.counseling} />
                 <MobileSubLink page="grad-reqs" label={shared.nav.gradReqs} />
               </MobileSection>
 
               <MobileSection title={shared.nav.admissions} id="admissions">
                 <MobileSubLink page="apply-now" label={shared.nav.applyNow} />
-                <MobileSubLink page="admissions" label="Admissions Home" />
-                <MobileSubLink page="careers" label={shared.nav.careers} />
+                {/* <MobileSubLink page="admissions" label="Admissions Home" /> */}
+                {/* <MobileSubLink page="careers" label={shared.nav.careers} /> */}
                 <MobileSubLink page="admission-reqs" label={shared.nav.admissionReqs} />
                 <MobileSubLink page="app-steps" label={shared.nav.appSteps} />
                 <MobileSubLink page="tech-reqs" label={shared.nav.techReqs} />

@@ -100,7 +100,7 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
               title="J.D. Curriculum" 
               subtitle="A rigorous 4-year academic sequence structured for bar readiness." 
               icon={MapIcon}
-              onBack={() => onNavigate('academics')}
+              onBack={() => onNavigate('home')}
             />
             <div className="max-w-5xl mx-auto px-6 py-20">
                <div className="space-y-16">
@@ -170,7 +170,7 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
               title="Bar Examination" 
               subtitle="Compliance and requirements for California licensure." 
               icon={ShieldCheckIcon}
-              onBack={() => onNavigate('academics')}
+              onBack={() => onNavigate('home')}
             />
             <div className="max-w-4xl mx-auto px-6 py-20 space-y-12">
                <div className="bg-white p-10 rounded-[40px] shadow-premium border border-gray-100">
@@ -209,7 +209,7 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
               title="Graduation Requirements" 
               subtitle="The final steps toward becoming a Juris Doctor." 
               icon={AcademicCapIcon}
-              onBack={() => onNavigate('academics')}
+              onBack={() => onNavigate('home')}
             />
             <div className="max-w-5xl mx-auto px-6 py-20">
                <div className="bg-white rounded-2xl shadow-soft border border-gray-100 p-10 mb-12">
@@ -266,7 +266,7 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
               title="Course Catalog" 
               subtitle="Explore the fundamental pillars of our legal instruction." 
               icon={ListBulletIcon}
-              onBack={() => onNavigate('academics')}
+              onBack={() => onNavigate('home')}
             />
             <div className="max-w-5xl mx-auto px-6 py-20">
                <div className="grid grid-cols-1 gap-8">
@@ -293,7 +293,7 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
               title="Academic Counseling" 
               subtitle="Personalized support to guide your law school journey." 
               icon={ChatBubbleLeftEllipsisIcon}
-              onBack={() => onNavigate('academics')}
+              onBack={() => onNavigate('home')}
             />
             <div className="max-w-5xl mx-auto px-6 py-20">
                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">

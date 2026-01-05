@@ -169,10 +169,10 @@ Last Updated: January 2026`
         <div className="col-span-1">
           <h3 className="text-[10px] font-bold text-pau-gold uppercase tracking-[0.2em] mb-6">Quick Links</h3>
           <ul className="text-xs text-gray-400 space-y-3 font-bold">
-            <li><button onClick={() => onNavigate('admissions')} className="hover:text-white transition-colors">Apply Now</button></li>
+            <li><button onClick={() => onNavigate('apply-now')} className="hover:text-white transition-colors">Apply Now</button></li>
             <li><button onClick={() => onNavigate('academic-calendar')} className="hover:text-white transition-colors">Academic Calendar</button></li>
-            <li><button onClick={() => onNavigate('library')} className="hover:text-white transition-colors">Law Library</button></li>
-            <li><button onClick={() => onNavigate('careers')} className="hover:text-white transition-colors">Career Services</button></li>
+            {/* <li><button onClick={() => onNavigate('library')} className="hover:text-white transition-colors">Law Library</button></li> */}
+            {/* <li><button onClick={() => onNavigate('careers')} className="hover:text-white transition-colors">Career Services</button></li> */}
           </ul>
         </div>
 
@@ -202,7 +202,7 @@ Last Updated: January 2026`
         <p>&copy; 2026-2027 Pacific American University School of Law. All rights reserved.</p>
         <div className="flex flex-wrap gap-x-6 gap-y-2 mt-4 md:mt-0 justify-center md:justify-end">
           <button onClick={() => onNavigate('admin')} className="hover:text-gray-400 transition-colors">Admin Dashboard</button>
-          <button onClick={() => onNavigate('consumer-info')} className="hover:text-gray-400 transition-colors">Consumer Information</button>
+          {/* <button onClick={() => onNavigate('consumer-info')} className="hover:text-gray-400 transition-colors">Consumer Information</button> */}
           <button onClick={() => setActiveModal('privacy')} className="hover:text-gray-400 transition-colors">Privacy Policy</button>
           <button onClick={() => setActiveModal('terms')} className="hover:text-gray-400 transition-colors">Terms of Use</button>
           <button onClick={() => setActiveModal('accessibility')} className="hover:text-gray-400 transition-colors">Accessibility</button>

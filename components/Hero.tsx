@@ -56,20 +56,20 @@ export const Hero: React.FC<HeroProps> = ({ content, shared, onNavigate }) => {
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row gap-5">
             <button 
-              onClick={() => onNavigate('admissions')}
+              onClick={() => onNavigate('apply-now')}
               className="px-10 py-5 bg-pau-gold text-white font-bold text-xs tracking-[0.15em] uppercase flex items-center justify-center rounded-sm hover:bg-white hover:text-pau-darkBlue transition-all duration-300 shadow-[0_0_20px_rgba(179,139,89,0.3)] group"
             >
               Apply Now 
               <ArrowRightIcon className="ml-3 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </button>
             
-            <button 
+            {/* <button 
               onClick={() => onNavigate('academics')}
               className="px-10 py-5 bg-white/5 border border-white/30 text-white font-bold text-xs tracking-[0.15em] uppercase flex items-center justify-center rounded-sm hover:bg-white/10 hover:border-white transition-all duration-300 backdrop-blur-sm group"
             >
               <PlayCircleIcon className="mr-3 h-5 w-5 text-pau-gold group-hover:text-white transition-colors" />
               Learn More
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

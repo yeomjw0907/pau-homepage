@@ -237,7 +237,7 @@ const App: React.FC = () => {
           "J.D., St. John's University School of Law (2004)",
           "B.A., The George Washington University (2000)"
         ], 
-        bio: "Academic and Teaching Experience:\nMarino Legal Academy\nManaging Director | 2009 – Present\n● Lead curriculum design and academic programming for legal writing, first-year skills, and bar examination preparation across multiple jurisdictions\n● Teach and lecture on legal writing, issue spotting, rule synthesis, and exam-ready analytical structure\n● Develop instructional materials and assessment frameworks to support early law students and bar candidates\n● Oversee faculty, academic content, and regulatory compliance for a third-generation legal education organization founded in 1946\n\nAdjunct Professor / Legal Educator\nNew York Law School | Pacific American University\n● Taught Legal Writing, First-Year Skills, and Bar Preparation courses\n● Instructed students on essay organization, analytical clarity, time management, and exam performance\n● Provided academic support and mentoring to first-year and at-risk law students\n\nAcademic Support and Bar Passage Outcomes\n● Member of the academic support team that helped increase New York Law School's bar passage rate from the low-50 percent range to 94 percent\n\nPublications\n● Author and contributor, Westlaw's McKinney's Forms\n○ Draft and update commentary and forms relating to New York civil practice and procedure\n\nProfessional Legal Experience\nGraham Management LLC | Montecito, CA\nGeneral Counsel | 2019 – Present\n● Advise on legal compliance, contracts, intellectual property, and risk management\n● Draft and negotiate licensing, service, and sponsorship agreements\n● Manage trademark registration, licensing, and enforcement\n● Coordinate with outside counsel on litigation and regulatory matters\n\nSchwartz & Perry LLP | New York, NY\nAttorney | 2008 – 2009\n● Drafted and reviewed employment and service agreements\n● Assisted with litigation support, discovery, and document production\n● Conducted legal research on labor and intellectual property issues\n\nNew York Yankees | Bronx, NY\nLegal Intern | 2006\n● Assisted with licensing and sponsorship agreements\n● Conducted research on intellectual property and regulatory compliance\n\nLeadership and Service\nCold Spring School District | Montecito, CA\nBoard President | 2018 – Present\n● Provide governance oversight for district operations, compliance, and budgeting\n● Named 2024 Board Member of the Year, Small School Districts' Association (SSDA)\n\nProfessional Memberships\n● State Bar of California\n● New York State Bar", 
+        bio: "Background: Marino Legal Academy Managing Director (2009–Present). Leads curriculum design and academic programming for legal writing, first-year skills, and bar examination preparation across multiple jurisdictions. He teaches and lectures on legal writing, issue spotting, rule synthesis, and exam-ready analytical structure. He also oversees faculty and regulatory compliance for a legal education organization founded in 1946. Previously served as an Adjunct Professor at New York Law School and Pacific American University. Professionally, he serves as General Counsel for Graham Management LLC, advising on legal compliance and intellectual property.", 
         expertise: ["Legal Writing", "First-Year Skills", "Bar Preparation", "Legal Education", "Contracts", "Intellectual Property", "Risk Management", "Legal Compliance", "Trademark Registration", "Licensing and Enforcement"],
         phone: "(917) 673-9618",
         email: "MMarino@MarinoLegal.com",
@@ -251,7 +251,7 @@ const App: React.FC = () => {
         education: [
           "Ph.D. in Political Science, University of Cincinnati (2006)"
         ], 
-        bio: "Qualifications\n● Dual qualified California Lawyer (Attorney) and English Solicitor\n● Practiced law in California and internationally for over 30 years\n\nAcademic and Teaching Experience\nSeveral Regionally Accredited Universities\nInstructor | 2006 – Present\n● Awarded PhD in Political Science (University of Cincinnati, 2006)\n● Instructed classes in Torts, International and Administrative Law, Introduction to Jurisprudence, Contracts, Family Law, Immigration, Legal Research, Bankruptcy, Copyrights, Evidence, Legal Ethics, Estates and Trusts and Constitutional Law since 2006\n\nLegal Practice as Attorney\n● Concentrates on cross-border issues including litigation, finance, securities, crypto assets, federal and company law\n\nLegal Practice as Solicitor\n● Focuses on the British overseas territories, capital markets, EU and national constitutional claims and petitions and bilateral and multilateral trade agreements and international organisations and tribunals", 
+        bio: "Background: Dr. Jonathan Levy is a dual-qualified California Lawyer and English Solicitor with over 30 years of legal practice experience internationally. Since 2006, he has instructed university classes in a wide range of subjects, including Torts, International Law, Contracts, and Constitutional Law. As an Attorney, he concentrates on cross-border issues such as litigation, finance, and crypto assets. As a Solicitor, his focus includes British overseas territories, capital markets, and international organizations.", 
         expertise: ["Torts", "International and Administrative Law", "Introduction to Jurisprudence", "Contracts", "Family Law", "Immigration", "Legal Research", "Bankruptcy", "Copyrights", "Evidence", "Legal Ethics", "Estates and Trusts", "Constitutional Law", "Cross-border Issues", "Litigation", "Finance", "Securities", "Crypto Assets", "Federal and Company Law", "British Overseas Territories", "Capital Markets", "EU and National Constitutional Claims", "Bilateral and Multilateral Trade Agreements", "International Organisations and Tribunals"],
         phone: "(213) 674-7174",
         email: "jlevy@paucal.org",
@@ -266,7 +266,7 @@ const App: React.FC = () => {
           "J.D., Loyola University School of Law (1994)",
           "B.A., Southern Agricultural & Mechanical University (1991)"
         ], 
-        bio: "Qualifications\n● Attorney Licensed in Louisiana (1994)\n\nAcademic and Teaching Experience\nSouthern University Law Center\nAssociate Professor | 2021 – Present\nCo-Director, Common Law Bar Program | 2022 – Present\n\nConcord Law School at Purdue University Global\nProfessor | 2017 – 2023", 
+        bio: "Background: Shandrea P. Williams serves as an Associate Professor at Southern University Law Center and is the Co-Director of the Common Law Bar Program there. She has extensive experience in online legal education, having served as a Professor at Concord Law School at Purdue University Global from 2017 to 2023. Her expertise focuses on academic support and bar preparation, where she has instructed numerous students in foundational legal subjects.", 
         expertise: ["Contracts"],
         phone: "(213) 674-7174",
         email: "swilliams@paucal.org",
@@ -274,14 +274,14 @@ const App: React.FC = () => {
         photoUrl: "/images/faculty-shandrea-williams.jpg"
       },
       { 
-        name: "John Jack Chandler", 
+        name: "John \"Jack\" Chandler", 
         credential: "J.D.",
         title: "Faculty (Teaches: Criminal Law, Legal Liability, Criminal Justice)", 
         education: [
           "J.D., Loyola Law School, Los Angeles",
           "B.A. in Criminal Justice, CSUF"
         ], 
-        bio: "Law Enforcement Experience\nSouthern California\nLaw Enforcement Officer and Legal Attorney | 30 years\n● Work experience involved street policing, undercover work, SWAT training, divisional administration and in-house legal management\n\nLegal Practice\nPrivate Attorney and Legal Instructor | 25 years\n● Successful private attorney and legal instructor in both criminal law and legal liability\n\nTeaching Experience\nSantiago Canyon College | Palomar College | Westwood College\nInstructor | Assistant Chair to Criminal Justice\n● Instructed criminal law and related criminal justice courses\n\nUS Virgin Islands\nInstructor\n● Taught legal courses after retirement from law enforcement and legal practice", 
+        bio: "Background: Jack Chandler spent 30 years as a law enforcement officer and legal attorney in Southern California. His extensive experience includes street policing, SWAT training, and in-house legal management. For 25 years, he maintained an overlapping career as a private attorney and legal instructor in criminal law and legal liability. He has taught at Santiago Canyon College, Palomar College, and Westwood College, where he served as Assistant Chair of Criminal Justice.", 
         expertise: ["Criminal Law", "Legal Liability", "Criminal Justice", "Law Enforcement", "Street Policing", "Undercover Work", "SWAT Training", "Divisional Administration", "In-house Legal Management"],
         phone: "(213) 674-7174",
         email: "jchandler@paucal.org",
@@ -296,7 +296,7 @@ const App: React.FC = () => {
           "LL.M. thesis & S.J.D., Indiana University Maurer School of Law (2010)",
           "LL.B., LL.M., Ph.D. coursework completed, Ewha Womans University"
         ], 
-        bio: "Administrative Experience\nPacific American University\nPresident | 2022 – Present\n\nAcademic Experience\nKookmin University\nAdjunct Professor | 2019 – 2022\n\nProfessional Experience\nI-Sung Labor Law Firm\nSenior Advisor | 2019 – 2022\n\nKorea Labor Institute\nSenior Researcher | 1996 – 2004", 
+        bio: "Background: Dr. Hyun Joo Kang has served as the President of Pacific American University since 2022. She previously held positions as an Adjunct Professor at Kookmin University and a Senior Advisor at I-Sung Labor Law Firm. Her extensive research background includes serving as a Senior Researcher at the Korea Labor Institute from 1996 to 2004. She also served as a Policy Analyst at the Presidential Economic, Social, and Labor Council in Korea.", 
         expertise: ["Educational Leadership", "Labor Law"],
         phone: "(213) 674-7174",
         email: "hjkang@paucal.org",
@@ -312,7 +312,7 @@ const App: React.FC = () => {
           "M.L.I.S., San Jose State University (1999)",
           "B.A., Oral Roberts University (1989)"
         ], 
-        bio: "Qualifications\n● Attorney Licensed in California\n\nAdministrative Experience\nPepperdine University School of Law\nAssistant Dean, Legal Technology Initiatives | 2023 – 2024\nAssistant Dean, Information Services | 2012 – 2023\nDirector of Information Services | 2001 – 2012", 
+        bio: "Background: Phillip Bohl is the Associate Dean of the School of Law and an expert in legal technology and information services. He spent over two decades at Pepperdine University School of Law in various leadership roles, including Assistant Dean of Legal Technology Initiatives and Assistant Dean of Information Services. He has also practiced as an attorney at law and has significant experience in managing law library operations and computer reference services.", 
         expertise: ["Legal Technology", "Information Services"],
         phone: "(213) 674-7174",
         email: "pbohl@paucal.org",
@@ -328,7 +328,7 @@ const App: React.FC = () => {
           "M.A., Dankook University Graduate School (1995)",
           "B.A., Kyungpook National University (1977)"
         ], 
-        bio: "Administrative Experience\nKorea Admissions Research Institute\nDirector | 2000 – Present\n\nAcademic Experience\nHoseo University\nProfessor | 1999 – 2022\nAdmissions Officer | 2016 – 2022", 
+        bio: "Background: Nam Hwan Jung is the Dean of Admissions at PAU. He has a long-standing career in academia, serving as a Professor at Hoseo University and its Graduate School for over 20 years. He also held the role of Admissions Officer at Hoseo University and currently serves as the Director of the Korea Admissions Research Institute, a position he has held since 2000.", 
         expertise: ["Admissions Management", "Higher Education"],
         phone: "(213) 674-7174",
         email: "nhjung@paucal.org",
@@ -344,7 +344,7 @@ const App: React.FC = () => {
           "J.D., Handong International Law School (2017)",
           "B.A., Mechanical Engineering and Electronic Engineering, Handong Global University (2007)"
         ], 
-        bio: "Professional Experience\nSeoul National University of Science and Tech. IACF\nMarketing Manager | 2024\n\nSungkyunkwan University Startup Center\nLab Startup Innovator | 2023\n\nNovick, Kim & Lee PLLC\nPatent Agent | 2013 – 2014", 
+        bio: "Background: Joyee J. Jea leads IT and Marketing at PAU. Her diverse professional background includes serving as a Marketing Manager at the Seoul National University of Science and Technology. She has also worked as a Lab Startup Innovator at Sungkyunkwan University and the Tech University of Korea. Additionally, she has experience as a Patent Agent and worked in Product Strategy & Planning at KIA Motors.", 
         expertise: ["Digital Marketing", "IT Systems"],
         phone: "(213) 674-7174",
         email: "jjea@paucal.org",

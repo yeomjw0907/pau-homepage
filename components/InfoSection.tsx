@@ -426,7 +426,7 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
                   <p className="text-xs text-gray-400 italic">
                     *Elective offerings are subject to academic year availability.
                   </p>
-                  <button 
+                  {/* <button 
                     onClick={() => {
                       setActivePath(null);
                       onNavigate('academics');
@@ -434,7 +434,7 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
                     className="inline-flex items-center justify-center px-8 py-3 bg-pau-darkBlue text-white text-xs font-bold uppercase tracking-widest rounded-full hover:bg-pau-gold hover:text-pau-darkBlue transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                   >
                     View Academic Catalog <ArrowRightIcon className="ml-2 h-4 w-4" />
-                  </button>
+                  </button> */}
               </div>
 
             </div>
