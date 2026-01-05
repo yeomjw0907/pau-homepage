@@ -1,5 +1,5 @@
 
-import React, { useState, useTransition } from 'react';
+import React, { useState, useTransition, useEffect, useRef } from 'react';
 import { HomeContent, Clinic, SharedContent, Page } from '../types';
 import { 
   ArrowRightIcon, 
@@ -28,6 +28,9 @@ interface InfoSectionProps {
 export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onClinicClick, onNavigate }) => {
   const [activePath, setActivePath] = useState<any | null>(null);
   const [isPending, startTransition] = useTransition();
+  const modalRef = useRef<HTMLDivElement>(null);
+  const firstFocusableRef = useRef<HTMLElement | null>(null);
+  const lastFocusableRef = useRef<HTMLElement | null>(null);
 
   const missionFeatures = [
     { 
@@ -64,6 +67,61 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
       desc: "We offer a high-quality legal education at a significantly lower cost than traditional U.S. law schools, making the J.D. dream accessible." 
     }
   ];
+
+  // Focus trap and keyboard navigation for modal
+  useEffect(() => {
+    if (!activePath) return;
+
+    const modal = modalRef.current;
+    if (!modal) return;
+
+    // Get all focusable elements
+    const focusableElements = modal.querySelectorAll<HTMLElement>(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    
+    if (focusableElements.length === 0) return;
+
+    firstFocusableRef.current = focusableElements[0];
+    lastFocusableRef.current = focusableElements[focusableElements.length - 1];
+
+    // Focus first element
+    firstFocusableRef.current?.focus();
+
+    // Handle Escape key
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setActivePath(null);
+      }
+    };
+
+    // Handle Tab key for focus trap
+    const handleTab = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab') return;
+
+      if (e.shiftKey) {
+        // Shift + Tab
+        if (document.activeElement === firstFocusableRef.current) {
+          e.preventDefault();
+          lastFocusableRef.current?.focus();
+        }
+      } else {
+        // Tab
+        if (document.activeElement === lastFocusableRef.current) {
+          e.preventDefault();
+          firstFocusableRef.current?.focus();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    modal.addEventListener('keydown', handleTab);
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      modal.removeEventListener('keydown', handleTab);
+    };
+  }, [activePath]);
 
   const careerPaths = [
     { 
@@ -196,7 +254,7 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
                      <item.icon className="h-5 w-5 stroke-[1.5]" />
                    </div>
                    <div className="pt-1">
-                     <h4 className="text-[11px] font-bold uppercase tracking-widest text-pau-darkBlue mb-2">{item.title}</h4>
+                     <h3 className="text-[11px] font-bold uppercase tracking-widest text-pau-darkBlue mb-2">{item.title}</h3>
                      <p className="text-xs md:text-sm text-gray-500 font-light leading-relaxed">{item.desc}</p>
                    </div>
                  </div>
@@ -363,6 +421,7 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
 
                 <button 
                   onClick={() => setActivePath(null)}
+                  aria-label="Close career pathway detail"
                   className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors bg-black/20 hover:bg-black/40 backdrop-blur-sm rounded-full p-2 z-20"
                 >
                   <XMarkIcon className="h-6 w-6" />

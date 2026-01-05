@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { ImageSize } from '../types';
 import { generateArchitecturalImage } from '../services/geminiService';
-import { PhotoIcon, ArrowPathIcon, BuildingOffice2Icon, KeyIcon } from '@heroicons/react/24/outline';
+import { PhotoIcon, ArrowPathIcon, BuildingOffice2Icon, KeyIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 
 // The global 'aistudio' object and its 'AIStudio' type are provided by the environment.
 // Conflicting local declaration removed.
@@ -56,10 +56,10 @@ export const CampusVisualizer: React.FC = () => {
         size
       );
       setGeneratedImage(base64Image);
-    } catch (err: any) {
+    } catch (err) {
       console.error("Generation failed:", err);
       // If requested entity was not found, the key might be invalid or from an unpaid project
-      if (err?.message?.includes("Requested entity was not found.")) {
+      if (err instanceof Error && err.message?.includes("Requested entity was not found.")) {
         setHasApiKey(false);
         setError("API Key configuration error. Please re-select a valid API key from a paid GCP project.");
       } else {
@@ -186,8 +186,9 @@ export const CampusVisualizer: React.FC = () => {
             </form>
 
             {error && (
-              <div className="mt-4 p-4 bg-red-50 text-red-700 text-xs border-l-4 border-red-500">
-                {error}
+              <div className="mt-4 p-4 bg-red-50 text-red-700 text-xs border-l-4 border-red-500 flex items-start" role="alert">
+                <ExclamationTriangleIcon className="h-5 w-5 mr-2 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                <span>{error}</span>
               </div>
             )}
             

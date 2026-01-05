@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useCallback, useTransition } from 'react';
+import React, { useState, useEffect, useCallback, useTransition, useMemo } from 'react';
 import { FacultyContent, SharedContent, FacultyMember, Page } from '../types';
 import { PlusIcon, MinusIcon, UserIcon } from '@heroicons/react/24/outline';
+import { LazyImage } from './common/LazyImage';
+import { trim } from '../utils/stringUtils';
 
 interface FacultyItemProps {
   prof: FacultyMember;
@@ -12,7 +14,7 @@ interface FacultyItemProps {
   onToggleBio: (name: string) => void;
 }
 
-const FacultyItem: React.FC<FacultyItemProps> = ({ 
+const FacultyItem: React.FC<FacultyItemProps> = React.memo(({ 
   prof, 
   isTeachesExpanded,
   isEdExpanded, 
@@ -23,8 +25,8 @@ const FacultyItem: React.FC<FacultyItemProps> = ({
 }) => {
   // Extract "Teaches" part from title
   const teachesMatch = prof.title.match(/Teaches:\s*(.+?)\)?$/i);
-  const teachesContent = teachesMatch ? teachesMatch[1].replace(/\s*\)\s*$/, '').trim() : null;
-  const displayTitle = teachesMatch ? prof.title.replace(/\s*\(Teaches:.*?\)/i, '').trim() : prof.title;
+  const teachesContent = teachesMatch ? trim(teachesMatch[1].replace(/\s*\)\s*$/, '')) : null;
+  const displayTitle = teachesMatch ? trim(prof.title.replace(/\s*\(Teaches:.*?\)/i, '')) : prof.title;
   
   return (
     <div className="py-8 md:py-12 border-b border-gray-100 last:border-0 flex flex-col md:flex-row gap-6 md:gap-12 group animate-fade-in">
@@ -32,7 +34,12 @@ const FacultyItem: React.FC<FacultyItemProps> = ({
       <div className="flex-shrink-0 flex justify-center md:block">
         <div className="w-40 md:w-56 aspect-[3/4] bg-gray-100 overflow-hidden shadow-sm group-hover:shadow-lg transition-all duration-500 rounded-lg border border-gray-100">
           {prof.photoUrl ? (
-            <img src={prof.photoUrl} alt={prof.name} className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" />
+            <LazyImage 
+              src={prof.photoUrl} 
+              alt={prof.name} 
+              className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" 
+              loading="lazy"
+            />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-gray-300 bg-gray-50">
               <UserIcon className="h-16 w-16 stroke-1" />
@@ -146,7 +153,9 @@ const FacultyItem: React.FC<FacultyItemProps> = ({
       </div>
     </div>
   );
-};
+});
+
+FacultyItem.displayName = 'FacultyItem';
 
 interface FacultyProps {
   content: FacultyContent;
@@ -196,9 +205,11 @@ export const Faculty: React.FC<FacultyProps> = ({ content, shared, currentPage, 
     });
   }, []);
 
-  const filteredProfiles = content.facultyList.filter(prof => 
-    activeTab === 'Faculty' ? prof.category === 'Faculty' : prof.category === 'Staff'
-  );
+  const filteredProfiles = useMemo(() => {
+    return content.facultyList.filter(prof => 
+      activeTab === 'Faculty' ? prof.category === 'Faculty' : prof.category === 'Staff'
+    );
+  }, [content.facultyList, activeTab]);
 
   return (
     <div className="bg-white min-h-screen font-sans">

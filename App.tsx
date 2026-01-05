@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useTransition } from 'react';
+import React, { useState, useTransition, Suspense, lazy } from 'react';
 import { 
   Page, 
   SupportedLanguage, 
@@ -8,7 +8,9 @@ import {
   Clinic, 
   NewsItem,
   GlobalAlert,
-  AdmissionsContent
+  AdmissionsContent,
+  FacultyContent,
+  AcademicsContent
 } from './types';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
@@ -22,41 +24,48 @@ import { NoticeBoard } from './components/NoticeBoard';
 import { NewsDetail } from './components/NewsDetail';
 import { StudentResources } from './components/StudentResources';
 import { ClinicDetail } from './components/ClinicDetail';
-import { Library } from './components/Library';
 import { Careers } from './components/Careers';
-import { Calendar } from './components/Calendar';
 import { ConsumerInfo } from './components/ConsumerInfo';
-import { Admin } from './components/Admin';
 import { TranslationOverlay } from './components/TranslationOverlay';
-import { translateContent } from './services/geminiService';
+import { LoadingSpinner } from './components/common/LoadingSpinner';
+
+// Lazy load heavy or rarely accessed components
+const Admin = lazy(() => import('./components/Admin').then(module => ({ default: module.Admin })));
+const CampusVisualizer = lazy(() => import('./components/CampusVisualizer').then(module => ({ default: module.CampusVisualizer })));
+const Calendar = lazy(() => import('./components/Calendar').then(module => ({ default: module.Calendar })));
+const Library = lazy(() => import('./components/Library').then(module => ({ default: module.Library })));
+import { PageHeader } from './components/common/PageHeader';
+import { SectionWrapper } from './components/common/SectionWrapper';
+import { GenericPage } from './components/common/GenericPage';
+import { DocumentLink } from './components/common/DocumentLink';
+import { InfoCard } from './components/common/InfoCard';
+import { StepCard } from './components/common/StepCard';
+import { SectionHeader } from './components/common/SectionHeader';
+import { useTranslation } from './hooks/useTranslation';
+import { DEFAULT_FACULTY_CONTENT } from './data/facultyData';
+import { DEFAULT_ADMISSIONS_CONTENT } from './data/admissionsData';
+import { DEFAULT_ACADEMICS_CONTENT } from './data/academicsData';
 import { 
   CurrencyDollarIcon, 
   BanknotesIcon, 
   CreditCardIcon, 
   CheckBadgeIcon, 
-  ArrowPathIcon, 
-  ExclamationCircleIcon,
   ClockIcon, 
   PhoneIcon,
   MapPinIcon,
   EnvelopeIcon,
   GlobeAltIcon,
-  PaperAirplaneIcon,
   GlobeAmericasIcon,
   UserIcon,
   AcademicCapIcon,
-  DocumentTextIcon,
   QuestionMarkCircleIcon,
   ShieldCheckIcon,
   DocumentDuplicateIcon,
+  DocumentTextIcon,
   BookOpenIcon,
   UserGroupIcon,
-  UserCircleIcon,
-  ArrowDownTrayIcon,
   ArrowRightIcon,
   ClipboardDocumentListIcon,
-  IdentificationIcon,
-  NewspaperIcon,
   ChatBubbleBottomCenterTextIcon,
   DocumentCheckIcon,
   ComputerDesktopIcon,
@@ -64,72 +73,13 @@ import {
   InboxArrowDownIcon
 } from '@heroicons/react/24/outline';
 
-const PageHeader: React.FC<{ title: string; subtitle: string; icon: any }> = ({ title, subtitle, icon: Icon }) => (
-  <div className="bg-pau-darkBlue pt-32 md:pt-44 pb-12 md:pb-20 px-6 text-center">
-    <div className="max-w-4xl mx-auto">
-      <Icon className="h-10 md:h-16 w-10 md:w-16 text-pau-gold mx-auto mb-4 md:mb-6" />
-      <h1 className="text-2xl sm:text-3xl md:text-5xl font-serif font-bold text-white whitespace-pre-line leading-snug md:leading-tight">{title}</h1>
-      <p className="mt-4 md:mt-6 text-sm md:text-xl text-gray-300 font-light max-w-2xl mx-auto">{subtitle}</p>
-    </div>
-  </div>
-);
-
-const SectionWrapper: React.FC<{ title?: string; children: React.ReactNode; centered?: boolean }> = ({ title, children, centered = false }) => (
-  <section className={`py-12 md:py-24 px-6 bg-white ${centered ? 'text-center' : ''}`}>
-    <div className="max-w-7xl mx-auto">
-      {title && (
-        <div className={`flex items-center space-x-4 mb-8 md:mb-16 ${centered ? 'justify-center' : ''}`}>
-          <span className="h-px w-8 md:w-12 bg-pau-gold"></span>
-          <h2 className="text-pau-gold font-bold tracking-widest uppercase text-[10px] md:text-xs">{title}</h2>
-        </div>
-      )}
-      {children}
-    </div>
-  </section>
-);
-
-const DocumentLink: React.FC<{ title: string; type?: string }> = ({ title, type = "PDF" }) => (
-  <div className="flex items-center justify-between p-4 md:p-6 bg-white border border-gray-100 rounded-2xl hover:shadow-xl hover:border-pau-gold transition-all cursor-pointer group">
-    <div className="flex items-center">
-      <div className="p-3 md:p-4 bg-red-50 text-red-500 rounded-xl mr-3 md:mr-5">
-        <DocumentTextIcon className="h-5 md:h-6 w-5 md:w-6" />
-      </div>
-      <div>
-        <h4 className="font-bold text-pau-darkBlue text-sm md:text-lg">{title}</h4>
-        <p className="text-[8px] md:text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-0.5 md:mt-1">{type} Resource</p>
-      </div>
-    </div>
-    <ArrowDownTrayIcon className="h-4 md:h-5 w-4 md:w-5 text-gray-300" />
-  </div>
-);
-
-// Generic Page Component for static text content
-const GenericPage: React.FC<{ 
-  title: string; 
-  subtitle: string; 
-  icon: any; 
-  content: React.ReactNode 
-}> = ({ title, subtitle, icon, content }) => (
-  <>
-    <PageHeader title={title} subtitle={subtitle} icon={icon} />
-    <SectionWrapper>
-      <div className="max-w-4xl mx-auto prose prose-lg prose-blue text-gray-600">
-        {content}
-      </div>
-    </SectionWrapper>
-  </>
-);
 
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<Page>('home');
   const [currentLang, setCurrentLang] = useState<SupportedLanguage>('English');
-  const [isTranslating, setIsTranslating] = useState(false);
   const [selectedClinic, setSelectedClinic] = useState<Clinic | null>(null);
-  const [isPending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
   const [selectedNews, setSelectedNews] = useState<NewsItem | null>(null);
-  
-  // Ref to track previous language to prevent initial English translation or loops
-  const prevLangRef = useRef<SupportedLanguage>('English');
 
   // Global State for Content
   const [homeContent, setHomeContent] = useState(MOCK_HOME_CONTENT);
@@ -139,26 +89,7 @@ const App: React.FC = () => {
     type: 'info'
   });
 
-  const [admissionsContent, setAdmissionsContent] = useState<AdmissionsContent>({
-    title: 'Admissions',
-    intro: 'Start your journey toward a legal career with Pacific American University.',
-    deadlinesTitle: 'Application Deadlines',
-    deadlines: [
-      { term: 'Winter Intake', date: 'Starts January (Deadline: mid-November)', type: '1L Students' },
-      { term: 'Spring Intake', date: 'Starts April (Deadline: mid-February)', type: '1L Students' },
-      { term: 'Fall Intake', date: 'Starts September (Deadline: mid-July)', type: '1L Students' }
-    ],
-    requirementsTitle: 'Admission Requirements',
-    requirements: ['Bachelor\'s Degree from an accredited institution', 'Personal Statement', 'Two Letters of Recommendation', 'LSAT Score (Optional)', 'Official Transcripts'],
-    tuitionTitle: 'Tuition & Value',
-    tuitionInfo: 'One of the most accessible JD programs in California. We believe in providing high-quality legal education without the crushing debt burden.',
-    tuitionCost: '$9,000',
-    faqTitle: 'Admissions FAQ',
-    faqs: [
-      { question: 'Is the program 100% online?', answer: 'Yes. PAUSL is a Registered Unaccredited Correspondence Law School. All lectures and coursework are delivered 100% online through our Learning Management System, Populi, allowing you to study from anywhere in the world.' },
-      { question: 'Do I need to take the LSAT?', answer: 'While LSAT scores are considered if submitted, they are not mandatory for admission. We evaluate candidates holistically.' }
-    ]
-  });
+  const [admissionsContent, setAdmissionsContent] = useState<AdmissionsContent>(DEFAULT_ADMISSIONS_CONTENT);
 
   const [noticesContent, setNoticesContent] = useState({ 
     title: 'Campus Notices', 
@@ -225,272 +156,30 @@ const App: React.FC = () => {
     ]
   });
 
-  const [facultyContent, setFacultyContent] = useState({ 
-    title: 'Distinguished Faculty', 
-    intro: 'Our professors are leaders in legal theory and practitioners with real-world impact.', 
-    facultyList: [
-      { 
-        name: "Michael Marino", 
-        credential: "Esq.",
-        title: "Faculty (Teaches: Legal Writing, First-Year Skills, Bar Preparation)", 
-        education: [
-          "J.D., St. John's University School of Law (2004)",
-          "B.A., The George Washington University (2000)"
-        ], 
-        bio: "Background: Marino Legal Academy Managing Director (2009–Present). Leads curriculum design and academic programming for legal writing, first-year skills, and bar examination preparation across multiple jurisdictions. He teaches and lectures on legal writing, issue spotting, rule synthesis, and exam-ready analytical structure. He also oversees faculty and regulatory compliance for a legal education organization founded in 1946. Previously served as an Adjunct Professor at New York Law School and Pacific American University. Professionally, he serves as General Counsel for Graham Management LLC, advising on legal compliance and intellectual property.", 
-        expertise: ["Legal Writing", "First-Year Skills", "Bar Preparation", "Legal Education", "Contracts", "Intellectual Property", "Risk Management", "Legal Compliance", "Trademark Registration", "Licensing and Enforcement"],
-        phone: "(917) 673-9618",
-        email: "MMarino@MarinoLegal.com",
-        category: "Faculty",
-        photoUrl: "/images/faculty-michael-marino.jpg"
-      },
-      { 
-        name: "Jonathan Levy", 
-        credential: "Ph.D., J.D.",
-        title: "Faculty (Teaches: Torts, International and Administrative Law, Introduction to Jurisprudence, Contracts, Family Law, Immigration, Legal Research, Bankruptcy, Copyrights, Evidence, Legal Ethics, Estates and Trusts, Constitutional Law)", 
-        education: [
-          "Ph.D. in Political Science, University of Cincinnati (2006)"
-        ], 
-        bio: "Background: Dr. Jonathan Levy is a dual-qualified California Lawyer and English Solicitor with over 30 years of legal practice experience internationally. Since 2006, he has instructed university classes in a wide range of subjects, including Torts, International Law, Contracts, and Constitutional Law. As an Attorney, he concentrates on cross-border issues such as litigation, finance, and crypto assets. As a Solicitor, his focus includes British overseas territories, capital markets, and international organizations.", 
-        expertise: ["Torts", "International and Administrative Law", "Introduction to Jurisprudence", "Contracts", "Family Law", "Immigration", "Legal Research", "Bankruptcy", "Copyrights", "Evidence", "Legal Ethics", "Estates and Trusts", "Constitutional Law", "Cross-border Issues", "Litigation", "Finance", "Securities", "Crypto Assets", "Federal and Company Law", "British Overseas Territories", "Capital Markets", "EU and National Constitutional Claims", "Bilateral and Multilateral Trade Agreements", "International Organisations and Tribunals"],
-        phone: "(213) 674-7174",
-        email: "jlevy@paucal.org",
-        category: "Faculty",
-        photoUrl: "/images/faculty-jonathan-levy.jpg"
-      },
-      { 
-        name: "Shandrea P. Williams", 
-        credential: "J.D.",
-        title: "Faculty (Teaches: Contracts I & II)", 
-        education: [
-          "J.D., Loyola University School of Law (1994)",
-          "B.A., Southern Agricultural & Mechanical University (1991)"
-        ], 
-        bio: "Background: Shandrea P. Williams serves as an Associate Professor at Southern University Law Center and is the Co-Director of the Common Law Bar Program there. She has extensive experience in online legal education, having served as a Professor at Concord Law School at Purdue University Global from 2017 to 2023. Her expertise focuses on academic support and bar preparation, where she has instructed numerous students in foundational legal subjects.", 
-        expertise: ["Contracts"],
-        phone: "(213) 674-7174",
-        email: "swilliams@paucal.org",
-        category: "Faculty",
-        photoUrl: "/images/faculty-shandrea-williams.jpg"
-      },
-      { 
-        name: "John \"Jack\" Chandler", 
-        credential: "J.D.",
-        title: "Faculty (Teaches: Criminal Law, Legal Liability, Criminal Justice)", 
-        education: [
-          "J.D., Loyola Law School, Los Angeles",
-          "B.A. in Criminal Justice, CSUF"
-        ], 
-        bio: "Background: Jack Chandler spent 30 years as a law enforcement officer and legal attorney in Southern California. His extensive experience includes street policing, SWAT training, and in-house legal management. For 25 years, he maintained an overlapping career as a private attorney and legal instructor in criminal law and legal liability. He has taught at Santiago Canyon College, Palomar College, and Westwood College, where he served as Assistant Chair of Criminal Justice.", 
-        expertise: ["Criminal Law", "Legal Liability", "Criminal Justice", "Law Enforcement", "Street Policing", "Undercover Work", "SWAT Training", "Divisional Administration", "In-house Legal Management"],
-        phone: "(213) 674-7174",
-        email: "jchandler@paucal.org",
-        category: "Faculty",
-        photoUrl: "/images/faculty-john-chandler.jpg"
-      },
-      { 
-        name: "Hyun Joo Kang", 
-        credential: "S.J.D.",
-        title: "CEO & President", 
-        education: [
-          "LL.M. thesis & S.J.D., Indiana University Maurer School of Law (2010)",
-          "LL.B., LL.M., Ph.D. coursework completed, Ewha Womans University"
-        ], 
-        bio: "Background: Dr. Hyun Joo Kang has served as the President of Pacific American University since 2022. She previously held positions as an Adjunct Professor at Kookmin University and a Senior Advisor at I-Sung Labor Law Firm. Her extensive research background includes serving as a Senior Researcher at the Korea Labor Institute from 1996 to 2004. She also served as a Policy Analyst at the Presidential Economic, Social, and Labor Council in Korea.", 
-        expertise: ["Educational Leadership", "Labor Law"],
-        phone: "(213) 674-7174",
-        email: "hjkang@paucal.org",
-        category: "Staff",
-        photoUrl: "/images/president-hyun-joo-kang.jpg"
-      },
-      { 
-        name: "Phillip Bohl", 
-        credential: "J.D., M.L.I.S.",
-        title: "Associate Dean of the School of Law", 
-        education: [
-          "J.D., Pepperdine University School of Law (1992)",
-          "M.L.I.S., San Jose State University (1999)",
-          "B.A., Oral Roberts University (1989)"
-        ], 
-        bio: "Background: Phillip Bohl is the Associate Dean of the School of Law and an expert in legal technology and information services. He spent over two decades at Pepperdine University School of Law in various leadership roles, including Assistant Dean of Legal Technology Initiatives and Assistant Dean of Information Services. He has also practiced as an attorney at law and has significant experience in managing law library operations and computer reference services.", 
-        expertise: ["Legal Technology", "Information Services"],
-        phone: "(213) 674-7174",
-        email: "pbohl@paucal.org",
-        category: "Staff",
-        photoUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?fit=crop&w=400&h=400&q=80"
-      },
-      { 
-        name: "Nam Hwan Jung", 
-        credential: "Ed.D.",
-        title: "Dean of Admissions", 
-        education: [
-          "Ed.D., LaSalle University Graduate School (1997)",
-          "M.A., Dankook University Graduate School (1995)",
-          "B.A., Kyungpook National University (1977)"
-        ], 
-        bio: "Background: Nam Hwan Jung is the Dean of Admissions at PAU. He has a long-standing career in academia, serving as a Professor at Hoseo University and its Graduate School for over 20 years. He also held the role of Admissions Officer at Hoseo University and currently serves as the Director of the Korea Admissions Research Institute, a position he has held since 2000.", 
-        expertise: ["Admissions Management", "Higher Education"],
-        phone: "(213) 674-7174",
-        email: "nhjung@paucal.org",
-        category: "Staff",
-        photoUrl: "/images/admin-nam-hwan-jung.jpg"
-      },
-      { 
-        name: "Joyee J. Jea", 
-        credential: "J.D., LL.M.",
-        title: "IT and Marketing Director", 
-        education: [
-          "LL.M., Regent University School of Law (2017)",
-          "J.D., Handong International Law School (2017)",
-          "B.A., Mechanical Engineering and Electronic Engineering, Handong Global University (2007)"
-        ], 
-        bio: "Background: Joyee J. Jea leads IT and Marketing at PAU. Her diverse professional background includes serving as a Marketing Manager at the Seoul National University of Science and Technology. She has also worked as a Lab Startup Innovator at Sungkyunkwan University and the Tech University of Korea. Additionally, she has experience as a Patent Agent and worked in Product Strategy & Planning at KIA Motors.", 
-        expertise: ["Digital Marketing", "IT Systems"],
-        phone: "(213) 674-7174",
-        email: "jjea@paucal.org",
-        category: "Staff",
-        photoUrl: "/images/admin-joyee-jea.jpg"
-      }
-    ] 
-  });
+  const [facultyContent, setFacultyContent] = useState<FacultyContent>(DEFAULT_FACULTY_CONTENT);
 
-  const [academicsContent, setAcademicsContent] = useState({ 
-    title: 'Academics', 
-    intro: 'Rigorous legal training for the next generation of advocates.',
-    programsTitle: 'Degree Programs',
-    programs: [
-      { name: 'Juris Doctor (JD)', description: 'A 4-year online program registered with the State Bar of California.' },
-      { name: 'Master of Laws (LLM)', description: 'Advanced specialized legal study for international attorneys.' }
-    ],
-    concentrationsTitle: 'Concentrations',
-    concentrations: ['Technology Law', 'Criminal Law', 'Business Law', 'Public Interest']
-  });
+  const [academicsContent, setAcademicsContent] = useState<AcademicsContent>(DEFAULT_ACADEMICS_CONTENT);
 
   const shared: SharedContent = DEFAULT_SHARED_CONTENT;
 
-  useEffect(() => {
-    const handleTranslation = async () => {
-      // Don't translate on initial mount if already English
-      if (currentLang === 'English' && prevLangRef.current === 'English') return;
-      
-      setIsTranslating(true);
-      
-      // Helper to translate safely
-      const translateSafe = async <T extends unknown>(content: T, lang: SupportedLanguage, sectionName: string): Promise<T> => {
-        try {
-          console.log(`[Translation] Starting translation for ${sectionName} to ${lang}`);
-          const result = await translateContent(content, lang);
-          console.log(`[Translation] Successfully translated ${sectionName}`);
-          return result;
-        } catch (e) {
-          console.error(`[Translation] Failed to translate ${sectionName} to ${lang}:`, e);
-          return content; // Fallback to original content on error
-        }
-      };
-
-      try {
-        // Determine which content is needed for current page (priority translation)
-        const getPriorityContent = () => {
-          switch (currentPage) {
-            case 'home':
-              return { content: homeContent, setter: setHomeContent, name: 'Home Content' };
-            case 'admissions':
-            case 'apply-now':
-            case 'app-steps':
-            case 'admission-reqs':
-            case 'transfer-int':
-            case 'tech-reqs':
-              return { content: admissionsContent, setter: setAdmissionsContent, name: 'Admissions' };
-            case 'academics':
-            case 'academic-calendar':
-            case 'bar-info':
-            case 'curriculum-schedule':
-            case 'course-desc':
-            case 'counseling':
-            case 'grad-reqs':
-              return { content: academicsContent, setter: setAcademicsContent, name: 'Academics' };
-            case 'faculty':
-            case 'admin-staffs':
-              return { content: facultyContent, setter: setFacultyContent, name: 'Faculty' };
-            case 'weekly-dicta':
-            case 'notices':
-            case 'news':
-            case 'news-detail':
-              return { content: weeklyDictaContent, setter: setWeeklyDictaContent, name: 'Weekly Dicta' };
-            default:
-              return { content: homeContent, setter: setHomeContent, name: 'Home Content' };
-          }
-        };
-
-        const priority = getPriorityContent();
-        
-        // Phase 1: Translate current page content immediately (target: <1 second)
-        const priorityPromise = translateSafe(priority.content, currentLang, priority.name);
-        priorityPromise.then(result => {
-          priority.setter(result);
-          // Hide loading overlay once priority content is ready
-          setIsTranslating(false);
-        }).catch(err => {
-          console.error(`[Translation] Priority content (${priority.name}) translation failed`, err);
-          setIsTranslating(false);
-        });
-
-        // Phase 2: Translate remaining content in background (non-blocking)
-        // Don't await these - let them complete in background
-        const backgroundPromises = [];
-
-        if (priority.name !== 'Home Content') {
-          backgroundPromises.push(
-            translateSafe(homeContent, currentLang, 'Home Content').then(setHomeContent).catch(() => {})
-          );
-        }
-        if (priority.name !== 'Admissions') {
-          backgroundPromises.push(
-            translateSafe(admissionsContent, currentLang, 'Admissions').then(setAdmissionsContent).catch(() => {})
-          );
-        }
-        if (priority.name !== 'Academics') {
-          backgroundPromises.push(
-            translateSafe(academicsContent, currentLang, 'Academics').then(setAcademicsContent).catch(() => {})
-          );
-        }
-        if (priority.name !== 'Faculty') {
-          backgroundPromises.push(
-            translateSafe(facultyContent, currentLang, 'Faculty').then(setFacultyContent).catch(() => {})
-          );
-        }
-        if (priority.name !== 'Weekly Dicta') {
-          backgroundPromises.push(
-            translateSafe(weeklyDictaContent, currentLang, 'Weekly Dicta').then(setWeeklyDictaContent).catch(() => {})
-          );
-          backgroundPromises.push(
-            translateSafe(noticesContent, currentLang, 'Notices').then(setNoticesContent).catch(() => {})
-          );
-        }
-
-        // Wait for priority content (should complete in <1 second)
-        await priorityPromise.catch(() => {});
-
-        // Background translations continue without blocking
-        Promise.allSettled(backgroundPromises).then(() => {
-          console.log(`[Translation] All background translations completed for ${currentLang}`);
-        });
-
-        console.log(`[Translation] Priority translation completed for ${currentLang}`);
-      } catch (err) {
-        console.error("[Translation] Translation process failed:", err);
-        setIsTranslating(false);
-        setGlobalAlert({
-          active: true,
-          message: `Translation to ${currentLang} failed. Please try again or refresh the page.`,
-          type: 'error'
-        });
-      } finally {
-        prevLangRef.current = currentLang;
-      }
-    };
-    handleTranslation();
-  }, [currentLang, currentPage]);
+  // Use translation hook
+  const { isTranslating } = useTranslation({
+    currentLang,
+    currentPage,
+    homeContent,
+    setHomeContent,
+    admissionsContent,
+    setAdmissionsContent,
+    academicsContent,
+    setAcademicsContent,
+    facultyContent,
+    setFacultyContent,
+    weeklyDictaContent,
+    setWeeklyDictaContent,
+    noticesContent,
+    setNoticesContent,
+    setGlobalAlert
+  });
 
   const handleNavigate = (page: Page) => {
     // Use startTransition to make navigation non-blocking
@@ -508,20 +197,22 @@ const App: React.FC = () => {
   const renderContent = () => {
     if (currentPage === 'admin') {
       return (
-        <Admin 
-          home={homeContent} 
-          setHome={setHomeContent}
-          admissions={admissionsContent}
-          setAdmissions={setAdmissionsContent}
-          academics={academicsContent}
-          setAcademics={setAcademicsContent}
-          faculty={facultyContent}
-          setFaculty={setFacultyContent}
-          notices={noticesContent}
-          setNotices={setNoticesContent}
-          globalAlert={globalAlert}
-          setGlobalAlert={setGlobalAlert}
-        />
+        <Suspense fallback={<LoadingSpinner message="Loading admin panel..." />}>
+          <Admin 
+            home={homeContent} 
+            setHome={setHomeContent}
+            admissions={admissionsContent}
+            setAdmissions={setAdmissionsContent}
+            academics={academicsContent}
+            setAcademics={setAcademicsContent}
+            faculty={facultyContent}
+            setFaculty={setFacultyContent}
+            notices={noticesContent}
+            setNotices={setNoticesContent}
+            globalAlert={globalAlert}
+            setGlobalAlert={setGlobalAlert}
+          />
+        </Suspense>
       );
     }
 
@@ -911,27 +602,35 @@ const App: React.FC = () => {
         />;
       
       case 'library':
-        return <Library content={{
-          title: "Law Library",
-          intro: "Your gateway to comprehensive legal research resources.",
-          sections: [
-            { title: "Digital Collections", content: "Access Westlaw, LexisNexis, and HeinOnline from anywhere 24/7." },
-            { title: "Research Guides", content: "Curated pathfinders for specific areas of law including Torts, Contracts, and Civil Procedure." },
-            { title: "Reference Support", content: "Schedule a Zoom consultation with our reference librarians for research strategy assistance." }
-          ]
-        }} shared={shared} />;
+        return (
+          <Suspense fallback={<LoadingSpinner message="Loading library..." />}>
+            <Library content={{
+              title: "Law Library",
+              intro: "Your gateway to comprehensive legal research resources.",
+              sections: [
+                { title: "Digital Collections", content: "Access Westlaw, LexisNexis, and HeinOnline from anywhere 24/7." },
+                { title: "Research Guides", content: "Curated pathfinders for specific areas of law including Torts, Contracts, and Civil Procedure." },
+                { title: "Reference Support", content: "Schedule a Zoom consultation with our reference librarians for research strategy assistance." }
+              ]
+            }} shared={shared} />
+          </Suspense>
+        );
 
       case 'academic-calendar':
-        return <Calendar content={{
-          title: "Academic Calendar",
-          intro: "Key dates and deadlines for the 2026-2027 academic year.",
-          events: [
-            { date: "Aug 25, 2026", event: "Fall Semester Begins", type: "Academic" },
-            { date: "Sept 7, 2026", event: "Labor Day (No Classes)", type: "Holiday" },
-            { date: "Nov 26-27, 2026", event: "Thanksgiving Break", type: "Holiday" },
-            { date: "Dec 14-18, 2026", event: "Final Examinations", type: "Exam" }
-          ]
-        }} shared={shared} />;
+        return (
+          <Suspense fallback={<LoadingSpinner message="Loading calendar..." />}>
+            <Calendar content={{
+              title: "Academic Calendar",
+              intro: "Key dates and deadlines for the 2026-2027 academic year.",
+              events: [
+                { date: "Aug 25, 2026", event: "Fall Semester Begins", type: "Academic" },
+                { date: "Sept 7, 2026", event: "Labor Day (No Classes)", type: "Holiday" },
+                { date: "Nov 26-27, 2026", event: "Thanksgiving Break", type: "Holiday" },
+                { date: "Dec 14-18, 2026", event: "Final Examinations", type: "Exam" }
+              ]
+            }} shared={shared} />
+          </Suspense>
+        );
 
       // --- ADMISSIONS SECTIONS ---
       case 'admissions':
@@ -1326,29 +1025,78 @@ const App: React.FC = () => {
 
       case 'tech-reqs':
         return (
-          <GenericPage
+          <>
+            <PageHeader 
             title="Technology Requirements"
             subtitle="Ensuring you are connected for success."
             icon={ComputerDesktopIcon}
-            content={
-              <>
-                <h3>Hardware Requirements</h3>
-                <ul>
-                  <li>Computer (PC or Mac) less than 4 years old</li>
-                  <li>Webcam (internal or external)</li>
-                  <li>Microphone and speakers (headset recommended)</li>
-                  <li>Minimum 8GB RAM</li>
-                </ul>
-                <h3>Software & Connectivity</h3>
-                <ul>
-                  <li>High-speed internet connection (Broadband/Fiber recommended)</li>
-                  <li>Google Chrome or Mozilla Firefox browser</li>
-                  <li>Microsoft Office Suite (Student license provided)</li>
-                  <li>Adobe Acrobat Reader</li>
-                </ul>
-              </>
-            }
-          />
+            />
+            <SectionWrapper>
+              <div className="max-w-6xl mx-auto">
+                {/* Hardware Requirements Section */}
+                <div className="mb-12 md:mb-16">
+                  <SectionHeader 
+                    title="Hardware Requirements" 
+                    icon={ComputerDesktopIcon} 
+                    variant="blue"
+                  />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                    <InfoCard 
+                      title="Computer" 
+                      description="PC or Mac less than 4 years old" 
+                      variant="blue"
+                    />
+                    <InfoCard 
+                      title="Webcam" 
+                      description="Internal or external camera" 
+                      variant="blue"
+                    />
+                    <InfoCard 
+                      title="Audio Equipment" 
+                      description="Microphone and speakers (headset recommended)" 
+                      variant="blue"
+                    />
+                    <InfoCard 
+                      title="Memory" 
+                      description="Minimum 8GB RAM" 
+                      variant="blue"
+                    />
+                  </div>
+                </div>
+
+                {/* Software & Connectivity Section */}
+                <div>
+                  <SectionHeader 
+                    title="Software & Connectivity" 
+                    icon={GlobeAltIcon} 
+                    variant="gold"
+                  />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                    <InfoCard 
+                      title="Internet Connection" 
+                      description="High-speed broadband or fiber recommended" 
+                      variant="gold"
+                    />
+                    <InfoCard 
+                      title="Web Browser" 
+                      description="Google Chrome or Mozilla Firefox" 
+                      variant="gold"
+                    />
+                    <InfoCard 
+                      title="Microsoft Office" 
+                      description="Student license provided" 
+                      variant="gold"
+                    />
+                    <InfoCard 
+                      title="Adobe Acrobat Reader" 
+                      description="Free PDF reader software" 
+                      variant="gold"
+                    />
+                  </div>
+                </div>
+              </div>
+            </SectionWrapper>
+          </>
         );
       
       case 'admission-reqs':
@@ -1356,37 +1104,155 @@ const App: React.FC = () => {
       
       case 'app-steps':
         return (
-          <GenericPage 
+          <>
+            <PageHeader 
             title="Application Steps" 
             subtitle="Your roadmap to enrollment."
             icon={ClipboardDocumentListIcon}
-            content={
-              <ol>
-                <li><strong>Submit Online Application:</strong> Complete the form via LSAC or our direct portal.</li>
-                <li><strong>Request Transcripts:</strong> Have official transcripts sent from all undergraduate institutions.</li>
-                <li><strong>Personal Statement:</strong> Upload a 2-3 page essay describing your motivation for studying law.</li>
-                <li><strong>Letters of Recommendation:</strong> Two letters from academic or professional sources.</li>
-                <li><strong>Interview:</strong> Selected candidates will be invited for a Zoom interview with the Admissions Committee.</li>
-              </ol>
-            }
-          />
+            />
+            <SectionWrapper>
+              <div className="max-w-4xl mx-auto">
+                <div className="space-y-6 md:space-y-8">
+                  <StepCard 
+                    stepNumber={1}
+                    title="Submit Online Application"
+                    description="Complete the form via LSAC or our direct portal."
+                    icon={DocumentCheckIcon}
+                  />
+                  <StepCard 
+                    stepNumber={2}
+                    title="Request Transcripts"
+                    description="Have official transcripts sent from all undergraduate institutions."
+                    icon={DocumentDuplicateIcon}
+                  />
+                  <StepCard 
+                    stepNumber={3}
+                    title="Personal Statement"
+                    description="Upload a 2-3 page essay describing your motivation for studying law."
+                    icon={DocumentTextIcon}
+                  />
+                  <StepCard 
+                    stepNumber={4}
+                    title="Letters of Recommendation"
+                    description="Two letters from academic or professional sources."
+                    icon={UserGroupIcon}
+                  />
+                  <StepCard 
+                    stepNumber={5}
+                    title="Interview"
+                    description="Selected candidates will be invited for a Zoom interview with the Admissions Committee."
+                    icon={ChatBubbleBottomCenterTextIcon}
+                    isLast
+                  />
+                </div>
+              </div>
+            </SectionWrapper>
+          </>
         );
 
       case 'transfer-int':
         return (
-          <GenericPage
+          <>
+            <PageHeader 
             title="Transfer & International"
             subtitle="Joining PAU from another institution or country."
             icon={GlobeAltIcon}
-            content={
-              <>
-                <p>PAU welcomes transfer students from other state-accredited or ABA-accredited law schools. Transfer credit is evaluated on a case-by-case basis.</p>
-                <h3>International Applicants</h3>
-                <p>Applicants with degrees from outside the U.S. must have their transcripts evaluated by a credential evaluation service (e.g., WES, LSAC CAS).</p>
-                <p><strong>TOEFL Requirement:</strong> Non-native English speakers must demonstrate proficiency with a minimum TOEFL score of 90 (iBT).</p>
-              </>
-            }
-          />
+            />
+            <SectionWrapper>
+              <div className="max-w-6xl mx-auto">
+                {/* Transfer Students Section */}
+                <div className="mb-12 md:mb-16">
+                  <div className="bg-gradient-to-br from-pau-darkBlue to-pau-blue p-8 md:p-12 rounded-3xl shadow-2xl relative overflow-hidden mb-8">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-pau-gold opacity-10 rounded-full -mr-32 -mt-32"></div>
+                    <div className="relative z-10">
+                      <div className="flex items-center mb-6">
+                        <div className="w-14 h-14 bg-pau-gold rounded-xl flex items-center justify-center mr-4">
+                          <AcademicCapIcon className="h-7 w-7 text-pau-darkBlue" />
+                        </div>
+                        <h2 className="text-2xl md:text-3xl font-serif font-bold text-white">Transfer Students</h2>
+                      </div>
+                      <p className="text-lg md:text-xl text-white leading-relaxed">
+                        PAU welcomes transfer students from other state-accredited or ABA-accredited law schools. Transfer credit is evaluated on a case-by-case basis.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                    <div className="bg-white p-6 rounded-2xl border-2 border-pau-blue shadow-lg hover:shadow-xl transition-all">
+                      <div className="flex items-center mb-4">
+                        <div className="w-10 h-10 bg-pau-blue rounded-lg flex items-center justify-center mr-3">
+                          <ShieldCheckIcon className="h-5 w-5 text-white" />
+                        </div>
+                        <h3 className="text-xl font-serif font-bold text-pau-darkBlue">State-Accredited Schools</h3>
+                      </div>
+                      <p className="text-gray-700">Credits from state-accredited law schools are considered for transfer.</p>
+                    </div>
+                    <div className="bg-white p-6 rounded-2xl border-2 border-pau-blue shadow-lg hover:shadow-xl transition-all">
+                      <div className="flex items-center mb-4">
+                        <div className="w-10 h-10 bg-pau-blue rounded-lg flex items-center justify-center mr-3">
+                          <CheckBadgeIcon className="h-5 w-5 text-white" />
+                        </div>
+                        <h3 className="text-xl font-serif font-bold text-pau-darkBlue">ABA-Accredited Schools</h3>
+                      </div>
+                      <p className="text-gray-700">Credits from ABA-accredited institutions are evaluated for transfer eligibility.</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* International Applicants Section */}
+                <div>
+                  <div className="bg-gradient-to-br from-pau-gold/20 to-amber-50 p-8 md:p-12 rounded-3xl border-2 border-pau-gold shadow-xl mb-8">
+                    <div className="flex items-center mb-6">
+                      <div className="w-14 h-14 bg-pau-gold rounded-xl flex items-center justify-center mr-4">
+                        <GlobeAltIcon className="h-7 w-7 text-pau-darkBlue" />
+                      </div>
+                      <h2 className="text-2xl md:text-3xl font-serif font-bold text-pau-darkBlue">International Applicants</h2>
+                    </div>
+                    <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                      Applicants with degrees from outside the U.S. must have their transcripts evaluated by a credential evaluation service.
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                    <div className="bg-white p-6 rounded-2xl border-2 border-pau-gold shadow-lg hover:shadow-xl transition-all">
+                      <div className="flex items-center mb-4">
+                        <div className="w-10 h-10 bg-pau-gold rounded-lg flex items-center justify-center mr-3">
+                          <DocumentCheckIcon className="h-5 w-5 text-pau-darkBlue" />
+                        </div>
+                        <h3 className="text-xl font-serif font-bold text-pau-darkBlue">Credential Evaluation</h3>
+                      </div>
+                      <p className="text-gray-700 mb-3">Required services include:</p>
+                      <ul className="space-y-2 text-gray-700">
+                        <li className="flex items-start">
+                          <span className="text-pau-gold mr-2">•</span>
+                          <span>WES (World Education Services)</span>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-pau-gold mr-2">•</span>
+                          <span>LSAC CAS (Law School Admission Council)</span>
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="bg-white p-6 rounded-2xl border-2 border-pau-gold shadow-lg hover:shadow-xl transition-all">
+                      <div className="flex items-center mb-4">
+                        <div className="w-10 h-10 bg-pau-gold rounded-lg flex items-center justify-center mr-3">
+                          <AcademicCapIcon className="h-5 w-5 text-pau-darkBlue" />
+                        </div>
+                        <h3 className="text-xl font-serif font-bold text-pau-darkBlue">TOEFL Requirement</h3>
+                      </div>
+                      <p className="text-gray-700 mb-3">
+                        Non-native English speakers must demonstrate proficiency with a minimum TOEFL score of:
+                      </p>
+                      <div className="bg-pau-gold/10 p-4 rounded-xl border border-pau-gold">
+                        <p className="text-2xl font-bold text-pau-darkBlue">90 (iBT)</p>
+                        <p className="text-sm text-gray-600 mt-1">Internet-based Test</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </SectionWrapper>
+          </>
         );
 
       default:
@@ -1405,6 +1271,15 @@ const App: React.FC = () => {
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans text-gray-900">
       {isTranslating && <TranslationOverlay lang={currentLang} />}
       
+      {/* Skip to main content link for screen readers */}
+      <a 
+        href="#main-content" 
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:bg-pau-blue focus:text-white focus:rounded-lg focus:font-bold focus:shadow-lg"
+        aria-label="Skip to main content"
+      >
+        Skip to main content
+      </a>
+      
       <Navbar 
         currentLang={currentLang} 
         onLanguageChange={setCurrentLang} 
@@ -1415,7 +1290,7 @@ const App: React.FC = () => {
         globalAlert={globalAlert}
       />
       
-      <main className="flex-grow">
+      <main id="main-content" className="flex-grow" role="main" tabIndex={-1}>
         {renderContent()}
       </main>
 

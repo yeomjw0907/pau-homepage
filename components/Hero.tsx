@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { HomeContent, SharedContent, Page } from '../types';
-import { ArrowRightIcon, PlayCircleIcon } from '@heroicons/react/24/outline';
+import { ArrowRightIcon } from '@heroicons/react/24/outline';
 
 interface HeroProps {
   content: HomeContent;
@@ -58,9 +58,10 @@ export const Hero: React.FC<HeroProps> = ({ content, shared, onNavigate }) => {
             <button 
               onClick={() => onNavigate('apply-now')}
               className="px-10 py-5 bg-pau-gold text-white font-bold text-xs tracking-[0.15em] uppercase flex items-center justify-center rounded-sm hover:bg-white hover:text-pau-darkBlue transition-all duration-300 shadow-[0_0_20px_rgba(179,139,89,0.3)] group"
+              aria-label="Navigate to application page"
             >
               Apply Now 
-              <ArrowRightIcon className="ml-3 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <ArrowRightIcon className="ml-3 h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
             </button>
             
             {/* <button 

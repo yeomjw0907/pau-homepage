@@ -28,7 +28,13 @@ interface AcademicsProps {
 /**
  * Internal helper for detailed sub-page headers
  */
-const SubPageHeader = ({ title, subtitle, icon: Icon, onBack }: any) => (
+interface SubPageHeaderProps {
+  title: string;
+  subtitle: string;
+  icon: React.ComponentType<{ className?: string }>;
+  onBack: () => void;
+}
+const SubPageHeader: React.FC<SubPageHeaderProps> = ({ title, subtitle, icon: Icon, onBack }) => (
   <div className="bg-pau-darkBlue pt-44 pb-20 px-6">
     <div className="max-w-5xl mx-auto">
       <button 

@@ -1,6 +1,8 @@
 
 import { GoogleGenAI } from "@google/genai";
 import { SupportedLanguage, ImageSize } from "../types";
+import { detectErrorType, ErrorType, getErrorMessage } from "../utils/errorMessages";
+import { withRetry } from "../utils/apiHelpers";
 
 // In-memory cache for translations to avoid redundant API calls and improve speed
 const translationCache = new Map<string, any>();
@@ -119,8 +121,12 @@ export const translateContent = async <T>(
                  '';
   
   if (!apiKey || apiKey === 'undefined' || apiKey === 'null') {
+    const errorType = ErrorType.API_KEY_MISSING;
+    const errorMessage = getErrorMessage(errorType, targetLanguage);
     console.error("Gemini API key is not configured. Please set GEMINI_API_KEY in environment variables.");
-    throw new Error("API key not found");
+    const error = new Error(errorMessage.message);
+    (error as any).errorType = errorType;
+    throw error;
   }
   const ai = new GoogleGenAI({ apiKey });
 
@@ -135,14 +141,21 @@ Rules:
 4. OUTPUT: Return ONLY the raw valid JSON string. Do not include markdown formatting (like \`\`\`json) or any conversational text.`;
 
   try {
-    const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
-      contents: contentString,
-      config: {
-        systemInstruction: systemInstruction,
-        responseMimeType: 'application/json',
-        temperature: 0.1,
-      }
+    const response = await withRetry(async () => {
+      return await ai.models.generateContent({
+        model: 'gemini-3-flash-preview',
+        contents: contentString,
+        config: {
+          systemInstruction: systemInstruction,
+          responseMimeType: 'application/json',
+          temperature: 0.1,
+        }
+      });
+    }, {
+      maxRetries: 3,
+      initialDelay: 1000,
+      maxDelay: 10000,
+      timeout: 30000
     });
 
     const text = response.text;
@@ -162,7 +175,16 @@ Rules:
     return translated;
   } catch (error) {
     console.error("Translation error:", error);
-    throw error;
+    
+    // Enhance error with user-friendly message
+    const errorType = detectErrorType(error);
+    const errorMessage = getErrorMessage(errorType, targetLanguage);
+    const enhancedError = new Error(errorMessage.message);
+    (enhancedError as any).errorType = errorType;
+    (enhancedError as any).title = errorMessage.title;
+    (enhancedError as any).action = errorMessage.action;
+    
+    throw enhancedError;
   }
 };
 
@@ -182,27 +204,38 @@ export const generateArchitecturalImage = async (
                  '';
   
   if (!apiKey || apiKey === 'undefined' || apiKey === 'null') {
+    const errorType = ErrorType.API_KEY_MISSING;
+    const errorMessage = getErrorMessage(errorType, 'English');
     console.error("Gemini API key is not configured. Please set GEMINI_API_KEY in environment variables.");
-    throw new Error("API key not found");
+    const error = new Error(errorMessage.message);
+    (error as any).errorType = errorType;
+    throw error;
   }
   const ai = new GoogleGenAI({ apiKey });
 
   try {
-    const response = await ai.models.generateContent({
-      model: 'gemini-3-pro-image-preview',
-      contents: {
-        parts: [
-          {
-            text: prompt,
-          },
-        ],
-      },
-      config: {
-        imageConfig: {
-          aspectRatio: "16:9",
-          imageSize: size as any, // "1K", "2K", or "4K"
+    const response = await withRetry(async () => {
+      return await ai.models.generateContent({
+        model: 'gemini-3-pro-image-preview',
+        contents: {
+          parts: [
+            {
+              text: prompt,
+            },
+          ],
         },
-      },
+        config: {
+          imageConfig: {
+            aspectRatio: "16:9",
+            imageSize: size, // "1K", "2K", or "4K"
+          },
+        },
+      });
+    }, {
+      maxRetries: 3,
+      initialDelay: 1000,
+      maxDelay: 10000,
+      timeout: 60000 // 60 seconds for image generation
     });
 
     const candidates = response.candidates;
@@ -221,6 +254,15 @@ export const generateArchitecturalImage = async (
     throw new Error("No image data found in the model response.");
   } catch (error) {
     console.error("Architectural generation error:", error);
-    throw error;
+    
+    // Enhance error with user-friendly message
+    const errorType = detectErrorType(error);
+    const errorMessage = getErrorMessage(errorType, 'English');
+    const enhancedError = new Error(errorMessage.message);
+    (enhancedError as any).errorType = errorType;
+    (enhancedError as any).title = errorMessage.title;
+    (enhancedError as any).action = errorMessage.action;
+    
+    throw enhancedError;
   }
 };

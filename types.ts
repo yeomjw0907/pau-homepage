@@ -22,7 +22,7 @@ export type Page =
 export interface GlobalAlert {
   active: boolean;
   message: string;
-  type: 'info' | 'warning' | 'emergency';
+  type: 'info' | 'warning' | 'emergency' | 'error';
 }
 
 export interface Statistic {

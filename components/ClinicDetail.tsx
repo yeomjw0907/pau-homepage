@@ -1,7 +1,8 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Clinic, SharedContent } from '../types';
 import { ArrowLeftIcon, BuildingLibraryIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { useForm } from '../hooks/useForm';
 
 interface ClinicDetailProps {
   clinic: Clinic;
@@ -11,37 +12,26 @@ interface ClinicDetailProps {
 
 export const ClinicDetail: React.FC<ClinicDetailProps> = ({ clinic, onBack, shared }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formData, setFormData] = useState({
+  const modalRef = useRef<HTMLDivElement>(null);
+  const firstFocusableRef = useRef<HTMLElement | null>(null);
+  const lastFocusableRef = useRef<HTMLElement | null>(null);
+  
+  const initialFormData = {
     name: '',
     email: '',
     studentId: '',
     year: '2L',
     hasPrerequisites: false,
     statement: ''
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    const checked = (e.target as HTMLInputElement).checked;
-    
-    setFormData(prev => ({
-      ...prev,
-      [name]: e.target.type === 'checkbox' ? checked : value
-    }));
   };
+  
+  const { formData, handleChange, reset } = useForm(initialFormData);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     alert(`Application submitted for ${formData.name}!\n\nThe Clinic Director will review your statement and contact you at ${formData.email}.`);
     setIsModalOpen(false);
-    setFormData({
-      name: '',
-      email: '',
-      studentId: '',
-      year: '2L',
-      hasPrerequisites: false,
-      statement: ''
-    });
+    reset();
   };
 
   return (
@@ -103,13 +93,16 @@ export const ClinicDetail: React.FC<ClinicDetailProps> = ({ clinic, onBack, shar
 
             <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
-            <div className="inline-block align-bottom bg-white rounded-xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full">
+            <div 
+              ref={modalRef}
+              className="inline-block align-bottom bg-white rounded-xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full"
+            >
               <div className="bg-pau-blue px-6 py-4 flex justify-between items-center">
-                 <h3 className="text-lg font-bold text-white">
+                 <h3 id="modal-title" className="text-lg font-bold text-white">
                     {shared.labels.clinicInquiryForm}
                  </h3>
-                 <button type="button" onClick={() => setIsModalOpen(false)} className="text-white/70 hover:text-white">
-                    <XMarkIcon className="h-6 w-6" />
+                 <button type="button" onClick={() => setIsModalOpen(false)} className="text-white/70 hover:text-white" aria-label="Close modal">
+                    <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                  </button>
               </div>
 
@@ -126,6 +119,7 @@ export const ClinicDetail: React.FC<ClinicDetailProps> = ({ clinic, onBack, shar
                       <input 
                         type="text" name="name" id="name" required
                         value={formData.name} onChange={handleChange}
+                        aria-required="true"
                         className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-pau-blue focus:border-pau-blue sm:text-sm p-3 bg-gray-50" 
                         placeholder="Jane Doe"
                       />
@@ -137,6 +131,7 @@ export const ClinicDetail: React.FC<ClinicDetailProps> = ({ clinic, onBack, shar
                       <input 
                         type="email" name="email" id="email" required
                         value={formData.email} onChange={handleChange}
+                        aria-required="true"
                         className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-pau-blue focus:border-pau-blue sm:text-sm p-3 bg-gray-50" 
                         placeholder="jdoe@pau.edu"
                       />
@@ -149,6 +144,7 @@ export const ClinicDetail: React.FC<ClinicDetailProps> = ({ clinic, onBack, shar
                         <input 
                           type="text" name="studentId" id="studentId" required
                           value={formData.studentId} onChange={handleChange}
+                          aria-required="true"
                           className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-pau-blue focus:border-pau-blue sm:text-sm p-3 bg-gray-50" 
                         />
                       </div>
@@ -189,6 +185,7 @@ export const ClinicDetail: React.FC<ClinicDetailProps> = ({ clinic, onBack, shar
                       <textarea 
                         id="statement" name="statement" rows={4} required
                         value={formData.statement} onChange={handleChange}
+                        aria-required="true"
                         className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-pau-blue focus:border-pau-blue sm:text-sm p-3 bg-gray-50" 
                       />
                     </div>

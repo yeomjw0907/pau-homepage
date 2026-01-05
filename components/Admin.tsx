@@ -38,6 +38,7 @@ import {
   ComputerDesktopIcon
 } from '@heroicons/react/24/outline';
 import { BookmarkIcon as BookmarkSolidIcon } from '@heroicons/react/24/solid';
+import { splitAndTrim } from '../utils/stringUtils';
 
 // --- Rich Text Editor Toolbar Component ---
 const RichTextToolbar = ({ onCommand }: { onCommand: (cmd: string, val?: string) => void }) => {
@@ -242,32 +243,37 @@ export const Admin: React.FC<AdminProps> = ({
   };
 
   // HANDLERS
-  const updateNewsItem = (index: number, field: string, value: any) => {
+  const updateNewsItem = <K extends keyof NewsItem>(index: number, field: K, value: NewsItem[K]) => {
     const newList = [...home.latestNews];
     newList[index] = { ...newList[index], [field]: value };
     setHome({ ...home, latestNews: newList });
   };
 
-  const updateNoticeItem = (index: number, field: string, value: any) => {
+  const updateNoticeItem = <K extends keyof NewsItem>(index: number, field: K, value: NewsItem[K]) => {
     const newList = [...notices.notices];
     newList[index] = { ...newList[index], [field]: value };
     setNotices({ ...notices, notices: newList });
   };
 
-  const updateFacultyItem = (index: number, field: string, value: any) => {
+  const updateFacultyItem = <K extends keyof FacultyMember>(index: number, field: K, value: FacultyMember[K]) => {
     const newList = [...faculty.facultyList];
     newList[index] = { ...newList[index], [field]: value };
     setFaculty({ ...faculty, facultyList: newList });
   };
 
-  const updateAcademicProgram = (index: number, field: string, value: any) => {
+  const updateAcademicProgram = (index: number, field: 'name' | 'description', value: string) => {
     const newList = [...academics.programs];
     newList[index] = { ...newList[index], [field]: value };
     setAcademics({ ...academics, programs: newList });
   };
 
   // RENDER DATE INPUT HELPER
-  const DateInput = ({ value, onChange, colorClass = "text-pau-gold" }: any) => (
+  interface DateInputProps {
+    value: string;
+    onChange: (value: string) => void;
+    colorClass?: string;
+  }
+  const DateInput: React.FC<DateInputProps> = ({ value, onChange, colorClass = "text-pau-gold" }) => (
     <div className="relative w-full h-[58px] group cursor-pointer" onClick={(e) => {
       const input = e.currentTarget.querySelector('input');
       if (input) input.showPicker();
@@ -287,7 +293,13 @@ export const Admin: React.FC<AdminProps> = ({
     </div>
   );
 
-  const SectionHeader = ({ title, subtitle, btnLabel, onBtnClick }: any) => (
+  interface SectionHeaderProps {
+    title: string;
+    subtitle: string;
+    btnLabel: string;
+    onBtnClick: () => void;
+  }
+  const SectionHeader: React.FC<SectionHeaderProps> = ({ title, subtitle, btnLabel, onBtnClick }) => (
     <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-10 pb-8 border-b border-gray-100 gap-4">
       <div>
         <h2 className="text-2xl font-serif font-bold text-pau-darkBlue">{title}</h2>
@@ -384,7 +396,7 @@ export const Admin: React.FC<AdminProps> = ({
                         {['info', 'warning', 'emergency'].map((type) => (
                           <button
                             key={type}
-                            onClick={() => setGlobalAlert({...globalAlert, type: type as any})}
+                            onClick={() => setGlobalAlert({...globalAlert, type: type as GlobalAlert['type']})}
                             className={`px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider border-2 transition-all ${
                               globalAlert.type === type 
                               ? 'border-pau-blue bg-pau-blue text-white' 
@@ -511,13 +523,13 @@ export const Admin: React.FC<AdminProps> = ({
                   onBtnClick={() => setHome({ ...home, latestNews: [{ id: Date.now().toString(), title: '', date: '', summary: '', body: '', category: 'General', images: [] }, ...home.latestNews] })}
                 />
                 
-                {home.latestNews.map((item: any, i: number) => (
+                {home.latestNews.map((item: NewsItem, i: number) => (
                   <div key={item.id} className={`relative p-10 border-2 rounded-3xl bg-white transition-all mb-12 shadow-sm ${item.isPinned ? 'border-pau-gold ring-1 ring-pau-gold/5' : 'border-gray-100'}`}>
                     <div className="absolute -top-5 right-8 flex items-center gap-3">
                       <button onClick={() => updateNewsItem(i, 'isPinned', !item.isPinned)} className={`p-3 rounded-full shadow-lg border-2 ${item.isPinned ? 'bg-pau-gold text-white border-white' : 'bg-white text-gray-300 border-gray-100'}`}>
                         {item.isPinned ? <BookmarkSolidIcon className="h-5 w-5" /> : <BookmarkOutlineIcon className="h-5 w-5" />}
                       </button>
-                      <button onClick={() => setHome({ ...home, latestNews: home.latestNews.filter((_: any, idx: number) => idx !== i) })} className="p-3 bg-white text-red-400 border-2 border-gray-100 rounded-full hover:text-red-600 shadow-lg">
+                      <button onClick={() => setHome({ ...home, latestNews: home.latestNews.filter((_, idx: number) => idx !== i) })} className="p-3 bg-white text-red-400 border-2 border-gray-100 rounded-full hover:text-red-600 shadow-lg">
                         <TrashIcon className="h-5 w-5" />
                       </button>
                     </div>
@@ -555,13 +567,13 @@ export const Admin: React.FC<AdminProps> = ({
                   onBtnClick={() => setNotices({ ...notices, notices: [{ id: Date.now().toString(), title: '', date: '', summary: '', body: '', category: 'Academic', images: [] }, ...notices.notices] })}
                 />
                 
-                {notices.notices.map((notice: any, i: number) => (
+                {notices.notices.map((notice: NewsItem, i: number) => (
                   <div key={notice.id} className={`relative p-10 border-2 rounded-3xl bg-white transition-all mb-12 shadow-sm ${notice.isPinned ? 'border-pau-blue ring-1 ring-pau-blue/5' : 'border-gray-100'}`}>
                     <div className="absolute -top-5 right-8 flex items-center gap-3">
                       <button onClick={() => updateNoticeItem(i, 'isPinned', !notice.isPinned)} className={`p-3 rounded-full shadow-lg border-2 ${notice.isPinned ? 'bg-pau-blue text-white border-white' : 'bg-white text-gray-300 border-gray-100'}`}>
                         {notice.isPinned ? <BookmarkSolidIcon className="h-5 w-5" /> : <BookmarkOutlineIcon className="h-5 w-5" />}
                       </button>
-                      <button onClick={() => setNotices({ ...notices, notices: notices.notices.filter((_: any, idx: number) => idx !== i) })} className="p-3 bg-white text-red-400 border-2 border-gray-100 rounded-full hover:text-red-600 shadow-lg">
+                      <button onClick={() => setNotices({ ...notices, notices: notices.notices.filter((_, idx: number) => idx !== i) })} className="p-3 bg-white text-red-400 border-2 border-gray-100 rounded-full hover:text-red-600 shadow-lg">
                         <TrashIcon className="h-5 w-5" />
                       </button>
                     </div>
@@ -595,10 +607,10 @@ export const Admin: React.FC<AdminProps> = ({
                   onBtnClick={() => setFaculty({ ...faculty, facultyList: [{ name: 'New Professor', title: '', education: '', bio: '', expertise: [] }, ...faculty.facultyList] })}
                 />
                 
-                {faculty.facultyList.map((member: any, i: number) => (
+                {faculty.facultyList.map((member: FacultyMember, i: number) => (
                   <div key={i} className="relative p-10 border border-gray-100 rounded-3xl bg-gray-50/30 mb-12 shadow-sm">
                     <div className="absolute top-4 right-4">
-                      <button onClick={() => setFaculty({ ...faculty, facultyList: faculty.facultyList.filter((_: any, idx: number) => idx !== i) })} className="p-2 text-red-300 hover:text-red-500 transition-colors">
+                      <button onClick={() => setFaculty({ ...faculty, facultyList: faculty.facultyList.filter((_, idx: number) => idx !== i) })} className="p-2 text-red-300 hover:text-red-500 transition-colors">
                         <TrashIcon className="h-5 w-5" />
                       </button>
                     </div>
@@ -629,7 +641,7 @@ export const Admin: React.FC<AdminProps> = ({
                         type="text" 
                         className="w-full p-4 bg-white border border-gray-200 rounded-lg text-sm" 
                         value={member.expertise?.join(', ')} 
-                        onChange={(e) => updateFacultyItem(i, 'expertise', e.target.value.split(',').map(s => s.trim()))} 
+                        onChange={(e) => updateFacultyItem(i, 'expertise', splitAndTrim(e.target.value))} 
                         placeholder="e.g. Civil Rights, Tech Law, Criminal Justice"
                       />
                     </div>
@@ -654,9 +666,9 @@ export const Admin: React.FC<AdminProps> = ({
                       <BookOpenIcon className="h-5 w-5 mr-3 text-pau-gold" /> Programs & Descriptions
                     </h3>
                     <div className="space-y-6">
-                      {academics.programs.map((prog: any, i: number) => (
+                      {academics.programs.map((prog, i: number) => (
                         <div key={i} className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm relative group">
-                          <button onClick={() => setAcademics({ ...academics, programs: academics.programs.filter((_: any, idx: number) => idx !== i) })} className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 text-red-300 hover:text-red-500 transition-all">
+                          <button onClick={() => setAcademics({ ...academics, programs: academics.programs.filter((_, idx: number) => idx !== i) })} className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 text-red-300 hover:text-red-500 transition-all">
                             <TrashIcon className="h-4 w-4" />
                           </button>
                           <input type="text" className="w-full p-3 bg-gray-50 border-none rounded mb-2 font-bold text-pau-blue focus:ring-1 focus:ring-pau-gold" value={prog.name} onChange={(e) => updateAcademicProgram(i, 'name', e.target.value)} />
@@ -683,7 +695,7 @@ export const Admin: React.FC<AdminProps> = ({
                               setAcademics({ ...academics, concentrations: newList });
                             }} 
                           />
-                          <button onClick={() => setAcademics({ ...academics, concentrations: academics.concentrations.filter((_: any, idx: number) => idx !== i) })} className="p-2 text-gray-300 hover:text-red-400">
+                          <button onClick={() => setAcademics({ ...academics, concentrations: academics.concentrations.filter((_, idx: number) => idx !== i) })} className="p-2 text-gray-300 hover:text-red-400">
                             <XMarkIcon className="h-5 w-5" />
                           </button>
                         </div>

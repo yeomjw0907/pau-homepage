@@ -2,6 +2,7 @@
 import React from 'react';
 import { NewsItem, SharedContent } from '../types';
 import { ArrowLeftIcon, CalendarDaysIcon, TagIcon, PhotoIcon } from '@heroicons/react/24/outline';
+import { LazyImage } from './common/LazyImage';
 
 interface NewsDetailProps {
   item: NewsItem;
@@ -10,7 +11,13 @@ interface NewsDetailProps {
 }
 
 export const NewsDetail: React.FC<NewsDetailProps> = ({ item, onBack, shared }) => {
-  const images = item.images && item.images.length > 0 ? item.images : ((item as any).imageUrl ? [(item as any).imageUrl] : []);
+  // Type guard for legacy imageUrl property
+  const hasImageUrl = (item: NewsItem): item is NewsItem & { imageUrl: string } => {
+    return 'imageUrl' in item && typeof (item as { imageUrl?: string }).imageUrl === 'string';
+  };
+  const images = item.images && item.images.length > 0 
+    ? item.images 
+    : (hasImageUrl(item) ? [item.imageUrl] : []);
   const isNewsletter = item.category === 'Newsletter';
 
   return (
@@ -51,13 +58,13 @@ export const NewsDetail: React.FC<NewsDetailProps> = ({ item, onBack, shared }) 
             {images.length > 0 && (
               <div className="space-y-4 mb-10">
                 <div className="w-full h-[400px] md:h-[500px] rounded-2xl overflow-hidden shadow-lg border border-gray-100">
-                   <img src={images[0]} alt={item.title} className="w-full h-full object-cover" />
+                   <LazyImage src={images[0]} alt={item.title} className="w-full h-full object-cover" loading="eager" />
                 </div>
                 {images.length > 1 && (
                   <div className="grid grid-cols-4 gap-4">
                     {images.slice(1).map((img, i) => (
                       <div key={i} className="aspect-square rounded-xl overflow-hidden shadow-sm border border-gray-100">
-                        <img src={img} alt={`Gallery ${i}`} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" />
+                        <LazyImage src={img} alt={`${item.title} - Image ${i + 2}`} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" loading="lazy" />
                       </div>
                     ))}
                   </div>

@@ -41,7 +41,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileExpandedSection, setMobileExpandedSection] = useState<string | null>(null);
-  const timeoutRef = useRef<any>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -123,6 +123,8 @@ export const Navbar: React.FC<NavbarProps> = ({
         className={`relative text-[15px] transition-all text-left w-full group flex items-center py-1 ${
           isActive ? 'text-pau-blue font-extrabold' : 'text-gray-600 hover:text-pau-blue font-semibold'
         }`}
+        aria-label={external ? `${label} (External link)` : label}
+        aria-current={isActive ? 'page' : undefined}
       >
         {isActive && (
           <span className="absolute -left-4 w-1 h-4 bg-pau-gold rounded-full"></span>
@@ -148,7 +150,12 @@ export const Navbar: React.FC<NavbarProps> = ({
           </span>
           <ChevronDownIcon className={`h-4 w-4 text-pau-gold transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
         </button>
-        <div className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-[1000px] pb-5' : 'max-h-0'}`}>
+        <div 
+          id={`mobile-section-${id}`}
+          className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-[1000px] pb-5' : 'max-h-0'}`}
+          role="region"
+          aria-hidden={!isOpen}
+        >
           <div className="flex flex-col space-y-4 pl-4 border-l-2 border-pau-gold/20">
             {children}
           </div>
@@ -161,8 +168,10 @@ export const Navbar: React.FC<NavbarProps> = ({
     <button 
       onClick={() => external ? navigateAndClose('home') : navigateAndClose(page)}
       className={`text-[15px] font-medium text-left py-1 transition-colors ${currentPage === page ? 'text-pau-gold font-bold' : 'text-gray-500 active:text-pau-blue'}`}
+      aria-label={external ? `${label} (External link)` : label}
+      aria-current={currentPage === page ? 'page' : undefined}
     >
-      {label} {external && <span className="text-[9px] text-gray-300 ml-1">(External)</span>}
+      {label} {external && <span className="text-[9px] text-gray-300 ml-1" aria-hidden="true">(External)</span>}
     </button>
   );
 
@@ -182,7 +191,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
       )}
 
-      <nav className={`fixed w-full z-50 transition-all duration-500 ${topOffset} ${navBgClass}`}>
+      <nav className={`fixed w-full z-50 transition-all duration-500 ${topOffset} ${navBgClass}`} role="navigation" aria-label="Main navigation">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
             <div 
@@ -207,10 +216,22 @@ export const Navbar: React.FC<NavbarProps> = ({
               <div className="relative group" onMouseEnter={() => handleMouseEnter('about')} onMouseLeave={handleMouseLeave}>
                 <button 
                   onClick={() => toggleDropdown('about')}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      toggleDropdown('about');
+                    } else if (e.key === 'Escape' && activeDropdown === 'about') {
+                      e.preventDefault();
+                      setActiveDropdown(null);
+                    }
+                  }}
                   className={navLinkClass(['history-mission', 'president-welcome', 'dean-message', 'school-form', 'faqs', 'bar-reg', 'disclosure', 'catalog', 'faculty', 'admin-staffs'/*, 'consumer-info'*/].includes(currentPage))}
+                  aria-label={`${shared.nav.about} menu`}
+                  aria-expanded={activeDropdown === 'about'}
+                  aria-haspopup="true"
                 >
                   {shared.nav.about}
-                  <ChevronDownIcon className={`ml-1 h-3.5 w-3.5 stroke-[3] transition-transform ${activeDropdown === 'about' ? 'rotate-180' : ''}`} />
+                  <ChevronDownIcon className={`ml-1 h-3.5 w-3.5 stroke-[3] transition-transform ${activeDropdown === 'about' ? 'rotate-180' : ''}`} aria-hidden="true" />
                 </button>
                 {activeDropdown === 'about' && (
                   <DropdownWrapper widthClass="w-[750px]">
@@ -257,10 +278,22 @@ export const Navbar: React.FC<NavbarProps> = ({
               <div className="relative group" onMouseEnter={() => handleMouseEnter('academics')} onMouseLeave={handleMouseLeave}>
                 <button 
                   onClick={() => toggleDropdown('academics')}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      toggleDropdown('academics');
+                    } else if (e.key === 'Escape' && activeDropdown === 'academics') {
+                      e.preventDefault();
+                      setActiveDropdown(null);
+                    }
+                  }}
                   className={navLinkClass([/*'academics',*/ 'academic-calendar', 'bar-info', 'curriculum-schedule', 'course-desc', 'counseling', 'grad-reqs'/*, 'centers', 'student-resources', 'library'*/].includes(currentPage))}
+                  aria-label={`${shared.nav.academics} menu`}
+                  aria-expanded={activeDropdown === 'academics'}
+                  aria-haspopup="true"
                 >
                   {shared.nav.academics}
-                  <ChevronDownIcon className={`ml-1 h-3.5 w-3.5 stroke-[3] transition-transform ${activeDropdown === 'academics' ? 'rotate-180' : ''}`} />
+                  <ChevronDownIcon className={`ml-1 h-3.5 w-3.5 stroke-[3] transition-transform ${activeDropdown === 'academics' ? 'rotate-180' : ''}`} aria-hidden="true" />
                 </button>
                 {activeDropdown === 'academics' && (
                   <DropdownWrapper widthClass="w-72">
@@ -284,9 +317,12 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button 
                   onClick={() => toggleDropdown('admissions')}
                   className={navLinkClass([/*'admissions',*/ 'apply-now', 'app-steps', 'admission-reqs', 'transfer-int', 'tech-reqs'/*, 'careers'*/].includes(currentPage))}
+                  aria-label={`${shared.nav.admissions} menu`}
+                  aria-expanded={activeDropdown === 'admissions'}
+                  aria-haspopup="true"
                 >
                   {shared.nav.admissions}
-                  <ChevronDownIcon className={`ml-1 h-3.5 w-3.5 stroke-[3] transition-transform ${activeDropdown === 'admissions' ? 'rotate-180' : ''}`} />
+                  <ChevronDownIcon className={`ml-1 h-3.5 w-3.5 stroke-[3] transition-transform ${activeDropdown === 'admissions' ? 'rotate-180' : ''}`} aria-hidden="true" />
                 </button>
                 {activeDropdown === 'admissions' && (
                   <DropdownWrapper widthClass="w-72">
@@ -407,11 +443,23 @@ export const Navbar: React.FC<NavbarProps> = ({
               <div className={`relative ml-4 pl-4 border-l ${isTransparent ? 'border-white/20' : 'border-gray-200'}`}>
                 <button 
                   onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
-                  className={`flex items-center space-x-2 transition-all rounded-full px-4 py-2 border font-bold ${languageBtnClass}`}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setIsLangMenuOpen(!isLangMenuOpen);
+                    } else if (e.key === 'Escape' && isLangMenuOpen) {
+                      e.preventDefault();
+                      setIsLangMenuOpen(false);
+                    }
+                  }}
+                  className={`flex items-center space-x-2 transition-all rounded-full px-4 py-2 border font-bold focus:outline-none focus:ring-2 focus:ring-pau-blue focus:ring-offset-2 ${languageBtnClass}`}
+                  aria-label={`Select language. Current language: ${currentLang}`}
+                  aria-expanded={isLangMenuOpen}
+                  aria-haspopup="true"
                 >
-                  <GlobeAltIcon className="h-4 w-4" />
+                  <GlobeAltIcon className="h-4 w-4" aria-hidden="true" />
                   <span className="text-[11px] uppercase tracking-widest">{currentLang.substring(0,3)}</span>
-                  <ChevronDownIcon className="h-3 w-3" />
+                  <ChevronDownIcon className="h-3 w-3" aria-hidden="true" />
                 </button>
                 {isLangMenuOpen && (
                   <div className="absolute right-0 mt-4 w-56 bg-white rounded-xl shadow-2xl py-2 z-[110] overflow-hidden border border-gray-200">
@@ -421,6 +469,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                         key={lang}
                         onClick={() => { onLanguageChange(lang); setIsLangMenuOpen(false); }}
                         className={`block w-full text-left px-5 py-3 text-[14px] transition-colors ${currentLang === lang ? 'bg-pau-light text-pau-blue font-bold' : 'text-gray-700 hover:bg-gray-50'}`}
+                        aria-label={`Select ${lang} language`}
+                        aria-pressed={currentLang === lang}
                       >
                         {lang}
                       </button>
@@ -435,11 +485,14 @@ export const Navbar: React.FC<NavbarProps> = ({
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className={`inline-flex items-center justify-center p-2 rounded-md focus:outline-none transition-colors ${isTransparent ? 'text-white hover:bg-white/20' : 'text-gray-700 hover:text-pau-blue hover:bg-gray-50'}`}
+                aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+                aria-expanded={isMobileMenuOpen}
+                aria-controls="mobile-menu"
               >
                 {isMobileMenuOpen ? (
-                  <XMarkIcon className="block h-7 w-7" />
+                  <XMarkIcon className="block h-7 w-7" aria-hidden="true" />
                 ) : (
-                  <Bars3Icon className="block h-7 w-7" />
+                  <Bars3Icon className="block h-7 w-7" aria-hidden="true" />
                 )}
               </button>
             </div>
@@ -447,7 +500,12 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
 
         {isMobileMenuOpen && (
-          <div className={`md:hidden bg-white fixed inset-0 z-[200] overflow-y-auto border-t border-gray-100 shadow-inner flex flex-col ${globalAlert.active ? 'top-[96px]' : 'top-[72px]'}`}>
+          <div 
+            id="mobile-menu"
+            className={`md:hidden bg-white fixed inset-0 z-[200] overflow-y-auto border-t border-gray-100 shadow-inner flex flex-col ${globalAlert.active ? 'top-[96px]' : 'top-[72px]'}`}
+            role="navigation"
+            aria-label="Mobile navigation menu"
+          >
             <div className="p-6 space-y-4 flex-grow">
               
               <button 

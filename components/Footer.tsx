@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Page, SharedContent } from '../types';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
@@ -11,6 +11,9 @@ type ModalType = 'privacy' | 'terms' | 'accessibility' | null;
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate, shared }) => {
   const [activeModal, setActiveModal] = useState<ModalType>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const firstFocusableRef = useRef<HTMLElement | null>(null);
+  const lastFocusableRef = useRef<HTMLElement | null>(null);
 
   const modalContent = {
     privacy: {
@@ -101,7 +104,7 @@ Last Updated: January 2026`
 
   return (
     <>
-    <footer className="bg-pau-darkBlue text-white pt-20 pb-10 px-6 font-sans">
+    <footer className="bg-pau-darkBlue text-white pt-20 pb-10 px-6 font-sans" role="contentinfo">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 lg:gap-16 border-b border-white/10 pb-20">
         {/* University Info */}
         <div className="col-span-1 md:col-span-1">
@@ -120,7 +123,7 @@ Last Updated: January 2026`
         <div className="col-span-1 md:col-span-2">
           <h3 className="text-[10px] font-bold text-pau-gold uppercase tracking-[0.2em] mb-6">Contact</h3>
           {/* Source: Catalog Page 48 (Contact Information) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 text-xs text-gray-400 font-light">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 text-xs text-gray-300 font-light">
             <div className="space-y-4">
               <div>
                 <strong className="text-white text-[10px] block mb-1 uppercase tracking-wider">Address:</strong>
@@ -168,9 +171,9 @@ Last Updated: January 2026`
         {/* Quick Links */}
         <div className="col-span-1">
           <h3 className="text-[10px] font-bold text-pau-gold uppercase tracking-[0.2em] mb-6">Quick Links</h3>
-          <ul className="text-xs text-gray-400 space-y-3 font-bold">
-            <li><button onClick={() => onNavigate('apply-now')} className="hover:text-white transition-colors">Apply Now</button></li>
-            <li><button onClick={() => onNavigate('academic-calendar')} className="hover:text-white transition-colors">Academic Calendar</button></li>
+          <ul className="text-xs text-gray-300 space-y-3 font-bold">
+            <li><button onClick={() => onNavigate('apply-now')} className="hover:text-white transition-colors" aria-label="Navigate to application page">Apply Now</button></li>
+            <li><button onClick={() => onNavigate('academic-calendar')} className="hover:text-white transition-colors" aria-label="Navigate to academic calendar">Academic Calendar</button></li>
             {/* <li><button onClick={() => onNavigate('library')} className="hover:text-white transition-colors">Law Library</button></li> */}
             {/* <li><button onClick={() => onNavigate('careers')} className="hover:text-white transition-colors">Career Services</button></li> */}
           </ul>
@@ -220,7 +223,10 @@ Last Updated: January 2026`
             aria-hidden="true"
           ></div>
           <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-          <div className="inline-block align-bottom bg-white rounded-xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl w-full">
+          <div 
+            ref={modalRef}
+            className="inline-block align-bottom bg-white rounded-xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl w-full"
+          >
             <div className="bg-pau-darkBlue px-6 py-5 sm:px-8">
               <div className="flex justify-between items-center text-white">
                 <h3 className="text-lg font-bold">{modalContent[activeModal].title}</h3>

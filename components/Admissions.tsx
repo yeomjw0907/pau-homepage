@@ -1,7 +1,8 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { AdmissionsContent, SharedContent } from '../types';
 import { CalendarDaysIcon, CurrencyDollarIcon, CheckCircleIcon, XMarkIcon, ArrowRightIcon, PlusIcon, MinusIcon } from '@heroicons/react/24/outline';
+import { useForm } from '../hooks/useForm';
 
 interface AdmissionsProps {
   content: AdmissionsContent;
@@ -11,13 +12,19 @@ interface AdmissionsProps {
 export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeFaqIndex, setActiveFaqIndex] = useState<number | null>(null);
-  const [formData, setFormData] = useState({
+  const modalRef = useRef<HTMLDivElement>(null);
+  const firstFocusableRef = useRef<HTMLElement | null>(null);
+  const lastFocusableRef = useRef<HTMLElement | null>(null);
+  
+  const initialFormData = {
     firstName: '',
     lastName: '',
     email: '',
     phone: '',
     cohort: 'winter' as 'winter' | 'spring' | 'fall'
-  });
+  };
+  
+  const { formData, handleChange, reset } = useForm(initialFormData);
 
   const cohortInfo = {
     winter: { label: 'Winter Intake (January)', deadline: 'mid-November' },
@@ -25,19 +32,12 @@ export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
     fall: { label: 'Fall Intake (September)', deadline: 'mid-July' }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const selectedCohort = cohortInfo[formData.cohort];
     alert(`Application Started!\n\nName: ${formData.firstName} ${formData.lastName}\nSelected Intake: ${selectedCohort.label}\nDeadline: ${selectedCohort.deadline}\n\nYou will receive further instructions via email at ${formData.email}.`);
     setIsModalOpen(false);
-    setFormData({ firstName: '', lastName: '', email: '', phone: '', cohort: 'winter' });
+    reset();
   };
 
   const toggleFaq = (index: number) => {
@@ -264,15 +264,18 @@ export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
               aria-hidden="true"
             ></div>
             <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-            <div className="inline-block align-bottom bg-white rounded-xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl w-full">
+            <div 
+              ref={modalRef}
+              className="inline-block align-bottom bg-white rounded-xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl w-full"
+            >
               <div className="bg-gradient-to-r from-pau-darkBlue to-pau-blue px-6 py-6 sm:px-8">
                  <div className="flex justify-between items-center text-white">
                     <div>
-                      <h3 className="text-xl font-bold mb-1">Start Your Application</h3>
+                      <h3 id="application-modal" className="text-xl font-bold mb-1">Start Your Application</h3>
                       <p className="text-sm text-gray-200">Pacific American University School of Law</p>
                     </div>
-                    <button type="button" onClick={() => setIsModalOpen(false)} className="text-white/70 hover:text-white transition-colors">
-                      <XMarkIcon className="h-6 w-6" />
+                    <button type="button" onClick={() => setIsModalOpen(false)} className="text-white/70 hover:text-white transition-colors" aria-label="Close modal">
+                      <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                     </button>
                  </div>
               </div>
@@ -286,29 +289,32 @@ export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
                   <div className="space-y-5">
                     {/* Cohort Selection */}
                     <div>
-                      <label className="block text-xs font-bold text-pau-darkBlue uppercase tracking-wide mb-2">
-                        Select Your Start Term <span className="text-red-500">*</span>
+                      <label htmlFor="cohort-select" className="block text-xs font-bold text-pau-darkBlue uppercase tracking-wide mb-2">
+                        Select Your Start Term <span className="text-red-500" aria-label="required">*</span>
                       </label>
                       <select
+                        id="cohort-select"
                         name="cohort"
                         value={formData.cohort}
                         onChange={handleChange}
                         required
+                        aria-required="true"
+                        aria-describedby="cohort-description"
                         className="block w-full border-2 border-pau-gold/30 rounded-lg shadow-sm focus:ring-2 focus:ring-pau-gold focus:border-pau-gold text-base p-4 bg-white font-semibold text-pau-darkBlue"
                       >
                         <option value="winter">Winter Intake - Starts January (Deadline: mid-November)</option>
                         <option value="spring">Spring Intake - Starts April (Deadline: mid-February)</option>
                         <option value="fall">Fall Intake - Starts September (Deadline: mid-July)</option>
                       </select>
-                      <p className="mt-2 text-xs text-gray-500 italic">
+                      <p id="cohort-description" className="mt-2 text-xs text-gray-500 italic">
                         Application deadline is 45 days prior to the start date.
                       </p>
                     </div>
 
                     {/* Selected Cohort Info */}
-                    <div className="bg-gradient-to-r from-pau-light to-blue-50 p-4 rounded-lg border-l-4 border-pau-gold">
+                    <div className="bg-gradient-to-r from-pau-light to-blue-50 p-4 rounded-lg border-l-4 border-pau-gold" role="status" aria-live="polite" aria-atomic="true">
                       <div className="flex items-start">
-                        <CalendarDaysIcon className="h-5 w-5 text-pau-gold mt-0.5 mr-3 flex-shrink-0" />
+                        <CalendarDaysIcon className="h-5 w-5 text-pau-gold mt-0.5 mr-3 flex-shrink-0" aria-hidden="true" />
                         <div>
                           <p className="text-sm font-bold text-pau-darkBlue mb-1">
                             You selected: {cohortInfo[formData.cohort].label}
@@ -323,22 +329,26 @@ export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
                     {/* Name Fields */}
                     <div className="grid grid-cols-2 gap-5">
                       <div>
-                        <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">
-                          First Name <span className="text-red-500">*</span>
+                        <label htmlFor="firstName" className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">
+                          First Name <span className="text-red-500" aria-label="required">*</span>
                         </label>
                         <input 
+                          id="firstName"
                           type="text" name="firstName" required
                           value={formData.firstName} onChange={handleChange}
+                          aria-required="true"
                           className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-pau-blue focus:border-pau-blue text-base p-3 bg-gray-50" 
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">
-                          Last Name <span className="text-red-500">*</span>
+                        <label htmlFor="lastName" className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">
+                          Last Name <span className="text-red-500" aria-label="required">*</span>
                         </label>
                         <input 
+                          id="lastName"
                           type="text" name="lastName" required
                           value={formData.lastName} onChange={handleChange}
+                          aria-required="true"
                           className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-pau-blue focus:border-pau-blue text-base p-3 bg-gray-50" 
                         />
                       </div>
@@ -346,37 +356,41 @@ export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
 
                     {/* Contact Fields */}
                     <div>
-                      <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">
-                        Email Address <span className="text-red-500">*</span>
+                      <label htmlFor="email" className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">
+                        Email Address <span className="text-red-500" aria-label="required">*</span>
                       </label>
                       <input 
+                        id="email"
                         type="email" name="email" required
                         value={formData.email} onChange={handleChange}
                         placeholder="your.email@example.com"
+                        aria-required="true"
                         className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-pau-blue focus:border-pau-blue text-base p-3 bg-gray-50" 
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">
-                        Phone Number <span className="text-red-500">*</span>
+                      <label htmlFor="phone" className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">
+                        Phone Number <span className="text-red-500" aria-label="required">*</span>
                       </label>
                       <input 
+                        id="phone"
                         type="tel" name="phone" required
                         value={formData.phone} onChange={handleChange}
                         placeholder="(123) 456-7890"
+                        aria-required="true"
                         className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-pau-blue focus:border-pau-blue text-base p-3 bg-gray-50" 
                       />
                     </div>
                   </div>
                 </div>
                 <div className="bg-gray-50 px-6 py-4 sm:px-8 sm:flex sm:flex-row-reverse border-t border-gray-100">
-                  <button type="submit" className="w-full inline-flex justify-center items-center rounded-md border border-transparent shadow-sm px-6 py-3 bg-pau-gold text-base font-bold text-white hover:bg-yellow-600 sm:ml-3 sm:w-auto transition-colors">
-                    <ArrowRightIcon className="h-5 w-5 mr-2" />
-                    Continue Application
-                  </button>
-                  <button type="button" onClick={() => setIsModalOpen(false)} className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-6 py-3 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm transition-colors">
-                    Cancel
-                  </button>
+                    <button type="submit" className="w-full inline-flex justify-center items-center rounded-md border border-transparent shadow-sm px-6 py-3 bg-pau-gold text-base font-bold text-white hover:bg-yellow-600 sm:ml-3 sm:w-auto transition-colors" aria-label="Submit application form">
+                      <ArrowRightIcon className="h-5 w-5 mr-2" aria-hidden="true" />
+                      Continue Application
+                    </button>
+                    <button type="button" onClick={() => setIsModalOpen(false)} className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-6 py-3 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm transition-colors" aria-label="Close application modal">
+                      Cancel
+                    </button>
                 </div>
               </form>
             </div>
