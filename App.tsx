@@ -351,39 +351,63 @@ const App: React.FC = () => {
           <>
             <PageHeader title={"President's\nWelcome"} subtitle="A strategic vision for legal leaders." icon={UserIcon} />
             <SectionWrapper>
-              <div className="max-w-5xl mx-auto flex flex-col md:flex-row gap-10 md:gap-16 items-center">
-                  <div className="w-full sm:w-2/3 md:w-1/3 flex-shrink-0">
-                    <div className="w-full aspect-[3/4] bg-gray-200 rounded-2xl md:rounded-[40px] overflow-hidden shadow-2xl relative">
-                      <img 
-                        src="/images/president-hyun-joo-kang.jpg" 
-                        alt="Hyun Joo Kang" 
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-pau-darkBlue/90 to-transparent p-6 md:p-8">
-                         <div className="flex items-baseline gap-2">
-                           <p className="text-white font-serif font-bold text-lg md:text-xl leading-tight">Hyun Joo Kang</p>
-                           <span className="text-sm text-gray-300 italic">S.J.D.</span>
-                         </div>
-                         <p className="text-pau-gold text-[9px] md:text-[10px] font-bold uppercase tracking-widest mt-1">President, PAU</p>
-                      </div>
-                    </div>
+              <div className="max-w-4xl mx-auto">
+                {/* Image Section */}
+                <div className="flex justify-center mb-12">
+                  <div className="w-64 md:w-80 aspect-[3/4] rounded-lg overflow-hidden shadow-lg">
+                    <img 
+                      src="/images/president-hyun-joo-kang.jpg" 
+                      alt="Dr. Hyun Joo Kang, President of Pacific American University" 
+                      className="w-full h-full object-cover"
+                    />
                   </div>
-                  <div className="md:w-2/3">
-                    <h2 className="text-2xl md:text-3xl font-serif font-bold text-pau-darkBlue leading-tight mb-6 md:mb-10">
-                      Welcome to Pacific American University.
-                    </h2>
-                    <div className="prose prose-sm md:prose-lg text-gray-600 leading-relaxed font-light space-y-4 md:space-y-6">
-                      <p>Our mission is to lower barriers to legal education through innovation. We believe professional legal training should be accessible regardless of geographic location.</p>
-                      <p>By merging American-style instruction with flexible delivery, we prepare students for success in the evolving legal landscape.</p>
-                      <div className="pt-6 md:pt-8 border-t border-gray-100">
-                        <div className="flex items-baseline gap-3">
-                          <p className="font-serif text-2xl md:text-3xl text-pau-blue">Hyun Joo Kang</p>
-                          <span className="text-lg text-gray-500 italic">S.J.D.</span>
-                        </div>
-                        <p className="text-[10px] md:text-xs font-bold text-pau-gold uppercase tracking-[0.2em] mt-2">President & CEO, PAU</p>
-                      </div>
-                    </div>
+                </div>
+
+                {/* Welcome Message */}
+                <div className="text-center mb-12">
+                  <h2 className="text-3xl md:text-4xl font-serif font-bold text-pau-darkBlue leading-tight mb-4">
+                    Welcome to Pacific American University – <span className="text-pau-blue">small but strong!</span>
+                  </h2>
+                  <div className="mt-6 mb-8">
+                    <p className="font-serif text-xl text-pau-darkBlue font-semibold">Dr. Hyun Joo Kang</p>
+                    <p className="text-sm text-pau-gold font-bold uppercase tracking-widest mt-1">President, Pacific American University</p>
                   </div>
+                </div>
+
+                {/* Main Content */}
+                <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed space-y-6">
+                  <p>
+                    In 2026, Pacific American University (PAU) provides a Juris Doctor (JD) degree program to you as an Unaccredited Correspondence Law School registered with the Committee of Bar Examiners of The State Bar of California. In an era where technology transcends geography, our decision to establish this unique correspondence law school reflects a bold mission: to lower barriers to legal education and overcome geographic boundaries through innovation.
+                  </p>
+                  
+                  <p>
+                    By merging American-style legal instruction with flexible delivery methods, we empower talented students from around the world to pursue their aspirations of becoming U.S. attorneys—regardless of location or circumstance. Our curriculum is built around experienced faculty through dynamic high-quality video lectures, supported by real-time synchronous sessions to foster essential interaction. This format respects global time differences and accommodates the diverse learning environments of our international student body.
+                  </p>
+                  
+                  <p>
+                    We actively recruit aspiring legal professionals worldwide who possess a strong sense of purpose and commitment to mastering U.S. law. Through this mission, we cultivate globally active professionals—U.S.-licensed attorneys equipped with a deep understanding of American legal principles—ready to make meaningful contributions in their respective fields. As educational borders dissolve, we believe our students will naturally align with our founding mission: to nurture global leaders with balanced, critical perspectives capable of addressing complex international issues.
+                  </p>
+                  
+                  <p>
+                    By fostering cross-border legal understanding and embracing diverse viewpoints, our institution becomes a platform for shaping thoughtful, solution-oriented professionals prepared to engage with the world's most pressing challenges. Your journey at PAU School of Law will be filled with meaningful learning experiences, and we eagerly anticipate celebrating numerous achievements together.
+                  </p>
+                  
+                  <p>
+                    Please do not hesitate to contact me, our Dean of the School of Law, and other academic staff. We will do our best to provide you with student services to lead you to your goal of earning your J.D. degree and passing the California Bar Exam.
+                  </p>
+                  
+                  <p className="text-xl font-semibold text-pau-darkBlue text-center mt-8">
+                    Thank you very much!
+                  </p>
+                </div>
+
+                {/* Signature Section */}
+                <div className="mt-16 pt-8 border-t border-gray-200 text-center">
+                  <p className="font-serif text-2xl md:text-3xl text-pau-darkBlue font-bold mb-2">Dr. Hyun Joo Kang</p>
+                  <p className="text-sm font-bold text-pau-gold uppercase tracking-widest mb-4">President, Pacific American University</p>
+                  <p className="text-gray-500 text-sm">Pacific American University School of Law</p>
+                  <p className="text-gray-500 text-sm">2026-2027 Academic Year</p>
+                </div>
               </div>
             </SectionWrapper>
           </>

@@ -265,7 +265,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       setActiveDropdown(null);
                     }
                   }}
-                  className={navLinkClass([/*'academics',*/ 'academic-calendar', 'bar-info', 'curriculum-schedule', 'course-desc', 'counseling', 'grad-reqs'/*, 'centers', 'student-resources', 'library'*/].includes(currentPage))}
+                  className={navLinkClass([/*'academics',*/ 'academic-calendar', 'bar-info', 'curriculum-schedule', 'counseling', 'grad-reqs'/*, 'centers', 'student-resources', 'library'*/].includes(currentPage))}
                   aria-label={`${shared.nav.academics} menu`}
                   aria-expanded={activeDropdown === 'academics'}
                   aria-haspopup="true"
@@ -282,7 +282,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                       <SubmenuBtn page="academic-calendar" label={shared.nav.academicCalendar} />
                       <SubmenuBtn page="bar-info" label={shared.nav.barInfo} />
                       <SubmenuBtn page="curriculum-schedule" label={shared.nav.curriculum} />
-                      <SubmenuBtn page="course-desc" label={shared.nav.courseDesc} />
                       <SubmenuBtn page="counseling" label={shared.nav.counseling} />
                       <SubmenuBtn page="grad-reqs" label={shared.nav.gradReqs} />
                     </div>
@@ -483,7 +482,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <MobileSubLink page="academic-calendar" label={shared.nav.academicCalendar} />
                 <MobileSubLink page="bar-info" label={shared.nav.barInfo} />
                 <MobileSubLink page="curriculum-schedule" label={shared.nav.curriculum} />
-                <MobileSubLink page="course-desc" label={shared.nav.courseDesc} />
                 <MobileSubLink page="counseling" label={shared.nav.counseling} />
                 <MobileSubLink page="grad-reqs" label={shared.nav.gradReqs} />
               </MobileSection>

@@ -64,6 +64,9 @@ const FacultyItem: React.FC<FacultyItemProps> = React.memo(({
           </div>
           <p className="text-pau-blue font-bold mb-4 md:mb-6 text-[10px] md:text-sm uppercase tracking-[0.15em] md:border-l-2 md:border-pau-gold md:pl-4">
             {displayTitle}
+            {displayTitle === "CEO & President" && (
+              <span className="block mt-1">Timothy P. Weimer (Dean of School of Law)</span>
+            )}
           </p>
           
           <div className="flex flex-col space-y-2 text-[12px] md:text-sm text-gray-500 font-medium bg-gray-50/50 p-4 rounded-xl border border-gray-100 text-left">

@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { AcademicsContent, Page } from '../types';
 import { 
   BookOpenIcon, 
@@ -16,7 +16,8 @@ import {
   BriefcaseIcon,
   DocumentDuplicateIcon,
   ClockIcon,
-  UserGroupIcon
+  UserGroupIcon,
+  XMarkIcon
 } from '@heroicons/react/24/outline';
 
 interface AcademicsProps {
@@ -58,6 +59,34 @@ const SubPageHeader: React.FC<SubPageHeaderProps> = ({ title, subtitle, icon: Ic
 );
 
 export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, currentPage }) => {
+  const [selectedCourse, setSelectedCourse] = useState<{ className: string; description: string } | null>(null);
+
+  // Course descriptions mapping
+  const courseDescriptions: Record<string, string> = {
+    "Introduction to Law": "This introductory course explores the foundational concepts of common law and the history of the American legal system. It provides students with an understanding of legal principles and case analysis.",
+    "Contracts I": "This course examines the law governing private agreements, including the enforcement of promises, precontractual liability, and statutory requirements such as the statute of frauds. It covers the analysis of legal enforceability of agreements, breach of contract, and available remedies.",
+    "Contracts II": "This course examines the law governing private agreements, including the enforcement of promises, precontractual liability, and statutory requirements such as the statute of frauds. It covers the analysis of legal enforceability of agreements, breach of contract, and available remedies.",
+    "Torts I": "Focusing on personal injury law, this course examines negligence and the evolving nature of negligence law. It also covers intentional torts, contemporary rules, and strict liability.",
+    "Torts II": "Focusing on personal injury law, this course examines negligence and the evolving nature of negligence law. It also covers intentional torts, contemporary rules, and strict liability.",
+    "Criminal Law": "This course covers the core principles of criminal law, including the definitions of crime, actus reus, mens rea, and defenses like necessity, intoxication, and insanity.",
+    "Legal Writing & Analysis": "Provides a rigorous foundation in legal reasoning, analytical thinking, and professional writing. Students will develop essential skills for crafting clear, concise, and well-structured responses to legal issues.",
+    "FYLSX review": "Prepares students for the California First-Year Law Students' Examination through focused review of Contracts, Criminal Law, and Torts.",
+    "Civil Procedure": "Explores civil litigation procedures, including the commencement of suits, pleadings, discovery, and trial processes.",
+    "Property": "Examines property law, focusing on various property interests, landlord-tenant relationships, land use, and the sale and financing of real estate.",
+    "Remedies": "Surveys the law of remedies, addressing what courts can do for claimants who have been wronged, covering both legal and equitable remedies.",
+    "Criminal Procedure": "Focusing on constitutional constraints in criminal investigations, including searches and seizures, interrogations, and the right to counsel.",
+    "Evidence": "Delves into the principles and application of evidence law, focusing on the Federal Rules of Evidence.",
+    "Constitutional Law": "Explores the U.S. Constitution, including the distribution of governmental powers, judicial review, and individual rights (First Amendment).",
+    "Business Associations": "A study of legal principles governing business entities and agency relationships (Partnerships, Corporations, LLCs).",
+    "Community Property": "Detailed examination of California's community property system, covering property relations between spouses and domestic partners.",
+    "Professional Responsibility": "Covers the law and ethics governing legal practice, including confidentiality, conflicts of interest, and the lawyer-client relationship.",
+    "Wills & Succession": "Comprehensive study of succession law, focusing on the transfer of property upon death, intestate succession, and the validity of wills.",
+    "California Civil Procedure": "Focuses on California's specific civil procedural rules and the jury trial system.",
+    "Advanced Legal Research & Writing": "Refines legal research and writing skills for professional practice, emphasizing persuasive strategy in drafting legal documents.",
+    "California Evidence": "Focuses on California's Evidence Code, comparing it to the Federal Rules of Evidence.",
+    "Practical Competency Training": "Offers practical training through a law practice internship (Track 1) or an advanced in-class practical skills study (Track 2)."
+  };
+
   const academicPortals = [
     {
       id: 'curriculum-schedule' as Page,
@@ -72,13 +101,6 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
       desc: "Information on FYLSX and California Bar Exam eligibility.",
       icon: CheckBadgeIcon,
       color: "text-blue-500"
-    },
-    {
-      id: 'course-desc' as Page,
-      title: "Course Catalog",
-      desc: "Detailed descriptions of core and elective law courses.",
-      icon: ListBulletIcon,
-      color: "text-emerald-500"
     },
     {
       id: 'counseling' as Page,
@@ -334,7 +356,11 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
                                {trimester.courses.map((course, courseIdx) => (
                                  <div 
                                    key={courseIdx}
-                                   className="group bg-white border-2 border-gray-100 rounded-xl p-5 hover:border-pau-blue/50 hover:shadow-lg transition-all duration-300"
+                                   onClick={() => {
+                                     const description = courseDescriptions[course.className] || "Course description not available.";
+                                     setSelectedCourse({ className: course.className, description });
+                                   }}
+                                   className="group bg-white border-2 border-gray-100 rounded-xl p-5 hover:border-pau-blue/50 hover:shadow-lg transition-all duration-300 cursor-pointer"
                                  >
                                    <div className="flex items-start justify-between mb-3">
                                      <span className="font-mono text-sm font-bold text-pau-blue">{course.classNum}</span>
@@ -654,6 +680,71 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
   return (
     <div className="bg-white min-h-screen">
       {renderSubPage()}
+      
+      {/* Course Description Modal - Global for all sub-pages */}
+      {selectedCourse && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md animate-fade-in"
+          onClick={() => setSelectedCourse(null)}
+        >
+          <div 
+            className="bg-white rounded-3xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-hidden border-2 border-pau-gold/20 animate-fade-in-up"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header with gradient */}
+            <div className="relative bg-gradient-to-r from-pau-darkBlue via-pau-blue to-pau-darkBlue px-8 py-6">
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-pau-gold to-transparent"></div>
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-4 flex-1">
+                  <div className="p-3 bg-white/10 rounded-xl backdrop-blur-sm border border-white/20">
+                    <BookOpenIcon className="h-8 w-8 text-pau-gold" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-2xl md:text-3xl font-serif font-bold text-white mb-2 leading-tight">
+                      {selectedCourse.className}
+                    </h3>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-bold text-pau-gold uppercase tracking-widest">Course Description</span>
+                    </div>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setSelectedCourse(null)}
+                  className="p-2.5 hover:bg-white/10 rounded-xl transition-all group border border-white/20 hover:border-pau-gold"
+                  aria-label="Close modal"
+                >
+                  <XMarkIcon className="h-6 w-6 text-white group-hover:text-pau-gold transition-colors" />
+                </button>
+              </div>
+            </div>
+
+            {/* Content */}
+            <div className="p-8 md:p-10 bg-gradient-to-b from-white to-gray-50/50">
+              <div className="prose prose-lg max-w-none">
+                <div className="relative pl-6 border-l-4 border-pau-gold mb-6">
+                  <p className="text-gray-800 leading-relaxed text-base md:text-lg font-light">
+                    {selectedCourse.description}
+                  </p>
+                </div>
+              </div>
+              
+              {/* Decorative footer */}
+              <div className="mt-8 pt-6 border-t border-gray-200 flex items-center justify-between">
+                <div className="flex items-center gap-2 text-sm text-gray-500">
+                  <AcademicCapIcon className="h-5 w-5 text-pau-gold" />
+                  <span className="font-medium">Pacific American University School of Law</span>
+                </div>
+                <button
+                  onClick={() => setSelectedCourse(null)}
+                  className="px-6 py-2.5 bg-pau-blue text-white rounded-lg font-semibold hover:bg-pau-darkBlue transition-colors shadow-md hover:shadow-lg"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
