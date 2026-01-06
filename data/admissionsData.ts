@@ -21,3 +21,5 @@ export const DEFAULT_ADMISSIONS_CONTENT: AdmissionsContent = {
   ]
 };
 
+
+

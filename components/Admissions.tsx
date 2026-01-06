@@ -76,24 +76,11 @@ export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
             <section className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
               <h2 className="text-3xl font-serif font-bold text-pau-blue mb-8 flex items-center">
                 <span className="w-8 h-1 bg-pau-gold mr-4"></span>
-                Admissions Standards
+                Overview
               </h2>
               <div className="bg-white rounded-xl shadow-soft border border-gray-100 p-8">
                 <p className="text-gray-700 text-lg leading-relaxed">
                   Applicants must demonstrate strong academic performance, typically reflected in their undergraduate GPA (minimum of 2.0). PAUSL employs a holistic admissions process that evaluates not only academic achievements but also personal qualities and the applicant's potential to contribute to the legal profession.
-                </p>
-              </div>
-            </section>
-
-            {/* LSAT Requirement */}
-            <section className="animate-fade-in mt-12" style={{ animationDelay: '0.15s' }}>
-              <h2 className="text-3xl font-serif font-bold text-pau-blue mb-8 flex items-center">
-                <span className="w-8 h-1 bg-pau-gold mr-4"></span>
-                LSAT Requirement
-              </h2>
-              <div className="bg-white rounded-xl shadow-soft border border-gray-100 p-8">
-                <p className="text-gray-700 text-lg leading-relaxed">
-                  PAUSL does not require applicants to submit scores from the Law School Admission Test (LSAT) but applicants are encouraged to take the LSAT because it is a reliable predictor of student performance in law school. The LSAT scores assist in demonstrating an applicant's capacity for successful law study and program completion.
                 </p>
               </div>
             </section>
@@ -134,37 +121,6 @@ export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
                     <span className="text-gray-700 text-lg pt-0.5">Submitting a passing score on the Duolingo English Test: 105 or higher.</span>
                   </li>
                 </ul>
-              </div>
-            </section>
-
-            {/* Tuition & Fees */}
-            <section className="animate-fade-in mt-12" style={{ animationDelay: '0.25s' }}>
-              <div className="relative overflow-hidden bg-pau-blue rounded-xl p-10 text-white shadow-lg">
-                <div className="absolute top-0 right-0 opacity-10 transform translate-x-1/4 -translate-y-1/4">
-                   <CurrencyDollarIcon className="h-64 w-64" />
-                </div>
-                <div className="relative z-10">
-                  <h2 className="text-3xl font-serif font-bold mb-8">Tuition & Fees</h2>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                    <div className="bg-white/10 backdrop-blur-sm rounded-lg px-6 py-4 border border-white/20">
-                      <span className="text-3xl font-bold text-white block mb-1">$3,000.00</span>
-                      <span className="text-sm font-medium text-pau-gold uppercase tracking-wider">Trimester Tuition</span>
-                    </div>
-                    <div className="bg-white/10 backdrop-blur-sm rounded-lg px-6 py-4 border border-white/20">
-                      <span className="text-3xl font-bold text-white block mb-1">$9,000.00</span>
-                      <span className="text-sm font-medium text-pau-gold uppercase tracking-wider">Annual Tuition (3 trimesters)</span>
-                    </div>
-                    <div className="bg-white/10 backdrop-blur-sm rounded-lg px-6 py-4 border border-white/20">
-                      <span className="text-3xl font-bold text-white block mb-1">$36,000.00</span>
-                      <span className="text-sm font-medium text-pau-gold uppercase tracking-wider">Total Tuition (Four years)</span>
-                    </div>
-                    <div className="bg-white/10 backdrop-blur-sm rounded-lg px-6 py-4 border border-white/20">
-                      <span className="text-3xl font-bold text-white block mb-1">$70.00</span>
-                      <span className="text-sm font-medium text-pau-gold uppercase tracking-wider">Application Fee (Non-refundable)</span>
-                    </div>
-                  </div>
-                </div>
               </div>
             </section>
           </div>

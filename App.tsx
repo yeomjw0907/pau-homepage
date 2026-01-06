@@ -1217,9 +1217,9 @@ const App: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   {[
                     { dept: "General Administration", hours: ["Mon-Fri: 9:00 AM - 5:00 PM PST", "Sat-Sun: Closed"], icon: BuildingOffice2Icon },
-                    { dept: "Admissions Office", hours: ["Mon-Fri: 8:00 AM - 6:00 PM PST", "Sat: By Appointment Only"], icon: UserGroupIcon },
-                    { dept: "Registrar & Records", hours: ["Mon-Thu: 10:00 AM - 4:00 PM PST", "Fri: 10:00 AM - 2:00 PM PST"], icon: ClipboardDocumentListIcon },
-                    { dept: "IT Support Helpdesk", hours: ["Mon-Sun: 7:00 AM - 10:00 PM PST", "Online Ticket: 24/7"], icon: ComputerDesktopIcon },
+                    { dept: "Admissions Office", hours: ["Mon-Fri: 9:00 AM - 5:00 PM PST", "Sat-Sun: Closed"], icon: UserGroupIcon },
+                    { dept: "Registrar & Records", hours: ["Mon-Fri: 9:00 AM - 5:00 PM PST", "Sat-Sun: Closed"], icon: ClipboardDocumentListIcon },
+                    { dept: "IT Support Helpdesk", hours: ["Mon-Fri: 9:00 AM - 5:00 PM PST", "Sat-Sun: Closed"], icon: ComputerDesktopIcon },
                   ].map((item, i) => (
                     <div key={i} className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:border-pau-blue transition-colors">
                       <div className="flex items-center mb-6">
@@ -1261,14 +1261,14 @@ const App: React.FC = () => {
                           <div>
                             <p className="font-bold text-pau-darkBlue">Pacific American University</p>
                             <p>School of Law</p>
-                            <p>123 University Drive</p>
-                            <p>Santa Clara, CA 95050</p>
+                            <p>3435 Wilshire Blvd. Suite 430,</p>
+                            <p>Los Angeles, CA 90010</p>
                           </div>
                        </div>
                        <h3 className="text-sm font-bold text-pau-gold uppercase tracking-widest mb-6">Main Line</h3>
                        <div className="flex items-center text-gray-700">
                           <PhoneIcon className="h-5 w-5 mr-3 text-pau-blue" />
-                          <p className="font-bold">(408) 555-0199</p>
+                          <p className="font-bold">(213) 674-7174</p>
                        </div>
                     </div>
                     
@@ -1279,9 +1279,6 @@ const App: React.FC = () => {
                             { name: "Admissions Office", email: "admissions@pau.edu", phone: "Ext. 101" },
                             { name: "Registrar's Office", email: "registrar@pau.edu", phone: "Ext. 102" },
                             { name: "Student Services", email: "studentservices@pau.edu", phone: "Ext. 103" },
-                            { name: "Financial Aid", email: "finance@pau.edu", phone: "Ext. 104" },
-                            { name: "Technical Support", email: "support@pau.edu", phone: "Ext. 200" },
-                            { name: "Law Library", email: "library@pau.edu", phone: "Ext. 300" },
                           ].map((dept, i) => (
                             <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between p-6 border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors">
                                <div className="mb-2 sm:mb-0">
@@ -1467,11 +1464,6 @@ const App: React.FC = () => {
                     <InfoCard 
                       title="Web Browser" 
                       description="Google Chrome or Mozilla Firefox" 
-                      variant="gold"
-                    />
-                    <InfoCard 
-                      title="Microsoft Office" 
-                      description="Student license provided" 
                       variant="gold"
                     />
                     <InfoCard 

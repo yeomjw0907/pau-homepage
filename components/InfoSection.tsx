@@ -182,7 +182,7 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
     { 
       icon: AcademicCapIcon, 
       title: "Graduate Study", 
-      desc: "Pursue advanced degrees at prestigious universities in US, Canada and London.",
+      desc: "Pursue advanced degrees at prestigious universities in US, Canada or London.",
       image: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2070&auto=format&fit=crop",
       details: {
         overview: "For international students, the PAU J.D. serves as a robust foundation for admission into specialized LL.M. (Master of Laws) or S.J.D. programs at ABA-accredited universities in the United States.",

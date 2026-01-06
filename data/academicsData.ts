@@ -12,3 +12,5 @@ export const DEFAULT_ACADEMICS_CONTENT: AcademicsContent = {
   concentrations: ['Technology Law', 'Criminal Law', 'Business Law', 'Public Interest']
 };
 
+
+

@@ -72,3 +72,5 @@ export const truncate = (str: string, maxLength: number): string => {
   return str.slice(0, maxLength - 3) + '...';
 };
 
+
+

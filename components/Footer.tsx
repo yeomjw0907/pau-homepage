@@ -161,7 +161,7 @@ Last Updated: January 2026`
                   <div>Monday – Friday:</div>
                   <div>9:00 am – 12:00 pm (Noon)</div>
                   <div>1:00 pm – 5:00 pm</div>
-                  <div className="text-[10px] text-gray-500 mt-1">Pacific Time (PT)</div>
+                  <div className="text-[10px] text-gray-500 mt-1">Pacific Standard Time (PST)</div>
                 </div>
               </div>
             </div>
@@ -191,6 +191,10 @@ Last Updated: January 2026`
         <p className="text-[10px] text-gray-500 leading-relaxed font-light text-justify mb-4">
           Pacific American University School of Law is registered with the Committee of Bar Examiners of the State Bar of California as an unaccredited correspondence law school. 
           PAUSL is not accredited by the State Bar of California or the American Bar Association.
+        </p>
+
+        <p className="text-[10px] text-gray-500 leading-relaxed font-light text-justify mb-4">
+          PAUSL's degree-granting authority in connection with its students qualifying to take the California Bar Examination and obtain admission to the practice of law in California is based on its registration as an unaccredited law school with The State Bar of California's Committee of Bar Examiners.
         </p>
 
         {/* Source: Catalog Page 43 (Student Disclosure Statement - Paragraph 4) */}
