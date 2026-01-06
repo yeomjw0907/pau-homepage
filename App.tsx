@@ -16,16 +16,7 @@ import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { InfoSection } from './components/InfoSection';
 import { Footer } from './components/Footer';
-import { Admissions } from './components/Admissions';
-import { Academics } from './components/Academics';
-import { Faculty } from './components/Faculty';
 import { HomeNews } from './components/HomeNews';
-import { NoticeBoard } from './components/NoticeBoard';
-import { NewsDetail } from './components/NewsDetail';
-import { StudentResources } from './components/StudentResources';
-import { ClinicDetail } from './components/ClinicDetail';
-import { Careers } from './components/Careers';
-import { ConsumerInfo } from './components/ConsumerInfo';
 import { TranslationOverlay } from './components/TranslationOverlay';
 import { LoadingSpinner } from './components/common/LoadingSpinner';
 
@@ -34,6 +25,15 @@ const Admin = lazy(() => import('./components/Admin').then(module => ({ default:
 const CampusVisualizer = lazy(() => import('./components/CampusVisualizer').then(module => ({ default: module.CampusVisualizer })));
 const Calendar = lazy(() => import('./components/Calendar').then(module => ({ default: module.Calendar })));
 const Library = lazy(() => import('./components/Library').then(module => ({ default: module.Library })));
+const Admissions = lazy(() => import('./components/Admissions').then(module => ({ default: module.Admissions })));
+const Academics = lazy(() => import('./components/Academics').then(module => ({ default: module.Academics })));
+const Faculty = lazy(() => import('./components/Faculty').then(module => ({ default: module.Faculty })));
+const NoticeBoard = lazy(() => import('./components/NoticeBoard').then(module => ({ default: module.NoticeBoard })));
+const NewsDetail = lazy(() => import('./components/NewsDetail').then(module => ({ default: module.NewsDetail })));
+const StudentResources = lazy(() => import('./components/StudentResources').then(module => ({ default: module.StudentResources })));
+const ClinicDetail = lazy(() => import('./components/ClinicDetail').then(module => ({ default: module.ClinicDetail })));
+const Careers = lazy(() => import('./components/Careers').then(module => ({ default: module.Careers })));
+const ConsumerInfo = lazy(() => import('./components/ConsumerInfo').then(module => ({ default: module.ConsumerInfo })));
 import { PageHeader } from './components/common/PageHeader';
 import { SectionWrapper } from './components/common/SectionWrapper';
 import { GenericPage } from './components/common/GenericPage';
@@ -111,7 +111,7 @@ const App: React.FC = () => {
         title: 'The Weekly Dicta — February 3, 2025',
         date: 'February 3, 2025',
         summary: 'Learning, Serving, and Leading Together — Pacific American University School of Law. Important dates for midterms, writing competition, and administrative deadlines.',
-        category: 'Newsletter',
+        category: 'Newsletter' as const,
         isPinned: true,
         body: `
           <p><strong>Learning, Serving, and Leading Together — Pacific American University School of Law</strong></p>
@@ -222,10 +222,18 @@ const App: React.FC = () => {
     }
 
     if (selectedNews) {
-      return <NewsDetail item={selectedNews} onBack={() => setSelectedNews(null)} shared={shared} />;
+      return (
+        <Suspense fallback={<LoadingSpinner message="Loading news..." />}>
+          <NewsDetail item={selectedNews} onBack={() => setSelectedNews(null)} shared={shared} />
+        </Suspense>
+      );
     }
     if (selectedClinic) {
-      return <ClinicDetail clinic={selectedClinic} onBack={() => setSelectedClinic(null)} shared={shared} />;
+      return (
+        <Suspense fallback={<LoadingSpinner message="Loading clinic..." />}>
+          <ClinicDetail clinic={selectedClinic} onBack={() => setSelectedClinic(null)} shared={shared} />
+        </Suspense>
+      );
     }
 
     switch (currentPage) {
@@ -958,11 +966,15 @@ const App: React.FC = () => {
       case 'admin-staffs':
       case 'faculty':
         return (
-          <Faculty content={facultyContent} shared={shared} currentPage={currentPage} onNavigate={handleNavigate} />
+          <Suspense fallback={<LoadingSpinner message="Loading faculty..." />}>
+            <Faculty content={facultyContent} shared={shared} currentPage={currentPage} onNavigate={handleNavigate} />
+          </Suspense>
         );
 
       case 'consumer-info':
-        return <ConsumerInfo content={{
+        return (
+          <Suspense fallback={<LoadingSpinner message="Loading consumer info..." />}>
+            <ConsumerInfo content={{
           title: "Consumer Information",
           intro: "Essential data regarding our academic program, student body, and outcomes.",
           sections: [
@@ -990,7 +1002,9 @@ const App: React.FC = () => {
               hasDownloadButton: true
             }
           ]
-        }} />;
+        }} />
+          </Suspense>
+        );
 
       // --- ACADEMICS SECTIONS ---
       case 'academics':
@@ -1000,12 +1014,16 @@ const App: React.FC = () => {
       case 'counseling':
       case 'grad-reqs':
         return (
-          <Academics content={academicsContent} onNavigate={handleNavigate} currentPage={currentPage} />
+          <Suspense fallback={<LoadingSpinner message="Loading academics..." />}>
+            <Academics content={academicsContent} onNavigate={handleNavigate} currentPage={currentPage} />
+          </Suspense>
         );
 
       case 'centers':
       case 'student-resources':
-        return <StudentResources 
+        return (
+          <Suspense fallback={<LoadingSpinner message="Loading resources..." />}>
+            <StudentResources 
           title="Student Success & Resources"
           subtitle="Comprehensive support systems designed to ensure academic achievement and professional growth."
           resources={[
@@ -1025,7 +1043,9 @@ const App: React.FC = () => {
               icon: "fraternity"
             }
           ]}
-        />;
+            />
+          </Suspense>
+        );
       
       case 'library':
         return (
@@ -1061,10 +1081,16 @@ const App: React.FC = () => {
       // --- ADMISSIONS SECTIONS ---
       case 'admissions':
       case 'apply-now':
-        return <Admissions content={admissionsContent} shared={shared} />;
+        return (
+          <Suspense fallback={<LoadingSpinner message="Loading admissions..." />}>
+            <Admissions content={admissionsContent} shared={shared} />
+          </Suspense>
+        );
       
       case 'careers':
-        return <Careers content={{
+        return (
+          <Suspense fallback={<LoadingSpinner message="Loading careers..." />}>
+            <Careers content={{
           title: "Career Services",
           intro: "Empowering you to launch a successful legal career.",
           stats: [
@@ -1076,10 +1102,16 @@ const App: React.FC = () => {
             { title: "Resume & Cover Letter Review", description: "Expert feedback to make your application materials stand out." },
             { title: "Mock Interviews", description: "Practice your interview skills with practicing attorneys." }
           ]
-        }} />;
+        }} />
+          </Suspense>
+        );
 
       case 'notices':
-        return <NoticeBoard content={noticesContent} onNewsClick={setSelectedNews} shared={shared} />;
+        return (
+          <Suspense fallback={<LoadingSpinner message="Loading notices..." />}>
+            <NoticeBoard content={noticesContent} onNewsClick={setSelectedNews} shared={shared} />
+          </Suspense>
+        );
       
       case 'weekly-dicta':
         return <HomeNews title={weeklyDictaContent.title} newsItems={weeklyDictaContent.notices} onNewsClick={setSelectedNews} onNavigate={handleNavigate} shared={shared} />;
@@ -1119,7 +1151,26 @@ const App: React.FC = () => {
                     </div>
                   </div>
                 </div>
-                <p className="text-xs text-gray-400 text-center">* Tuition and fees are subject to change. Books and supplies are not included.</p>
+                <p className="text-xs text-gray-400 text-center mb-12">* Tuition and fees are subject to change. Books and supplies are not included.</p>
+
+                {/* Additional Costs Table */}
+                <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+                  <div className="bg-pau-gold/10 p-6 border-b border-gray-200">
+                    <h3 className="text-xl font-bold font-serif text-pau-darkBlue uppercase tracking-widest">Additional Costs</h3>
+                  </div>
+                  <div className="p-8">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm md:text-base">
+                      <div className="font-bold text-pau-darkBlue">Item</div>
+                      <div className="font-bold text-pau-darkBlue text-center">Amount</div>
+                      <div className="font-bold text-pau-darkBlue">Notes</div>
+                      <div className="col-span-3 h-px bg-gray-100"></div>
+                      
+                      <div className="text-gray-700">4L Elective Bar Review Preparation Course Set-Up Fee</div>
+                      <div className="text-right md:text-center text-gray-600 font-mono">$200.00</div>
+                      <div className="text-gray-600 italic text-sm">Non-refundable, optional for 4L students.</div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </SectionWrapper>
           </>

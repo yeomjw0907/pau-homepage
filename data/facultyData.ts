@@ -81,6 +81,23 @@ export const DEFAULT_FACULTY_CONTENT: FacultyContent = {
       photoUrl: "/images/president-hyun-joo-kang.jpg"
     },
     {
+      name: "Timothy P. Weimer",
+      credential: "J.D., M.B.A.",
+      title: "Dean of School of Law",
+      education: [
+        "Juris Doctor (J.D.), The University of Akron School of Law (2015)",
+        "Master of Business Administration (M.B.A.), Capella University (2006)",
+        "Awards: CALI Excellence for the Future Awards (Statutory Interpretation; Food and Drug Law)",
+        "Certifications: Health Law Certificate, Westlaw & Lexis Advance National Certifications"
+      ],
+      bio: "Timothy P. Weimer is the Dean and Professor of Law at Pacific American University School of Law, a California-registered correspondence law school preparing for its inaugural class in September 2026.\n\nPreviously, he served as Dean and Professor of Law at San Francisco Law School from March 2019 to October 2023, where he provided strategic leadership for the main campus and San Diego branch campus, managed a multimillion-dollar budget, led a comprehensive curriculum redesign through the Academic Excellence Program that increased bar passage rates by 17% in its first year, and founded the Center for Immigration Law and Psychology—the nation's only collaborative legal-psychological immigration asylum clinic, which was later established as a funded 501(c)(3) nonprofit organization.\n\nHe graduated with a Juris Doctor and Health Law Certificate from the University of Akron School of Law and holds a Master of Business Administration from Capella University. Admitted to practice in Ohio since 2015, he maintains a solo general practice focused on a variety of law topics including estate planning, bankruptcy, business consulting, military enlistment matters, and contracts. His broader legal experience includes extensive discovery work and e-discovery in complex litigation involving pharmaceuticals, social media, healthcare, and regulatory compliance.\n\nBefore entering law, Dean Weimer worked as a financial services representative at Fidelity Investments, where he earned recognition for outstanding performance with high-net-worth clients, and earlier served as a certified peace officer and Assistant Park Manager for Utah State Parks.\n\nDean Weimer is committed to expanding access to legal education and fostering diverse, inclusive learning environments that prepare students for meaningful contributions in an increasingly global profession.\n\nOutside of work, he enjoys time with his family, writing fantasy novels, and outdoor pursuits, including working as a professional whitewater guide on rivers in Alaska, Utah, and the Grand Canyon.",
+      expertise: ["Academic Leadership", "Legal Education", "Estate Planning", "Business Consulting", "E-Discovery", "Immigration Law"],
+      phone: "(213) 674-7174",
+      email: "timothypweimer@paucal.org",
+      category: "Staff",
+      photoUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?fit=crop&w=400&h=400&q=80"
+    },
+    {
       name: "Phillip Bohl",
       credential: "J.D., M.L.I.S.",
       title: "Associate Dean of the School of Law",

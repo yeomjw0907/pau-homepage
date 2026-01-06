@@ -296,8 +296,8 @@ export const Admin: React.FC<AdminProps> = ({
   interface SectionHeaderProps {
     title: string;
     subtitle: string;
-    btnLabel: string;
-    onBtnClick: () => void;
+    btnLabel?: string;
+    onBtnClick?: () => void;
   }
   const SectionHeader: React.FC<SectionHeaderProps> = ({ title, subtitle, btnLabel, onBtnClick }) => (
     <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-10 pb-8 border-b border-gray-100 gap-4">
@@ -604,7 +604,7 @@ export const Admin: React.FC<AdminProps> = ({
                   title="Faculty Management" 
                   subtitle="Edit professor bios and academic expertise"
                   btnLabel="Add Faculty Member"
-                  onBtnClick={() => setFaculty({ ...faculty, facultyList: [{ name: 'New Professor', title: '', education: '', bio: '', expertise: [] }, ...faculty.facultyList] })}
+                  onBtnClick={() => setFaculty({ ...faculty, facultyList: [{ name: 'New Professor', title: '', education: [], bio: '', expertise: [] }, ...faculty.facultyList] })}
                 />
                 
                 {faculty.facultyList.map((member: FacultyMember, i: number) => (
@@ -625,8 +625,8 @@ export const Admin: React.FC<AdminProps> = ({
                           <input type="text" className="w-full p-4 bg-white border border-gray-200 rounded-lg font-serif italic" value={member.title} onChange={(e) => updateFacultyItem(i, 'title', e.target.value)} />
                        </div>
                        <div className="md:col-span-1">
-                          <label className="text-[10px] font-bold text-gray-400 uppercase mb-2 block">Education</label>
-                          <input type="text" className="w-full p-4 bg-white border border-gray-200 rounded-lg" value={member.education} onChange={(e) => updateFacultyItem(i, 'education', e.target.value)} />
+                          <label className="text-[10px] font-bold text-gray-400 uppercase mb-2 block">Education (Comma separated)</label>
+                          <input type="text" className="w-full p-4 bg-white border border-gray-200 rounded-lg" value={member.education?.join(', ') || ''} onChange={(e) => updateFacultyItem(i, 'education', splitAndTrim(e.target.value))} />
                        </div>
                     </div>
                     

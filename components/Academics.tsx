@@ -84,7 +84,8 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
     "California Civil Procedure": "Focuses on California's specific civil procedural rules and the jury trial system.",
     "Advanced Legal Research & Writing": "Refines legal research and writing skills for professional practice, emphasizing persuasive strategy in drafting legal documents.",
     "California Evidence": "Focuses on California's Evidence Code, comparing it to the Federal Rules of Evidence.",
-    "Practical Competency Training": "Offers practical training through a law practice internship (Track 1) or an advanced in-class practical skills study (Track 2)."
+    "Practical Competency Training": "Offers practical training through a law practice internship (Track 1) or an advanced in-class practical skills study (Track 2).",
+    "Bar Review (Elective)": "Comprehensive coverage of all subjects tested on the California State Bar Examination, including Business Associations, Community Property, and Wills and Succession."
   };
 
   const academicPortals = [
@@ -314,7 +315,8 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
                            name: "Fall (Nov.)",
                            courses: [
                              { classNum: "Law 405", className: "Advanced Legal Research & Writing", units: "3 units", hours: "135 hours" },
-                             { classNum: "Law 406", className: "Practical Competency Training", units: "6 units", hours: "270 hours" }
+                             { classNum: "Law 406", className: "Practical Competency Training", units: "6 units", hours: "270 hours" },
+                             { classNum: "Law 407", className: "Bar Review (Elective)", units: "4 units", hours: "180 hours" }
                            ]
                          }
                        ]
@@ -418,9 +420,14 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
 
                <div className="bg-pau-darkBlue p-10 rounded-[40px] text-white shadow-2xl">
                   <h3 className="text-2xl font-serif font-bold text-pau-gold mb-6">General Bar Examination</h3>
-                  <p className="text-gray-300 leading-relaxed font-light mb-8">
+                  <p className="text-gray-300 leading-relaxed font-light mb-6">
                     Graduates of PAU School of Law are eligible to sit for the California General Bar Examination upon successful completion of the 84-unit J.D. program and meeting all other moral character and legal requirements.
                   </p>
+                  <div className="bg-white/10 p-6 rounded-2xl border border-white/20 mb-8">
+                    <p className="text-gray-200 leading-relaxed font-light">
+                      PAUSL offers 4L students an elective Bar Review course that provides comprehensive review of all exam subjects, timed writing assignments, and mock MBE exams to hone essential skills for the California Bar Examination.
+                    </p>
+                  </div>
                   <a 
                     href="https://www.calbar.ca.gov" 
                     target="_blank" 
