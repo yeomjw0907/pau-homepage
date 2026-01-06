@@ -73,7 +73,8 @@ import {
   InboxArrowDownIcon,
   PlusIcon,
   MinusIcon,
-  ExclamationCircleIcon
+  ExclamationCircleIcon,
+  CheckCircleIcon
 } from '@heroicons/react/24/outline';
 
 
@@ -1538,94 +1539,275 @@ const App: React.FC = () => {
             icon={GlobeAltIcon}
             />
             <SectionWrapper>
-              <div className="max-w-6xl mx-auto">
+              <div className="max-w-7xl mx-auto">
                 {/* Transfer Students Section */}
-                <div className="mb-12 md:mb-16">
-                  <div className="bg-gradient-to-br from-pau-darkBlue to-pau-blue p-8 md:p-12 rounded-3xl shadow-2xl relative overflow-hidden mb-8">
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-pau-gold opacity-10 rounded-full -mr-32 -mt-32"></div>
+                <div className="mb-16 md:mb-20">
+                  {/* Hero Header */}
+                  <div className="relative bg-gradient-to-br from-pau-darkBlue via-pau-blue to-pau-darkBlue p-10 md:p-16 rounded-3xl shadow-2xl overflow-hidden mb-10">
+                    <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+                    <div className="absolute top-0 right-0 w-96 h-96 bg-pau-gold opacity-5 rounded-full -mr-48 -mt-48"></div>
+                    <div className="absolute bottom-0 left-0 w-72 h-72 bg-pau-gold opacity-5 rounded-full -ml-36 -mb-36"></div>
                     <div className="relative z-10">
                       <div className="flex items-center mb-6">
-                        <div className="w-14 h-14 bg-pau-gold rounded-xl flex items-center justify-center mr-4">
-                          <AcademicCapIcon className="h-7 w-7 text-pau-darkBlue" />
+                        <div className="w-16 h-16 bg-pau-gold rounded-2xl flex items-center justify-center mr-5 shadow-lg">
+                          <AcademicCapIcon className="h-8 w-8 text-pau-darkBlue" />
                         </div>
-                        <h2 className="text-2xl md:text-3xl font-serif font-bold text-white">Transfer Students</h2>
+                        <div>
+                          <h2 className="text-3xl md:text-4xl font-serif font-bold text-white mb-2">Transfer Students Policy</h2>
+                          <div className="w-20 h-1 bg-pau-gold"></div>
+                        </div>
                       </div>
-                      <p className="text-lg md:text-xl text-white leading-relaxed">
-                        PAU welcomes transfer students from other state-accredited or ABA-accredited law schools. Transfer credit is evaluated on a case-by-case basis.
+                      <p className="text-lg md:text-xl text-white/90 leading-relaxed max-w-3xl">
+                        PAUSL welcomes qualified transfer students and evaluates transfer credits in accordance with California State Bar requirements.
                       </p>
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-                    <div className="bg-white p-6 rounded-2xl border-2 border-pau-blue shadow-lg hover:shadow-xl transition-all">
-                      <div className="flex items-center mb-4">
-                        <div className="w-10 h-10 bg-pau-blue rounded-lg flex items-center justify-center mr-3">
-                          <ShieldCheckIcon className="h-5 w-5 text-white" />
+                  {/* Policy Cards Grid */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    {/* Eligibility Card */}
+                    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 group">
+                      <div className="flex items-start mb-4">
+                        <div className="w-12 h-12 bg-gradient-to-br from-pau-blue to-pau-darkBlue rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
+                          <ShieldCheckIcon className="h-6 w-6 text-white" />
                         </div>
-                        <h3 className="text-xl font-serif font-bold text-pau-darkBlue">State-Accredited Schools</h3>
+                        <div className="flex-1">
+                          <h3 className="text-xl font-serif font-bold text-pau-darkBlue mb-3">Eligibility</h3>
+                          <div className="w-12 h-0.5 bg-pau-gold mb-4"></div>
+                        </div>
                       </div>
-                      <p className="text-gray-700">Credits from state-accredited law schools are considered for transfer.</p>
+                      <p className="text-gray-700 leading-relaxed">
+                        Transfer credit is only granted to applicants meeting <span className="font-semibold text-pau-darkBlue">Section 6060(h)</span> requirements. You must have passed the <span className="font-semibold">FYLSX</span> or be exempt (advanced to 2L by an accredited law school).
+                      </p>
                     </div>
-                    <div className="bg-white p-6 rounded-2xl border-2 border-pau-blue shadow-lg hover:shadow-xl transition-all">
-                      <div className="flex items-center mb-4">
-                        <div className="w-10 h-10 bg-pau-blue rounded-lg flex items-center justify-center mr-3">
-                          <CheckBadgeIcon className="h-5 w-5 text-white" />
+
+                    {/* Credit Validity Card */}
+                    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 group">
+                      <div className="flex items-start mb-4">
+                        <div className="w-12 h-12 bg-gradient-to-br from-pau-blue to-pau-darkBlue rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
+                          <ClockIcon className="h-6 w-6 text-white" />
                         </div>
-                        <h3 className="text-xl font-serif font-bold text-pau-darkBlue">ABA-Accredited Schools</h3>
+                        <div className="flex-1">
+                          <h3 className="text-xl font-serif font-bold text-pau-darkBlue mb-3">Credit Validity</h3>
+                          <div className="w-12 h-0.5 bg-pau-gold mb-4"></div>
+                        </div>
                       </div>
-                      <p className="text-gray-700">Credits from ABA-accredited institutions are evaluated for transfer eligibility.</p>
+                      <p className="text-gray-700 leading-relaxed">
+                        Courses must be completed within <span className="font-semibold text-pau-darkBlue">27 months</span> prior to enrollment (waived for those who passed FYLSX).
+                      </p>
+                    </div>
+
+                    {/* Credit Limit Card */}
+                    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 group">
+                      <div className="flex items-start mb-4">
+                        <div className="w-12 h-12 bg-gradient-to-br from-pau-gold to-amber-500 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
+                          <CheckBadgeIcon className="h-6 w-6 text-pau-darkBlue" />
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-xl font-serif font-bold text-pau-darkBlue mb-3">Credit Limit</h3>
+                          <div className="w-12 h-0.5 bg-pau-gold mb-4"></div>
+                        </div>
+                      </div>
+                      <div className="bg-pau-gold/10 p-4 rounded-xl border border-pau-gold/20">
+                        <p className="text-2xl font-bold text-pau-darkBlue mb-1">40 Units</p>
+                        <p className="text-sm text-gray-600">Maximum transfer credit accepted</p>
+                      </div>
+                    </div>
+
+                    {/* Evaluation Fee Card */}
+                    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 group">
+                      <div className="flex items-start mb-4">
+                        <div className="w-12 h-12 bg-gradient-to-br from-pau-gold to-amber-500 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
+                          <CurrencyDollarIcon className="h-6 w-6 text-pau-darkBlue" />
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-xl font-serif font-bold text-pau-darkBlue mb-3">Evaluation Fee</h3>
+                          <div className="w-12 h-0.5 bg-pau-gold mb-4"></div>
+                        </div>
+                      </div>
+                      <p className="text-gray-700 leading-relaxed mb-4">
+                        <span className="font-semibold">$10 per unit</span> evaluation fee (non-refundable).
+                      </p>
+                      <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
+                        <p className="text-lg font-bold text-pau-darkBlue">$10 per unit</p>
+                        <p className="text-sm text-gray-600">Non-refundable evaluation fee</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Starting Over Policy - Full Width */}
+                  <div className="bg-gradient-to-r from-amber-50 to-yellow-50 rounded-2xl shadow-lg border-2 border-pau-gold/30 p-8 md:p-10">
+                    <div className="flex items-start">
+                      <div className="w-12 h-12 bg-pau-gold rounded-xl flex items-center justify-center mr-5 flex-shrink-0">
+                        <DocumentTextIcon className="h-6 w-6 text-pau-darkBlue" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-xl font-serif font-bold text-pau-darkBlue mb-3">"Starting Over"</h3>
+                        <p className="text-gray-700 leading-relaxed">
+                          If not seeking transfer credit, you must submit the <span className="font-semibold text-pau-darkBlue">"Starting First-Year Law Studies Over Certification"</span> to the State Bar.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
 
                 {/* International Applicants Section */}
                 <div>
-                  <div className="bg-gradient-to-br from-pau-gold/20 to-amber-50 p-8 md:p-12 rounded-3xl border-2 border-pau-gold shadow-xl mb-8">
-                    <div className="flex items-center mb-6">
-                      <div className="w-14 h-14 bg-pau-gold rounded-xl flex items-center justify-center mr-4">
-                        <GlobeAltIcon className="h-7 w-7 text-pau-darkBlue" />
+                  {/* Hero Header */}
+                  <div className="relative bg-gradient-to-br from-pau-gold/30 via-amber-50 to-yellow-50 p-10 md:p-16 rounded-3xl border-2 border-pau-gold/40 shadow-xl mb-10 overflow-hidden">
+                    <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+                    <div className="absolute top-0 right-0 w-96 h-96 bg-pau-gold opacity-10 rounded-full -mr-48 -mt-48"></div>
+                    <div className="relative z-10">
+                      <div className="flex items-center mb-6">
+                        <div className="w-16 h-16 bg-pau-gold rounded-2xl flex items-center justify-center mr-5 shadow-lg">
+                          <GlobeAltIcon className="h-8 w-8 text-pau-darkBlue" />
+                        </div>
+                        <div>
+                          <h2 className="text-3xl md:text-4xl font-serif font-bold text-pau-darkBlue mb-2">International Students Requirements</h2>
+                          <div className="w-20 h-1 bg-pau-gold"></div>
+                        </div>
                       </div>
-                      <h2 className="text-2xl md:text-3xl font-serif font-bold text-pau-darkBlue">International Applicants</h2>
+                      <p className="text-lg md:text-xl text-gray-700 leading-relaxed max-w-3xl">
+                        PAUSL welcomes international students from around the world. All applicants must meet specific English proficiency and credential evaluation requirements.
+                      </p>
                     </div>
-                    <p className="text-lg text-gray-700 leading-relaxed mb-6">
-                      Applicants with degrees from outside the U.S. must have their transcripts evaluated by a credential evaluation service.
-                    </p>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-                    <div className="bg-white p-6 rounded-2xl border-2 border-pau-gold shadow-lg hover:shadow-xl transition-all">
-                      <div className="flex items-center mb-4">
-                        <div className="w-10 h-10 bg-pau-gold rounded-lg flex items-center justify-center mr-3">
-                          <DocumentCheckIcon className="h-5 w-5 text-pau-darkBlue" />
-                        </div>
-                        <h3 className="text-xl font-serif font-bold text-pau-darkBlue">Credential Evaluation</h3>
+                  {/* No ESL Instruction - Full Width Alert */}
+                  <div className="bg-red-50 border-2 border-red-200 rounded-2xl p-8 mb-8">
+                    <div className="flex items-start">
+                      <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center mr-5 flex-shrink-0">
+                        <ExclamationCircleIcon className="h-6 w-6 text-red-600" />
                       </div>
-                      <p className="text-gray-700 mb-3">Required services include:</p>
-                      <ul className="space-y-2 text-gray-700">
-                        <li className="flex items-start">
-                          <span className="text-pau-gold mr-2">•</span>
-                          <span>WES (World Education Services)</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-pau-gold mr-2">•</span>
-                          <span>LSAC CAS (Law School Admission Council)</span>
-                        </li>
-                      </ul>
+                      <div>
+                        <h3 className="text-xl font-serif font-bold text-red-900 mb-3">No ESL</h3>
+                        <p className="text-red-800 leading-relaxed">
+                          PAUSL does not provide ESL instruction. <span className="font-semibold">High proficiency in oral and written English is mandatory.</span>
+                        </p>
+                      </div>
                     </div>
-                    <div className="bg-white p-6 rounded-2xl border-2 border-pau-gold shadow-lg hover:shadow-xl transition-all">
-                      <div className="flex items-center mb-4">
-                        <div className="w-10 h-10 bg-pau-gold rounded-lg flex items-center justify-center mr-3">
-                          <AcademicCapIcon className="h-5 w-5 text-pau-darkBlue" />
+                  </div>
+
+                  {/* English Proficiency Methods */}
+                  <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 md:p-10 mb-8">
+                    <h3 className="text-2xl font-serif font-bold text-pau-darkBlue mb-6 flex items-center">
+                      <span className="w-10 h-1 bg-pau-gold mr-4"></span>
+                      English Language Proficiency Requirements
+                    </h3>
+                    <p className="text-gray-700 text-lg leading-relaxed mb-8">
+                      Non-native English speakers must demonstrate proficiency through one of the following methods:
+                    </p>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {/* Prior Academic Study */}
+                      <div className="bg-gradient-to-br from-blue-50 to-pau-light rounded-xl p-6 border border-blue-100 hover:shadow-lg transition-all group">
+                        <div className="flex items-center mb-4">
+                          <div className="w-10 h-10 bg-pau-blue rounded-lg flex items-center justify-center mr-3 group-hover:scale-110 transition-transform">
+                            <AcademicCapIcon className="h-5 w-5 text-white" />
+                          </div>
+                          <h4 className="text-lg font-bold text-pau-darkBlue">Prior Academic Study</h4>
                         </div>
-                        <h3 className="text-xl font-serif font-bold text-pau-darkBlue">TOEFL Requirement</h3>
+                        <p className="text-gray-700 leading-relaxed">
+                          <span className="font-semibold">2+ years of study</span> at an English-speaking college.
+                        </p>
                       </div>
-                      <p className="text-gray-700 mb-3">
-                        Non-native English speakers must demonstrate proficiency with a minimum TOEFL score of:
+
+                      {/* TOEFL */}
+                      <div className="bg-gradient-to-br from-blue-50 to-pau-light rounded-xl p-6 border border-blue-100 hover:shadow-lg transition-all group">
+                        <div className="flex items-center mb-4">
+                          <div className="w-10 h-10 bg-pau-blue rounded-lg flex items-center justify-center mr-3 group-hover:scale-110 transition-transform">
+                            <DocumentCheckIcon className="h-5 w-5 text-white" />
+                          </div>
+                          <h4 className="text-lg font-bold text-pau-darkBlue">TOEFL</h4>
+                        </div>
+                        <p className="text-gray-700 mb-3 leading-relaxed">
+                          TOEFL: <span className="font-semibold">79</span> (iBT), <span className="font-semibold">213</span> (CBT), or <span className="font-semibold">550</span> (PBT).
+                        </p>
+                      </div>
+
+                      {/* IELTS */}
+                      <div className="bg-gradient-to-br from-blue-50 to-pau-light rounded-xl p-6 border border-blue-100 hover:shadow-lg transition-all group">
+                        <div className="flex items-center mb-4">
+                          <div className="w-10 h-10 bg-pau-blue rounded-lg flex items-center justify-center mr-3 group-hover:scale-110 transition-transform">
+                            <CheckBadgeIcon className="h-5 w-5 text-white" />
+                          </div>
+                          <h4 className="text-lg font-bold text-pau-darkBlue">IELTS</h4>
+                        </div>
+                        <p className="text-gray-700 leading-relaxed">
+                          IELTS: <span className="font-semibold">6.0 or higher</span>.
+                        </p>
+                      </div>
+
+                      {/* Duolingo */}
+                      <div className="bg-gradient-to-br from-blue-50 to-pau-light rounded-xl p-6 border border-blue-100 hover:shadow-lg transition-all group">
+                        <div className="flex items-center mb-4">
+                          <div className="w-10 h-10 bg-pau-blue rounded-lg flex items-center justify-center mr-3 group-hover:scale-110 transition-transform">
+                            <GlobeAltIcon className="h-5 w-5 text-white" />
+                          </div>
+                          <h4 className="text-lg font-bold text-pau-darkBlue">Duolingo English Test</h4>
+                        </div>
+                        <p className="text-gray-700 leading-relaxed">
+                          Duolingo: <span className="font-semibold">105 or higher</span>.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Transcript Evaluation */}
+                  <div className="bg-gradient-to-br from-pau-darkBlue to-pau-blue rounded-2xl shadow-xl p-8 md:p-10 text-white mb-8">
+                    <div className="flex items-start">
+                      <div className="w-12 h-12 bg-pau-gold rounded-xl flex items-center justify-center mr-5 flex-shrink-0">
+                        <DocumentCheckIcon className="h-6 w-6 text-pau-darkBlue" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-2xl font-serif font-bold mb-4">Transcript Evaluation</h3>
+                        <p className="text-white/90 leading-relaxed mb-4">
+                          Degrees from outside the U.S. require evaluation from a <span className="font-semibold">State Bar-approved agency</span> (e.g., A2Z, ECE, IERF).
+                        </p>
+                        <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                          <p className="text-sm font-semibold mb-2 text-pau-gold">Approved Organizations:</p>
+                          <div className="flex flex-wrap gap-3">
+                            <span className="px-3 py-1 bg-white/20 rounded-lg text-sm">A2Z</span>
+                            <span className="px-3 py-1 bg-white/20 rounded-lg text-sm">ECE</span>
+                            <span className="px-3 py-1 bg-white/20 rounded-lg text-sm">IERF</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Additional Requirements Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Official Transcripts */}
+                    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 group">
+                      <div className="flex items-start mb-4">
+                        <div className="w-12 h-12 bg-gradient-to-br from-pau-blue to-pau-darkBlue rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
+                          <DocumentTextIcon className="h-6 w-6 text-white" />
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-xl font-serif font-bold text-pau-darkBlue mb-3">Official Transcripts</h3>
+                          <div className="w-12 h-0.5 bg-pau-gold mb-4"></div>
+                        </div>
+                      </div>
+                      <p className="text-gray-700 leading-relaxed">
+                        All official transcripts must be sent <span className="font-semibold text-pau-darkBlue">directly from the issuing institution to PAUSL</span>.
                       </p>
-                      <div className="bg-pau-gold/10 p-4 rounded-xl border border-pau-gold">
-                        <p className="text-2xl font-bold text-pau-darkBlue">90 (iBT)</p>
-                        <p className="text-sm text-gray-600 mt-1">Internet-based Test</p>
+                    </div>
+
+                    {/* LSAC ID */}
+                    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 group">
+                      <div className="flex items-start mb-4">
+                        <div className="w-12 h-12 bg-gradient-to-br from-pau-gold to-amber-500 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
+                          <CheckBadgeIcon className="h-6 w-6 text-pau-darkBlue" />
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-xl font-serif font-bold text-pau-darkBlue mb-3">LSAC ID</h3>
+                          <div className="w-12 h-0.5 bg-pau-gold mb-4"></div>
+                        </div>
                       </div>
+                      <p className="text-gray-700 leading-relaxed">
+                        All applicants must <span className="font-semibold text-pau-darkBlue">obtain and provide an LSAC number</span> on their application.
+                      </p>
                     </div>
                   </div>
                 </div>
