@@ -108,7 +108,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         : textColorClass
     }`;
   
-  const SubmenuBtn = ({ page, label, external }: { page: Page, label: string, external?: boolean }) => {
+  const SubmenuBtn = ({ page, label, external, externalUrl }: { page: Page, label: string, external?: boolean, externalUrl?: string }) => {
     const isActive = currentPage === page;
     return (
       <button 
@@ -164,14 +164,23 @@ export const Navbar: React.FC<NavbarProps> = ({
     );
   };
 
-  const MobileSubLink = ({ page, label, external }: { page: Page, label: string, external?: boolean }) => (
+  const MobileSubLink = ({ page, label, external, externalUrl }: { page: Page, label: string, external?: boolean, externalUrl?: string }) => (
     <button 
-      onClick={() => external ? navigateAndClose('home') : navigateAndClose(page)}
-      className={`text-[15px] font-medium text-left py-1 transition-colors ${currentPage === page ? 'text-pau-gold font-bold' : 'text-gray-500 active:text-pau-blue'}`}
+      onClick={() => {
+        if (external) {
+          navigateAndClose('home');
+        } else {
+          navigateAndClose(page);
+        }
+      }}
+      className={`text-[15px] font-medium text-left py-1 transition-colors flex items-center ${currentPage === page ? 'text-pau-gold font-bold' : 'text-gray-500 active:text-pau-blue'}`}
       aria-label={external ? `${label} (External link)` : label}
       aria-current={currentPage === page ? 'page' : undefined}
     >
-      {label} {external && <span className="text-[9px] text-gray-300 ml-1" aria-hidden="true">(External)</span>}
+      <span className="group-hover:translate-x-1 transition-transform flex items-center">
+        {label}
+        {external && <span className="ml-2 text-[8px] bg-gray-50 text-gray-400 px-1.5 py-0.5 rounded uppercase tracking-widest font-bold">EXT</span>}
+      </span>
     </button>
   );
 
@@ -304,10 +313,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 {activeDropdown === 'admissions' && (
                   <DropdownWrapper widthClass="w-72">
                     <div className="px-10 space-y-4">
-                      <button onClick={() => { onNavigate('apply-now'); setActiveDropdown(null); }} className={`block w-full text-left text-[15px] font-bold uppercase transition-colors flex items-center ${currentPage === 'apply-now' ? 'text-pau-gold' : 'text-pau-blue'}`}>
-                        {shared.nav.applyNow}
-                        {currentPage === 'apply-now' ? null : <span className="ml-2 w-1.5 h-1.5 rounded-full bg-pau-gold animate-pulse"></span>}
-                      </button>
+                      <SubmenuBtn page="home" label={shared.nav.applyNow} external />
                       {/* <SubmenuBtn page="admissions" label="Admissions Home" /> */}
                       {/* <SubmenuBtn page="careers" label={shared.nav.careers} /> */}
                       <SubmenuBtn page="app-steps" label={shared.nav.appSteps} />
@@ -487,7 +493,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               </MobileSection>
 
               <MobileSection title={shared.nav.admissions} id="admissions">
-                <MobileSubLink page="apply-now" label={shared.nav.applyNow} />
+                <MobileSubLink page="home" label={shared.nav.applyNow} external />
                 {/* <MobileSubLink page="admissions" label="Admissions Home" /> */}
                 {/* <MobileSubLink page="careers" label={shared.nav.careers} /> */}
                 <MobileSubLink page="admission-reqs" label={shared.nav.admissionReqs} />

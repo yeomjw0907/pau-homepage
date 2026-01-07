@@ -144,6 +144,7 @@ export interface FacultyMember {
   name: string;
   credential?: string;
   title: string;
+  additionalInfo?: string;
   education: string[];
   bio: string;
   expertise: string[];
@@ -317,7 +318,7 @@ export const DEFAULT_SHARED_CONTENT: SharedContent = {
     disclosure: "Disclosure Statement",
     presidentWelcome: "President's Welcome",
     deanMessage: "Message from the Dean",
-    adminStaffs: "Administration Staff",
+    adminStaffs: "Administrative Staff",
     faculty: "Faculty",
     catalog: "Catalog",
     schoolForm: "School Form",

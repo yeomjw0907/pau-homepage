@@ -6,8 +6,8 @@ export const DEFAULT_FACULTY_CONTENT: FacultyContent = {
   facultyList: [
     {
       name: "Michael Marino",
-      credential: "Esq.",
-      title: "Faculty (Teaches: Legal Writing, First-Year Skills, Bar Preparation)",
+      credential: "J.D.",
+      title: "Faculty",
       education: [
         "J.D., St. John's University School of Law (2004)",
         "B.A., The George Washington University (2000)"
@@ -22,7 +22,7 @@ export const DEFAULT_FACULTY_CONTENT: FacultyContent = {
     {
       name: "Jonathan Levy",
       credential: "Ph.D., J.D.",
-      title: "Faculty (Teaches: Torts, International and Administrative Law, Introduction to Jurisprudence, Contracts, Family Law, Immigration, Legal Research, Bankruptcy, Copyrights, Evidence, Legal Ethics, Estates and Trusts, Constitutional Law)",
+      title: "Faculty",
       education: [
         "Ph.D., University of Cincinnati (2006)",
         "J.D., Golden Gate University School of Law",
@@ -38,7 +38,7 @@ export const DEFAULT_FACULTY_CONTENT: FacultyContent = {
     {
       name: "Shandrea P. Williams",
       credential: "J.D.",
-      title: "Faculty (Teaches: Contracts I & II)",
+      title: "Faculty",
       education: [
         "J.D., Loyola University School of Law (1994)",
         "B.A., Southern Agricultural & Mechanical University (1991)"
@@ -51,9 +51,9 @@ export const DEFAULT_FACULTY_CONTENT: FacultyContent = {
       photoUrl: "/images/faculty-shandrea-williams.jpg"
     },
     {
-      name: "John \"Jack\" Chandler",
+      name: "John Jack Chandler",
       credential: "J.D.",
-      title: "Faculty (Teaches: Criminal Law, Legal Liability, Criminal Justice)",
+      title: "Faculty",
       education: [
         "J.D., Loyola Law School, Los Angeles",
         "B.A. in Criminal Justice, CSUF"
@@ -69,6 +69,7 @@ export const DEFAULT_FACULTY_CONTENT: FacultyContent = {
       name: "Hyun Joo Kang",
       credential: "S.J.D.",
       title: "CEO & President",
+      additionalInfo: "Timothy P. Weimer (Dean of School of Law)",
       education: [
         "LL.M. thesis & S.J.D., Indiana University Maurer School of Law (2010)",
         "LL.B., LL.M., Ph.D. coursework completed, Ewha Womans University"
