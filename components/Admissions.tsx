@@ -76,12 +76,38 @@ export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
             <section className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
               <h2 className="text-3xl font-serif font-bold text-pau-blue mb-8 flex items-center">
                 <span className="w-8 h-1 bg-pau-gold mr-4"></span>
-                Overview
+                1. Overview
               </h2>
               <div className="bg-white rounded-xl shadow-soft border border-gray-100 p-8">
-                <p className="text-gray-700 text-lg leading-relaxed">
-                  Applicants must demonstrate strong academic performance, typically reflected in their undergraduate GPA (minimum of 2.0). PAUSL employs a holistic admissions process that evaluates not only academic achievements but also personal qualities and the applicant's potential to contribute to the legal profession.
+                <p className="text-gray-700 text-lg leading-relaxed mb-6">
+                  PAUSL employs a holistic admissions process that evaluates not only academic achievements but also personal qualities and the applicant's potential to contribute to the legal profession.
                 </p>
+                <ul className="space-y-4">
+                  <li className="flex items-start group">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
+                      <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
+                    </div>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>Academic Excellence:</strong> Applicants must demonstrate strong academic performance, typically reflected in their undergraduate GPA with a minimum of 2.0.</span>
+                  </li>
+                  <li className="flex items-start group">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
+                      <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
+                    </div>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>Character Assessment:</strong> The review process assesses whether the applicant's moral character meets the standards expected of individuals entering the practice of law in California.</span>
+                  </li>
+                  <li className="flex items-start group">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
+                      <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
+                    </div>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>Required Disclosures:</strong> Applicants must disclose any prior criminal convictions or disciplinary actions from previous institutions.</span>
+                  </li>
+                  <li className="flex items-start group">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
+                      <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
+                    </div>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>LSAC Number:</strong> While the LSAT is optional, the State Bar of California requires all applicants to obtain and provide an LSAC number on their application.</span>
+                  </li>
+                </ul>
               </div>
             </section>
 
@@ -89,36 +115,81 @@ export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
             <section className="animate-fade-in mt-12" style={{ animationDelay: '0.2s' }}>
               <h2 className="text-3xl font-serif font-bold text-pau-blue mb-8 flex items-center">
                 <span className="w-8 h-1 bg-pau-gold mr-4"></span>
-                English Language Requirement (International Applicants)
+                2. English Language Requirement (International Applicants)
               </h2>
               <div className="bg-white rounded-xl shadow-soft border border-gray-100 p-8">
                 <p className="text-gray-700 text-lg leading-relaxed mb-6">
-                  International applicants who are non-native speaker of English must demonstrate English proficiency by one of the following:
+                  International applicants who are non-native speakers of English must demonstrate English proficiency through one of the following methods:
                 </p>
                 <ul className="space-y-4">
                   <li className="flex items-start group">
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
                       <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
                     </div>
-                    <span className="text-gray-700 text-lg pt-0.5">Completion of at least two years of study at a college or university where the language of instruction was English.</span>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>Prior Education:</strong> Completion of at least two years of study at a college or university where the language of instruction was English.</span>
                   </li>
                   <li className="flex items-start group">
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
                       <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
                     </div>
-                    <span className="text-gray-700 text-lg pt-0.5">Submitting a passing score from the Test of English as a Foreign Language (TOEFL): At least 79 (internet-based test).</span>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>TOEFL (Test of English as a Foreign Language):</strong> A minimum score of 79 on the internet-based test (iBT), 550 on the paper-based test (PBT), or 213 on the computer-based test (CBT).</span>
                   </li>
                   <li className="flex items-start group">
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
                       <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
                     </div>
-                    <span className="text-gray-700 text-lg pt-0.5">Submitting a passing score on the International English Language Testing System (IELTS): 6.0 or higher for the overall band.</span>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>IELTS (International English Language Testing System):</strong> An overall band score of 6.0 or higher.</span>
                   </li>
                   <li className="flex items-start group">
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
                       <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
                     </div>
-                    <span className="text-gray-700 text-lg pt-0.5">Submitting a passing score on the Duolingo English Test: 105 or higher.</span>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>Duolingo English Test:</strong> A score of 105 or higher.</span>
+                  </li>
+                </ul>
+              </div>
+            </section>
+
+            {/* Minimum Entrance Requirements */}
+            <section className="animate-fade-in mt-12" style={{ animationDelay: '0.3s' }}>
+              <h2 className="text-3xl font-serif font-bold text-pau-blue mb-8 flex items-center">
+                <span className="w-8 h-1 bg-pau-gold mr-4"></span>
+                3. Minimum Entrance Requirements (Admission Criteria)
+              </h2>
+              <div className="bg-white rounded-xl shadow-soft border border-gray-100 p-8">
+                <p className="text-gray-700 text-lg leading-relaxed mb-6">
+                  To be eligible for admission, prospective students must meet at least one of the following five criteria:
+                </p>
+                <ul className="space-y-4">
+                  <li className="flex items-start group">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
+                      <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
+                    </div>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>Master's Degree:</strong> A master's degree from an accredited U.S. institution with a minimum cumulative GPA of 2.0.</span>
+                  </li>
+                  <li className="flex items-start group">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
+                      <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
+                    </div>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>Bachelor's Degree:</strong> A bachelor's degree from an accredited American institution or an equivalent non-U.S. institution with a minimum cumulative GPA of 2.0.</span>
+                  </li>
+                  <li className="flex items-start group">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
+                      <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
+                    </div>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>Associate's Degree:</strong> An associate's degree from an accredited college or university with a minimum cumulative GPA of 2.0.</span>
+                  </li>
+                  <li className="flex items-start group">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
+                      <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
+                    </div>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>Sixty (60) or More College Units:</strong> Earned college units from an accredited institution with a minimum cumulative GPA of 2.0.</span>
+                  </li>
+                  <li className="flex items-start group">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
+                      <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
+                    </div>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>CLEP Exams:</strong> For those without a degree or 60 units, achieving a score of 50 or above on specified College-Level Examination Program (CLEP) exams, including the required College Composition exam.</span>
                   </li>
                 </ul>
               </div>

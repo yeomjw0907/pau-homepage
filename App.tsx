@@ -277,6 +277,29 @@ const App: React.FC = () => {
               </div>
             </SectionWrapper>
 
+            {/* History Section */}
+            <SectionWrapper>
+              <div className="max-w-5xl mx-auto">
+                <div className="bg-white p-10 md:p-16 rounded-3xl shadow-xl border border-gray-200">
+                  <div className="flex items-center mb-8">
+                    <div className="w-16 h-16 bg-pau-blue rounded-full flex items-center justify-center mr-4">
+                      <BookOpenIcon className="h-8 w-8 text-white" />
+                    </div>
+                    <h2 className="text-2xl md:text-3xl font-serif font-bold text-pau-darkBlue">Our History</h2>
+                  </div>
+                  
+                  <div className="space-y-6 text-gray-700 leading-relaxed text-lg">
+                    <p>
+                      Pacific American University (PAU) was founded in 2018 and initially offered a Graduate Certificate in Business Administration (GCBA) and a Master of Business Administration (MBA) program, both approved by the California Bureau for Private Postsecondary Education (BPPE). After successfully graduating students from the MBA program, President Kang—who had long aspired to establish a correspondence law school in California to train future U.S. lawyers through a Juris Doctor (J.D.) program—redirected the university's full focus toward the development of the J.D. program.
+                    </p>
+                    <p>
+                      Today, PAU offers the J.D. program through Pacific American University School of Law (PAUSL) as an Unaccredited Correspondence Law School registered with the Committee of Bar Examiners of the State Bar of California.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </SectionWrapper>
+
             {/* Core Values Section */}
             <SectionWrapper title="Our Core Values">
               <div className="max-w-6xl mx-auto">
@@ -423,23 +446,53 @@ const App: React.FC = () => {
 
       case 'dean-message':
         return (
-          <GenericPage
-            title="Message from the Dean"
-            subtitle="Academic leadership committed to student outcomes."
-            icon={AcademicCapIcon}
-            content={
-              <>
-                <p className="lead">To the Future Advocates of Tomorrow,</p>
-                <p>Welcome to Pacific American University School of Law. As Dean, I am honored to lead an institution that is reshaping the landscape of legal education.</p>
-                <p>We are not just an online law school; we are a community of scholars, practitioners, and students united by a common goal: to master the law and use it to effect positive change. Our curriculum is rigorous, designed to challenge you and prepare you for the realities of modern legal practice.</p>
-                <p>Whether you aspire to practice in a courtroom, a corporate boardroom, or a public interest organization, your journey starts here. We are committed to providing you with the tools, mentorship, and opportunities you need to succeed.</p>
-                <div className="mt-8 border-t border-gray-200 pt-6">
-                  <p className="font-bold text-pau-darkBlue text-xl font-serif">Elena Rodriguez</p>
-                  <p className="text-sm text-gray-500 uppercase tracking-widest mt-1">Dean, School of Law</p>
+          <>
+            <PageHeader title={"Message from the Dean"} subtitle="Academic leadership committed to student outcomes." icon={AcademicCapIcon} />
+            <SectionWrapper>
+              <div className="max-w-4xl mx-auto">
+                {/* Image Section */}
+                <div className="flex justify-center mb-12">
+                  <div className="w-64 md:w-80 aspect-[3/4] rounded-lg overflow-hidden shadow-lg">
+                    <img 
+                      src="/images/admin-timothy-weimer.jpg" 
+                      alt="Timothy P. Weimer, Dean of School of Law" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
                 </div>
-              </>
-            }
-          />
+
+                {/* Welcome Message */}
+                <div className="text-center mb-12">
+                  <h2 className="text-3xl md:text-4xl font-serif font-bold text-pau-darkBlue leading-tight mb-4">
+                    Welcome to Pacific American University School of Law
+                  </h2>
+                  <div className="mt-6 mb-8">
+                    <p className="font-serif text-xl text-pau-darkBlue font-semibold">Timothy P. Weimer</p>
+                    <p className="text-sm text-pau-gold font-bold uppercase tracking-widest mt-1">Dean of School of Law</p>
+                  </div>
+                </div>
+
+                {/* Message Content */}
+                <div className="prose prose-lg prose-blue text-gray-600 max-w-none">
+                  <p>It is an honor to serve as the founding Dean of Pacific American University School of Law (PAUSL) at this exciting moment in the school's history. PAUSL was created with a bold, deeply important, and visionary purpose: to expand access to high-quality legal education for capable, motivated students—wherever they are in the world, and whatever path has led them to the study of law.</p>
+                  <p>It is an honor to serve as the founding Dean of Pacific American University School of Law (PAUSL) at this exciting moment in the school's history. PAUSL was created with a bold, deeply important, and visionary purpose: to expand access to high-quality legal education for capable, motivated students—wherever they are in the world, and whatever path has led them to the study of law.</p>
+                  <p>For many prospective students, particularly international students and those from non-traditional or first-generation law school families, the journey to law school can feel uncertain or even out of reach. PAUSL was designed with you in mind. Our online correspondence-based JD program embraces flexibility without compromising rigor, allowing students to pursue a U.S. legal education while balancing professional, family, and geographic realities. At PAUSL, your background is not a barrier—it is a strength.</p>
+                  <p>Our vision for PAUSL is ambitious. We are building a modern law school that reflects the realities of today's legal profession and anticipates the needs of tomorrow's lawyers. Through innovative curriculum design, engaging faculty-led instruction, and a strong emphasis on academic success and professional readiness, PAUSL is committed to preparing graduates not only to pass the California Bar Examination, but to think critically, act ethically, serve effectively and succeed as Lawyers in an increasingly interconnected world.</p>
+                  <p>Central to our mission is the belief that legal education should not be confined by borders. By bringing together students from diverse cultures, professions, and life experiences, PAUSL fosters a global learning community grounded in American legal principles while enriched by international perspectives. Our graduates will be uniquely positioned to navigate cross-border legal issues, support global businesses and communities, and contribute meaningfully to the rule of law.</p>
+                  <p>As Dean, I am committed to each student's success, the ongoing integrity of the institution, and continuous improvement in all that we do. PAUSL will be a law school that listens to its students, supports them academically, and holds itself to the highest standards of professionalism and compliance. We are building not only a law school, but a community—one defined by inclusion, intellectual curiosity, and a shared belief in the transformative power of legal education.</p>
+                  <p>I invite you to explore what PAUSL has to offer and to imagine yourself as part of this exciting future. Whether you are beginning a new professional chapter, advancing an existing career, or pursuing a lifelong dream of becoming a lawyer, Pacific American University School of Law is committed to your academic, professional, and personal success.</p>
+                  <p>I look forward to welcoming you to PAUSL.</p>
+                </div>
+
+                {/* Signature Section */}
+                <div className="mt-16 pt-8 border-t border-gray-200 text-center">
+                  <p className="font-serif text-2xl md:text-3xl text-pau-darkBlue font-bold mb-2">Timothy P. Weimer, Dean</p>
+                  <p className="text-sm font-bold text-pau-gold uppercase tracking-widest mb-4">Dean of School of Law</p>
+                  <p className="text-gray-500 text-sm">Pacific American University School of Law</p>
+                </div>
+              </div>
+            </SectionWrapper>
+          </>
         );
 
       case 'school-form':
@@ -1352,9 +1405,10 @@ const App: React.FC = () => {
                        <h3 className="text-2xl font-serif font-bold text-pau-darkBlue mb-8">Department Directory</h3>
                        <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
                           {[
-                            { name: "Admissions Office", email: "admissions@pau.edu", phone: "Ext. 101" },
-                            { name: "Registrar's Office", email: "registrar@pau.edu", phone: "Ext. 102" },
-                            { name: "Student Services", email: "studentservices@pau.edu", phone: "Ext. 103" },
+                            { name: "Help Desk", email: "help@paucal.org", phone: "Ext. 100" },
+                            { name: "Admissions Office", email: "admissions@paucal.org", phone: "Ext. 101" },
+                            { name: "Registrar's Office", email: "registrar@paucal.org", phone: "Ext. 102" },
+                            { name: "Student Services", email: "studentservices@paucal.org", phone: "Ext. 103" },
                           ].map((dept, i) => (
                             <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between p-6 border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors">
                                <div className="mb-2 sm:mb-0">
@@ -1364,9 +1418,11 @@ const App: React.FC = () => {
                                   <a href={`mailto:${dept.email}`} className="flex items-center hover:text-pau-blue transition-colors">
                                     <EnvelopeIcon className="h-4 w-4 mr-2 text-gray-400" /> {dept.email}
                                   </a>
-                                  <span className="flex items-center">
-                                    <PhoneIcon className="h-4 w-4 mr-2 text-gray-400" /> {dept.phone}
-                                  </span>
+                                  {dept.phone && (
+                                    <span className="flex items-center">
+                                      <PhoneIcon className="h-4 w-4 mr-2 text-gray-400" /> {dept.phone}
+                                    </span>
+                                  )}
                                </div>
                             </div>
                           ))}
@@ -1566,39 +1622,122 @@ const App: React.FC = () => {
             icon={ClipboardDocumentListIcon}
             />
             <SectionWrapper>
-              <div className="max-w-4xl mx-auto">
-                <div className="space-y-6 md:space-y-8">
-                  <StepCard 
-                    stepNumber={1}
-                    title="Submit Online Application"
-                    description="Complete the form via LSAC or our direct portal."
-                    icon={DocumentCheckIcon}
-                  />
-                  <StepCard 
-                    stepNumber={2}
-                    title="Request Transcripts"
-                    description="Have official transcripts sent from all undergraduate institutions."
-                    icon={DocumentDuplicateIcon}
-                  />
-                  <StepCard 
-                    stepNumber={3}
-                    title="Personal Statement"
-                    description="Upload a 2-3 page essay describing your motivation for studying law."
-                    icon={DocumentTextIcon}
-                  />
-                  <StepCard 
-                    stepNumber={4}
-                    title="Letters of Recommendation"
-                    description="Two letters from academic or professional sources."
-                    icon={UserGroupIcon}
-                  />
-                  <StepCard 
-                    stepNumber={5}
-                    title="Interview"
-                    description="Selected candidates will be invited for a Zoom interview with the Admissions Committee."
-                    icon={ChatBubbleBottomCenterTextIcon}
-                    isLast
-                  />
+              <div className="max-w-5xl mx-auto space-y-16">
+                {/* On-line Application */}
+                <div className="bg-white rounded-2xl p-8 md:p-10 shadow-lg border border-gray-200">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-12 h-12 bg-pau-blue rounded-xl flex items-center justify-center shadow-md">
+                      <DocumentCheckIcon className="h-6 w-6 text-white" />
+                    </div>
+                    <h2 className="text-3xl font-serif font-bold text-pau-darkBlue">On-line Application</h2>
+                  </div>
+                  <p className="text-gray-700 leading-relaxed mb-8 text-lg">
+                    PAU School of Law employs a digital application and enrollment system, eliminating the need for paper-based processes. The Application, Enrollment Agreement, Disclosure, and all pertinent documents or forms are accomplished and electronically signed online. To finalize the application procedure, you should: Complete and electronically sign the Application at <a href="https://paucal.org/Apply-Now" target="_blank" rel="noopener noreferrer" className="text-pau-blue hover:text-pau-darkBlue font-semibold underline">https://paucal.org/Apply-Now</a>
+                  </p>
+                  <div className="space-y-5">
+                    <div className="bg-gray-50 rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border-l-4 border-pau-blue">
+                      <div className="flex items-start gap-5">
+                        <div className="flex-shrink-0 w-12 h-12 bg-pau-blue text-white rounded-xl flex items-center justify-center font-bold text-lg shadow-lg">
+                          1
+                        </div>
+                        <p className="text-gray-700 leading-relaxed pt-2 text-base">
+                          Explore our program offerings on our school's website at <a href="https://www.paucal.org/" target="_blank" rel="noopener noreferrer" className="text-pau-blue hover:text-pau-darkBlue font-semibold underline">https://www.paucal.org/</a>
+                        </p>
+                      </div>
+                    </div>
+                    <div className="bg-gray-50 rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border-l-4 border-pau-blue">
+                      <div className="flex items-start gap-5">
+                        <div className="flex-shrink-0 w-12 h-12 bg-pau-blue text-white rounded-xl flex items-center justify-center font-bold text-lg shadow-lg">
+                          2
+                        </div>
+                        <p className="text-gray-700 leading-relaxed pt-2 text-base">
+                          Check if you meet the specific admission requirements for the degree or certification program you're interested in by reviewing the 'Admissions Requirements' section
+                        </p>
+                      </div>
+                    </div>
+                    <div className="bg-gray-50 rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border-l-4 border-pau-blue">
+                      <div className="flex items-start gap-5">
+                        <div className="flex-shrink-0 w-12 h-12 bg-pau-blue text-white rounded-xl flex items-center justify-center font-bold text-lg shadow-lg">
+                          3
+                        </div>
+                        <p className="text-gray-700 leading-relaxed pt-2 text-base">
+                          Take a look at our tuition, and other information
+                        </p>
+                      </div>
+                    </div>
+                    <div className="bg-gray-50 rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border-l-4 border-pau-blue">
+                      <div className="flex items-start gap-5">
+                        <div className="flex-shrink-0 w-12 h-12 bg-pau-blue text-white rounded-xl flex items-center justify-center font-bold text-lg shadow-lg">
+                          4
+                        </div>
+                        <p className="text-gray-700 leading-relaxed pt-2 text-base">
+                          Begin your application process by pressing 'Apply Now' button on our homepage. Please ensure that you upload all official documentation required for the admissions committee review
+                        </p>
+                      </div>
+                    </div>
+                    <div className="bg-gray-50 rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border-l-4 border-pau-blue">
+                      <div className="flex items-start gap-5">
+                        <div className="flex-shrink-0 w-12 h-12 bg-pau-blue text-white rounded-xl flex items-center justify-center font-bold text-lg shadow-lg">
+                          5
+                        </div>
+                        <p className="text-gray-700 leading-relaxed pt-2 text-base">
+                          After submitting your application on PAU's Populi, you may expect further instructions or communication regarding the application process through email response with the link to follow up
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* International Applicants */}
+                <div className="bg-white rounded-2xl p-8 md:p-10 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-12 h-12 bg-pau-blue rounded-xl flex items-center justify-center shadow-md">
+                      <GlobeAltIcon className="h-6 w-6 text-white" />
+                    </div>
+                    <h2 className="text-3xl font-serif font-bold text-pau-darkBlue">International Applicants</h2>
+                  </div>
+                  <p className="text-gray-700 leading-relaxed text-lg">
+                    Pacific American University welcomes students from all over the world. PAU provides a vitally technology-based distance education environment to engage students interactively in an abundant, multimedia learning experience. Students may enroll and study at any time from any location in the world where sufficient Internet access is available.
+                  </p>
+                </div>
+
+                {/* Submitting Academic Documentation */}
+                <div className="bg-white rounded-2xl p-8 md:p-10 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-12 h-12 bg-pau-blue rounded-xl flex items-center justify-center shadow-md">
+                      <DocumentDuplicateIcon className="h-6 w-6 text-white" />
+                    </div>
+                    <h2 className="text-3xl font-serif font-bold text-pau-darkBlue">Submitting Academic Documentation</h2>
+                  </div>
+                  <p className="text-gray-700 leading-relaxed text-lg">
+                    Students are required to have official copies of transcripts from secondary schools and colleges and universities that they have attended sent directly to PAU. Transcripts in languages other than English must be accompanied by a certified translation.
+                  </p>
+                </div>
+
+                {/* Foreign Transcript Evaluation */}
+                <div className="bg-white rounded-2xl p-8 md:p-10 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-12 h-12 bg-pau-blue rounded-xl flex items-center justify-center shadow-md">
+                      <ShieldCheckIcon className="h-6 w-6 text-white" />
+                    </div>
+                    <h2 className="text-3xl font-serif font-bold text-pau-darkBlue">Foreign Transcript Evaluation</h2>
+                  </div>
+                  <p className="text-gray-700 leading-relaxed text-lg">
+                    Transcripts for comparable university-level courses completed in a country other than the United States must be evaluated by an outside credential evaluation company before they are submitted to PAU. The National Association of Credential Evaluation Services members are acceptable sources for foreign credential evaluation and translation services.
+                  </p>
+                </div>
+
+                {/* Verifying English Proficiency */}
+                <div className="bg-white rounded-2xl p-8 md:p-10 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-12 h-12 bg-pau-blue rounded-xl flex items-center justify-center shadow-md">
+                      <CheckCircleIcon className="h-6 w-6 text-white" />
+                    </div>
+                    <h2 className="text-3xl font-serif font-bold text-pau-darkBlue">Verifying English Proficiency</h2>
+                  </div>
+                  <p className="text-gray-700 leading-relaxed text-lg">
+                    Applicants whose native language is not English and have not completed their studies at an accredited U.S. college or university must submit evidence of English proficiency such as TOEFL, IELTS, or duolingo score. Transcripts not in English must be evaluated by an appropriate third party and translated into English or evaluated by a trained transcript evaluation fluent in the language on the transcript. In this case, the evaluation must have expertise in the educational practices of the country of origin and include an English translation of the review.
+                  </p>
                 </div>
               </div>
             </SectionWrapper>
