@@ -35,7 +35,7 @@ const FacultyItem: React.FC<FacultyItemProps> = ({
       {/* Content Column */}
       <div className="flex-grow">
         <div className="mb-6 md:mb-8 text-center md:text-left">
-          <h3 className="text-xl md:text-3xl font-serif font-bold text-pau-darkBlue mb-2 leading-tight flex items-baseline gap-2 flex-wrap">
+          <h3 className="text-xl md:text-3xl font-serif font-bold text-pau-darkBlue mb-2 leading-tight flex items-baseline gap-2 flex-wrap justify-center md:justify-start">
             <span>{prof.name}</span>
             {prof.credential && (
               <span className="text-sm md:text-lg font-serif italic text-gray-500 font-normal">
