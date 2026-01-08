@@ -310,11 +310,11 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
                </p>
                
                <div className="flex items-center gap-4">
-                 <div className="w-12 h-12 rounded-full bg-pau-gold flex items-center justify-center text-pau-darkBlue font-bold font-serif text-xl">
-                    ER
+                 <div className="w-16 h-16 rounded-full bg-gradient-to-br from-pau-gold via-pau-goldDark to-pau-gold flex items-center justify-center text-pau-darkBlue font-bold font-serif text-lg shadow-lg ring-2 ring-pau-gold/30 hover:ring-pau-gold/50 transition-all duration-300 hover:scale-110">
+                    <span className="tracking-tight">TPW</span>
                  </div>
                  <div>
-                   <p className="font-serif font-bold text-white">Elena Rodriguez</p>
+                   <p className="font-serif font-bold text-white">Timothy P. Weimer</p>
                    <p className="text-[10px] uppercase tracking-widest text-gray-500">Dean, School of Law</p>
                  </div>
                </div>

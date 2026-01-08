@@ -194,6 +194,51 @@ export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
                 </ul>
               </div>
             </section>
+
+            {/* Verification of Pre-Legal Study */}
+            <section className="animate-fade-in mt-12" style={{ animationDelay: '0.4s' }}>
+              <h2 className="text-3xl font-serif font-bold text-pau-blue mb-8 flex items-center">
+                <span className="w-8 h-1 bg-pau-gold mr-4"></span>
+                4. Verification of Pre-Legal Study
+              </h2>
+              <div className="bg-white rounded-xl shadow-soft border border-gray-100 p-8">
+                <p className="text-gray-700 text-lg leading-relaxed mb-6">
+                  PAUSL is responsible for verifying that each applicant has satisfied the pre-legal education requirement prior to admission to the J.D. program. This verification process is conducted in accordance with Guideline 5.28 of the Guidelines for Unaccredited Law Schools and Rule VII, Section 1 of the Rules Regulating Admission to Practice Law in California.
+                </p>
+                <ul className="space-y-4">
+                  <li className="flex items-start group">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
+                      <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
+                    </div>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>Official Transcripts:</strong> All applicants must provide official transcripts from every college or university previously attended. If applicable, official CLEP (College Level Examination Program) score reports must also be sent directly to PAUSL from the College Board.</span>
+                  </li>
+                  <li className="flex items-start group">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
+                      <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
+                    </div>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>Verification Standards:</strong> The Admissions Office will review academic records to ensure the completion of at least two years of college work (minimum 60 semester or 90 quarter units) at an accredited institution, or the equivalent through approved CLEP examinations.</span>
+                  </li>
+                  <li className="flex items-start group">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
+                      <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
+                    </div>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>State Bar Evaluation:</strong> In cases where PAUSL cannot definitively determine whether an applicant's pre-legal study meets the required standards, the applicant may be required to obtain a formal "Evaluation of Pre-Legal Education" from the Committee of Bar Examiners of the State Bar of California. The responsibility for requesting this evaluation and paying any associated fees rests with the applicant.</span>
+                  </li>
+                  <li className="flex items-start group">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
+                      <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
+                    </div>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>Foreign Credentials:</strong> Applicants seeking to satisfy requirements with credits from foreign institutions must provide a credential evaluation from an agency approved by the Committee of Bar Examiners.</span>
+                  </li>
+                  <li className="flex items-start group">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
+                      <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
+                    </div>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>Final Admission Status:</strong> Final admission to the J.D. program is contingent upon the successful verification of all pre-legal study requirements. An applicant will not be considered fully admitted until PAUSL or the Committee of Bar Examiners has officially confirmed their eligibility.</span>
+                  </li>
+                </ul>
+              </div>
+            </section>
           </div>
 
           {/* Sidebar / Dates */}

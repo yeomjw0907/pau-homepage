@@ -140,8 +140,8 @@ Last Updated: January 2026`
               </div>
               <div>
                 <strong className="text-white text-[10px] block mb-1 uppercase tracking-wider">Website:</strong>
-                <a href="https://www.paucal.org" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
-                  www.paucal.org
+                <a href="https://www.law.paucal.org" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                  www.law.paucal.org
                 </a>
               </div>
             </div>
