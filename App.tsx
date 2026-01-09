@@ -760,22 +760,22 @@ const App: React.FC = () => {
                     {/* Section 2 */}
                     <div className="space-y-4">
                       <h2 className="text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">2. Pacific American University School of Law (PAUSL) is not accredited by the Committee of Bar Examiners of the State Bar of California, but is registered as an unaccredited correspondence law school.</h2>
-                      <p>
+                      <p className="font-semibold text-pau-darkBlue">
                         Students enrolled in the J.D. degree program at this law school who successfully complete the first year of law study must pass the First-Year Law Students' Examination as required by Business and Professions Code section 6060(h) and Title 4, Division1, Chapter 1 Rule 4.3(I) of the Rules of State Bar of California as part of the requirements to qualify to take the California Bar Examination. A student who passes the First-Year Law Students' Examination within three (3) administrations of the examination after first becoming eligible to take it will receive credit for all legal studies completed up to the time the examination is passed. A student who does not pass the examination within three (3) administrations of the examination after first becoming eligible to take it must be promptly disqualified from the law school's J.D. degree program. If the dismissed student subsequently passes the examination, the student is eligible for re-enrollment in this law school's J.D. degree program, but will receive credit for only one year of legal study.
                       </p>
-                      <p>
+                      <p className="font-semibold text-pau-darkBlue">
                         Study at, or graduation from, this law school may not qualify a student to take the bar examination or to satisfy the requirements for admission to practice in jurisdictions other than California. A student intending to seek admission to practice law in a jurisdiction other than California should contact the admitting authority in that jurisdiction for information regarding the legal education requirements in that jurisdiction for admission to the practice of law.
                       </p>
                     </div>
 
                     {/* Section 3 */}
                     <div className="space-y-4">
-                      <h2 className="text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">3. Pacific American University School of Law has not applied for accreditation in the previous five years.</h2>
+                      <h2 className="text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">3. PAUSL has not applied for accreditation in the previous five years.</h2>
                     </div>
 
                     {/* Section 4 */}
                     <div className="space-y-4">
-                      <h2 className="text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">4. Pacific American University School of Law's Financial Status for the first ten years is as follow:</h2>
+                      <h2 className="text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">4. PAUSL's Financial Status for the first ten years is as follow:</h2>
                       <div className="overflow-x-auto">
                         <table className="w-full border-collapse border border-gray-300">
                           <thead>
@@ -880,7 +880,7 @@ const App: React.FC = () => {
 
                     {/* Section 7 */}
                     <div className="space-y-6">
-                      <h2 className="text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">7. The educational background, qualifications, and experience of the faculty at Pacific American University School of Law for the 2025-2026 Academic School Year and the names of any faculty who are licensees of the State Bar of California or who are admitted in another jurisdiction are as follows:</h2>
+                      <h2 className="text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">7. The educational background, qualifications, and experience of the faculty at PAUSL for the 2026-2027 Academic School Year and the names of any faculty who are licensees of the State Bar of California or who are admitted in another jurisdiction are as follows:</h2>
                       
                       <div className="space-y-8">
                         {/* Michael Marino */}
@@ -962,7 +962,7 @@ const App: React.FC = () => {
 
                     {/* Section 8 */}
                     <div className="space-y-6">
-                      <h2 className="text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">8. The educational background, qualifications, and experience of the administrators at Pacific American University School of Law for the 2025-2026 Academic School Year and the names of any administrators who are licensees of the State Bar of California or who are admitted in another jurisdiction are as follows:</h2>
+                      <h2 className="text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">8. The educational background, qualifications, and experience of the administrators at Pacific American University School of Law for the 2026-2027 Academic School Year and the names of any administrators who are licensees of the State Bar of California or who are admitted in another jurisdiction are as follows:</h2>
                       
                       <div className="space-y-8">
                         {/* Hyun Joo Kang */}
@@ -1089,12 +1089,12 @@ const App: React.FC = () => {
 
                     {/* Section 10 */}
                     <div className="space-y-4">
-                      <h2 className="text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">10. Pacific American University School of Law has not been issued a Notice of Noncompliance by the Committee of Bar Examiners.</h2>
+                      <h2 className="text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">10. PAUSL has not been issued a Notice of Noncompliance by the Committee of Bar Examiners.</h2>
                     </div>
 
                     {/* Section 11 */}
                     <div className="space-y-4">
-                      <h2 className="text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">11. The attrition rates of students who are enrolled in the J.D. Degree Program at Pacific American University School of Law and do not matriculate into subsequent years of study, for the past five years, are as follows:</h2>
+                      <h2 className="text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">11. The attrition rates of students who are enrolled in the J.D. Degree Program at PAUSL and do not matriculate into subsequent years of study, for the past five years, are as follows:</h2>
                       <div className="overflow-x-auto">
                         <table className="w-full border-collapse border border-gray-300">
                           <thead>
@@ -1107,7 +1107,7 @@ const App: React.FC = () => {
                             </tr>
                           </thead>
                           <tbody>
-                            {['2024-2025', '2023-2024', '2022-2023', '2021-2022'].map((year, idx) => (
+                            {['2025-2026', '2024-2025', '2023-2024', '2022-2023', '2021-2022'].map((year, idx) => (
                               <tr key={idx} className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
                                 <td className="border border-gray-300 px-4 py-3 font-bold">{year}</td>
                                 <td className="border border-gray-300 px-4 py-3 text-center">N/A</td>
@@ -1123,13 +1123,13 @@ const App: React.FC = () => {
 
                     {/* Section 12 */}
                     <div className="space-y-4">
-                      <h2 className="text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">12. The education and degree provided by Pacific American University School of Law may not satisfy the requirements of jurisdictions other than California for the practice of law. Applicants should contact the jurisdiction in which they may want to practice for that jurisdiction's requirements.</h2>
+                      <h2 className="text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">12. The education and degree provided by PAUSL may not satisfy the requirements of jurisdictions other than California for the practice of law. Applicants should contact the jurisdiction in which they may want to practice for that jurisdiction's requirements.</h2>
                     </div>
 
                     {/* Signature Section */}
                     <div className="mt-12 pt-8 border-t-2 border-gray-300 space-y-6">
                       <p className="text-sm md:text-base">
-                        By signing below, I acknowledge that I have read and understand this Student Disclosure Statement in its entirety, including information regarding Pacific American University School of Law's registration status with The State Bar of California, its unaccredited correspondence method of instruction, examination and graduation requirements, its financial health, and its reported pass rates. I understand that study at or graduation from this law school may not qualify me to take the bar examination or to satisfy the requirements for admission to practice law in jurisdictions other than California. My signature affirms that I have received a copy of this Disclosure Statement and that I understand the nature, limitations, and conditions of enrollment at Pacific American University School of Law.
+                        By signing below, I acknowledge that I have read and understand this Student Disclosure Statement in its entirety, including information regarding PAUSL' registration status with The State Bar of California, its unaccredited correspondence method of instruction, examination and graduation requirements, its financial health, and its reported pass rates. I understand that study at or graduation from this law school may not qualify me to take the bar examination or to satisfy the requirements for admission to practice law in jurisdictions other than California. My signature affirms that I have received a copy of this Disclosure Statement and that I understand the nature, limitations, and conditions of enrollment at PAUSL.
                       </p>
                       
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">

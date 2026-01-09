@@ -134,6 +134,20 @@ export const Calendar: React.FC<CalendarProps> = ({ content, shared }) => {
           </ul>
         </div>
 
+        {/* Academic Breaks */}
+        <div className="mt-12 bg-white shadow-soft rounded-2xl border border-gray-100 overflow-hidden">
+          <div className="bg-gradient-to-r from-pau-light to-white px-8 py-6 border-b border-gray-200">
+            <h3 className="text-xl font-serif font-bold text-pau-darkBlue">
+              Academic Breaks
+            </h3>
+          </div>
+          <div className="px-8 py-6">
+            <p className="text-gray-700 leading-relaxed">
+              There are one-week breaks for Spring Break in late March, Independence Day in July, and Thanksgiving in November.
+            </p>
+          </div>
+        </div>
+
         {/* Important Notice */}
         <div className="mt-12 bg-gradient-to-r from-blue-50 to-pau-light rounded-2xl p-6 border-l-4 border-pau-gold shadow-md">
           <div className="flex items-start">
