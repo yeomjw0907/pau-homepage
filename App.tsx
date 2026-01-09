@@ -1333,54 +1333,284 @@ const App: React.FC = () => {
       case 'tuition-fees':
         return (
           <>
-            <PageHeader title={"Tuition &\nCosts"} subtitle="Transparent pricing for your legal education." icon={CurrencyDollarIcon} />
-            <SectionWrapper title="Schedule of Charges">
-              <div className="max-w-4xl mx-auto">
-                <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 mb-12">
-                  <div className="bg-pau-blue p-6 text-white text-center">
-                    <h3 className="text-xl font-bold font-serif uppercase tracking-widest">2026-2027 Academic Year</h3>
+            <PageHeader title={"Tuition, Fees\nand Costs"} subtitle="Transparent pricing for your legal education." icon={CurrencyDollarIcon} />
+            <SectionWrapper>
+              <div className="max-w-6xl mx-auto space-y-12">
+                {/* Introduction */}
+                <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8">
+                  <p className="text-gray-700 leading-relaxed mb-4">
+                    Tuition, fees and other costs are subject to change. The cost of textbooks and study materials are not included in tuition but estimates are presented in the table below entitled Additional Costs. Similarly, there are other costs and fees which are NOT included in tuition while attending PAUSL that include fees to The State Bar of California (which are paid directly to The State Bar of California by the student) and are listed in the section below entitled The State Bar of California Fees. Tuition and fees payable to PAUSL are invoiced and accepted only in U.S Dollars. Similarly, fees due to The State Bar of California also must be paid in U.S. Dollars.
+                  </p>
+                  <p className="text-gray-700 leading-relaxed">
+                    All anticipated expenses directly related to study at PAUSL are listed below in the following sections entitled: Tuition, Additional Costs, Set-Up Fees, and The State Bar of California Fees.
+                  </p>
+                </div>
+
+                {/* Tuition Table */}
+                <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+                  <div className="bg-pau-blue p-6 text-white">
+                    <h2 className="text-2xl font-bold font-serif">Tuition</h2>
                   </div>
                   <div className="p-8">
-                    <div className="grid grid-cols-2 gap-y-6 text-sm md:text-base">
-                      <div className="font-bold text-pau-darkBlue">Tuition (per unit)</div>
-                      <div className="text-right text-gray-600 font-mono">$300.00</div>
-                      <div className="col-span-2 h-px bg-gray-100"></div>
-                      
-                      <div className="font-bold text-pau-darkBlue">Registration Fee (per semester)</div>
-                      <div className="text-right text-gray-600 font-mono">$50.00</div>
-                      <div className="col-span-2 h-px bg-gray-100"></div>
+                    <div className="overflow-x-auto">
+                      <table className="w-full border-collapse border border-gray-300">
+                        <thead>
+                          <tr className="bg-pau-darkBlue text-white">
+                            <th className="border border-gray-300 px-4 py-3 text-left font-bold">Description</th>
+                            <th className="border border-gray-300 px-4 py-3 text-right font-bold">Amount</th>
+                            <th className="border border-gray-300 px-4 py-3 text-left font-bold">Explanation</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr className="bg-white">
+                            <td className="border border-gray-300 px-4 py-3 font-semibold text-pau-darkBlue">Trimester tuition cost:</td>
+                            <td className="border border-gray-300 px-4 py-3 text-right font-mono">$3,000.00</td>
+                            <td className="border border-gray-300 px-4 py-3">Per trimester</td>
+                          </tr>
+                          <tr className="bg-gray-50">
+                            <td className="border border-gray-300 px-4 py-3 font-semibold text-pau-darkBlue">Yearly tuition:</td>
+                            <td className="border border-gray-300 px-4 py-3 text-right font-mono">$9,000.00</td>
+                            <td className="border border-gray-300 px-4 py-3">3 trimesters per year (3 x $3,000)</td>
+                          </tr>
+                          <tr className="bg-white">
+                            <td className="border border-gray-300 px-4 py-3 font-semibold text-pau-darkBlue">Total tuition:</td>
+                            <td className="border border-gray-300 px-4 py-3 text-right font-mono font-bold text-lg">$36,000.00</td>
+                            <td className="border border-gray-300 px-4 py-3">Four years of coursework are required (4 x $9,000)</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p className="mt-4 text-sm text-gray-600 italic">
+                      Tuition and fees may change, and the cost of textbooks and study materials is not covered by the tuition. See examples below of total cost calculations for each year and the estimated total for four years including fees to The State Bar of California in the Summary of Expected Fees by Year section.
+                    </p>
+                  </div>
+                </div>
 
-                      <div className="font-bold text-pau-darkBlue">Student Services Fee</div>
-                      <div className="text-right text-gray-600 font-mono">$100.00</div>
-                      <div className="col-span-2 h-px bg-gray-100"></div>
-
-                      <div className="font-bold text-pau-darkBlue">Library Access Fee</div>
-                      <div className="text-right text-gray-600 font-mono">$150.00</div>
-                      
-                      <div className="col-span-2 mt-6 p-4 bg-green-50 rounded-lg flex justify-between items-center border border-green-100">
-                        <span className="font-bold text-green-800 uppercase tracking-wide">Estimated Annual Total (24 Units)</span>
-                        <span className="font-bold text-xl text-green-700 font-mono">$7,800.00</span>
-                      </div>
+                {/* Additional Costs Table */}
+                <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+                  <div className="bg-pau-gold/10 p-6 border-b border-gray-200">
+                    <h2 className="text-2xl font-bold font-serif text-pau-darkBlue">Additional Costs</h2>
+                  </div>
+                  <div className="p-8">
+                    <div className="overflow-x-auto">
+                      <table className="w-full border-collapse border border-gray-300 text-sm">
+                        <thead>
+                          <tr className="bg-pau-darkBlue text-white">
+                            <th className="border border-gray-300 px-4 py-3 text-left font-bold">Description</th>
+                            <th className="border border-gray-300 px-4 py-3 text-center font-bold">Frequency</th>
+                            <th className="border border-gray-300 px-4 py-3 text-center font-bold">Refundable/Non-Refundable</th>
+                            <th className="border border-gray-300 px-4 py-3 text-right font-bold">Amount</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {[
+                            { desc: "Application for Admissions", freq: "One time", refund: "Non-refundable", amount: "$70" },
+                            { desc: "Rush Processing, Admissions", freq: "One time", refund: "Non-refundable", amount: "$200" },
+                            { desc: "Student Services Fee", freq: "Per Year", refund: "Refundable*", amount: "$150" },
+                            { desc: "Registration Fee", freq: "One time", refund: "Non-refundable*", amount: "$200" },
+                            { desc: "Late Registration Fee", freq: "Upon request", refund: "Non-refundable", amount: "$20" },
+                            { desc: "Drop/Add Fee (per course)", freq: "Upon request", refund: "Non-refundable", amount: "$10" },
+                            { desc: "Readmission Fee", freq: "Upon request", refund: "Non-refundable", amount: "$50" },
+                            { desc: "Transfer Credit Fee (per credit)", freq: "Upon request", refund: "Non-refundable", amount: "$10" },
+                            { desc: "Academic Program Change Fee", freq: "Upon request", refund: "Non-refundable", amount: "$20" },
+                            { desc: "Leave of Absence Fee", freq: "Upon request", refund: "Non-refundable", amount: "$10" },
+                            { desc: "Enrollment Verification Letter (per copy)", freq: "Upon request", refund: "Non-refundable", amount: "$10" },
+                            { desc: "Official Transcript (per copy)", freq: "Upon request", refund: "Non-refundable", amount: "$10" },
+                            { desc: "Misc. Certification Fee (per copy)", freq: "Upon request", refund: "Non-refundable", amount: "$10" },
+                            { desc: "Duplicate Diploma", freq: "Upon request", refund: "Non-refundable", amount: "$50" },
+                            { desc: "Graduation Fee", freq: "One time", refund: "Non-refundable", amount: "$300" },
+                            { desc: "Late Application for Admissions", freq: "Upon Request", refund: "Non-Refundable", amount: "$350" },
+                            { desc: "Tuition Late Fee", freq: "Late Payment", refund: "Non-refundable", amount: "$100" },
+                            { desc: "Returned Check Fee", freq: "Per Returned Check", refund: "Non-refundable", amount: "$20" },
+                            { desc: "Installment Plan Option 1 Set-Up Fee", freq: "One Time per Year", refund: "Non-refundable", amount: "$100" },
+                            { desc: "Books", freq: "Per Year", refund: "Refundable***", amount: "$500 to $1,000**" },
+                            { desc: "Westlaw Set-Up Fee", freq: "Per Year", refund: "Non-refundable*", amount: "$200" },
+                            { desc: "CALI Set-Up Fee", freq: "Per Year", refund: "Non-refundable*", amount: "$100" },
+                            { desc: "ExamSoft Set-Up Fee", freq: "Per Year", refund: "Non-refundable*", amount: "$200" },
+                            { desc: "4L Elective Bar Review Preparation Course Set-Up Fee", freq: "One Time - Optional", refund: "Non-refundable", amount: "$200" },
+                          ].map((item, idx) => (
+                            <tr key={idx} className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                              <td className="border border-gray-300 px-4 py-3">{item.desc}</td>
+                              <td className="border border-gray-300 px-4 py-3 text-center">{item.freq}</td>
+                              <td className="border border-gray-300 px-4 py-3 text-center">{item.refund}</td>
+                              <td className="border border-gray-300 px-4 py-3 text-right font-mono">{item.amount}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                    <div className="mt-6 space-y-2 text-sm text-gray-600">
+                      <p><strong>*</strong> These fees may be reimbursable if the Student provides notice of withdrawal within seven (7) days of signing the Enrollment Agreement. See the Refund section below for details.</p>
+                      <p><strong>**</strong> Textbook shipping fees to destinations outside of the U.S. may be increased depending on shipping type, package weight, time of year, and destination. Email at reg@paucal.org if you have questions on shipping.</p>
+                      <p><strong>***</strong> Books may often be returnable if in like-new condition and the return process is initiated within seven (7) days of the start of the term but shipping costs for returns must be covered by the student. Students are responsible for their own shipping insurance for returned materials.</p>
                     </div>
                   </div>
                 </div>
-                <p className="text-xs text-gray-400 text-center mb-12">* Tuition and fees are subject to change. Books and supplies are not included.</p>
 
-                {/* Additional Costs Table */}
-                <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+                {/* Set-Up Fees */}
+                <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
                   <div className="bg-pau-gold/10 p-6 border-b border-gray-200">
-                    <h3 className="text-xl font-bold font-serif text-pau-darkBlue uppercase tracking-widest">Additional Costs</h3>
+                    <h2 className="text-2xl font-bold font-serif text-pau-darkBlue">Set-Up Fees</h2>
                   </div>
                   <div className="p-8">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm md:text-base">
-                      <div className="font-bold text-pau-darkBlue">Item</div>
-                      <div className="font-bold text-pau-darkBlue text-center">Amount</div>
-                      <div className="font-bold text-pau-darkBlue">Notes</div>
-                      <div className="col-span-3 h-px bg-gray-100"></div>
-                      
-                      <div className="text-gray-700">4L Elective Bar Review Preparation Course Set-Up Fee</div>
-                      <div className="text-right md:text-center text-gray-600 font-mono">$200.00</div>
-                      <div className="text-gray-600 italic text-sm">Non-refundable, optional for 4L students.</div>
+                    <p className="text-gray-700 leading-relaxed mb-6">
+                      Students pay a $500.00 in set-up fee each year, and 4L students may pay an additional $200 fee (for a total of $700) if they enroll in the Bar Review Preparation Course. Note that these fees are only refundable within seven (7) days of signing the enrollment agreement and after that date, they become non-refundable. These fees cover four software programs listed below. To see how these fees impact the total cost of education at PAUSL, see the section below entitled: Summary of Expected Fees by Year.
+                    </p>
+                    <div className="overflow-x-auto">
+                      <table className="w-full border-collapse border border-gray-300">
+                        <tbody>
+                          <tr className="bg-white">
+                            <td className="border border-gray-300 px-4 py-3 font-semibold text-pau-darkBlue">Westlaw</td>
+                            <td className="border border-gray-300 px-4 py-3 text-right font-mono">$200.00 (annually)</td>
+                          </tr>
+                          <tr className="bg-gray-50">
+                            <td className="border border-gray-300 px-4 py-3 font-semibold text-pau-darkBlue">CALI</td>
+                            <td className="border border-gray-300 px-4 py-3 text-right font-mono">$100.00 (annually)</td>
+                          </tr>
+                          <tr className="bg-white">
+                            <td className="border border-gray-300 px-4 py-3 font-semibold text-pau-darkBlue">ExamSoft</td>
+                            <td className="border border-gray-300 px-4 py-3 text-right font-mono">$200.00 (annually)</td>
+                          </tr>
+                          <tr className="bg-gray-50">
+                            <td className="border border-gray-300 px-4 py-3 font-semibold text-pau-darkBlue">Bar Preparation</td>
+                            <td className="border border-gray-300 px-4 py-3 text-right font-mono">$200.00 (4L year - Optional if enrolled in Bar Review Preparation course)</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+                {/* The State Bar of California Fees */}
+                <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+                  <div className="bg-pau-gold/10 p-6 border-b border-gray-200">
+                    <h2 className="text-2xl font-bold font-serif text-pau-darkBlue">The State Bar of California Fees</h2>
+                  </div>
+                  <div className="p-8">
+                    <p className="text-gray-700 leading-relaxed mb-6">
+                      Students must pay The State Bar of California the following fees directly in U.S. Dollars which the student will incur at various points over the course of the four years in law school at PAUSL (see the Summary of Expected Fees by Year section below for likely times those fees may apply). They are not charged all at one time so the student must be cognizant of the timing and amount of these regulatory obligations. Staying abreast of these and other important aspects of your process to California Bar Licensure will ensure a smooth process through law school and into law practice. Typically, these fees will be due near the end of the First-Year and over the course of the Fourth-Year. All fees are subject to change without notice and students are responsible for ensuring that all fee deadlines are met as determined by The State Bar of California.
+                    </p>
+                    <div className="overflow-x-auto">
+                      <table className="w-full border-collapse border border-gray-300">
+                        <thead>
+                          <tr className="bg-pau-darkBlue text-white">
+                            <th className="border border-gray-300 px-4 py-3 text-left font-bold">Fee Description</th>
+                            <th className="border border-gray-300 px-4 py-3 text-right font-bold">Amount</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {[
+                            { desc: "Law Student Registration", amount: "$150" },
+                            { desc: "First Year Law Students Examination (FYLSX)", amount: "$873" },
+                            { desc: "FYLSX Laptop Fee", amount: "$153" },
+                            { desc: "Moral Character Determination", amount: "$745" },
+                            { desc: "Multistate Professional Responsibility Examination (MPRE)", amount: "$135" },
+                            { desc: "California State Bar Examination Registration", amount: "$850" },
+                            { desc: "Laptop Fee for the California State Bar Examination", amount: "$153" },
+                          ].map((item, idx) => (
+                            <tr key={idx} className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                              <td className="border border-gray-300 px-4 py-3">{item.desc}</td>
+                              <td className="border border-gray-300 px-4 py-3 text-right font-mono">{item.amount}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                    <p className="mt-6 text-sm text-gray-600">
+                      Note that The State Bar of California does permit refunds on some fees. Should a student decide to withdraw from PAUSL it is encouraged that the student contact The State Bar of California about seeking refunds of any fees paid to that organization. See their website here: <a href="https://www.calbar.ca.gov/Admissions/Examinations/California-Bar-Examination/Refund-of-Fees-Policy" target="_blank" rel="noopener noreferrer" className="text-pau-blue hover:text-pau-gold underline">www.calbar.ca.gov/Admissions/Examinations/California-Bar-Examination/Refund-of-Fees-Policy</a>
+                    </p>
+                  </div>
+                </div>
+
+                {/* Summary of Expected Fees by Year */}
+                <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+                  <div className="bg-pau-gold/10 p-6 border-b border-gray-200">
+                    <h2 className="text-2xl font-bold font-serif text-pau-darkBlue">Summary of Expected Fees by Year</h2>
+                  </div>
+                  <div className="p-8">
+                    <p className="text-gray-700 leading-relaxed mb-6">
+                      Students' costs and fees at PAUSL differ depending upon their year in law school. Unlike some schools which may charge a single fee for the entire semester to cover all expenses, PAUSL is transparent in the fee structure for students and charges only the fees that are necessary for a given year of school. Also, it is important to note that depending upon the year in school, some fees must be paid directly to The State Bar of California (look closely at the 1-L and 4-L years). All fees and costs are referenced in the tables above and the illustrations below draw from those tables to provide an example of what students can expect to pay for a given year of school at PAUSL. The actual numbers for each student may vary depending upon other variables but the scenarios listed below are the likely expense amounts for most students.
+                    </p>
+                    <div className="overflow-x-auto">
+                      <table className="w-full border-collapse border border-gray-300 text-sm">
+                        <thead>
+                          <tr className="bg-pau-darkBlue text-white">
+                            <th className="border border-gray-300 px-3 py-2 text-left font-bold">Category</th>
+                            <th className="border border-gray-300 px-3 py-2 text-center font-bold">1L</th>
+                            <th className="border border-gray-300 px-3 py-2 text-center font-bold">2L</th>
+                            <th className="border border-gray-300 px-3 py-2 text-center font-bold">3L</th>
+                            <th className="border border-gray-300 px-3 py-2 text-center font-bold">4L</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr className="bg-pau-blue/10 font-bold">
+                            <td colSpan={5} className="border border-gray-300 px-4 py-3">Pacific American University School of Law Tuition & Fees*</td>
+                          </tr>
+                          {[
+                            { cat: "Admissions Application Fee (one time)", year1L: "$70", year2L: "$0", year3L: "$0", year4L: "$0" },
+                            { cat: "Tuition (3 Trimesters @ $3,000 per Trimester)", year1L: "$9,000", year2L: "$9,000", year3L: "$9,000", year4L: "$9,000" },
+                            { cat: "Student Services Fee (annual)", year1L: "$150", year2L: "$150", year3L: "$150", year4L: "$150" },
+                            { cat: "Registration Fee (one time)", year1L: "$200", year2L: "$0", year3L: "$0", year4L: "$0" },
+                            { cat: "Set-Up Fee Westlaw (annual)", year1L: "$200", year2L: "$200", year3L: "$200", year4L: "$200" },
+                            { cat: "Set-Up Fee CALI (annual)", year1L: "$100", year2L: "$100", year3L: "$100", year4L: "$100" },
+                            { cat: "Set-Up Fee ExamSoft (annual)", year1L: "$200", year2L: "$200", year3L: "$200", year4L: "$200" },
+                            { cat: "Set-Up Fee Bar Preparation (optional 4L) **", year1L: "$0", year2L: "$0", year3L: "$0", year4L: "$200" },
+                            { cat: "Textbooks (Estimated) ***", year1L: "$1,000", year2L: "$1,000", year3L: "$1,000", year4L: "$1,000" },
+                            { cat: "Payment Plan Fee (Optional) ****", year1L: "$100", year2L: "$100", year3L: "$100", year4L: "$100" },
+                            { cat: "Graduation Fee (4L only)", year1L: "$0", year2L: "$0", year3L: "$0", year4L: "$300" },
+                            { cat: "Subtotal: PAUSL Tuition & Fees", year1L: "$11,020", year2L: "$10,750", year3L: "$10,750", year4L: "$11,250", isSubtotal: true },
+                            { cat: "PAUSL Total 4-Year Estimated Tuition & Fees", year1L: "$43,770", year2L: "", year3L: "", year4L: "", isTotal: true },
+                          ].map((row, idx) => (
+                            <tr key={idx} className={row.isSubtotal || row.isTotal ? 'bg-pau-blue/10 font-bold' : idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                              <td className="border border-gray-300 px-3 py-2">{row.cat}</td>
+                              <td className="border border-gray-300 px-3 py-2 text-center font-mono">{row.year1L}</td>
+                              <td className="border border-gray-300 px-3 py-2 text-center font-mono">{row.year2L}</td>
+                              <td className="border border-gray-300 px-3 py-2 text-center font-mono">{row.year3L}</td>
+                              <td className="border border-gray-300 px-3 py-2 text-center font-mono">{row.year4L}</td>
+                            </tr>
+                          ))}
+                          <tr className="bg-pau-gold/10 font-bold">
+                            <td colSpan={5} className="border border-gray-300 px-4 py-3">The State Bar Of California Fees (Paid directly to The State Bar)*****</td>
+                          </tr>
+                          {[
+                            { cat: "Law Student Registration (1L)", year1L: "$150", year2L: "$0", year3L: "$0", year4L: "$0" },
+                            { cat: "FYLSX Fee (1L)", year1L: "$873", year2L: "$0", year3L: "$0", year4L: "$0" },
+                            { cat: "FYLSX Laptop Fee (1L)", year1L: "$153", year2L: "$0", year3L: "$0", year4L: "$0" },
+                            { cat: "Moral Character Determination (4L)", year1L: "$0", year2L: "$0", year3L: "$0", year4L: "$745" },
+                            { cat: "MPRE Fee (4L)", year1L: "$0", year2L: "$0", year3L: "$0", year4L: "$135" },
+                            { cat: "Bar Exam Registration Fee (4L)", year1L: "$0", year2L: "$0", year3L: "$0", year4L: "$850" },
+                            { cat: "Bar Exam Laptop Fee (4L)", year1L: "$0", year2L: "$0", year3L: "$0", year4L: "$153" },
+                            { cat: "Subtotal: State Bar Fees", year1L: "$1,176", year2L: "$0", year3L: "$0", year4L: "$1,883", isSubtotal: true },
+                            { cat: "Total 4-Year Anticipated State Bar Fees", year1L: "$3,059", year2L: "", year3L: "", year4L: "", isTotal: true },
+                          ].map((row, idx) => (
+                            <tr key={idx} className={row.isSubtotal || row.isTotal ? 'bg-pau-gold/10 font-bold' : idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                              <td className="border border-gray-300 px-3 py-2">{row.cat}</td>
+                              <td className="border border-gray-300 px-3 py-2 text-center font-mono">{row.year1L}</td>
+                              <td className="border border-gray-300 px-3 py-2 text-center font-mono">{row.year2L}</td>
+                              <td className="border border-gray-300 px-3 py-2 text-center font-mono">{row.year3L}</td>
+                              <td className="border border-gray-300 px-3 py-2 text-center font-mono">{row.year4L}</td>
+                            </tr>
+                          ))}
+                          <tr className="bg-green-50 font-bold">
+                            <td className="border border-gray-300 px-3 py-2">Annual Estimated Cost for Each of the Four Years</td>
+                            <td className="border border-gray-300 px-3 py-2 text-center font-mono">$12,196</td>
+                            <td className="border border-gray-300 px-3 py-2 text-center font-mono">$10,750</td>
+                            <td className="border border-gray-300 px-3 py-2 text-center font-mono">$10,750</td>
+                            <td className="border border-gray-300 px-3 py-2 text-center font-mono">$13,133</td>
+                          </tr>
+                          <tr className="bg-green-100 font-bold text-lg">
+                            <td className="border border-gray-300 px-3 py-2">Grand Total 4-Year Estimated Cost</td>
+                            <td colSpan={4} className="border border-gray-300 px-3 py-2 text-center font-mono">$46,829</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div className="mt-6 space-y-2 text-sm text-gray-600">
+                      <p><strong>*</strong> Tuition and fees may change, and the cost of textbooks and study materials is not covered by the tuition.</p>
+                      <p><strong>**</strong> Fourth-Year students may opt to take the four credit elective Bar Review Preparation course which includes a $200 one-time set-up fee which is refundable within seven (7) days of enrollment.</p>
+                      <p><strong>***</strong> Note that Text Book costs are estimated at the highest expected cost and actual costs may be lower.</p>
+                      <p><strong>****</strong> Students opting for the Payment Plan Option 1 will pay $100 per year to set up their payment plan. See the Financial Aid section for more details. Also note that students who choose to pay via credit card must cover transaction and processing fees which may be as high as 4.5% of the amount charged.</p>
+                      <p><strong>*****</strong> All fees associated with The State Bar of California are based upon observed fees and expenses as presented in The State Bar of California's Schedule of Charges and Deadlines Title 4, Division 1 Admission Fees and could change at any time. Students are responsible to stay abreast of The State Bar of California law student-related fees. <a href="https://www.calbar.ca.gov/Portals/0/documents/rules/Rules_Appendix_A_Sched-Chgs-Deadlines.pdf" target="_blank" rel="noopener noreferrer" className="text-pau-blue hover:text-pau-gold underline">www.calbar.ca.gov/Portals/0/documents/rules/Rules_Appendix_A_Sched-Chgs-Deadlines.pdf</a></p>
                     </div>
                   </div>
                 </div>
@@ -1393,25 +1623,86 @@ const App: React.FC = () => {
         return (
           <>
             <PageHeader title={"Payment\nPlans"} subtitle="Flexible options to manage your investment." icon={CreditCardIcon} />
-            <SectionWrapper title="Financial Options">
-              <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-                {[
-                  { title: "Pay in Full", desc: "Pay the full semester tuition upfront.", detail: "0% Interest", note: "Best Value" },
-                  { title: "Monthly Installments", desc: "Divide tuition into 4 monthly payments per semester.", detail: "$50 Setup Fee", note: "Most Popular" },
-                  { title: "Employer Deferral", desc: "Defer payment until 30 days after grades are posted.", detail: "Company Sponsorship", note: "For Working Pros" }
-                ].map((plan, i) => (
-                  <div key={i} className="bg-white p-8 rounded-2xl shadow-soft border border-gray-100 hover:shadow-xl hover:border-pau-gold transition-all group">
-                    <div className="w-12 h-12 bg-pau-light rounded-full flex items-center justify-center mb-6 group-hover:bg-pau-blue group-hover:text-white transition-colors">
-                      <CreditCardIcon className="h-6 w-6 text-pau-blue group-hover:text-white" />
+            <SectionWrapper>
+              <div className="max-w-5xl mx-auto space-y-12">
+                {/* Introduction */}
+                <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8">
+                  <h2 className="text-2xl font-bold font-serif text-pau-darkBlue mb-4">Financial Aid</h2>
+                  <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-6">Installment Plans</h3>
+                  <p className="text-gray-700 leading-relaxed font-semibold mb-8">
+                    STUDENTS CHOOSING A STUDENT INSTALLMENT PLAN AGREE TO PAY THE TUITION, ANY ACCRUED INTEREST, AND RELATED FEES.
+                  </p>
+                </div>
+
+                {/* Payment Plan Options */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  {/* Option 1 */}
+                  <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+                    <div className="bg-pau-blue p-6 text-white">
+                      <h3 className="text-xl font-bold font-serif">Option 1: $350/month Minimum Payment Plan with 5% Annual Interest</h3>
                     </div>
-                    <h3 className="text-xl font-bold text-pau-darkBlue mb-2 font-serif">{plan.title}</h3>
-                    <p className="text-gray-500 text-sm mb-6 min-h-[40px]">{plan.desc}</p>
-                    <div className="pt-6 border-t border-gray-100 flex justify-between items-center">
-                      <span className="font-bold text-pau-gold text-xs uppercase tracking-wider">{plan.detail}</span>
-                      <span className="px-2 py-1 bg-gray-100 text-gray-500 text-[10px] uppercase font-bold rounded">{plan.note}</span>
+                    <div className="p-8">
+                      <p className="text-gray-700 leading-relaxed mb-4">
+                        Under this plan, you are required to make a minimum monthly payment of $350.00. The tuition amount will accrue a 5% annual interest rate until it is paid in full. You may also make extra payments, which will be subtracted from your account balance.
+                      </p>
+                      <p className="text-sm text-gray-600 italic">
+                        * Please ensure the full remaining balance of $3,000 for the current trimester is paid before registering for the next trimester, as registration for the next trimester occurs before its start.
+                      </p>
                     </div>
                   </div>
-                ))}
+
+                  {/* Option 2 */}
+                  <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+                    <div className="bg-pau-gold p-6 text-white">
+                      <h3 className="text-xl font-bold font-serif">Option 2: $750/month Maximum Payment Plan with 0% Interest</h3>
+                    </div>
+                    <div className="p-8">
+                      <p className="text-gray-700 leading-relaxed">
+                        With this plan, you will make a fixed monthly payment of $750.00. Your tuition will be entirely covered by the end of the trimester, and there is no annual interest applied to the outstanding balance.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Additional Information */}
+                <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8 space-y-6">
+                  <div>
+                    <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-4">Payment Plan Processing Fee</h3>
+                    <p className="text-gray-700 leading-relaxed">
+                      There is a payment plan processing fee of $100.00 per year, which is charged to students who choose to use an installment plan to finance their tuition and related fees.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-4">Credit Card Payments</h3>
+                    <p className="text-gray-700 leading-relaxed">
+                      We accept credit cards for processing payments, and any associated surcharges or processing fees are the responsibility of the students. Typically, such fees do not exceed 4.5% of the full amount of the charges. Make sure that if a credit card payment is planned for tuition and/or fees that you have a full understanding of the fee structure for processing your card before initiating payment. Consult with the PAUSL finance office for details regarding credit card processing fees.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-4">Accelerating Payments</h3>
+                    <p className="text-gray-700 leading-relaxed">
+                      At any point in time, students have the flexibility to settle their tuition balance or make a lump sum payment without incurring any penalties.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Applying for Installment Payment Plans */}
+                <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8">
+                  <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-4">Applying for Installment Payment Plans</h3>
+                  <p className="text-gray-700 leading-relaxed mb-6">
+                    To initiate an Installment Payment Plan, please get in touch with the PAUSL via email (<a href="mailto:registrar@paucal.org" className="text-pau-blue hover:text-pau-gold underline">registrar@paucal.org</a>). PAUSL representatives will guide each student in selecting the most suitable plan.
+                  </p>
+                  <div className="bg-red-50 border-l-4 border-red-500 p-6 mb-6">
+                    <p className="text-gray-800 font-semibold mb-4">
+                      STUDENTS WHO OPT FOR AN INSTALLMENT PAYMENT PLAN ARE RESPONSIBLE FOR COVERING THE FULL TUITION AMOUNT ALONG WITH ANY ASSOCIATED INTEREST AND FEES, REGARDLESS OF WHETHER THEY WITHDRAW OR SUCCESSFULLY GRADUATE.
+                    </p>
+                  </div>
+                  <p className="text-gray-700 leading-relaxed">
+                    Students enrolled in the PAUSL's Installment Payment Plan are expected to maintain timely payments. Failure to do so may result in dismissal from the law school. Specifically, students who miss two (2) payments in an academic year will be placed on non-academic probation, while those who miss three (3) payments during an academic year will face dismissal from the PAUSL.
+                  </p>
+                </div>
               </div>
             </SectionWrapper>
           </>
@@ -1421,31 +1712,140 @@ const App: React.FC = () => {
         return (
           <>
             <PageHeader title={"Refund\nPolicy"} subtitle="Fair and transparent withdrawal guidelines." icon={DocumentCheckIcon} />
-            <SectionWrapper title="Withdrawal & Cancellations">
-              <div className="max-w-4xl mx-auto space-y-10">
-                <div className="p-8 bg-blue-50 border-l-4 border-pau-blue rounded-r-xl">
-                  <h3 className="font-bold text-pau-blue mb-2 text-lg">Buyer's Right to Cancel</h3>
+            <SectionWrapper>
+              <div className="max-w-5xl mx-auto space-y-12">
+                {/* Students' Right to Cancel, Withdraw or Leave of Absence */}
+                <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8">
+                  <h2 className="text-2xl font-bold font-serif text-pau-darkBlue mb-6">CANCELLATION & TUITION REFUND POLICY</h2>
+                  <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-4">Students' Right to Cancel, Withdraw or Leave of Absence</h3>
                   <p className="text-gray-700 leading-relaxed">
-                    You have the right to cancel this agreement and obtain a refund of charges paid through attendance at the first class session, or the seventh day after enrollment, whichever is later.
+                    Students have the right to cancel the enrollment agreement, withdraw from PAUSL, or leave a course according to the terms and conditions outlined in this Pacific American University School of Law catalog.
                   </p>
                 </div>
-                
-                <div className="bg-white p-8 border border-gray-200 rounded-2xl">
-                  <h4 className="font-bold text-pau-darkBlue mb-6 text-xl font-serif">Pro-Rata Refund Schedule</h4>
-                  <div className="space-y-4">
-                    {[
-                      { time: "Before 1st day of class", refund: "100%" },
-                      { time: "1st week of class (Drop/Add)", refund: "100%" },
-                      { time: "Through 25% of the term", refund: "75%" },
-                      { time: "Through 50% of the term", refund: "50%" },
-                      { time: "Through 60% of the term", refund: "25%" },
-                      { time: "After 60% of the term", refund: "0%" },
-                    ].map((item, i) => (
-                      <div key={i} className="flex justify-between items-center py-3 border-b border-gray-100 last:border-0 hover:bg-gray-50 px-2 rounded transition-colors">
-                        <span className="text-gray-600 font-medium">{item.time}</span>
-                        <span className="font-bold text-pau-darkBlue">{item.refund}</span>
-                      </div>
-                    ))}
+
+                {/* Withdrawal or Cancellation Policy */}
+                <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8">
+                  <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-6">Withdrawal or Cancellation Policy</h3>
+                  <p className="text-gray-700 leading-relaxed mb-4">
+                    Students may withdraw from the program according to the following guidelines.
+                  </p>
+                  <ul className="space-y-3 text-gray-700 leading-relaxed list-disc list-inside">
+                    <li>Students can withdraw from the school without penalty by submitting a written notice to the admissions office at any time before the final exam period (weeks forty-six (46) to fifty-two (52) of each academic year).</li>
+                    <li>Withdrawal requests during the final exam period (starting in week forty-six (46)) must be submitted as a written petition to the PAUSL Dean. The petition must clearly state that missing the final exam was due to a traumatic event or serious hardship preventing completion of the exam. Please note that these petitions are rarely approved.</li>
+                    <li>A student who does not voluntarily withdraw and fails to take final exams within the designated period will face "academic dismissal" for the affected course(s).</li>
+                    <li>Tuition refunds upon withdrawal will follow the refund policy in the enrollment agreement. Withdrawal after the refund period, as specified in the agreement, does not exempt students paying tuition in installments from continuing monthly payments.</li>
+                    <li>Students experiencing financial difficulties and considering withdrawal are strongly encouraged to seek financial counseling to explore all available financial options before making a decision.</li>
+                  </ul>
+                  <p className="text-gray-700 leading-relaxed mt-4">
+                    An official written notice is only recognized when it is mailed to PAUSL at the Law School's business address or emailed to the registrar (<a href="mailto:reg@paucal.org" className="text-pau-blue hover:text-pau-gold underline">reg@paucal.org</a>). Please note that sending an email to your professor does not constitute written notice. Withdrawal or cancellation will be effective from the date the notice is received.
+                  </p>
+                  <p className="text-gray-700 leading-relaxed mt-4">
+                    If a student provides written notice of cancellation before attending the first class of a term, they may be eligible for a refund of the funds paid, excluding any nonrefundable fees.
+                  </p>
+                </div>
+
+                {/* Leave of Absence Policy */}
+                <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8">
+                  <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-4">Leave of Absence Policy</h3>
+                  <p className="text-gray-700 leading-relaxed">
+                    Leaves of absence in the J.D. Program are only allowed between academic years. A student may petition the Dean and Faculty for a leave of absence based on good cause. A leave shall not exceed more than a period of twelve months.
+                  </p>
+                </div>
+
+                {/* Refund Policy */}
+                <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8">
+                  <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-6">Refund Policy</h3>
+                  <div className="space-y-4 text-gray-700 leading-relaxed">
+                    <p>
+                      PAUSL will provide refunds in accordance with its written refund policy, accompanied by a clear explanation of the method of calculation, within thirty (30) days after a student withdraws from a class or a program, or thirty (30) days of the law school's discontinuing a course or educational program in which a student is enrolled.
+                    </p>
+                    <p>
+                      Refundable tuition and fees refer to the remaining tuition and fees charged after deducting non-refundable fees that have already been retained.
+                    </p>
+                    <p>
+                      A student is entitled to receive a full refund of all payments made if they withdraw or cancel their enrollment within seven (7) days, by midnight (PST), from the date the Enrollment Agreement was signed. Similarly, set-up Fees are refundable only within seven (7) days of the date of signing the Enrollment Agreement.
+                    </p>
+                    <p>
+                      If a student withdraws after instruction has begun, they are eligible for a prorated refund based on the unused portion of tuition and other refundable charges. Instructional periods are calculated on a weekly basis, regardless of the specific day the course starts.
+                    </p>
+                    <p>
+                      Beginning on day eight after the date of signing the Enrollment Agreement, all designated non-refundable fees will apply, thereby reducing the potential refund amount. For a comprehensive list of non-refundable fees, please refer to the Tuition, Fees, and Costs section of this Catalog.
+                    </p>
+                    <p>
+                      <strong>The State Bar of California Fee Refunds:</strong> Please note that any refund requests related to fees paid directly to The State Bar of California should be directed to their offices. The State Bar of California has a Refund of Fees Form on its website at: <a href="https://www.calbar.ca.gov/Admissions/Examinations/California-Bar-Examination/Refund-of-Fees-Policy" target="_blank" rel="noopener noreferrer" className="text-pau-blue hover:text-pau-gold underline">https://www.calbar.ca.gov/Admissions/Examinations/California-Bar-Examination/Refund-of-Fees-Policy</a>
+                    </p>
+                    <div className="bg-red-50 border-l-4 border-red-500 p-6 mt-6">
+                      <p className="text-gray-800 font-semibold">
+                        No refunds will be issued by PAUSL to students who have completed 26 or more weeks of consecutive instruction. Upon completion of the 26th week of instruction, regardless of student attendance and unless a timely withdrawal notice is given (before the completion of 26 weeks of instruction), the full tuition for the academic year will be due and owing to PAUSL.
+                      </p>
+                    </div>
+                    <p className="mt-6">
+                      You may withdraw or cancel the J.D. Program agreement by providing clear and concise written notice ("I hereby choose to withdraw from the J.D. Program as of -insert date here-") to the Registrar by email <a href="mailto:registrar@paucal.org" className="text-pau-blue hover:text-pau-gold underline">registrar@paucal.org</a> or by USPS Certified Mail, addressed to:
+                    </p>
+                    <div className="bg-gray-50 p-6 rounded-lg mt-4">
+                      <p className="font-semibold text-pau-darkBlue">Registrar</p>
+                      <p>PAU School of Law</p>
+                      <p>3435 Wilshire Blvd. Suite 430</p>
+                      <p>Los Angeles, CA 90010</p>
+                    </div>
+                    <p className="mt-4">
+                      In the event of a refund, the PAU School of Law will send a check to the student within 30 days.
+                    </p>
+                    <p className="mt-4">
+                      See the Pro-rata Refund calculation example in the table below.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Pro-rata Refund Calculation Details */}
+                <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8">
+                  <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-6">Pro-rata Refund Calculation Details</h3>
+                  <p className="text-gray-700 leading-relaxed mb-6">
+                    Example of a J.D. Program refund based on the student withdrawing from the program after 13 weeks in the first year assuming fees have been paid for the entire year at the point of withdrawal:
+                  </p>
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse border border-gray-300">
+                      <thead>
+                        <tr className="bg-pau-darkBlue text-white">
+                          <th className="border border-gray-300 px-4 py-3 text-left font-bold">Calculation Component</th>
+                          <th className="border border-gray-300 px-4 py-3 text-left font-bold">Details</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr className="bg-white">
+                          <td className="border border-gray-300 px-4 py-3 font-semibold text-pau-darkBlue">Refundable portion: $10,150</td>
+                          <td className="border border-gray-300 px-4 py-3">Tuition is $9,000 per year plus additional costs of $1,150 per year (student services fee, text books, registration fee) for a total of $10,150. See the Tuition Fees and Costs section of the Catalog for more details.</td>
+                        </tr>
+                        <tr className="bg-gray-50">
+                          <td className="border border-gray-300 px-4 py-3 font-semibold text-pau-darkBlue">NOTE regarding the fees that are non-refundable at 13 weeks:</td>
+                          <td className="border border-gray-300 px-4 py-3">
+                            <p className="mb-2">Non-refundable portion for 1L: $570</p>
+                            <p className="mb-2">Non-refundable portion for 2L, 3L: $500</p>
+                            <p>Non-refundable portion for 4L taking elective Bar Review Course: $700</p>
+                            <p className="mt-2 text-sm italic">The non-refundable amount examples listed here are not calculated into the total here because this example only discusses the refundable portion of payments made to PAUSL. One-time admission fee for new students of $70 plus the set-up fee $500 (annual fee for 1L, 2L, and 3L students) for a total non-refundable amount of $600. 4L set-up fee of $200 for 4L students that elect to take the elective Bar Review Course. 4L students may have a non-refundable amount of either $500 or $700 if they enroll in the elective Bar Review Course. Set-up fees are only refundable within seven (7) days of signing the Enrollment Agreement. This example is beyond that date. See the Tuition Fees and Costs section of the Catalog for more details.</p>
+                          </td>
+                        </tr>
+                        <tr className="bg-white">
+                          <td className="border border-gray-300 px-4 py-3 font-semibold text-pau-darkBlue">Length of the Program is 48 weeks</td>
+                          <td className="border border-gray-300 px-4 py-3">One year of school is three 16 week trimesters</td>
+                        </tr>
+                        <tr className="bg-gray-50">
+                          <td className="border border-gray-300 px-4 py-3 font-semibold text-pau-darkBlue">Refund Calculation:</td>
+                          <td className="border border-gray-300 px-4 py-3">
+                            <p className="mb-2">This refund calculation example is using a withdrawal from PAUSL after 13 weeks in the first year. The refund in this scenario before the application of the termination fee is $7,409.50</p>
+                            <p className="text-sm">48 weeks - 13 weeks = 35 weeks</p>
+                            <p className="text-sm">35 weeks is 72.916% or 73% (all percentages are rounded to the nearest whole number)</p>
+                            <p className="text-sm font-semibold">73% x $10,150 = $7,409.50</p>
+                          </td>
+                        </tr>
+                        <tr className="bg-green-50 font-bold">
+                          <td className="border border-gray-300 px-4 py-3">Total Refund:</td>
+                          <td className="border border-gray-300 px-4 py-3">
+                            The refund due to the student after 13 weeks is: $7,409.50
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
