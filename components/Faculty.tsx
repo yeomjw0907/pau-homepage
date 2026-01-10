@@ -53,12 +53,6 @@ const FacultyItem: React.FC<FacultyItemProps> = ({
           )}
           
           <div className="flex flex-col space-y-2 text-[12px] md:text-sm text-gray-500 font-medium bg-gray-50/50 p-4 rounded-xl border border-gray-100 text-left">
-            {prof.phone && (
-              <div className="flex flex-wrap items-center">
-                <span className="font-bold text-gray-400 w-16 md:w-20">Phone:</span> 
-                <span className="text-gray-700">{prof.phone}</span>
-              </div>
-            )}
             {prof.email && (
               <div className="flex flex-wrap items-center overflow-hidden">
                 <span className="font-bold text-gray-400 w-16 md:w-20">Email:</span> 
