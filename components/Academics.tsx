@@ -408,9 +408,46 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
             />
             <div className="max-w-4xl mx-auto px-6 py-20 space-y-12">
                <div className="bg-white p-10 rounded-[40px] shadow-premium border border-gray-100">
+                  <h3 className="text-2xl font-serif font-bold text-pau-blue mb-6">Student Registration</h3>
+                  <p className="text-gray-600 leading-relaxed font-light mb-6">
+                    Law school students must register as students with the State Bar of California. The registration form must be completed accurately under penalty of perjury.
+                  </p>
+                  <p className="text-gray-600 leading-relaxed font-light mb-6">
+                    Potential students with any questions may contact the Committee of Bar Examiners of the State Bar of California at:
+                  </p>
+                  <div className="bg-gray-50 p-6 rounded-2xl border border-gray-200 mb-6">
+                    <p className="font-semibold text-pau-darkBlue mb-4">The State Bar of California</p>
+                    <div className="space-y-3 text-gray-700">
+                      <div>
+                        <p className="font-semibold mb-1">Main Office:</p>
+                        <p>180 Howard Street</p>
+                        <p>San Francisco, CA 94105</p>
+                        <p>(415) 538-2000</p>
+                      </div>
+                      <div className="pt-3 border-t border-gray-300">
+                        <p className="font-semibold mb-1">Branch Office:</p>
+                        <p>845 S. Figueroa St.</p>
+                        <p>Los Angeles, CA 90017-2515</p>
+                        <p>(213) 765-1000</p>
+                      </div>
+                      <div className="pt-3 border-t border-gray-300">
+                        <a 
+                          href="https://www.calbar.ca.gov" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-pau-blue hover:text-pau-darkBlue underline font-semibold"
+                        >
+                          www.calbar.ca.gov
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+               </div>
+
+               <div className="bg-white p-10 rounded-[40px] shadow-premium border border-gray-100">
                   <h3 className="text-2xl font-serif font-bold text-pau-blue mb-6">First-Year Law Students' Exam (FYLSX)</h3>
-                  <p className="text-gray-600 leading-relaxed font-light mb-8">
-                    In accordance with Section 6060(h) of the California Business and Professions Code, students at unaccredited law schools must pass the First-Year Law Students’ Examination (the "Baby Bar") within three administrations of first becoming eligible to take it.
+                  <p className="text-gray-600 leading-relaxed font-light mb-6">
+                    The method of instruction at this law school for the Juris Doctor (J.D.) degree program is principally by correspondence. Students enrolled in the J.D. degree program at this law school who successfully complete the first year of law study must pass the First-Year Law Students' Examination required by Business and Professions Code § 6060(h) and Title 4, Division 1, Chapter 1 Rule 4.3(I) of the of the Rules of the State Bar of California as part of the requirements to qualify to take the California Bar Examination. A student who passes the First-Year Law Students' Examination within three (3) administrations of the examination after first becoming eligible to take it will receive credit for all legal studies completed to the time the examination is passed. A student who does not pass the examination within three (3) administrations of the examination after first becoming eligible to take it must be promptly disqualified from the law school's J.D. degree program. If the dismissed student subsequently passes the examination, the student is eligible for re-enrollment in this law school's J.D. degree program, but will receive credit for only one year of legal study.
                   </p>
                   <div className="p-6 bg-red-50 rounded-2xl border border-red-100">
                     <p className="text-xs text-red-700 font-bold uppercase tracking-widest mb-2">Notice:</p>
@@ -534,38 +571,193 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
               icon={ChatBubbleLeftEllipsisIcon}
               onBack={() => onNavigate('home')}
             />
-            <div className="max-w-5xl mx-auto px-6 py-20">
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                  <div className="space-y-6">
-                    <h3 className="text-3xl font-serif font-bold text-pau-darkBlue">Dedicated to Your Success</h3>
+            <div className="max-w-5xl mx-auto px-6 py-20 space-y-12">
+              {/* Introduction */}
+              <div className="bg-white p-10 rounded-[40px] shadow-premium border border-gray-100">
+                <p className="text-gray-600 leading-relaxed font-light">
+                  PAUSL provides academic counseling and related student support services to assist students in progressing successfully through the program. Academic counseling is available through faculty and staff and is designed to help students understand course expectations, develop effective study strategies, and navigate academic requirements.
+                </p>
+              </div>
+
+              {/* Academic Counseling */}
+              <div className="bg-white p-10 rounded-[40px] shadow-premium border border-gray-100">
+                <h3 className="text-2xl font-serif font-bold text-pau-blue mb-6">Academic Counseling</h3>
+                <p className="text-gray-600 leading-relaxed font-light">
+                  Faculty provide guidance related to course content; study methods appropriate to correspondence legal education, time management, and preparation for assessments. Each course has a designated instructor who serves as the primary point of contact for academic support.
+                </p>
+              </div>
+
+              {/* Academic Support Resources */}
+              <div className="bg-white p-10 rounded-[40px] shadow-premium border border-gray-100">
+                <h3 className="text-2xl font-serif font-bold text-pau-blue mb-6">Academic Support Resources</h3>
+                <p className="text-gray-600 leading-relaxed font-light">
+                  Students have access to faculty office hours, email support, and instructional guidance throughout the trimester. PAUSL also offers supplementary resources, including special lecture series, and materials available through PAUSL's membership in CALI.org.
+                </p>
+              </div>
+
+              {/* Advising on Academic Policies and Procedures */}
+              <div className="bg-white p-10 rounded-[40px] shadow-premium border border-gray-100">
+                <h3 className="text-2xl font-serif font-bold text-pau-blue mb-6">Advising on Academic Policies and Procedures</h3>
+                <p className="text-gray-600 leading-relaxed font-light">
+                  PAUSL informs students about academic policies, deadlines, and administrative requirements and provides assistance in understanding these policies as they relate to academic progress.
+                </p>
+              </div>
+
+              {/* Career Planning */}
+              <div className="bg-white p-10 rounded-[40px] shadow-premium border border-gray-100">
+                <h3 className="text-2xl font-serif font-bold text-pau-blue mb-6">Career Planning (Limited)</h3>
+                <p className="text-gray-600 leading-relaxed font-light">
+                  PAUSL does not maintain a dedicated Career Services Office and does not guarantee employment outcomes. However, faculty and staff may offer limited, informal career guidance based on their professional experience, and students may access external networking opportunities through law-specific fraternal organizations such as Delta Theta Phi and the Christian Legal Society.
+                </p>
+              </div>
+
+              {/* Course Planning and Program Progression */}
+              <div className="bg-white p-10 rounded-[40px] shadow-premium border border-gray-100">
+                <h3 className="text-2xl font-serif font-bold text-pau-blue mb-6">Course Planning and Program Progression</h3>
+                <p className="text-gray-600 leading-relaxed font-light">
+                  PAUSL provides guidance to help students understand the required course sequence and any available options within the program. Faculty and staff assist students in planning for successful progression through the curriculum.
+                </p>
+              </div>
+
+              {/* Transition Support */}
+              <div className="bg-white p-10 rounded-[40px] shadow-premium border border-gray-100">
+                <h3 className="text-2xl font-serif font-bold text-pau-blue mb-6">Transition Support</h3>
+                <p className="text-gray-600 leading-relaxed font-light">
+                  Students transferring into PAUSL or transitioning between stages of study may receive support to help ensure continuity of academic progress.
+                </p>
+              </div>
+
+              {/* Availability */}
+              <div className="bg-pau-light p-10 rounded-[40px] border border-gray-100">
+                <h3 className="text-2xl font-serif font-bold text-pau-blue mb-6">Availability</h3>
+                <p className="text-gray-600 leading-relaxed font-light">
+                  Faculty and staff are available during posted office hours, typically 9:00 AM to 5:00 PM Pacific Time, Monday through Friday. Academic support is also available via email.
+                </p>
+              </div>
+
+              {/* Student Services: Academic Resources and Student Support at PAUSL */}
+              <div className="bg-white p-10 rounded-[40px] shadow-premium border border-gray-100">
+                <h2 className="text-3xl font-serif font-bold text-pau-darkBlue mb-8">Student Services: Academic Resources and Student Support at PAUSL</h2>
+                
+                {/* Personalized Academic Advising */}
+                <div className="mb-8">
+                  <h3 className="text-2xl font-serif font-bold text-pau-blue mb-4">Personalized Academic Advising</h3>
+                  <p className="text-gray-600 leading-relaxed font-light">
+                    At PAUSL students benefit from direct engagement with faculty and dedicated support from the dean and associate dean. These faculty and staff are available for one-on-one guidance, helping students navigate course selections and plan their academic journey to ensure timely graduation. Particularly, the dean and associate dean lead workshops throughout the year to support student success.
+                  </p>
+                </div>
+
+                {/* Targeted Academic Support */}
+                <div className="mb-8">
+                  <h3 className="text-2xl font-serif font-bold text-pau-blue mb-4">Targeted Academic Support</h3>
+                  <p className="text-gray-600 leading-relaxed font-light">
+                    Students are encouraged to schedule phone consultations with the associate dean to review midterm results and receive tailored advice for final exam preparation. This individualized support empowers students to perform at their best.
+                  </p>
+                </div>
+
+                {/* Academic Success Program */}
+                <div className="mb-8">
+                  <h3 className="text-2xl font-serif font-bold text-pau-blue mb-4">Academic Success Program</h3>
+                  <p className="text-gray-600 leading-relaxed font-light mb-4">
+                    Students who are admitted on academic probation or placed on probation during their studies are required to participate in PAUSL's Academic Success Program. However, all students are welcome to access additional academic resources, including a dedicated course site filled with tools and materials designed to enhance learning outcomes.
+                  </p>
+                </div>
+
+                {/* Student ID Cards */}
+                <div className="mb-8">
+                  <h3 className="text-2xl font-serif font-bold text-pau-blue mb-4">Student ID Cards</h3>
+                  <p className="text-gray-600 leading-relaxed font-light">
+                    PAUSL student identification cards can be conveniently downloaded through the student portal, Populi.
+                  </p>
+                </div>
+
+                {/* Weekly Dicta Newsletter */}
+                <div className="mb-8">
+                  <h3 className="text-2xl font-serif font-bold text-pau-blue mb-4">Weekly Dicta Newsletter</h3>
+                  <p className="text-gray-600 leading-relaxed font-light">
+                    PAUSL administration produced a weekly newsletter sent via email each week of the term. The Weekly Dicta provides timely updates, deadlines, and information related to the operations of the school, and other information of interest to students, staff, and faculty.
+                  </p>
+                </div>
+
+                {/* Library, Study, and Research Tools */}
+                <div className="mb-8">
+                  <h3 className="text-2xl font-serif font-bold text-pau-blue mb-4">Library, Study, and Research Tools</h3>
+                  <p className="text-gray-600 leading-relaxed font-light">
+                    PAUSL provides access to Westlaw, offering comprehensive legal resources such as federal and state statutes, case law, textbooks, and scholarly journals. Students also benefit from CALI's interactive learning tools that include over 1,300 interactive CALI Lessons covering every aspect of the PAUSL curriculum and more, Lawdibles which is a recorded audio service that provides a law professor explaining a narrow area of law understandably and accurately in less than ten minutes, subject outlines that help bring additional structure and learning to students on all law school topic areas, plus other curated resources that support legal research and independent as well as collaborative study.
+                  </p>
+                </div>
+
+                {/* Special Lecture Series */}
+                <div className="mb-8">
+                  <h3 className="text-2xl font-serif font-bold text-pau-blue mb-4">Special Lecture Series</h3>
+                  <p className="text-gray-600 leading-relaxed font-light">
+                    PAUSL hosts a series of distinguished lectures throughout the academic year, featuring guest speakers and experts who explore timely legal topics at no extra cost to students. Students are strongly encouraged to attend these sessions both for the value of the content shared as well as for the potential networking opportunities with both the presenter(s) and other attendees.
+                  </p>
+                </div>
+
+                {/* Delta Theta Phi Membership */}
+                <div className="mb-8">
+                  <h3 className="text-2xl font-serif font-bold text-pau-blue mb-4">Delta Theta Phi Membership</h3>
+                  <p className="text-gray-600 leading-relaxed font-light">
+                    Eligible PAUSL law students who meet the required GPA threshold may join Delta Theta Phi, one of the nation's oldest law fraternities. Student members have the opportunity to further their academic pursuits through writing articles and/or editing the Adelphia Law Journal, which publishes thought-provoking articles on emerging legal issues and debates. Delta Theta Phi provides more than just a "club" of law students and lawyers, it can play a key role in both success in law school through collaborative assistance with peers and mentors as well as potential opportunities for future employment through this network of legal professionals. Other benefits include eligibility for scholarships, awards, prizes, and opportunities to develop leadership skills within a dynamic legal community.
+                  </p>
+                </div>
+
+                {/* Transcript and Diploma Services */}
+                <div>
+                  <h3 className="text-2xl font-serif font-bold text-pau-blue mb-4">Transcript and Diploma Services</h3>
+                  <p className="text-gray-600 leading-relaxed font-light">
+                    PAUSL will provide students and alumni with official and unofficial copies of student transcripts, enrollment verifications, and duplicate diplomas upon request for a nominal fee. Please see the Tuition Fees and Costs section of the PAUSL catalog for the fee schedule.
+                  </p>
+                </div>
+              </div>
+
+              {/* Academic Success Program (ASP) - Detailed */}
+              <div className="bg-white p-10 rounded-[40px] shadow-premium border border-gray-100">
+                <h2 className="text-3xl font-serif font-bold text-pau-darkBlue mb-8">Academic Success Program (ASP)</h2>
+                <p className="text-gray-600 leading-relaxed font-light mb-6">
+                  The Academic Success Program (ASP) at PAUSL is designed to support students who are either at risk of being placed on Academic Probation or are already on Academic Probation.
+                </p>
+                
+                <div className="space-y-4 mb-6">
+                  <div className="flex items-start">
+                    <span className="text-pau-gold font-bold mr-3">●</span>
                     <p className="text-gray-600 leading-relaxed font-light">
-                      At PAU School of Law, we understand that online learning requires discipline and support. Our Academic Counseling office provides personalized guidance to help you manage your course load, prepare for exams, and balance your studies with professional and personal commitments.
+                      <strong>Mandatory Attendance:</strong> Students on Academic Probation, or those referred to ASP by a professor, are required to attend program sessions.
                     </p>
-                    <ul className="space-y-4 pt-4">
-                      {[
-                        "Individualized Study Plans",
-                        "FYLSX Preparation Strategy",
-                        "Performance Analysis & Feedback",
-                        "Time Management Coaching"
-                      ].map((item, i) => (
-                        <li key={i} className="flex items-center text-pau-blue font-medium">
-                          <CheckBadgeIcon className="h-5 w-5 mr-3 text-pau-gold" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
                   </div>
-                  <div className="bg-pau-light p-10 rounded-3xl border border-gray-100 shadow-lg text-center">
-                     <UserGroupIcon className="h-16 w-16 text-pau-gold mx-auto mb-6" />
-                     <h4 className="text-xl font-bold text-pau-darkBlue mb-4">Schedule an Appointment</h4>
-                     <p className="text-sm text-gray-500 mb-8">
-                       Counseling sessions are available via Zoom or phone. Current students can book directly through the student portal.
-                     </p>
-                     <button className="bg-pau-blue text-white px-8 py-3 rounded-full font-bold uppercase text-xs tracking-widest hover:bg-pau-darkBlue transition-colors shadow-md">
-                       Book Session
-                     </button>
+                  <div className="flex items-start">
+                    <span className="text-pau-gold font-bold mr-3">●</span>
+                    <p className="text-gray-600 leading-relaxed font-light">
+                      <strong>Dean's Sessions:</strong> These students must also participate in additional sessions with the Dean of the School of Law.
+                    </p>
                   </div>
-               </div>
+                  <div className="flex items-start">
+                    <span className="text-pau-gold font-bold mr-3">●</span>
+                    <p className="text-gray-600 leading-relaxed font-light">
+                      <strong>Focus Areas:</strong> ASP sessions emphasize reviewing course assignments, strengthening understanding of legal concepts, improving legal writing, practicing approaches to the MBE, and learning how to effectively use academic resources.
+                    </p>
+                  </div>
+                  <div className="flex items-start">
+                    <span className="text-pau-gold font-bold mr-3">●</span>
+                    <p className="text-gray-600 leading-relaxed font-light">
+                      <strong>Priority:</strong> Work completed in ASP is supplementary and does not replace regular coursework or exam preparation.
+                    </p>
+                  </div>
+                </div>
+
+                <p className="text-gray-600 leading-relaxed font-light mb-6">
+                  Professors may refer students to ASP based on midterm performance, even before formal Academic Probation status is assigned.
+                </p>
+
+                <p className="text-gray-600 leading-relaxed font-light mb-6">
+                  Successful completion of ASP, and potential removal from Academic Probation, is determined by: 1) Overall course grades; 2) Test performance, 3) In-class assignment results, 4) Completion of ASP-specific assignments, 5) Feedback from professors and other faculty, and 6) Review and analysis by ASP administrators.
+                </p>
+
+                <p className="text-gray-600 leading-relaxed font-light">
+                  Students may be required to participate in ASP multiple times during their academic journey at PAUSL.
+                </p>
+              </div>
             </div>
           </>
         );

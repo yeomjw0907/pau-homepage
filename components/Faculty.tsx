@@ -178,7 +178,7 @@ export const Faculty: React.FC<FacultyProps> = ({ content, shared, currentPage, 
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-10 md:py-24">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
           <aside className="lg:w-80 flex-shrink-0">
-             <div className="flex lg:flex-col gap-3 md:gap-4 p-2 md:p-6 bg-gray-50 rounded-2xl md:rounded-3xl border border-gray-100 overflow-x-auto no-scrollbar">
+             <div className="flex justify-center lg:justify-start lg:flex-col gap-3 md:gap-4 p-2 md:p-6 bg-gray-50 rounded-2xl md:rounded-3xl border border-gray-100 overflow-x-auto no-scrollbar">
                 <button 
                   onClick={() => handleTabChange('Faculty')}
                   className={`flex-shrink-0 md:w-full py-3 md:py-5 px-4 md:px-6 rounded-xl text-[9px] md:text-[11px] font-bold uppercase tracking-widest transition-all ${

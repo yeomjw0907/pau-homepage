@@ -89,14 +89,6 @@ export const Navbar: React.FC<NavbarProps> = ({
     ? 'text-white hover:text-white hover:bg-white/10' 
     : 'text-gray-800 hover:text-pau-blue hover:bg-gray-50';
 
-  const logoTitleClass = isTransparent 
-    ? 'text-white' 
-    : 'text-pau-blue';
-    
-  const logoSubtitleClass = isTransparent 
-    ? 'text-pau-goldLight' 
-    : 'text-pau-gold';
-
   const languageBtnClass = isTransparent
     ? `text-white border-white/30 hover:bg-white/10 ${isLangMenuOpen ? 'bg-white/20' : ''}`
     : `text-gray-700 border-gray-300 hover:text-pau-blue hover:bg-gray-50 ${isLangMenuOpen ? 'bg-gray-100' : ''}`;
@@ -204,20 +196,14 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
             <div 
-              className="flex-shrink-0 cursor-pointer group flex items-center gap-3"
+              className="flex-shrink-0 cursor-pointer group flex items-center"
               onClick={() => onNavigate('home')}
             >
-              <div className={`w-11 h-11 font-serif font-bold text-2xl flex items-center justify-center rounded-sm shadow-md transition-all ${isTransparent ? 'bg-white text-pau-blue' : 'bg-pau-blue text-white group-hover:bg-pau-darkBlue'}`}>
-                P
-              </div>
-              <div className="flex flex-col justify-center">
-                  <h1 className={`${logoTitleClass} font-bold text-xl tracking-tighter leading-none font-sans transition-colors duration-500`}>
-                    PACIFIC AMERICAN
-                  </h1>
-                  <h2 className={`${logoSubtitleClass} font-medium text-[10px] tracking-[0.45em] mt-1.5 uppercase transition-colors duration-500`}>
-                    School of Law
-                  </h2>
-              </div>
+              <img 
+                src={isTransparent ? '/images/logo/logo-white.svg' : '/images/logo/logo-main.svg'}
+                alt="Pacific American University School of Law"
+                className="h-12 md:h-14 w-auto transition-opacity duration-500 group-hover:opacity-80"
+              />
             </div>
 
             <div className="hidden md:flex items-center space-x-1">

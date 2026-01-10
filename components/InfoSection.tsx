@@ -267,11 +267,11 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
       {/* 2. STUDY FROM ANYWHERE (Features) */}
       <section className="py-20 px-4 md:px-6 bg-white">
         <div className="max-w-7xl mx-auto">
-           <div className="text-center mb-16">
+           <div className="text-left md:text-center mb-16">
              <h2 className="text-4xl md:text-5xl font-serif font-bold text-pau-darkBlue mb-6">
                Study American Law From <br/> Anywhere
              </h2>
-             <p className="text-lg text-gray-500 font-light max-w-2xl mx-auto leading-relaxed">
+             <p className="text-lg text-gray-500 font-light max-w-2xl md:mx-auto leading-relaxed">
                A fully online J.D. program designed for motivated students seeking flexibility, world-class instruction, and a clear path to a California law license.
              </p>
            </div>
@@ -340,9 +340,9 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
       {/* 4. GLOBAL CAREER PATHS */}
       <section className="py-24 bg-gray-50">
          <div className="max-w-7xl mx-auto px-4 md:px-6">
-            <div className="text-center mb-16">
+            <div className="text-left md:text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-serif font-bold text-pau-darkBlue mb-6">Your Path to a Global Career</h2>
-              <p className="text-lg text-gray-500 font-light max-w-2xl mx-auto leading-relaxed">
+              <p className="text-lg text-gray-500 font-light max-w-2xl md:mx-auto leading-relaxed">
                 Our rigorous curriculum opens doors to diverse international fields, equipping you with the credentials needed for today's interconnected legal environment.
               </p>
             </div>

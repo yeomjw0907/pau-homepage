@@ -761,7 +761,7 @@ const App: React.FC = () => {
                     <div className="space-y-4">
                       <h2 className="text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">2. Pacific American University School of Law (PAUSL) is not accredited by the Committee of Bar Examiners of the State Bar of California, but is registered as an unaccredited correspondence law school.</h2>
                       <p className="font-semibold text-pau-darkBlue">
-                        Students enrolled in the J.D. degree program at this law school who successfully complete the first year of law study must pass the First-Year Law Students' Examination as required by Business and Professions Code section 6060(h) and Title 4, Division1, Chapter 1 Rule 4.3(I) of the Rules of State Bar of California as part of the requirements to qualify to take the California Bar Examination. A student who passes the First-Year Law Students' Examination within three (3) administrations of the examination after first becoming eligible to take it will receive credit for all legal studies completed up to the time the examination is passed. A student who does not pass the examination within three (3) administrations of the examination after first becoming eligible to take it must be promptly disqualified from the law school's J.D. degree program. If the dismissed student subsequently passes the examination, the student is eligible for re-enrollment in this law school's J.D. degree program, but will receive credit for only one year of legal study.
+                        The method of instruction at this law school for the Juris Doctor (J.D.) degree program is principally by correspondence. Students enrolled in the J.D. degree program at this law school who successfully complete the first year of law study must pass the First-Year Law Students' Examination required by Business and Professions Code § 6060(h) and Title 4, Division 1, Chapter 1 Rule 4.3(I) of the of the Rules of the State Bar of California as part of the requirements to qualify to take the California Bar Examination. A student who passes the First-Year Law Students' Examination within three (3) administrations of the examination after first becoming eligible to take it will receive credit for all legal studies completed to the time the examination is passed. A student who does not pass the examination within three (3) administrations of the examination after first becoming eligible to take it must be promptly disqualified from the law school's J.D. degree program. If the dismissed student subsequently passes the examination, the student is eligible for re-enrollment in this law school's J.D. degree program, but will receive credit for only one year of legal study.
                       </p>
                       <p className="font-semibold text-pau-darkBlue">
                         Study at, or graduation from, this law school may not qualify a student to take the bar examination or to satisfy the requirements for admission to practice in jurisdictions other than California. A student intending to seek admission to practice law in a jurisdiction other than California should contact the admitting authority in that jurisdiction for information regarding the legal education requirements in that jurisdiction for admission to the practice of law.
@@ -1392,52 +1392,54 @@ const App: React.FC = () => {
                     <h2 className="text-2xl font-bold font-serif text-pau-darkBlue">Additional Costs</h2>
                   </div>
                   <div className="p-8">
-                    <div className="overflow-x-auto">
-                      <table className="w-full border-collapse border border-gray-300 text-sm">
-                        <thead>
-                          <tr className="bg-pau-darkBlue text-white">
-                            <th className="border border-gray-300 px-4 py-3 text-left font-bold">Description</th>
-                            <th className="border border-gray-300 px-4 py-3 text-center font-bold">Frequency</th>
-                            <th className="border border-gray-300 px-4 py-3 text-center font-bold">Refundable/Non-Refundable</th>
-                            <th className="border border-gray-300 px-4 py-3 text-right font-bold">Amount</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {[
-                            { desc: "Application for Admissions", freq: "One time", refund: "Non-refundable", amount: "$70" },
-                            { desc: "Rush Processing, Admissions", freq: "One time", refund: "Non-refundable", amount: "$200" },
-                            { desc: "Student Services Fee", freq: "Per Year", refund: "Refundable*", amount: "$150" },
-                            { desc: "Registration Fee", freq: "One time", refund: "Non-refundable*", amount: "$200" },
-                            { desc: "Late Registration Fee", freq: "Upon request", refund: "Non-refundable", amount: "$20" },
-                            { desc: "Drop/Add Fee (per course)", freq: "Upon request", refund: "Non-refundable", amount: "$10" },
-                            { desc: "Readmission Fee", freq: "Upon request", refund: "Non-refundable", amount: "$50" },
-                            { desc: "Transfer Credit Fee (per credit)", freq: "Upon request", refund: "Non-refundable", amount: "$10" },
-                            { desc: "Academic Program Change Fee", freq: "Upon request", refund: "Non-refundable", amount: "$20" },
-                            { desc: "Leave of Absence Fee", freq: "Upon request", refund: "Non-refundable", amount: "$10" },
-                            { desc: "Enrollment Verification Letter (per copy)", freq: "Upon request", refund: "Non-refundable", amount: "$10" },
-                            { desc: "Official Transcript (per copy)", freq: "Upon request", refund: "Non-refundable", amount: "$10" },
-                            { desc: "Misc. Certification Fee (per copy)", freq: "Upon request", refund: "Non-refundable", amount: "$10" },
-                            { desc: "Duplicate Diploma", freq: "Upon request", refund: "Non-refundable", amount: "$50" },
-                            { desc: "Graduation Fee", freq: "One time", refund: "Non-refundable", amount: "$300" },
-                            { desc: "Late Application for Admissions", freq: "Upon Request", refund: "Non-Refundable", amount: "$350" },
-                            { desc: "Tuition Late Fee", freq: "Late Payment", refund: "Non-refundable", amount: "$100" },
-                            { desc: "Returned Check Fee", freq: "Per Returned Check", refund: "Non-refundable", amount: "$20" },
-                            { desc: "Installment Plan Option 1 Set-Up Fee", freq: "One Time per Year", refund: "Non-refundable", amount: "$100" },
-                            { desc: "Books", freq: "Per Year", refund: "Refundable***", amount: "$500 to $1,000**" },
-                            { desc: "Westlaw Set-Up Fee", freq: "Per Year", refund: "Non-refundable*", amount: "$200" },
-                            { desc: "CALI Set-Up Fee", freq: "Per Year", refund: "Non-refundable*", amount: "$100" },
-                            { desc: "ExamSoft Set-Up Fee", freq: "Per Year", refund: "Non-refundable*", amount: "$200" },
-                            { desc: "4L Elective Bar Review Preparation Course Set-Up Fee", freq: "One Time - Optional", refund: "Non-refundable", amount: "$200" },
-                          ].map((item, idx) => (
-                            <tr key={idx} className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                              <td className="border border-gray-300 px-4 py-3">{item.desc}</td>
-                              <td className="border border-gray-300 px-4 py-3 text-center">{item.freq}</td>
-                              <td className="border border-gray-300 px-4 py-3 text-center">{item.refund}</td>
-                              <td className="border border-gray-300 px-4 py-3 text-right font-mono">{item.amount}</td>
+                    <div className="overflow-x-auto -mx-4 md:mx-0">
+                      <div className="inline-block min-w-full align-middle px-4 md:px-0">
+                        <table className="w-full border-collapse border border-gray-300 text-[10px] md:text-sm">
+                          <thead>
+                            <tr className="bg-pau-darkBlue text-white">
+                              <th className="border border-gray-300 px-2 md:px-4 py-2 md:py-3 text-left font-bold text-[9px] md:text-sm">Description</th>
+                              <th className="border border-gray-300 px-1 md:px-4 py-2 md:py-3 text-center font-bold text-[9px] md:text-sm whitespace-nowrap">Frequency</th>
+                              <th className="border border-gray-300 px-1 md:px-4 py-2 md:py-3 text-center font-bold text-[9px] md:text-sm whitespace-nowrap">Refundable/Non-Refundable</th>
+                              <th className="border border-gray-300 px-2 md:px-4 py-2 md:py-3 text-right font-bold text-[9px] md:text-sm">Amount</th>
                             </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                          </thead>
+                          <tbody>
+                            {[
+                              { desc: "Application for Admissions", freq: "One time", refund: "Non-refundable", amount: "$70" },
+                              { desc: "Rush Processing, Admissions", freq: "One time", refund: "Non-refundable", amount: "$200" },
+                              { desc: "Student Services Fee", freq: "Per Year", refund: "Refundable*", amount: "$150" },
+                              { desc: "Registration Fee", freq: "One time", refund: "Non-refundable*", amount: "$200" },
+                              { desc: "Late Registration Fee", freq: "Upon request", refund: "Non-refundable", amount: "$20" },
+                              { desc: "Drop/Add Fee (per course)", freq: "Upon request", refund: "Non-refundable", amount: "$10" },
+                              { desc: "Readmission Fee", freq: "Upon request", refund: "Non-refundable", amount: "$50" },
+                              { desc: "Transfer Credit Fee (per credit)", freq: "Upon request", refund: "Non-refundable", amount: "$10" },
+                              { desc: "Academic Program Change Fee", freq: "Upon request", refund: "Non-refundable", amount: "$20" },
+                              { desc: "Leave of Absence Fee", freq: "Upon request", refund: "Non-refundable", amount: "$10" },
+                              { desc: "Enrollment Verification Letter (per copy)", freq: "Upon request", refund: "Non-refundable", amount: "$10" },
+                              { desc: "Official Transcript (per copy)", freq: "Upon request", refund: "Non-refundable", amount: "$10" },
+                              { desc: "Misc. Certification Fee (per copy)", freq: "Upon request", refund: "Non-refundable", amount: "$10" },
+                              { desc: "Duplicate Diploma", freq: "Upon request", refund: "Non-refundable", amount: "$50" },
+                              { desc: "Graduation Fee", freq: "One time", refund: "Non-refundable", amount: "$300" },
+                              { desc: "Late Application for Admissions", freq: "Upon Request", refund: "Non-Refundable", amount: "$350" },
+                              { desc: "Tuition Late Fee", freq: "Late Payment", refund: "Non-refundable", amount: "$100" },
+                              { desc: "Returned Check Fee", freq: "Per Returned Check", refund: "Non-refundable", amount: "$20" },
+                              { desc: "Installment Plan Option 1 Set-Up Fee", freq: "One Time per Year", refund: "Non-refundable", amount: "$100" },
+                              { desc: "Books", freq: "Per Year", refund: "Refundable***", amount: "$500 to $1,000**" },
+                              { desc: "Westlaw Set-Up Fee", freq: "Per Year", refund: "Non-refundable*", amount: "$200" },
+                              { desc: "CALI Set-Up Fee", freq: "Per Year", refund: "Non-refundable*", amount: "$100" },
+                              { desc: "ExamSoft Set-Up Fee", freq: "Per Year", refund: "Non-refundable*", amount: "$200" },
+                              { desc: "4L Elective Bar Review Preparation Course Set-Up Fee", freq: "One Time - Optional", refund: "Non-refundable", amount: "$200" },
+                            ].map((item, idx) => (
+                              <tr key={idx} className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                                <td className="border border-gray-300 px-2 md:px-4 py-2 md:py-3 text-[10px] md:text-sm leading-tight">{item.desc}</td>
+                                <td className="border border-gray-300 px-1 md:px-4 py-2 md:py-3 text-center text-[10px] md:text-sm whitespace-nowrap">{item.freq}</td>
+                                <td className="border border-gray-300 px-1 md:px-4 py-2 md:py-3 text-center text-[10px] md:text-sm whitespace-nowrap">{item.refund}</td>
+                                <td className="border border-gray-300 px-2 md:px-4 py-2 md:py-3 text-right font-mono text-[10px] md:text-sm">{item.amount}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                     <div className="mt-6 space-y-2 text-sm text-gray-600">
                       <p><strong>*</strong> These fees may be reimbursable if the Student provides notice of withdrawal within seven (7) days of signing the Enrollment Agreement. See the Refund section below for details.</p>
@@ -1490,31 +1492,33 @@ const App: React.FC = () => {
                     <p className="text-gray-700 leading-relaxed mb-6">
                       Students must pay The State Bar of California the following fees directly in U.S. Dollars which the student will incur at various points over the course of the four years in law school at PAUSL (see the Summary of Expected Fees by Year section below for likely times those fees may apply). They are not charged all at one time so the student must be cognizant of the timing and amount of these regulatory obligations. Staying abreast of these and other important aspects of your process to California Bar Licensure will ensure a smooth process through law school and into law practice. Typically, these fees will be due near the end of the First-Year and over the course of the Fourth-Year. All fees are subject to change without notice and students are responsible for ensuring that all fee deadlines are met as determined by The State Bar of California.
                     </p>
-                    <div className="overflow-x-auto">
-                      <table className="w-full border-collapse border border-gray-300">
-                        <thead>
-                          <tr className="bg-pau-darkBlue text-white">
-                            <th className="border border-gray-300 px-4 py-3 text-left font-bold">Fee Description</th>
-                            <th className="border border-gray-300 px-4 py-3 text-right font-bold">Amount</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {[
-                            { desc: "Law Student Registration", amount: "$150" },
-                            { desc: "First Year Law Students Examination (FYLSX)", amount: "$873" },
-                            { desc: "FYLSX Laptop Fee", amount: "$153" },
-                            { desc: "Moral Character Determination", amount: "$745" },
-                            { desc: "Multistate Professional Responsibility Examination (MPRE)", amount: "$135" },
-                            { desc: "California State Bar Examination Registration", amount: "$850" },
-                            { desc: "Laptop Fee for the California State Bar Examination", amount: "$153" },
-                          ].map((item, idx) => (
-                            <tr key={idx} className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                              <td className="border border-gray-300 px-4 py-3">{item.desc}</td>
-                              <td className="border border-gray-300 px-4 py-3 text-right font-mono">{item.amount}</td>
+                    <div className="overflow-x-auto -mx-4 md:mx-0">
+                      <div className="inline-block min-w-full align-middle px-4 md:px-0">
+                        <table className="w-full border-collapse border border-gray-300 text-[10px] md:text-sm">
+                          <thead>
+                            <tr className="bg-pau-darkBlue text-white">
+                              <th className="border border-gray-300 px-2 md:px-4 py-2 md:py-3 text-left font-bold text-[9px] md:text-sm">Fee Description</th>
+                              <th className="border border-gray-300 px-2 md:px-4 py-2 md:py-3 text-right font-bold text-[9px] md:text-sm">Amount</th>
                             </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                          </thead>
+                          <tbody>
+                            {[
+                              { desc: "Law Student Registration", amount: "$150" },
+                              { desc: "First Year Law Students Examination (FYLSX)", amount: "$873" },
+                              { desc: "FYLSX Laptop Fee", amount: "$153" },
+                              { desc: "Moral Character Determination", amount: "$745" },
+                              { desc: "Multistate Professional Responsibility Examination (MPRE)", amount: "$135" },
+                              { desc: "California State Bar Examination Registration", amount: "$850" },
+                              { desc: "Laptop Fee for the California State Bar Examination", amount: "$153" },
+                            ].map((item, idx) => (
+                              <tr key={idx} className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                                <td className="border border-gray-300 px-2 md:px-4 py-2 md:py-3 text-[10px] md:text-sm leading-tight">{item.desc}</td>
+                                <td className="border border-gray-300 px-2 md:px-4 py-2 md:py-3 text-right font-mono text-[10px] md:text-sm">{item.amount}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                     <p className="mt-6 text-sm text-gray-600">
                       Note that The State Bar of California does permit refunds on some fees. Should a student decide to withdraw from PAUSL it is encouraged that the student contact The State Bar of California about seeking refunds of any fees paid to that organization. See their website here: <a href="https://www.calbar.ca.gov/Admissions/Examinations/California-Bar-Examination/Refund-of-Fees-Policy" target="_blank" rel="noopener noreferrer" className="text-pau-blue hover:text-pau-gold underline">www.calbar.ca.gov/Admissions/Examinations/California-Bar-Examination/Refund-of-Fees-Policy</a>
@@ -1531,20 +1535,21 @@ const App: React.FC = () => {
                     <p className="text-gray-700 leading-relaxed mb-6">
                       Students' costs and fees at PAUSL differ depending upon their year in law school. Unlike some schools which may charge a single fee for the entire semester to cover all expenses, PAUSL is transparent in the fee structure for students and charges only the fees that are necessary for a given year of school. Also, it is important to note that depending upon the year in school, some fees must be paid directly to The State Bar of California (look closely at the 1-L and 4-L years). All fees and costs are referenced in the tables above and the illustrations below draw from those tables to provide an example of what students can expect to pay for a given year of school at PAUSL. The actual numbers for each student may vary depending upon other variables but the scenarios listed below are the likely expense amounts for most students.
                     </p>
-                    <div className="overflow-x-auto">
-                      <table className="w-full border-collapse border border-gray-300 text-sm">
-                        <thead>
-                          <tr className="bg-pau-darkBlue text-white">
-                            <th className="border border-gray-300 px-3 py-2 text-left font-bold">Category</th>
-                            <th className="border border-gray-300 px-3 py-2 text-center font-bold">1L</th>
-                            <th className="border border-gray-300 px-3 py-2 text-center font-bold">2L</th>
-                            <th className="border border-gray-300 px-3 py-2 text-center font-bold">3L</th>
-                            <th className="border border-gray-300 px-3 py-2 text-center font-bold">4L</th>
-                          </tr>
-                        </thead>
+                    <div className="overflow-x-auto -mx-4 md:mx-0">
+                      <div className="inline-block min-w-full align-middle px-4 md:px-0">
+                        <table className="w-full border-collapse border border-gray-300 text-[9px] md:text-sm">
+                          <thead>
+                            <tr className="bg-pau-darkBlue text-white">
+                              <th className="border border-gray-300 px-1.5 md:px-3 py-1.5 md:py-2 text-left font-bold text-[8px] md:text-sm">Category</th>
+                              <th className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-bold text-[8px] md:text-sm">1L</th>
+                              <th className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-bold text-[8px] md:text-sm">2L</th>
+                              <th className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-bold text-[8px] md:text-sm">3L</th>
+                              <th className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-bold text-[8px] md:text-sm">4L</th>
+                            </tr>
+                          </thead>
                         <tbody>
                           <tr className="bg-pau-blue/10 font-bold">
-                            <td colSpan={5} className="border border-gray-300 px-4 py-3">Pacific American University School of Law Tuition & Fees*</td>
+                            <td colSpan={5} className="border border-gray-300 px-1.5 md:px-4 py-1.5 md:py-3 text-[9px] md:text-sm">Pacific American University School of Law Tuition & Fees*</td>
                           </tr>
                           {[
                             { cat: "Admissions Application Fee (one time)", year1L: "$70", year2L: "$0", year3L: "$0", year4L: "$0" },
@@ -1562,15 +1567,15 @@ const App: React.FC = () => {
                             { cat: "PAUSL Total 4-Year Estimated Tuition & Fees", year1L: "$43,770", year2L: "", year3L: "", year4L: "", isTotal: true },
                           ].map((row, idx) => (
                             <tr key={idx} className={row.isSubtotal || row.isTotal ? 'bg-pau-blue/10 font-bold' : idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                              <td className="border border-gray-300 px-3 py-2">{row.cat}</td>
-                              <td className="border border-gray-300 px-3 py-2 text-center font-mono">{row.year1L}</td>
-                              <td className="border border-gray-300 px-3 py-2 text-center font-mono">{row.year2L}</td>
-                              <td className="border border-gray-300 px-3 py-2 text-center font-mono">{row.year3L}</td>
-                              <td className="border border-gray-300 px-3 py-2 text-center font-mono">{row.year4L}</td>
+                              <td className="border border-gray-300 px-1.5 md:px-3 py-1.5 md:py-2 text-[9px] md:text-sm leading-tight">{row.cat}</td>
+                              <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">{row.year1L}</td>
+                              <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">{row.year2L}</td>
+                              <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">{row.year3L}</td>
+                              <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">{row.year4L}</td>
                             </tr>
                           ))}
                           <tr className="bg-pau-gold/10 font-bold">
-                            <td colSpan={5} className="border border-gray-300 px-4 py-3">The State Bar Of California Fees (Paid directly to The State Bar)*****</td>
+                            <td colSpan={5} className="border border-gray-300 px-1.5 md:px-4 py-1.5 md:py-3 text-[9px] md:text-sm">The State Bar Of California Fees (Paid directly to The State Bar)*****</td>
                           </tr>
                           {[
                             { cat: "Law Student Registration (1L)", year1L: "$150", year2L: "$0", year3L: "$0", year4L: "$0" },
@@ -1584,33 +1589,47 @@ const App: React.FC = () => {
                             { cat: "Total 4-Year Anticipated State Bar Fees", year1L: "$3,059", year2L: "", year3L: "", year4L: "", isTotal: true },
                           ].map((row, idx) => (
                             <tr key={idx} className={row.isSubtotal || row.isTotal ? 'bg-pau-gold/10 font-bold' : idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                              <td className="border border-gray-300 px-3 py-2">{row.cat}</td>
-                              <td className="border border-gray-300 px-3 py-2 text-center font-mono">{row.year1L}</td>
-                              <td className="border border-gray-300 px-3 py-2 text-center font-mono">{row.year2L}</td>
-                              <td className="border border-gray-300 px-3 py-2 text-center font-mono">{row.year3L}</td>
-                              <td className="border border-gray-300 px-3 py-2 text-center font-mono">{row.year4L}</td>
+                              <td className="border border-gray-300 px-1.5 md:px-3 py-1.5 md:py-2 text-[9px] md:text-sm leading-tight">{row.cat}</td>
+                              <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">{row.year1L}</td>
+                              <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">{row.year2L}</td>
+                              <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">{row.year3L}</td>
+                              <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">{row.year4L}</td>
                             </tr>
                           ))}
                           <tr className="bg-green-50 font-bold">
-                            <td className="border border-gray-300 px-3 py-2">Annual Estimated Cost for Each of the Four Years</td>
-                            <td className="border border-gray-300 px-3 py-2 text-center font-mono">$12,196</td>
-                            <td className="border border-gray-300 px-3 py-2 text-center font-mono">$10,750</td>
-                            <td className="border border-gray-300 px-3 py-2 text-center font-mono">$10,750</td>
-                            <td className="border border-gray-300 px-3 py-2 text-center font-mono">$13,133</td>
+                            <td className="border border-gray-300 px-1.5 md:px-3 py-1.5 md:py-2 text-[9px] md:text-sm leading-tight">Annual Estimated Cost for Each of the Four Years</td>
+                            <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">$12,196</td>
+                            <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">$10,750</td>
+                            <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">$10,750</td>
+                            <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">$13,133</td>
                           </tr>
                           <tr className="bg-green-100 font-bold text-lg">
-                            <td className="border border-gray-300 px-3 py-2">Grand Total 4-Year Estimated Cost</td>
-                            <td colSpan={4} className="border border-gray-300 px-3 py-2 text-center font-mono">$46,829</td>
+                            <td className="border border-gray-300 px-1.5 md:px-3 py-1.5 md:py-2 text-[9px] md:text-lg leading-tight">Grand Total 4-Year Estimated Cost</td>
+                            <td colSpan={4} className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-lg">$46,829</td>
                           </tr>
                         </tbody>
                       </table>
+                      </div>
                     </div>
                     <div className="mt-6 space-y-2 text-sm text-gray-600">
                       <p><strong>*</strong> Tuition and fees may change, and the cost of textbooks and study materials is not covered by the tuition.</p>
                       <p><strong>**</strong> Fourth-Year students may opt to take the four credit elective Bar Review Preparation course which includes a $200 one-time set-up fee which is refundable within seven (7) days of enrollment.</p>
                       <p><strong>***</strong> Note that Text Book costs are estimated at the highest expected cost and actual costs may be lower.</p>
                       <p><strong>****</strong> Students opting for the Payment Plan Option 1 will pay $100 per year to set up their payment plan. See the Financial Aid section for more details. Also note that students who choose to pay via credit card must cover transaction and processing fees which may be as high as 4.5% of the amount charged.</p>
-                      <p><strong>*****</strong> All fees associated with The State Bar of California are based upon observed fees and expenses as presented in The State Bar of California's Schedule of Charges and Deadlines Title 4, Division 1 Admission Fees and could change at any time. Students are responsible to stay abreast of The State Bar of California law student-related fees. <a href="https://www.calbar.ca.gov/Portals/0/documents/rules/Rules_Appendix_A_Sched-Chgs-Deadlines.pdf" target="_blank" rel="noopener noreferrer" className="text-pau-blue hover:text-pau-gold underline">www.calbar.ca.gov/Portals/0/documents/rules/Rules_Appendix_A_Sched-Chgs-Deadlines.pdf</a></p>
+                      <p><strong>*****</strong> All fees associated with The State Bar of California are based upon observed fees and expenses as presented in The State Bar of California's Schedule of Charges and Deadlines Title 4, Division 1 Admission Fees and could change at any time. Students are responsible to stay abreast of The State Bar of California law student-related fees.</p>
+                      <div className="mt-4">
+                        <a 
+                          href="https://www.calbar.ca.gov/Portals/0/documents/rules/Rules_Appendix_A_Sched-Chgs-Deadlines.pdf" 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="inline-flex items-center px-4 py-2 bg-pau-blue text-white text-sm font-bold rounded-lg hover:bg-pau-darkBlue transition-colors shadow-sm hover:shadow-md"
+                        >
+                          View Schedule of Charges and Deadlines
+                          <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1928,8 +1947,26 @@ const App: React.FC = () => {
                     </div>
                   ))}
                 </div>
-                <div className="mt-8 p-4 bg-blue-50 text-blue-800 text-xs text-center rounded-lg border border-blue-100">
-                  * Note: All times are in Pacific Standard Time (PST). Office hours may vary during holidays and semester breaks.
+                <div className="mt-8 space-y-4">
+                  <div className="p-4 bg-blue-50 text-blue-800 text-xs text-center rounded-lg border border-blue-100">
+                    * Note: All times are in Pacific Standard Time (PST). Office hours may vary during holidays and semester breaks.
+                  </div>
+                  <div className="p-4 bg-amber-50 text-amber-800 text-xs rounded-lg border border-amber-100">
+                    <div className="font-bold mb-2">Federal Holidays - Office Closed:</div>
+                    <div className="space-y-1 text-left">
+                      <div>• New Year's Day (January 1)</div>
+                      <div>• Martin Luther King Jr. Day (Third Monday in January)</div>
+                      <div>• Presidents' Day (Third Monday in February)</div>
+                      <div>• Memorial Day (Last Monday in May)</div>
+                      <div>• Independence Day (July 4)</div>
+                      <div>• Labor Day (First Monday in September)</div>
+                      <div>• Columbus Day (Second Monday in October)</div>
+                      <div>• Veterans Day (November 11)</div>
+                      <div>• Thanksgiving Day (Fourth Thursday in November)</div>
+                      <div>• Day after Thanksgiving (Fourth Friday in November)</div>
+                      <div>• Christmas Day (December 25)</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </SectionWrapper>
