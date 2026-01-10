@@ -1952,20 +1952,17 @@ const App: React.FC = () => {
                     * Note: All times are in Pacific Standard Time (PST). Office hours may vary during holidays and semester breaks.
                   </div>
                   <div className="p-4 bg-amber-50 text-amber-800 text-xs rounded-lg border border-amber-100">
-                    <div className="font-bold mb-2">Federal Holidays - Office Closed:</div>
-                    <div className="space-y-1 text-left mb-4">
+                    <div className="font-bold mb-2">Federal Holiday and additional closure:</div>
+                    <div className="space-y-1 text-left">
                       <div>• President's Day (3rd Monday in February)</div>
                       <div>• Memorial Day (Last Monday in May)</div>
                       <div>• Independence Day (July 4th, or designated day)</div>
                       <div>• Labor Day (1st Monday in September)</div>
                       <div>• Thanksgiving Day (4th Thursday in November)</div>
-                      <div>• Christmas Day (December 25)</div>
-                      <div>• New Year's Day (January 1)</div>
-                    </div>
-                    <div className="font-bold mb-2">Recommended Additional Closures:</div>
-                    <div className="space-y-1 text-left">
                       <div>• Day after Thanksgiving (4th Friday in November)</div>
+                      <div>• Christmas Day (December 25)</div>
                       <div>• Christmas Eve (December 24)</div>
+                      <div>• New Year's Day (January 1)</div>
                       <div>• New Year's Eve (December 31)</div>
                     </div>
                   </div>
