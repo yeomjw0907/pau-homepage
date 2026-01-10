@@ -579,65 +579,71 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
                 </p>
               </div>
 
-              {/* Academic Counseling */}
-              <div className="bg-white p-10 rounded-[40px] shadow-premium border border-gray-100">
-                <h3 className="text-2xl font-serif font-bold text-pau-blue mb-6">Academic Counseling</h3>
-                <p className="text-gray-600 leading-relaxed font-light">
-                  Faculty provide guidance related to course content; study methods appropriate to correspondence legal education, time management, and preparation for assessments. Each course has a designated instructor who serves as the primary point of contact for academic support.
-                </p>
+              {/* Academic Counseling Group */}
+              <div className="bg-white rounded-[40px] shadow-premium border border-gray-100 overflow-hidden">
+                <div className="bg-gradient-to-r from-pau-blue/5 to-pau-blue/10 px-10 py-8 border-b border-gray-100">
+                  <h2 className="text-3xl font-serif font-bold text-pau-darkBlue">Academic Counseling</h2>
+                </div>
+                <div className="p-10 space-y-8">
+                  {/* Academic Counseling */}
+                  <div className="pb-8 border-b border-gray-100 last:border-b-0 last:pb-0">
+                    <h3 className="text-2xl font-serif font-bold text-pau-blue mb-4">Academic Counseling</h3>
+                    <p className="text-gray-600 leading-relaxed font-light">
+                      Faculty provide guidance related to course content; study methods appropriate to correspondence legal education, time management, and preparation for assessments. Each course has a designated instructor who serves as the primary point of contact for academic support.
+                    </p>
+                  </div>
+
+                  {/* Advising on Academic Policies and Procedures */}
+                  <div className="pb-8 border-b border-gray-100 last:border-b-0 last:pb-0">
+                    <h3 className="text-2xl font-serif font-bold text-pau-blue mb-4">Advising on Academic Policies and Procedures</h3>
+                    <p className="text-gray-600 leading-relaxed font-light">
+                      PAUSL informs students about academic policies, deadlines, and administrative requirements and provides assistance in understanding these policies as they relate to academic progress.
+                    </p>
+                  </div>
+
+                  {/* Course Planning and Program Progression */}
+                  <div className="pb-8 border-b border-gray-100 last:border-b-0 last:pb-0">
+                    <h3 className="text-2xl font-serif font-bold text-pau-blue mb-4">Course Planning and Program Progression</h3>
+                    <p className="text-gray-600 leading-relaxed font-light">
+                      PAUSL provides guidance to help students understand the required course sequence and any available options within the program. Faculty and staff assist students in planning for successful progression through the curriculum.
+                    </p>
+                  </div>
+
+                  {/* Transition Support */}
+                  <div>
+                    <h3 className="text-2xl font-serif font-bold text-pau-blue mb-4">Transition Support</h3>
+                    <p className="text-gray-600 leading-relaxed font-light">
+                      Students transferring into PAUSL or transitioning between stages of study may receive support to help ensure continuity of academic progress.
+                    </p>
+                  </div>
+                </div>
               </div>
 
-              {/* Academic Support Resources */}
-              <div className="bg-white p-10 rounded-[40px] shadow-premium border border-gray-100">
-                <h3 className="text-2xl font-serif font-bold text-pau-blue mb-6">Academic Support Resources</h3>
-                <p className="text-gray-600 leading-relaxed font-light">
-                  Students have access to faculty office hours, email support, and instructional guidance throughout the trimester. PAUSL also offers supplementary resources, including special lecture series, and materials available through PAUSL's membership in CALI.org.
-                </p>
-              </div>
+              {/* Academic Support Group */}
+              <div className="bg-white rounded-[40px] shadow-premium border border-gray-100 overflow-hidden">
+                <div className="bg-gradient-to-r from-pau-blue/5 to-pau-blue/10 px-10 py-8 border-b border-gray-100">
+                  <h2 className="text-3xl font-serif font-bold text-pau-darkBlue">Academic Support</h2>
+                </div>
+                <div className="p-10 space-y-8">
+                  {/* Academic Support Resources */}
+                  <div className="pb-8 border-b border-gray-100 last:border-b-0 last:pb-0">
+                    <h3 className="text-2xl font-serif font-bold text-pau-blue mb-4">Academic Support Resources</h3>
+                    <p className="text-gray-600 leading-relaxed font-light">
+                      Students have access to faculty office hours, email support, and instructional guidance throughout the trimester. PAUSL also offers supplementary resources, including special lecture series, and materials available through PAUSL's membership in CALI.org.
+                    </p>
+                  </div>
 
-              {/* Advising on Academic Policies and Procedures */}
-              <div className="bg-white p-10 rounded-[40px] shadow-premium border border-gray-100">
-                <h3 className="text-2xl font-serif font-bold text-pau-blue mb-6">Advising on Academic Policies and Procedures</h3>
-                <p className="text-gray-600 leading-relaxed font-light">
-                  PAUSL informs students about academic policies, deadlines, and administrative requirements and provides assistance in understanding these policies as they relate to academic progress.
-                </p>
-              </div>
+                  {/* Availability */}
+                  <div className="pb-8 border-b border-gray-100 last:border-b-0 last:pb-0">
+                    <h3 className="text-2xl font-serif font-bold text-pau-blue mb-4">Availability</h3>
+                    <p className="text-gray-600 leading-relaxed font-light">
+                      Faculty and staff are available during posted office hours, typically 9:00 AM to 5:00 PM Pacific Time, Monday through Friday. Academic support is also available via email.
+                    </p>
+                  </div>
 
-              {/* Career Planning */}
-              <div className="bg-white p-10 rounded-[40px] shadow-premium border border-gray-100">
-                <h3 className="text-2xl font-serif font-bold text-pau-blue mb-6">Career Planning (Limited)</h3>
-                <p className="text-gray-600 leading-relaxed font-light">
-                  PAUSL does not maintain a dedicated Career Services Office and does not guarantee employment outcomes. However, faculty and staff may offer limited, informal career guidance based on their professional experience, and students may access external networking opportunities through law-specific fraternal organizations such as Delta Theta Phi and the Christian Legal Society.
-                </p>
-              </div>
-
-              {/* Course Planning and Program Progression */}
-              <div className="bg-white p-10 rounded-[40px] shadow-premium border border-gray-100">
-                <h3 className="text-2xl font-serif font-bold text-pau-blue mb-6">Course Planning and Program Progression</h3>
-                <p className="text-gray-600 leading-relaxed font-light">
-                  PAUSL provides guidance to help students understand the required course sequence and any available options within the program. Faculty and staff assist students in planning for successful progression through the curriculum.
-                </p>
-              </div>
-
-              {/* Transition Support */}
-              <div className="bg-white p-10 rounded-[40px] shadow-premium border border-gray-100">
-                <h3 className="text-2xl font-serif font-bold text-pau-blue mb-6">Transition Support</h3>
-                <p className="text-gray-600 leading-relaxed font-light">
-                  Students transferring into PAUSL or transitioning between stages of study may receive support to help ensure continuity of academic progress.
-                </p>
-              </div>
-
-              {/* Availability */}
-              <div className="bg-pau-light p-10 rounded-[40px] border border-gray-100">
-                <h3 className="text-2xl font-serif font-bold text-pau-blue mb-6">Availability</h3>
-                <p className="text-gray-600 leading-relaxed font-light">
-                  Faculty and staff are available during posted office hours, typically 9:00 AM to 5:00 PM Pacific Time, Monday through Friday. Academic support is also available via email.
-                </p>
-              </div>
-
-              {/* Student Services: Academic Resources and Student Support at PAUSL */}
-              <div className="bg-white p-10 rounded-[40px] shadow-premium border border-gray-100">
-                <h2 className="text-3xl font-serif font-bold text-pau-darkBlue mb-8">Student Services: Academic Resources and Student Support at PAUSL</h2>
+                  {/* Student Services: Academic Resources and Student Support at PAUSL */}
+                  <div className="pt-8 border-t-2 border-gray-200">
+                    <h3 className="text-2xl font-serif font-bold text-pau-blue mb-6">Student Services: Academic Resources and Student Support at PAUSL</h3>
                 
                 {/* Personalized Academic Advising */}
                 <div className="mb-8">
@@ -709,6 +715,8 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
                   <p className="text-gray-600 leading-relaxed font-light">
                     PAUSL will provide students and alumni with official and unofficial copies of student transcripts, enrollment verifications, and duplicate diplomas upon request for a nominal fee. Please see the Tuition Fees and Costs section of the PAUSL catalog for the fee schedule.
                   </p>
+                </div>
+                  </div>
                 </div>
               </div>
 

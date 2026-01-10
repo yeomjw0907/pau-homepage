@@ -1953,18 +1953,20 @@ const App: React.FC = () => {
                   </div>
                   <div className="p-4 bg-amber-50 text-amber-800 text-xs rounded-lg border border-amber-100">
                     <div className="font-bold mb-2">Federal Holidays - Office Closed:</div>
-                    <div className="space-y-1 text-left">
-                      <div>• New Year's Day (January 1)</div>
-                      <div>• Martin Luther King Jr. Day (Third Monday in January)</div>
-                      <div>• Presidents' Day (Third Monday in February)</div>
+                    <div className="space-y-1 text-left mb-4">
+                      <div>• President's Day (3rd Monday in February)</div>
                       <div>• Memorial Day (Last Monday in May)</div>
-                      <div>• Independence Day (July 4)</div>
-                      <div>• Labor Day (First Monday in September)</div>
-                      <div>• Columbus Day (Second Monday in October)</div>
-                      <div>• Veterans Day (November 11)</div>
-                      <div>• Thanksgiving Day (Fourth Thursday in November)</div>
-                      <div>• Day after Thanksgiving (Fourth Friday in November)</div>
+                      <div>• Independence Day (July 4th, or designated day)</div>
+                      <div>• Labor Day (1st Monday in September)</div>
+                      <div>• Thanksgiving Day (4th Thursday in November)</div>
                       <div>• Christmas Day (December 25)</div>
+                      <div>• New Year's Day (January 1)</div>
+                    </div>
+                    <div className="font-bold mb-2">Recommended Additional Closures:</div>
+                    <div className="space-y-1 text-left">
+                      <div>• Day after Thanksgiving (4th Friday in November)</div>
+                      <div>• Christmas Eve (December 24)</div>
+                      <div>• New Year's Eve (December 31)</div>
                     </div>
                   </div>
                 </div>
