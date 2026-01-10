@@ -109,8 +109,11 @@ Last Updated: January 2026`
         {/* University Info */}
         <div className="col-span-1 md:col-span-1">
           <div className="flex flex-col mb-6">
-            <h3 className="text-2xl font-bold tracking-tight text-white">PACIFIC AMERICAN</h3>
-            <h4 className="text-[10px] text-pau-gold tracking-[0.4em] font-medium uppercase mt-1">University</h4>
+            <img 
+              src="/images/logo/logo-white.svg"
+              alt="Pacific American University School of Law"
+              className="h-12 md:h-14 w-auto max-w-[200px] md:max-w-[240px] object-contain"
+            />
           </div>
           {/* Source: Catalog Page 11 (Mission Statement) */}
           <p className="text-gray-500 text-xs leading-relaxed font-light">
