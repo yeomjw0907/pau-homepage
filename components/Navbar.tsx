@@ -202,7 +202,13 @@ export const Navbar: React.FC<NavbarProps> = ({
               <img 
                 src={isTransparent ? '/images/logo/logo-white.svg' : '/images/logo/logo-main.svg'}
                 alt="Pacific American University School of Law"
-                className="h-12 md:h-14 w-auto transition-opacity duration-500 group-hover:opacity-80"
+                className="h-12 md:h-14 w-auto max-w-[200px] md:max-w-[240px] object-contain transition-opacity duration-500 group-hover:opacity-80"
+                onError={(e) => {
+                  // logo-white.svg가 없으면 logo-main.svg로 fallback
+                  if (isTransparent && e.currentTarget.src.includes('logo-white.svg')) {
+                    e.currentTarget.src = '/images/logo/logo-main.svg';
+                  }
+                }}
               />
             </div>
 
