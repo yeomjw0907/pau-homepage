@@ -65,7 +65,7 @@ export const DEFAULT_FACULTY_CONTENT: FacultyContent = {
       name: "Hyun Joo Kang",
       credential: "S.J.D.",
       title: "CEO & President",
-      additionalInfo: "Timothy P. Weimer (Dean of School of Law)",
+
       education: [
         "LL.M. thesis & S.J.D., Indiana University Maurer School of Law (2010)",
         "LL.B., LL.M., Ph.D. coursework completed, Ewha Womans University"
