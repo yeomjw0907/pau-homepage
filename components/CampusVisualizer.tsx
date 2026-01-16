@@ -201,7 +201,7 @@ export const CampusVisualizer: React.FC = () => {
           <div className="md:w-2/3 bg-white p-4 rounded-xl shadow-2xl border border-gray-100 flex items-center justify-center min-h-[500px] relative overflow-hidden group">
             {/* Background pattern for empty state */}
             {!generatedImage && (
-               <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/graphy.png')] opacity-10"></div>
+               <div className="absolute inset-0 bg-[url('/images/patterns/pattern-graphy.png')] opacity-10"></div>
             )}
             
             {generatedImage ? (

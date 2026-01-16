@@ -128,7 +128,7 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
       icon: GlobeAmericasIcon, 
       title: "International Business", 
       desc: "Navigate the complex landscape of global commerce and trade.",
-      image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop",
+      image: "/images/info-international-business.jpg",
       details: {
         overview: "Prepare for a high-stakes career facilitating transactions between entities in different countries. This path focuses on the legal frameworks that govern international commerce, mergers and acquisitions, and joint ventures.",
         roles: ["International Contract Manager", "Trade Compliance Officer", "Global Business Developer", "Cross-Border Transaction Specialist"],
@@ -139,7 +139,7 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
       icon: BuildingLibraryIcon, 
       title: "Corporate Governance", 
       desc: "Advise boards and executives on fiduciary duties and ethical compliance.",
-      image: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2070&auto=format&fit=crop",
+      image: "/images/info-corporate-governance.jpg",
       details: {
         overview: "Corporate governance professionals ensure that companies operate within the law and adhere to ethical standards. This role is critical for maintaining investor confidence and managing corporate liability.",
         roles: ["Corporate Secretary", "Ethics & Compliance Director", "Board Advisor", "ESG (Environmental, Social, Governance) Consultant"],
@@ -150,7 +150,7 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
       icon: ScaleIcon, 
       title: "Legal Consulting", 
       desc: "Provide strategic legal insight to non-legal entities and organizations.",
-      image: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=2070&auto=format&fit=crop",
+      image: "/images/info-legal-consulting.jpg",
       details: {
         overview: "Leverage your J.D. to provide specialized advice to consulting firms, NGOs, and corporations. This path emphasizes problem-solving, risk assessment, and strategic planning rather than traditional litigation.",
         roles: ["Management Consultant", "Legal Operations Manager", "Risk Analyst", "Policy Advisor"],
@@ -161,7 +161,7 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
       icon: GlobeAsiaAustraliaIcon, 
       title: "Cross-border Trade", 
       desc: "Master the regulations governing imports, exports, and tariffs.",
-      image: "https://images.unsplash.com/photo-1578575437130-527eed3abbec?q=80&w=2070&auto=format&fit=crop",
+      image: "/images/info-cross-border-trade.jpg",
       details: {
         overview: "Become an expert in the movement of goods, services, and capital across borders. This field requires deep knowledge of WTO rules, regional trade agreements (like USMCA), and customs regulations.",
         roles: ["Customs Broker", "Import/Export Control Analyst", "Supply Chain Compliance Manager", "Trade Policy Specialist"],
@@ -172,7 +172,7 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
       icon: ScaleIcon, 
       title: "Regulatory Affairs", 
       desc: "Ensure compliance with government agencies like the FDA, SEC, and EPA.",
-      image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070&auto=format&fit=crop",
+      image: "/images/info-regulatory-affairs.jpg",
       details: {
         overview: "Regulatory affairs specialists act as the liaison between private industry and government regulatory agencies. They ensure that products and practices meet all safety, efficacy, and reporting standards.",
         roles: ["Regulatory Affairs Manager", "Compliance Auditor", "Government Relations Officer", "Quality Assurance Lead"],
@@ -183,7 +183,7 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
       icon: AcademicCapIcon, 
       title: "Graduate Study", 
       desc: "Pursue advanced degrees at prestigious universities in US, Canada or London.",
-      image: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2070&auto=format&fit=crop",
+      image: "/images/info-graduate-study.jpg",
       details: {
         overview: "For international students, the PAU J.D. serves as a robust foundation for admission into specialized LL.M. (Master of Laws) or S.J.D. programs at ABA-accredited universities in the United States.",
         roles: ["Legal Scholar / Academic", "Specialized Practitioner (Tax, IP)", "Judicial Clerkship", "Think Tank Researcher"],
@@ -293,7 +293,7 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
       {/* 3. STUDENT CENTERED (Dark Section) */}
       <section className="py-24 bg-[#051626] text-white relative overflow-hidden">
         {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-5 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+        <div className="absolute inset-0 opacity-5 bg-[url('/images/patterns/pattern-cubes.png')]"></div>
         
         <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">

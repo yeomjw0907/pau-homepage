@@ -429,7 +429,7 @@ export const MOCK_HOME_CONTENT: HomeContent = {
       description: "Specialize in IP, AI ethics, and Silicon Valley's unique legal needs.",
       detailTitle: "Innovation & Law",
       detailBody: "Lead the conversation in tech regulations.",
-      image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b",
+      image: "/images/innovation-law.jpg",
       stats: [{ label: "Growth", value: "+20%" }],
       relatedPathways: [{ label: "IP Clinic", targetPage: "academics", description: "Hands-on tech law" }]
     },

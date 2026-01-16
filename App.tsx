@@ -2354,7 +2354,7 @@ const App: React.FC = () => {
                 <div className="mb-16 md:mb-20">
                   {/* Hero Header */}
                   <div className="relative bg-gradient-to-br from-pau-darkBlue via-pau-blue to-pau-darkBlue p-10 md:p-16 rounded-3xl shadow-2xl overflow-hidden mb-10">
-                    <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+                    <div className="absolute inset-0 bg-[url('/images/patterns/pattern-cubes.png')] opacity-5"></div>
                     <div className="absolute top-0 right-0 w-96 h-96 bg-pau-gold opacity-5 rounded-full -mr-48 -mt-48"></div>
                     <div className="absolute bottom-0 left-0 w-72 h-72 bg-pau-gold opacity-5 rounded-full -ml-36 -mb-36"></div>
                     <div className="relative z-10">
@@ -2465,7 +2465,7 @@ const App: React.FC = () => {
                 <div>
                   {/* Hero Header */}
                   <div className="relative bg-gradient-to-br from-pau-gold/30 via-amber-50 to-yellow-50 p-10 md:p-16 rounded-3xl border-2 border-pau-gold/40 shadow-xl mb-10 overflow-hidden">
-                    <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+                    <div className="absolute inset-0 bg-[url('/images/patterns/pattern-cubes.png')] opacity-5"></div>
                     <div className="absolute top-0 right-0 w-96 h-96 bg-pau-gold opacity-10 rounded-full -mr-48 -mt-48"></div>
                     <div className="relative z-10">
                       <div className="flex items-center mb-6">
