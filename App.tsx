@@ -190,6 +190,42 @@ const App: React.FC = () => {
     setGlobalAlert
   });
 
+  // Initialize data from Supabase (Moved to top level)
+  React.useEffect(() => {
+    const loadData = async () => {
+      try {
+        // Load Global Settings
+        const settings = await adminService.fetchGlobalSettings();
+        if (settings) {
+          if (settings.maintenance_mode) {
+            setGlobalAlert({ active: true, message: settings.maintenance_message || 'Site under maintenance', type: 'warning' });
+          }
+        }
+
+        // Load News
+        const news = await adminService.fetchNews();
+        setHomeContent(prev => ({ ...prev, latestNews: news }));
+
+        // Load Faculty
+        const faculty = await adminService.fetchFaculty();
+        setFacultyContent(prev => ({ ...prev, facultyList: faculty }));
+
+        // Load Notices
+        const notices = await adminService.fetchNotices();
+        setNoticesContent(prev => ({ ...prev, notices }));
+
+        // Load Weekly Dicta
+        const dicta = await adminService.fetchWeeklyDicta();
+        setWeeklyDictaContent(prev => ({ ...prev, notices: dicta as any }));
+
+      } catch (error) {
+        console.error("Failed to load Supabase data:", error);
+      }
+    };
+
+    loadData();
+  }, []);
+
   const handleNavigate = (page: Page) => {
     // Use startTransition to make navigation non-blocking
     startTransition(() => {
@@ -239,46 +275,6 @@ const App: React.FC = () => {
         </Suspense>
       );
     }
-
-    // Initialize data from Supabase
-    React.useEffect(() => {
-      const loadData = async () => {
-        try {
-          // Load Global Settings
-          const settings = await adminService.fetchGlobalSettings();
-          if (settings) {
-            // Apply global settings if any (e.g. site title, alert)
-            if (settings.maintenance_mode) {
-              setGlobalAlert({ active: true, message: settings.maintenance_message || 'Site under maintenance', type: 'warning' });
-            }
-          }
-
-          // Load News
-          const news = await adminService.fetchNews();
-          setHomeContent(prev => ({ ...prev, latestNews: news }));
-
-          // Load Faculty
-          const faculty = await adminService.fetchFaculty();
-          setFacultyContent(prev => ({ ...prev, members: faculty }));
-
-          // Load Notices
-          const notices = await adminService.fetchNotices();
-          setNoticesContent(prev => ({ ...prev, notices }));
-
-          // Load Weekly Dicta
-          const dicta = await adminService.fetchWeeklyDicta();
-          // Type assertion to match state structure if needed, or rely on compatible interfaces
-          // The state expects `notices` property to be the array of items. 
-          // We map database items to match if necessary, but assuming types.ts is consistent.
-          setWeeklyDictaContent(prev => ({ ...prev, notices: dicta as any }));
-
-        } catch (error) {
-          console.error("Failed to load Supabase data:", error);
-        }
-      };
-
-      loadData();
-    }, []);
 
     switch (currentPage) {
       case 'weekly-dicta':

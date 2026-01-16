@@ -84,6 +84,8 @@ export interface GlobalFutureItem {
 export interface HomeContent {
   heroTitle: string;
   heroSubtitle: string;
+  heroImageDesktop?: string;
+  heroImageMobile?: string;
   visionStatement: string;
   visionAuthor?: string;
   missionTitle: string;
@@ -424,6 +426,8 @@ export const DEFAULT_SHARED_CONTENT: SharedContent = {
 export const MOCK_HOME_CONTENT: HomeContent = {
   heroTitle: "Empowering Advocates.\nTransforming Lives.",
   heroSubtitle: "Experience world-class legal education from the heart of Silicon Valley to wherever you are.",
+  heroImageDesktop: "/images/hero-desktop.jpg",
+  heroImageMobile: "/images/hero-mobile.jpg",
   visionStatement: "Our vision is to provide an accessible gateway to the legal profession for students of all backgrounds.",
   missionTitle: "The PAU Mission",
   missionDescription: "We bridge the gap between academic theory and real-world legal practice through technology-driven pedagogy.",

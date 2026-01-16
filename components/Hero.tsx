@@ -13,14 +13,25 @@ export const Hero: React.FC<HeroProps> = ({ content, shared, onNavigate }) => {
   return (
     <div className="relative h-screen min-h-[850px] w-full overflow-hidden bg-pau-darkBlue text-white font-sans">
       {/* Background Image - Keeping the existing image as requested */}
+      {/* Background Image */}
       <div className="absolute inset-0 z-0">
+        {/* Desktop Image */}
         <img
-          className="w-full h-full object-cover object-[center_65%] md:object-center animate-fade-in scale-105 transform brightness-[1.1]"
-          src="/images/hero-background.jpg"
-          alt="Pacific American University Law Campus"
+          className="hidden md:block w-full h-full object-cover object-[center_65%] md:object-center animate-fade-in scale-105 transform brightness-[1.1]"
+          src={content.heroImageDesktop || "/images/hero-desktop.jpg"}
+          alt="Pacific American University Law Campus - Desktop"
           loading="eager"
           decoding="async"
         />
+        {/* Mobile Image */}
+        <img
+          className="block md:hidden w-full h-full object-cover object-[center_top] animate-fade-in scale-105 transform brightness-[1.1]"
+          src={content.heroImageMobile || "/images/hero-mobile.jpg"}
+          alt="Pacific American University Law Campus - Mobile"
+          loading="eager"
+          decoding="async"
+        />
+
         {/* Gradient Overlay for Text Readability */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#051626]/90 via-[#051626]/40 to-transparent z-10 pointer-events-none" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#051626] via-transparent to-black/30 z-10 pointer-events-none" />
