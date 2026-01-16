@@ -25,7 +25,7 @@ export const Hero: React.FC<HeroProps> = ({ content, shared, onNavigate }) => {
         />
         {/* Mobile Image */}
         <img
-          className="block md:hidden w-full h-full object-cover object-[center_top] animate-fade-in scale-105 transform brightness-[1.1]"
+          className="block md:hidden w-full h-full object-cover object-[-20%_top] animate-fade-in scale-105 transform brightness-[1.1]"
           src={content.heroImageMobile || "/images/hero-mobile.jpg"}
           alt="Pacific American University Law Campus - Mobile"
           loading="eager"
