@@ -1,11 +1,11 @@
 import React, { useState, useTransition, Suspense, lazy } from 'react';
-import { 
-  Page, 
-  SupportedLanguage, 
-  SharedContent, 
-  DEFAULT_SHARED_CONTENT, 
-  MOCK_HOME_CONTENT, 
-  Clinic, 
+import {
+  Page,
+  SupportedLanguage,
+  SharedContent,
+  DEFAULT_SHARED_CONTENT,
+  MOCK_HOME_CONTENT,
+  Clinic,
   NewsItem,
   GlobalAlert,
   AdmissionsContent,
@@ -34,6 +34,10 @@ const StudentResources = lazy(() => import('./components/StudentResources').then
 const ClinicDetail = lazy(() => import('./components/ClinicDetail').then(module => ({ default: module.ClinicDetail })));
 const Careers = lazy(() => import('./components/Careers').then(module => ({ default: module.Careers })));
 const ConsumerInfo = lazy(() => import('./components/ConsumerInfo').then(module => ({ default: module.ConsumerInfo })));
+
+const WeeklyDictaPage = lazy(() => import('./components/WeeklyDicta').then(module => ({ default: module.WeeklyDicta })));
+const RequestInfoPage = lazy(() => import('./components/RequestInfo').then(module => ({ default: module.RequestInfo })));
+import * as adminService from './services/adminService';
 import { PageHeader } from './components/common/PageHeader';
 import { SectionWrapper } from './components/common/SectionWrapper';
 import { GenericPage } from './components/common/GenericPage';
@@ -45,12 +49,12 @@ import { useTranslation } from './hooks/useTranslation';
 import { DEFAULT_FACULTY_CONTENT } from './data/facultyData';
 import { DEFAULT_ADMISSIONS_CONTENT } from './data/admissionsData';
 import { DEFAULT_ACADEMICS_CONTENT } from './data/academicsData';
-import { 
-  CurrencyDollarIcon, 
-  BanknotesIcon, 
-  CreditCardIcon, 
-  CheckBadgeIcon, 
-  ClockIcon, 
+import {
+  CurrencyDollarIcon,
+  BanknotesIcon,
+  CreditCardIcon,
+  CheckBadgeIcon,
+  ClockIcon,
   PhoneIcon,
   MapPinIcon,
   EnvelopeIcon,
@@ -96,10 +100,10 @@ const App: React.FC = () => {
 
   const [admissionsContent, setAdmissionsContent] = useState<AdmissionsContent>(DEFAULT_ADMISSIONS_CONTENT);
 
-  const [noticesContent, setNoticesContent] = useState({ 
-    title: 'Campus Notices', 
-    intro: 'Stay informed about upcoming events, academic deadlines, and policy changes.', 
-    notices: [] 
+  const [noticesContent, setNoticesContent] = useState({
+    title: 'Campus Notices',
+    intro: 'Stay informed about upcoming events, academic deadlines, and policy changes.',
+    notices: []
   });
 
   const [weeklyDictaContent, setWeeklyDictaContent] = useState({
@@ -203,8 +207,8 @@ const App: React.FC = () => {
     if (currentPage === 'admin') {
       return (
         <Suspense fallback={<LoadingSpinner message="Loading admin panel..." />}>
-          <Admin 
-            home={homeContent} 
+          <Admin
+            home={homeContent}
             setHome={setHomeContent}
             admissions={admissionsContent}
             setAdmissions={setAdmissionsContent}
@@ -236,7 +240,61 @@ const App: React.FC = () => {
       );
     }
 
+    // Initialize data from Supabase
+    React.useEffect(() => {
+      const loadData = async () => {
+        try {
+          // Load Global Settings
+          const settings = await adminService.fetchGlobalSettings();
+          if (settings) {
+            // Apply global settings if any (e.g. site title, alert)
+            if (settings.maintenance_mode) {
+              setGlobalAlert({ active: true, message: settings.maintenance_message || 'Site under maintenance', type: 'warning' });
+            }
+          }
+
+          // Load News
+          const news = await adminService.fetchNews();
+          setHomeContent(prev => ({ ...prev, latestNews: news }));
+
+          // Load Faculty
+          const faculty = await adminService.fetchFaculty();
+          setFacultyContent(prev => ({ ...prev, members: faculty }));
+
+          // Load Notices
+          const notices = await adminService.fetchNotices();
+          setNoticesContent(prev => ({ ...prev, notices }));
+
+          // Load Weekly Dicta
+          const dicta = await adminService.fetchWeeklyDicta();
+          // Type assertion to match state structure if needed, or rely on compatible interfaces
+          // The state expects `notices` property to be the array of items. 
+          // We map database items to match if necessary, but assuming types.ts is consistent.
+          setWeeklyDictaContent(prev => ({ ...prev, notices: dicta as any }));
+
+        } catch (error) {
+          console.error("Failed to load Supabase data:", error);
+        }
+      };
+
+      loadData();
+    }, []);
+
     switch (currentPage) {
+      case 'weekly-dicta':
+        return (
+          <Suspense fallback={<LoadingSpinner message="Loading Weekly Dicta..." />}>
+            <WeeklyDictaPage items={weeklyDictaContent.notices as any} />
+          </Suspense>
+        );
+
+      case 'request-info':
+        return (
+          <Suspense fallback={<LoadingSpinner message="Loading Request Form..." />}>
+            <RequestInfoPage />
+          </Suspense>
+        );
+
       // --- HOME & MAIN SECTIONS ---
       case 'home':
         return (
@@ -252,7 +310,7 @@ const App: React.FC = () => {
         return (
           <>
             <PageHeader title={"Mission &\nIdentity"} subtitle="Nurturing impactful leaders for a global society." icon={GlobeAmericasIcon} />
-            
+
             {/* Mission Statement Section */}
             <SectionWrapper>
               <div className="max-w-5xl mx-auto">
@@ -260,7 +318,7 @@ const App: React.FC = () => {
                   {/* Decorative Elements */}
                   <div className="absolute top-0 right-0 w-64 h-64 bg-pau-gold opacity-5 rounded-full -mr-32 -mt-32"></div>
                   <div className="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-5 rounded-full -ml-24 -mb-24"></div>
-                  
+
                   <div className="relative z-10">
                     <div className="flex items-center mb-8">
                       <div className="w-16 h-16 bg-pau-gold rounded-full flex items-center justify-center mr-4">
@@ -268,7 +326,7 @@ const App: React.FC = () => {
                       </div>
                       <h2 className="text-2xl md:text-3xl font-serif font-bold text-white">Our Mission</h2>
                     </div>
-                    
+
                     <blockquote className="text-lg md:text-2xl text-white leading-relaxed font-light italic border-l-4 border-pau-gold pl-6">
                       The mission of Pacific American University ("PAU") is to nurture impactful, balanced-minded leaders, who are equipped to resolve complex global issues, making a positive impact on the growth of a healthy and inclusive society through a student-centered academic community and programs.
                     </blockquote>
@@ -287,7 +345,7 @@ const App: React.FC = () => {
                     </div>
                     <h2 className="text-2xl md:text-3xl font-serif font-bold text-pau-darkBlue">Our History</h2>
                   </div>
-                  
+
                   <div className="space-y-6 text-gray-700 leading-relaxed text-lg">
                     <p>
                       Pacific American University (PAU) was founded in 2018 and initially offered a Graduate Certificate in Business Administration (GCBA) and a Master of Business Administration (MBA) program, both approved by the California Bureau for Private Postsecondary Education (BPPE). After successfully graduating students from the MBA program, President Kang—who had long aspired to establish a correspondence law school in California to train future U.S. lawyers through a Juris Doctor (J.D.) program—redirected the university's full focus toward the development of the J.D. program.
@@ -355,7 +413,7 @@ const App: React.FC = () => {
                       <span className="text-xs font-bold text-pau-gold uppercase tracking-widest">Official Designation</span>
                     </div>
                   </div>
-                  
+
                   <div className="mt-4">
                     <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
                       Pacific American University School of Law is registered with the Committee of Bar Examiners of the State Bar of California as a{' '}
@@ -364,7 +422,7 @@ const App: React.FC = () => {
                     <p className="text-lg md:text-xl text-gray-700 leading-relaxed mt-6">
                       PAUSL is not accredited by the State Bar of California or the American Bar Association.
                     </p>
-                    
+
                     <div className="mt-8 pt-6 border-t border-gray-200">
                       <p className="text-sm text-gray-500 italic">
                         This designation reflects our commitment to transparency and compliance with California legal education requirements.
@@ -386,9 +444,9 @@ const App: React.FC = () => {
                 {/* Image Section */}
                 <div className="flex justify-center mb-12">
                   <div className="w-64 md:w-80 aspect-[3/4] rounded-lg overflow-hidden shadow-lg">
-                    <img 
-                      src="/images/president-hyun-joo-kang.jpg" 
-                      alt="Dr. Hyun Joo Kang, President of Pacific American University" 
+                    <img
+                      src="/images/president-hyun-joo-kang.jpg"
+                      alt="Dr. Hyun Joo Kang, President of Pacific American University"
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -410,23 +468,23 @@ const App: React.FC = () => {
                   <p>
                     In 2026, Pacific American University (PAU) provides a Juris Doctor (JD) degree program to you as an Unaccredited Correspondence Law School registered with the Committee of Bar Examiners of The State Bar of California. In an era where technology transcends geography, our decision to establish this unique correspondence law school reflects a bold mission: to lower barriers to legal education and overcome geographic boundaries through innovation.
                   </p>
-                  
+
                   <p>
                     By merging American-style legal instruction with flexible delivery methods, we empower talented students from around the world to pursue their aspirations of becoming U.S. attorneys—regardless of location or circumstance. Our curriculum is built around experienced faculty through dynamic high-quality video lectures, supported by real-time synchronous sessions to foster essential interaction. This format respects global time differences and accommodates the diverse learning environments of our international student body.
                   </p>
-                  
+
                   <p>
                     We actively recruit aspiring legal professionals worldwide who possess a strong sense of purpose and commitment to mastering U.S. law. Through this mission, we cultivate globally active professionals—U.S.-licensed attorneys equipped with a deep understanding of American legal principles—ready to make meaningful contributions in their respective fields. As educational borders dissolve, we believe our students will naturally align with our founding mission: to nurture global leaders with balanced, critical perspectives capable of addressing complex international issues.
                   </p>
-                  
+
                   <p>
                     By fostering cross-border legal understanding and embracing diverse viewpoints, our institution becomes a platform for shaping thoughtful, solution-oriented professionals prepared to engage with the world's most pressing challenges. Your journey at PAU School of Law will be filled with meaningful learning experiences, and we eagerly anticipate celebrating numerous achievements together.
                   </p>
-                  
+
                   <p>
                     Please do not hesitate to contact me, our Dean of the School of Law, and other academic staff. We will do our best to provide you with student services to lead you to your goal of earning your J.D. degree and passing the California Bar Exam.
                   </p>
-                  
+
                   <p className="text-xl font-semibold text-pau-darkBlue text-center mt-8">
                     Thank you very much!
                   </p>
@@ -453,9 +511,9 @@ const App: React.FC = () => {
                 {/* Image Section */}
                 <div className="flex justify-center mb-12">
                   <div className="w-64 md:w-80 aspect-[3/4] rounded-lg overflow-hidden shadow-lg">
-                    <img 
-                      src="/images/admin-timothy-weimer.jpg" 
-                      alt="Timothy P. Weimer, Dean of School of Law" 
+                    <img
+                      src="/images/admin-timothy-weimer.jpg"
+                      alt="Timothy P. Weimer, Dean of School of Law"
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -475,17 +533,17 @@ const App: React.FC = () => {
                 {/* Message Content */}
                 <div className="prose prose-lg prose-blue text-gray-600 max-w-none">
                   <p className="mb-6">It is an honor to serve as the founding Dean of Pacific American University School of Law (PAUSL) at this exciting moment in the school's history. PAUSL was created with a bold, deeply important, and visionary purpose: to expand access to high-quality legal education for capable, motivated students—wherever they are in the world, and whatever path has led them to the study of law.</p>
-                  
+
                   <p className="mb-6">For many prospective students, particularly international students and those from non-traditional or first-generation law school families, the journey to law school can feel uncertain or even out of reach. PAUSL was designed with you in mind. Our online correspondence-based JD program embraces flexibility without compromising rigor, allowing students to pursue a U.S. legal education while balancing professional, family, and geographic realities. At PAUSL, your background is not a barrier—it is a strength.</p>
-                  
+
                   <p className="mb-6">Our vision for PAUSL is ambitious. We are building a modern law school that reflects the realities of today's legal profession and anticipates the needs of tomorrow's lawyers. Through innovative curriculum design, engaging faculty-led instruction, and a strong emphasis on academic success and professional readiness, PAUSL is committed to preparing graduates not only to pass the California Bar Examination, but to think critically, act ethically, serve effectively and succeed as Lawyers in an increasingly interconnected world.</p>
-                  
+
                   <p className="mb-6">Central to our mission is the belief that legal education should not be confined by borders. By bringing together students from diverse cultures, professions, and life experiences, PAUSL fosters a global learning community grounded in American legal principles while enriched by international perspectives. Our graduates will be uniquely positioned to navigate cross-border legal issues, support global businesses and communities, and contribute meaningfully to the rule of law.</p>
-                  
+
                   <p className="mb-6">As Dean, I am committed to each student's success, the ongoing integrity of the institution, and continuous improvement in all that we do. PAUSL will be a law school that listens to its students, supports them academically, and holds itself to the highest standards of professionalism and compliance. We are building not only a law school, but a community—one defined by inclusion, intellectual curiosity, and a shared belief in the transformative power of legal education.</p>
-                  
+
                   <p className="mb-6">I invite you to explore what PAUSL has to offer and to imagine yourself as part of this exciting future. Whether you are beginning a new professional chapter, advancing an existing career, or pursuing a lifelong dream of becoming a lawyer, Pacific American University School of Law is committed to your academic, professional, and personal success.</p>
-                  
+
                   <p className="mb-0">I look forward to welcoming you to PAUSL.</p>
                 </div>
 
@@ -505,14 +563,14 @@ const App: React.FC = () => {
           <>
             <PageHeader title={"School\nForms"} subtitle="Streamlining your administrative needs." icon={ClipboardDocumentListIcon} />
             <SectionWrapper title="Administrative Requests">
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 max-w-4xl mx-auto">
-                  <DocumentLink title="Application for Admission" />
-                  <DocumentLink title="Transcript Request Form" />
-                  <DocumentLink title="Notice of Cancellation / Withdrawal" />
-                  <DocumentLink title="Credit Card Authorization Form" />
-                  <DocumentLink title="Grade Appeal Petition" />
-                  <DocumentLink title="Leave of Absence Request" />
-               </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 max-w-4xl mx-auto">
+                <DocumentLink title="Application for Admission" />
+                <DocumentLink title="Transcript Request Form" />
+                <DocumentLink title="Notice of Cancellation / Withdrawal" />
+                <DocumentLink title="Credit Card Authorization Form" />
+                <DocumentLink title="Grade Appeal Petition" />
+                <DocumentLink title="Leave of Absence Request" />
+              </div>
             </SectionWrapper>
           </>
         );
@@ -522,35 +580,35 @@ const App: React.FC = () => {
           <>
             <PageHeader title={"Frequently Asked\nQuestions"} subtitle="Expert answers to your queries." icon={QuestionMarkCircleIcon} />
             <SectionWrapper>
-               <div className="max-w-4xl mx-auto space-y-6 md:space-y-10">
-                  {[
-                    { 
-                      q: "Is the school accredited?", 
-                      a: "Pacific American University School of Law is registered as an Unaccredited Correspondence Law School with the Committee of Bar Examiners of the State Bar of California." 
-                    },
-                    { 
-                      q: "Can I take the Bar Exam?", 
-                      a: "Graduates are eligible to sit for the California Bar Examination, provided they meet all other State Bar requirements." 
-                    },
-                    {
-                      q: "What technical equipment do I need?",
-                      a: "Students must have a computer with reliable high-speed internet access, a webcam, and a microphone to participate in live sessions and access course materials."
-                    },
-                    {
-                      q: "Is financial aid available?",
-                      a: "PAU offers competitive tuition rates and flexible payment plans. We do not participate in federal financial aid programs (Title IV) at this time."
-                    }
-                  ].map((faq, i) => (
-                    <div key={i} className="bg-white p-6 md:p-12 rounded-2xl md:rounded-[40px] shadow-premium border border-gray-50">
-                      <h4 className="text-lg md:text-2xl font-serif font-bold text-pau-blue mb-4">
-                        <span className="text-pau-gold mr-3">Q.</span>{faq.q}
-                      </h4>
-                      <p className="text-sm md:text-lg text-gray-600 leading-relaxed font-light pl-8 border-l-2 border-pau-gold/20">
-                        {faq.a}
-                      </p>
-                    </div>
-                  ))}
-               </div>
+              <div className="max-w-4xl mx-auto space-y-6 md:space-y-10">
+                {[
+                  {
+                    q: "Is the school accredited?",
+                    a: "Pacific American University School of Law is registered as an Unaccredited Correspondence Law School with the Committee of Bar Examiners of the State Bar of California."
+                  },
+                  {
+                    q: "Can I take the Bar Exam?",
+                    a: "Graduates are eligible to sit for the California Bar Examination, provided they meet all other State Bar requirements."
+                  },
+                  {
+                    q: "What technical equipment do I need?",
+                    a: "Students must have a computer with reliable high-speed internet access, a webcam, and a microphone to participate in live sessions and access course materials."
+                  },
+                  {
+                    q: "Is financial aid available?",
+                    a: "PAU offers competitive tuition rates and flexible payment plans. We do not participate in federal financial aid programs (Title IV) at this time."
+                  }
+                ].map((faq, i) => (
+                  <div key={i} className="bg-white p-6 md:p-12 rounded-2xl md:rounded-[40px] shadow-premium border border-gray-50">
+                    <h4 className="text-lg md:text-2xl font-serif font-bold text-pau-blue mb-4">
+                      <span className="text-pau-gold mr-3">Q.</span>{faq.q}
+                    </h4>
+                    <p className="text-sm md:text-lg text-gray-600 leading-relaxed font-light pl-8 border-l-2 border-pau-gold/20">
+                      {faq.a}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </SectionWrapper>
           </>
         );
@@ -881,7 +939,7 @@ const App: React.FC = () => {
                     {/* Section 7 */}
                     <div className="space-y-6">
                       <h2 className="text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">7. The educational background, qualifications, and experience of the faculty at PAUSL for the 2026-2027 Academic School Year and the names of any faculty who are licensees of the State Bar of California or who are admitted in another jurisdiction are as follows:</h2>
-                      
+
                       <div className="space-y-8">
                         {/* Michael Marino */}
                         <div className="border-l-4 border-pau-blue pl-4">
@@ -963,7 +1021,7 @@ const App: React.FC = () => {
                     {/* Section 8 */}
                     <div className="space-y-6">
                       <h2 className="text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">8. The educational background, qualifications, and experience of the administrators at Pacific American University School of Law for the 2026-2027 Academic School Year and the names of any administrators who are licensees of the State Bar of California or who are admitted in another jurisdiction are as follows:</h2>
-                      
+
                       <div className="space-y-8">
                         {/* Hyun Joo Kang */}
                         <div className="border-l-4 border-pau-gold pl-4">
@@ -1131,7 +1189,7 @@ const App: React.FC = () => {
                       <p className="text-sm md:text-base">
                         By signing below, I acknowledge that I have read and understand this Student Disclosure Statement in its entirety, including information regarding PAUSL' registration status with The State Bar of California, its unaccredited correspondence method of instruction, examination and graduation requirements, its financial health, and its reported pass rates. I understand that study at or graduation from this law school may not qualify me to take the bar examination or to satisfy the requirements for admission to practice law in jurisdictions other than California. My signature affirms that I have received a copy of this Disclosure Statement and that I understand the nature, limitations, and conditions of enrollment at PAUSL.
                       </p>
-                      
+
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
                         <div>
                           <div className="border-b-2 border-gray-400 mb-2 pb-1 min-h-[40px]"></div>
@@ -1142,7 +1200,7 @@ const App: React.FC = () => {
                           <p className="text-sm font-semibold">Signature of Student</p>
                         </div>
                       </div>
-                      
+
                       <div className="w-48">
                         <div className="border-b-2 border-gray-400 mb-2 pb-1 min-h-[40px]"></div>
                         <p className="text-sm font-semibold">Date</p>
@@ -1158,21 +1216,21 @@ const App: React.FC = () => {
       case 'catalog':
         return (
           <>
-             <PageHeader title={"School\nCatalog"} subtitle="Complete guide to policies and programs." icon={BookOpenIcon} />
-             <SectionWrapper>
-               <div className="max-w-4xl mx-auto flex flex-col items-center">
-                  <div className="w-48 h-64 bg-gray-200 shadow-2xl mb-10 flex items-center justify-center rounded-r-2xl border-l-8 border-pau-darkBlue relative overflow-hidden group cursor-pointer hover:scale-105 transition-transform duration-500">
-                     <div className="absolute inset-0 bg-gradient-to-br from-pau-blue to-pau-darkBlue"></div>
-                     <div className="relative z-10 text-center text-white p-4">
-                       <span className="block text-4xl font-serif font-bold mb-2">2026</span>
-                       <span className="text-[10px] uppercase tracking-[0.2em] block">Academic Catalog</span>
-                     </div>
+            <PageHeader title={"School\nCatalog"} subtitle="Complete guide to policies and programs." icon={BookOpenIcon} />
+            <SectionWrapper>
+              <div className="max-w-4xl mx-auto flex flex-col items-center">
+                <div className="w-48 h-64 bg-gray-200 shadow-2xl mb-10 flex items-center justify-center rounded-r-2xl border-l-8 border-pau-darkBlue relative overflow-hidden group cursor-pointer hover:scale-105 transition-transform duration-500">
+                  <div className="absolute inset-0 bg-gradient-to-br from-pau-blue to-pau-darkBlue"></div>
+                  <div className="relative z-10 text-center text-white p-4">
+                    <span className="block text-4xl font-serif font-bold mb-2">2026</span>
+                    <span className="text-[10px] uppercase tracking-[0.2em] block">Academic Catalog</span>
                   </div>
-                  <button className="bg-pau-gold text-white px-10 py-4 rounded-full font-bold uppercase text-xs tracking-widest hover:bg-pau-darkBlue transition-colors shadow-lg">
-                    Download PDF Catalog
-                  </button>
-               </div>
-             </SectionWrapper>
+                </div>
+                <button className="bg-pau-gold text-white px-10 py-4 rounded-full font-bold uppercase text-xs tracking-widest hover:bg-pau-darkBlue transition-colors shadow-lg">
+                  Download PDF Catalog
+                </button>
+              </div>
+            </SectionWrapper>
           </>
         );
 
@@ -1188,34 +1246,34 @@ const App: React.FC = () => {
         return (
           <Suspense fallback={<LoadingSpinner message="Loading consumer info..." />}>
             <ConsumerInfo content={{
-          title: "Consumer Information",
-          intro: "Essential data regarding our academic program, student body, and outcomes.",
-          sections: [
-            {
-              id: "student-body",
-              title: "Student Body Diversity",
-              content: "PAU Law is committed to fostering a diverse academic environment. As a newly established program starting in 2026, historical student data is not yet available.",
-              tableData: [
-                { label: "Female Students", value: "N/A (New Program)" },
-                { label: "Male Students", value: "N/A (New Program)" },
-                { label: "Non-Binary / Other", value: "N/A (New Program)" },
-                { label: "Minority Representation", value: "N/A (New Program)" }
+              title: "Consumer Information",
+              intro: "Essential data regarding our academic program, student body, and outcomes.",
+              sections: [
+                {
+                  id: "student-body",
+                  title: "Student Body Diversity",
+                  content: "PAU Law is committed to fostering a diverse academic environment. As a newly established program starting in 2026, historical student data is not yet available.",
+                  tableData: [
+                    { label: "Female Students", value: "N/A (New Program)" },
+                    { label: "Male Students", value: "N/A (New Program)" },
+                    { label: "Non-Binary / Other", value: "N/A (New Program)" },
+                    { label: "Minority Representation", value: "N/A (New Program)" }
+                  ]
+                },
+                {
+                  id: "refund-policy",
+                  title: "Refund Policy",
+                  content: "A student is entitled to receive a full refund of all payments made if they withdraw or cancel their enrollment within seven (7) days, by midnight (PST), from the date the Enrollment Agreement was signed.\n\nIf a student withdraws after instruction has begun, they are eligible for a prorated refund based on the unused portion of tuition and other refundable charges. Refundable tuition and fees refer to the remaining tuition and fees charged after deducting non-refundable fees that have already been retained."
+                },
+                {
+                  id: "disclosure",
+                  title: "Disclosure",
+                  subtitle: "Transparency in our educational offering.",
+                  content: "Pacific American University School of Law makes the following disclosures as required by the State Bar of California Guidelines for Unaccredited Law School Rules.\n\nGuideline 2.3(D) Compliance\nThe law school has not applied for accreditation in the last five years. The school's assets and resources are primarily dedicated to providing distance legal education.",
+                  hasDownloadButton: true
+                }
               ]
-            },
-            {
-              id: "refund-policy",
-              title: "Refund Policy",
-              content: "A student is entitled to receive a full refund of all payments made if they withdraw or cancel their enrollment within seven (7) days, by midnight (PST), from the date the Enrollment Agreement was signed.\n\nIf a student withdraws after instruction has begun, they are eligible for a prorated refund based on the unused portion of tuition and other refundable charges. Refundable tuition and fees refer to the remaining tuition and fees charged after deducting non-refundable fees that have already been retained."
-            },
-            {
-              id: "disclosure",
-              title: "Disclosure",
-              subtitle: "Transparency in our educational offering.",
-              content: "Pacific American University School of Law makes the following disclosures as required by the State Bar of California Guidelines for Unaccredited Law School Rules.\n\nGuideline 2.3(D) Compliance\nThe law school has not applied for accreditation in the last five years. The school's assets and resources are primarily dedicated to providing distance legal education.",
-              hasDownloadButton: true
-            }
-          ]
-        }} />
+            }} />
           </Suspense>
         );
 
@@ -1236,30 +1294,30 @@ const App: React.FC = () => {
       case 'student-resources':
         return (
           <Suspense fallback={<LoadingSpinner message="Loading resources..." />}>
-            <StudentResources 
-          title="Student Success & Resources"
-          subtitle="Comprehensive support systems designed to ensure academic achievement and professional growth."
-          resources={[
-            {
-              title: "Academic Success Program (ASP)",
-              description: "A dedicated program designed to support students in mastering legal concepts and improving exam performance. It includes mandatory sessions for students on academic probation and offers personalized guidance on legal writing, case analysis, and MBE strategies.",
-              icon: "academic"
-            },
-            {
-              title: "Online Legal Research (Westlaw & CALI)",
-              description: "All students receive full access to Westlaw, the world's leading online legal research service, and a membership to CALI (Center for Computer-Assisted Legal Instruction), providing over 1,300 interactive tutorials across 32 legal subject areas.",
-              icon: "research"
-            },
-            {
-              title: "Delta Theta Phi Law Fraternity",
-              description: "PAUSL hosts a chapter of Delta Theta Phi, one of the nation's oldest legal fraternities. Members gain access to a global network of legal professionals, leadership opportunities, and eligibility for scholarships and awards.",
-              icon: "fraternity"
-            }
-          ]}
+            <StudentResources
+              title="Student Success & Resources"
+              subtitle="Comprehensive support systems designed to ensure academic achievement and professional growth."
+              resources={[
+                {
+                  title: "Academic Success Program (ASP)",
+                  description: "A dedicated program designed to support students in mastering legal concepts and improving exam performance. It includes mandatory sessions for students on academic probation and offers personalized guidance on legal writing, case analysis, and MBE strategies.",
+                  icon: "academic"
+                },
+                {
+                  title: "Online Legal Research (Westlaw & CALI)",
+                  description: "All students receive full access to Westlaw, the world's leading online legal research service, and a membership to CALI (Center for Computer-Assisted Legal Instruction), providing over 1,300 interactive tutorials across 32 legal subject areas.",
+                  icon: "research"
+                },
+                {
+                  title: "Delta Theta Phi Law Fraternity",
+                  description: "PAUSL hosts a chapter of Delta Theta Phi, one of the nation's oldest legal fraternities. Members gain access to a global network of legal professionals, leadership opportunities, and eligibility for scholarships and awards.",
+                  icon: "fraternity"
+                }
+              ]}
             />
           </Suspense>
         );
-      
+
       case 'library':
         return (
           <Suspense fallback={<LoadingSpinner message="Loading library..." />}>
@@ -1299,23 +1357,23 @@ const App: React.FC = () => {
             <Admissions content={admissionsContent} shared={shared} />
           </Suspense>
         );
-      
+
       case 'careers':
         return (
           <Suspense fallback={<LoadingSpinner message="Loading careers..." />}>
             <Careers content={{
-          title: "Career Services",
-          intro: "Empowering you to launch a successful legal career.",
-          stats: [
-             { label: "Employment Rate", value: "92%" },
-             { label: "Bar Pass Rate", value: "85%" },
-             { label: "Alumni Network", value: "2000+" }
-          ],
-          services: [
-            { title: "Resume & Cover Letter Review", description: "Expert feedback to make your application materials stand out." },
-            { title: "Mock Interviews", description: "Practice your interview skills with practicing attorneys." }
-          ]
-        }} />
+              title: "Career Services",
+              intro: "Empowering you to launch a successful legal career.",
+              stats: [
+                { label: "Employment Rate", value: "92%" },
+                { label: "Bar Pass Rate", value: "85%" },
+                { label: "Alumni Network", value: "2000+" }
+              ],
+              services: [
+                { title: "Resume & Cover Letter Review", description: "Expert feedback to make your application materials stand out." },
+                { title: "Mock Interviews", description: "Practice your interview skills with practicing attorneys." }
+              ]
+            }} />
           </Suspense>
         );
 
@@ -1325,7 +1383,7 @@ const App: React.FC = () => {
             <NoticeBoard content={noticesContent} onNewsClick={setSelectedNews} shared={shared} />
           </Suspense>
         );
-      
+
       case 'weekly-dicta':
         return <HomeNews title={weeklyDictaContent.title} newsItems={weeklyDictaContent.notices} onNewsClick={setSelectedNews} onNavigate={handleNavigate} shared={shared} />;
 
@@ -1547,68 +1605,68 @@ const App: React.FC = () => {
                               <th className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-bold text-[8px] md:text-sm">4L</th>
                             </tr>
                           </thead>
-                        <tbody>
-                          <tr className="bg-pau-blue/10 font-bold">
-                            <td colSpan={5} className="border border-gray-300 px-1.5 md:px-4 py-1.5 md:py-3 text-[9px] md:text-sm">Pacific American University School of Law Tuition & Fees*</td>
-                          </tr>
-                          {[
-                            { cat: "Admissions Application Fee (one time)", year1L: "$70", year2L: "$0", year3L: "$0", year4L: "$0" },
-                            { cat: "Tuition (3 Trimesters @ $3,000 per Trimester)", year1L: "$9,000", year2L: "$9,000", year3L: "$9,000", year4L: "$9,000" },
-                            { cat: "Student Services Fee (annual)", year1L: "$150", year2L: "$150", year3L: "$150", year4L: "$150" },
-                            { cat: "Registration Fee (one time)", year1L: "$200", year2L: "$0", year3L: "$0", year4L: "$0" },
-                            { cat: "Set-Up Fee Westlaw (annual)", year1L: "$200", year2L: "$200", year3L: "$200", year4L: "$200" },
-                            { cat: "Set-Up Fee CALI (annual)", year1L: "$100", year2L: "$100", year3L: "$100", year4L: "$100" },
-                            { cat: "Set-Up Fee ExamSoft (annual)", year1L: "$200", year2L: "$200", year3L: "$200", year4L: "$200" },
-                            { cat: "Set-Up Fee Bar Preparation (optional 4L) **", year1L: "$0", year2L: "$0", year3L: "$0", year4L: "$200" },
-                            { cat: "Textbooks (Estimated) ***", year1L: "$1,000", year2L: "$1,000", year3L: "$1,000", year4L: "$1,000" },
-                            { cat: "Payment Plan Fee (Optional) ****", year1L: "$100", year2L: "$100", year3L: "$100", year4L: "$100" },
-                            { cat: "Graduation Fee (4L only)", year1L: "$0", year2L: "$0", year3L: "$0", year4L: "$300" },
-                            { cat: "Subtotal: PAUSL Tuition & Fees", year1L: "$11,020", year2L: "$10,750", year3L: "$10,750", year4L: "$11,250", isSubtotal: true },
-                            { cat: "PAUSL Total 4-Year Estimated Tuition & Fees", year1L: "$43,770", year2L: "", year3L: "", year4L: "", isTotal: true },
-                          ].map((row, idx) => (
-                            <tr key={idx} className={row.isSubtotal || row.isTotal ? 'bg-pau-blue/10 font-bold' : idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                              <td className="border border-gray-300 px-1.5 md:px-3 py-1.5 md:py-2 text-[9px] md:text-sm leading-tight">{row.cat}</td>
-                              <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">{row.year1L}</td>
-                              <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">{row.year2L}</td>
-                              <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">{row.year3L}</td>
-                              <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">{row.year4L}</td>
+                          <tbody>
+                            <tr className="bg-pau-blue/10 font-bold">
+                              <td colSpan={5} className="border border-gray-300 px-1.5 md:px-4 py-1.5 md:py-3 text-[9px] md:text-sm">Pacific American University School of Law Tuition & Fees*</td>
                             </tr>
-                          ))}
-                          <tr className="bg-pau-gold/10 font-bold">
-                            <td colSpan={5} className="border border-gray-300 px-1.5 md:px-4 py-1.5 md:py-3 text-[9px] md:text-sm">The State Bar Of California Fees (Paid directly to The State Bar)*****</td>
-                          </tr>
-                          {[
-                            { cat: "Law Student Registration (1L)", year1L: "$150", year2L: "$0", year3L: "$0", year4L: "$0" },
-                            { cat: "FYLSX Fee (1L)", year1L: "$873", year2L: "$0", year3L: "$0", year4L: "$0" },
-                            { cat: "FYLSX Laptop Fee (1L)", year1L: "$153", year2L: "$0", year3L: "$0", year4L: "$0" },
-                            { cat: "Moral Character Determination (4L)", year1L: "$0", year2L: "$0", year3L: "$0", year4L: "$745" },
-                            { cat: "MPRE Fee (4L)", year1L: "$0", year2L: "$0", year3L: "$0", year4L: "$135" },
-                            { cat: "Bar Exam Registration Fee (4L)", year1L: "$0", year2L: "$0", year3L: "$0", year4L: "$850" },
-                            { cat: "Bar Exam Laptop Fee (4L)", year1L: "$0", year2L: "$0", year3L: "$0", year4L: "$153" },
-                            { cat: "Subtotal: State Bar Fees", year1L: "$1,176", year2L: "$0", year3L: "$0", year4L: "$1,883", isSubtotal: true },
-                            { cat: "Total 4-Year Anticipated State Bar Fees", year1L: "$3,059", year2L: "", year3L: "", year4L: "", isTotal: true },
-                          ].map((row, idx) => (
-                            <tr key={idx} className={row.isSubtotal || row.isTotal ? 'bg-pau-gold/10 font-bold' : idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                              <td className="border border-gray-300 px-1.5 md:px-3 py-1.5 md:py-2 text-[9px] md:text-sm leading-tight">{row.cat}</td>
-                              <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">{row.year1L}</td>
-                              <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">{row.year2L}</td>
-                              <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">{row.year3L}</td>
-                              <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">{row.year4L}</td>
+                            {[
+                              { cat: "Admissions Application Fee (one time)", year1L: "$70", year2L: "$0", year3L: "$0", year4L: "$0" },
+                              { cat: "Tuition (3 Trimesters @ $3,000 per Trimester)", year1L: "$9,000", year2L: "$9,000", year3L: "$9,000", year4L: "$9,000" },
+                              { cat: "Student Services Fee (annual)", year1L: "$150", year2L: "$150", year3L: "$150", year4L: "$150" },
+                              { cat: "Registration Fee (one time)", year1L: "$200", year2L: "$0", year3L: "$0", year4L: "$0" },
+                              { cat: "Set-Up Fee Westlaw (annual)", year1L: "$200", year2L: "$200", year3L: "$200", year4L: "$200" },
+                              { cat: "Set-Up Fee CALI (annual)", year1L: "$100", year2L: "$100", year3L: "$100", year4L: "$100" },
+                              { cat: "Set-Up Fee ExamSoft (annual)", year1L: "$200", year2L: "$200", year3L: "$200", year4L: "$200" },
+                              { cat: "Set-Up Fee Bar Preparation (optional 4L) **", year1L: "$0", year2L: "$0", year3L: "$0", year4L: "$200" },
+                              { cat: "Textbooks (Estimated) ***", year1L: "$1,000", year2L: "$1,000", year3L: "$1,000", year4L: "$1,000" },
+                              { cat: "Payment Plan Fee (Optional) ****", year1L: "$100", year2L: "$100", year3L: "$100", year4L: "$100" },
+                              { cat: "Graduation Fee (4L only)", year1L: "$0", year2L: "$0", year3L: "$0", year4L: "$300" },
+                              { cat: "Subtotal: PAUSL Tuition & Fees", year1L: "$11,020", year2L: "$10,750", year3L: "$10,750", year4L: "$11,250", isSubtotal: true },
+                              { cat: "PAUSL Total 4-Year Estimated Tuition & Fees", year1L: "$43,770", year2L: "", year3L: "", year4L: "", isTotal: true },
+                            ].map((row, idx) => (
+                              <tr key={idx} className={row.isSubtotal || row.isTotal ? 'bg-pau-blue/10 font-bold' : idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                                <td className="border border-gray-300 px-1.5 md:px-3 py-1.5 md:py-2 text-[9px] md:text-sm leading-tight">{row.cat}</td>
+                                <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">{row.year1L}</td>
+                                <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">{row.year2L}</td>
+                                <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">{row.year3L}</td>
+                                <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">{row.year4L}</td>
+                              </tr>
+                            ))}
+                            <tr className="bg-pau-gold/10 font-bold">
+                              <td colSpan={5} className="border border-gray-300 px-1.5 md:px-4 py-1.5 md:py-3 text-[9px] md:text-sm">The State Bar Of California Fees (Paid directly to The State Bar)*****</td>
                             </tr>
-                          ))}
-                          <tr className="bg-green-50 font-bold">
-                            <td className="border border-gray-300 px-1.5 md:px-3 py-1.5 md:py-2 text-[9px] md:text-sm leading-tight">Annual Estimated Cost for Each of the Four Years</td>
-                            <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">$12,196</td>
-                            <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">$10,750</td>
-                            <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">$10,750</td>
-                            <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">$13,133</td>
-                          </tr>
-                          <tr className="bg-green-100 font-bold text-lg">
-                            <td className="border border-gray-300 px-1.5 md:px-3 py-1.5 md:py-2 text-[9px] md:text-lg leading-tight">Grand Total 4-Year Estimated Cost</td>
-                            <td colSpan={4} className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-lg">$46,829</td>
-                          </tr>
-                        </tbody>
-                      </table>
+                            {[
+                              { cat: "Law Student Registration (1L)", year1L: "$150", year2L: "$0", year3L: "$0", year4L: "$0" },
+                              { cat: "FYLSX Fee (1L)", year1L: "$873", year2L: "$0", year3L: "$0", year4L: "$0" },
+                              { cat: "FYLSX Laptop Fee (1L)", year1L: "$153", year2L: "$0", year3L: "$0", year4L: "$0" },
+                              { cat: "Moral Character Determination (4L)", year1L: "$0", year2L: "$0", year3L: "$0", year4L: "$745" },
+                              { cat: "MPRE Fee (4L)", year1L: "$0", year2L: "$0", year3L: "$0", year4L: "$135" },
+                              { cat: "Bar Exam Registration Fee (4L)", year1L: "$0", year2L: "$0", year3L: "$0", year4L: "$850" },
+                              { cat: "Bar Exam Laptop Fee (4L)", year1L: "$0", year2L: "$0", year3L: "$0", year4L: "$153" },
+                              { cat: "Subtotal: State Bar Fees", year1L: "$1,176", year2L: "$0", year3L: "$0", year4L: "$1,883", isSubtotal: true },
+                              { cat: "Total 4-Year Anticipated State Bar Fees", year1L: "$3,059", year2L: "", year3L: "", year4L: "", isTotal: true },
+                            ].map((row, idx) => (
+                              <tr key={idx} className={row.isSubtotal || row.isTotal ? 'bg-pau-gold/10 font-bold' : idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                                <td className="border border-gray-300 px-1.5 md:px-3 py-1.5 md:py-2 text-[9px] md:text-sm leading-tight">{row.cat}</td>
+                                <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">{row.year1L}</td>
+                                <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">{row.year2L}</td>
+                                <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">{row.year3L}</td>
+                                <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">{row.year4L}</td>
+                              </tr>
+                            ))}
+                            <tr className="bg-green-50 font-bold">
+                              <td className="border border-gray-300 px-1.5 md:px-3 py-1.5 md:py-2 text-[9px] md:text-sm leading-tight">Annual Estimated Cost for Each of the Four Years</td>
+                              <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">$12,196</td>
+                              <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">$10,750</td>
+                              <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">$10,750</td>
+                              <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">$13,133</td>
+                            </tr>
+                            <tr className="bg-green-100 font-bold text-lg">
+                              <td className="border border-gray-300 px-1.5 md:px-3 py-1.5 md:py-2 text-[9px] md:text-lg leading-tight">Grand Total 4-Year Estimated Cost</td>
+                              <td colSpan={4} className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-lg">$46,829</td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </div>
                     <div className="mt-6 space-y-2 text-sm text-gray-600">
@@ -1618,10 +1676,10 @@ const App: React.FC = () => {
                       <p><strong>****</strong> Students opting for the Payment Plan Option 1 will pay $100 per year to set up their payment plan. See the Financial Aid section for more details. Also note that students who choose to pay via credit card must cover transaction and processing fees which may be as high as 4.5% of the amount charged.</p>
                       <p><strong>*****</strong> All fees associated with The State Bar of California are based upon observed fees and expenses as presented in The State Bar of California's Schedule of Charges and Deadlines Title 4, Division 1 Admission Fees and could change at any time. Students are responsible to stay abreast of The State Bar of California law student-related fees.</p>
                       <div className="mt-4">
-                        <a 
-                          href="https://www.calbar.ca.gov/Portals/0/documents/rules/Rules_Appendix_A_Sched-Chgs-Deadlines.pdf" 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
+                        <a
+                          href="https://www.calbar.ca.gov/Portals/0/documents/rules/Rules_Appendix_A_Sched-Chgs-Deadlines.pdf"
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="inline-flex items-center px-4 py-2 bg-pau-blue text-white text-sm font-bold rounded-lg hover:bg-pau-darkBlue transition-colors shadow-sm hover:shadow-md"
                         >
                           View Schedule of Charges and Deadlines
@@ -1875,44 +1933,44 @@ const App: React.FC = () => {
       case 'tuition':
         return (
           <>
-             <PageHeader title={"Tuition &\nFinancial Services"} subtitle="Investing in your future with transparent costs." icon={BanknotesIcon} />
-             <SectionWrapper>
-               <div className="max-w-4xl mx-auto space-y-12">
-                  <div className="bg-white p-8 rounded-2xl shadow-premium border border-gray-100 flex flex-col md:flex-row gap-8 items-center">
-                     <div className="flex-shrink-0 p-6 bg-green-50 rounded-full">
-                       <CurrencyDollarIcon className="h-12 w-12 text-green-600" />
-                     </div>
-                     <div>
-                       <h3 className="text-2xl font-bold text-pau-darkBlue mb-2">J.D. Program Tuition</h3>
-                       <p className="text-gray-600 leading-relaxed mb-4">
-                         Tuition is charged on a per-unit basis. The current rate is <span className="font-bold text-green-700">$300 per unit</span>.
-                       </p>
-                       <p className="text-sm text-gray-500">Estimated annual tuition for a full-time student (24 units): <span className="font-bold text-gray-800">$7,200</span>.</p>
-                     </div>
+            <PageHeader title={"Tuition &\nFinancial Services"} subtitle="Investing in your future with transparent costs." icon={BanknotesIcon} />
+            <SectionWrapper>
+              <div className="max-w-4xl mx-auto space-y-12">
+                <div className="bg-white p-8 rounded-2xl shadow-premium border border-gray-100 flex flex-col md:flex-row gap-8 items-center">
+                  <div className="flex-shrink-0 p-6 bg-green-50 rounded-full">
+                    <CurrencyDollarIcon className="h-12 w-12 text-green-600" />
                   </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-pau-darkBlue mb-2">J.D. Program Tuition</h3>
+                    <p className="text-gray-600 leading-relaxed mb-4">
+                      Tuition is charged on a per-unit basis. The current rate is <span className="font-bold text-green-700">$300 per unit</span>.
+                    </p>
+                    <p className="text-sm text-gray-500">Estimated annual tuition for a full-time student (24 units): <span className="font-bold text-gray-800">$7,200</span>.</p>
+                  </div>
+                </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                     <button onClick={() => handleNavigate('payment-plan')} className="text-left bg-gray-50 p-8 rounded-2xl border border-gray-200 hover:border-pau-gold hover:shadow-md transition-all group">
-                        <h4 className="font-bold text-pau-blue mb-4 flex items-center group-hover:text-pau-gold transition-colors">
-                          <CreditCardIcon className="h-5 w-5 mr-2" /> Payment Options
-                        </h4>
-                        <ul className="space-y-3 text-sm text-gray-600">
-                          <li>• Pay in full per semester</li>
-                          <li>• Monthly installment plan (4 payments/semester)</li>
-                          <li>• Employer reimbursement deferment</li>
-                        </ul>
-                     </button>
-                     <button onClick={() => handleNavigate('refund-policy')} className="text-left bg-gray-50 p-8 rounded-2xl border border-gray-200 hover:border-pau-gold hover:shadow-md transition-all group">
-                        <h4 className="font-bold text-pau-blue mb-4 flex items-center group-hover:text-pau-gold transition-colors">
-                          <DocumentCheckIcon className="h-5 w-5 mr-2" /> Refund Policy
-                        </h4>
-                        <p className="text-sm text-gray-600">
-                          100% refund if withdrawn by the 1st week of classes. Prorated refunds available up to the 60% point of the semester.
-                        </p>
-                     </button>
-                  </div>
-               </div>
-             </SectionWrapper>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <button onClick={() => handleNavigate('payment-plan')} className="text-left bg-gray-50 p-8 rounded-2xl border border-gray-200 hover:border-pau-gold hover:shadow-md transition-all group">
+                    <h4 className="font-bold text-pau-blue mb-4 flex items-center group-hover:text-pau-gold transition-colors">
+                      <CreditCardIcon className="h-5 w-5 mr-2" /> Payment Options
+                    </h4>
+                    <ul className="space-y-3 text-sm text-gray-600">
+                      <li>• Pay in full per semester</li>
+                      <li>• Monthly installment plan (4 payments/semester)</li>
+                      <li>• Employer reimbursement deferment</li>
+                    </ul>
+                  </button>
+                  <button onClick={() => handleNavigate('refund-policy')} className="text-left bg-gray-50 p-8 rounded-2xl border border-gray-200 hover:border-pau-gold hover:shadow-md transition-all group">
+                    <h4 className="font-bold text-pau-blue mb-4 flex items-center group-hover:text-pau-gold transition-colors">
+                      <DocumentCheckIcon className="h-5 w-5 mr-2" /> Refund Policy
+                    </h4>
+                    <p className="text-sm text-gray-600">
+                      100% refund if withdrawn by the 1st week of classes. Prorated refunds available up to the 60% point of the semester.
+                    </p>
+                  </button>
+                </div>
+              </div>
+            </SectionWrapper>
           </>
         );
 
@@ -1939,8 +1997,8 @@ const App: React.FC = () => {
                       <ul className="space-y-3">
                         {item.hours.map((h, idx) => (
                           <li key={idx} className="flex items-start text-sm text-gray-600">
-                             <ClockIcon className="h-4 w-4 mr-2 mt-0.5 text-pau-gold" />
-                             {h}
+                            <ClockIcon className="h-4 w-4 mr-2 mt-0.5 text-pau-gold" />
+                            {h}
                           </li>
                         ))}
                       </ul>
@@ -1977,55 +2035,55 @@ const App: React.FC = () => {
           <>
             <PageHeader title={"Contact\nInformation"} subtitle="Reach out to the right department." icon={PhoneIcon} />
             <SectionWrapper>
-               <div className="max-w-5xl mx-auto">
-                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-16">
-                    <div className="lg:col-span-1 bg-white p-8 rounded-2xl border border-gray-100 shadow-lg h-fit">
-                       <h3 className="text-sm font-bold text-pau-gold uppercase tracking-widest mb-6">Mailing Address</h3>
-                       <div className="flex items-start text-gray-700 mb-8">
-                          <MapPinIcon className="h-5 w-5 mr-3 mt-1 flex-shrink-0 text-pau-blue" />
-                          <div>
-                            <p className="font-bold text-pau-darkBlue">Pacific American University</p>
-                            <p>School of Law</p>
-                            <p>3435 Wilshire Blvd. Suite 430,</p>
-                            <p>Los Angeles, CA 90010</p>
+              <div className="max-w-5xl mx-auto">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-16">
+                  <div className="lg:col-span-1 bg-white p-8 rounded-2xl border border-gray-100 shadow-lg h-fit">
+                    <h3 className="text-sm font-bold text-pau-gold uppercase tracking-widest mb-6">Mailing Address</h3>
+                    <div className="flex items-start text-gray-700 mb-8">
+                      <MapPinIcon className="h-5 w-5 mr-3 mt-1 flex-shrink-0 text-pau-blue" />
+                      <div>
+                        <p className="font-bold text-pau-darkBlue">Pacific American University</p>
+                        <p>School of Law</p>
+                        <p>3435 Wilshire Blvd. Suite 430,</p>
+                        <p>Los Angeles, CA 90010</p>
+                      </div>
+                    </div>
+                    <h3 className="text-sm font-bold text-pau-gold uppercase tracking-widest mb-6">Main Line</h3>
+                    <div className="flex items-center text-gray-700">
+                      <PhoneIcon className="h-5 w-5 mr-3 text-pau-blue" />
+                      <p className="font-bold">(213) 674-7174</p>
+                    </div>
+                  </div>
+
+                  <div className="lg:col-span-2">
+                    <h3 className="text-2xl font-serif font-bold text-pau-darkBlue mb-8">Department Directory</h3>
+                    <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+                      {[
+                        { name: "Help Desk", email: "help@paucal.org", phone: "Ext. 100" },
+                        { name: "Admissions Office", email: "admissions@paucal.org", phone: "Ext. 101" },
+                        { name: "Registrar's Office", email: "registrar@paucal.org", phone: "Ext. 102" },
+                        { name: "Student Services", email: "studentservices@paucal.org", phone: "Ext. 103" },
+                      ].map((dept, i) => (
+                        <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between p-6 border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors">
+                          <div className="mb-2 sm:mb-0">
+                            <h4 className="font-bold text-pau-darkBlue">{dept.name}</h4>
                           </div>
-                       </div>
-                       <h3 className="text-sm font-bold text-pau-gold uppercase tracking-widest mb-6">Main Line</h3>
-                       <div className="flex items-center text-gray-700">
-                          <PhoneIcon className="h-5 w-5 mr-3 text-pau-blue" />
-                          <p className="font-bold">(213) 674-7174</p>
-                       </div>
+                          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 text-sm text-gray-600">
+                            <a href={`mailto:${dept.email}`} className="flex items-center hover:text-pau-blue transition-colors">
+                              <EnvelopeIcon className="h-4 w-4 mr-2 text-gray-400" /> {dept.email}
+                            </a>
+                            {dept.phone && (
+                              <span className="flex items-center">
+                                <PhoneIcon className="h-4 w-4 mr-2 text-gray-400" /> {dept.phone}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                    
-                    <div className="lg:col-span-2">
-                       <h3 className="text-2xl font-serif font-bold text-pau-darkBlue mb-8">Department Directory</h3>
-                       <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
-                          {[
-                            { name: "Help Desk", email: "help@paucal.org", phone: "Ext. 100" },
-                            { name: "Admissions Office", email: "admissions@paucal.org", phone: "Ext. 101" },
-                            { name: "Registrar's Office", email: "registrar@paucal.org", phone: "Ext. 102" },
-                            { name: "Student Services", email: "studentservices@paucal.org", phone: "Ext. 103" },
-                          ].map((dept, i) => (
-                            <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between p-6 border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors">
-                               <div className="mb-2 sm:mb-0">
-                                 <h4 className="font-bold text-pau-darkBlue">{dept.name}</h4>
-                               </div>
-                               <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 text-sm text-gray-600">
-                                  <a href={`mailto:${dept.email}`} className="flex items-center hover:text-pau-blue transition-colors">
-                                    <EnvelopeIcon className="h-4 w-4 mr-2 text-gray-400" /> {dept.email}
-                                  </a>
-                                  {dept.phone && (
-                                    <span className="flex items-center">
-                                      <PhoneIcon className="h-4 w-4 mr-2 text-gray-400" /> {dept.phone}
-                                    </span>
-                                  )}
-                               </div>
-                            </div>
-                          ))}
-                       </div>
-                    </div>
-                 </div>
-               </div>
+                  </div>
+                </div>
+              </div>
             </SectionWrapper>
           </>
         );
@@ -2033,54 +2091,54 @@ const App: React.FC = () => {
       case 'request-info':
         return (
           <>
-             <PageHeader title={"Request\nInformation"} subtitle="Tell us how we can help you." icon={InboxArrowDownIcon} />
-             <SectionWrapper>
-                <div className="max-w-4xl mx-auto">
-                   <div className="bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-gray-100">
-                     <div className="text-center mb-10">
-                       <h3 className="text-2xl font-serif font-bold text-pau-darkBlue mb-4">Send us a Message</h3>
-                       <p className="text-gray-500">Fill out the form below and our team will get back to you within 24 hours.</p>
-                     </div>
-                     <form className="space-y-8">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                           <div>
-                             <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">First Name</label>
-                             <input type="text" className="w-full p-4 border border-gray-200 bg-gray-50 rounded-xl focus:bg-white focus:ring-2 focus:ring-pau-blue/20 focus:border-pau-blue transition-all" placeholder="Jane" />
-                           </div>
-                           <div>
-                             <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Last Name</label>
-                             <input type="text" className="w-full p-4 border border-gray-200 bg-gray-50 rounded-xl focus:bg-white focus:ring-2 focus:ring-pau-blue/20 focus:border-pau-blue transition-all" placeholder="Doe" />
-                           </div>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                          <div>
-                             <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Email Address</label>
-                             <input type="email" className="w-full p-4 border border-gray-200 bg-gray-50 rounded-xl focus:bg-white focus:ring-2 focus:ring-pau-blue/20 focus:border-pau-blue transition-all" placeholder="jane@example.com" />
-                          </div>
-                          <div>
-                             <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Inquiry Type</label>
-                             <select className="w-full p-4 border border-gray-200 bg-gray-50 rounded-xl focus:bg-white focus:ring-2 focus:ring-pau-blue/20 focus:border-pau-blue transition-all text-gray-600">
-                                <option>General Admission</option>
-                                <option>Program Details (J.D.)</option>
-                                <option>Tuition & Financial Aid</option>
-                                <option>Technical Issue</option>
-                                <option>Other</option>
-                             </select>
-                          </div>
-                        </div>
-                        <div>
-                           <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Message</label>
-                           <textarea rows={5} className="w-full p-4 border border-gray-200 bg-gray-50 rounded-xl focus:bg-white focus:ring-2 focus:ring-pau-blue/20 focus:border-pau-blue transition-all" placeholder="How can we assist you today?"></textarea>
-                        </div>
-                        <div className="flex justify-end">
-                          <button className="bg-pau-gold text-white px-10 py-4 rounded-xl font-bold uppercase text-xs tracking-widest hover:bg-pau-darkBlue transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
-                            Submit Inquiry
-                          </button>
-                        </div>
-                     </form>
+            <PageHeader title={"Request\nInformation"} subtitle="Tell us how we can help you." icon={InboxArrowDownIcon} />
+            <SectionWrapper>
+              <div className="max-w-4xl mx-auto">
+                <div className="bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-gray-100">
+                  <div className="text-center mb-10">
+                    <h3 className="text-2xl font-serif font-bold text-pau-darkBlue mb-4">Send us a Message</h3>
+                    <p className="text-gray-500">Fill out the form below and our team will get back to you within 24 hours.</p>
                   </div>
+                  <form className="space-y-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                      <div>
+                        <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">First Name</label>
+                        <input type="text" className="w-full p-4 border border-gray-200 bg-gray-50 rounded-xl focus:bg-white focus:ring-2 focus:ring-pau-blue/20 focus:border-pau-blue transition-all" placeholder="Jane" />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Last Name</label>
+                        <input type="text" className="w-full p-4 border border-gray-200 bg-gray-50 rounded-xl focus:bg-white focus:ring-2 focus:ring-pau-blue/20 focus:border-pau-blue transition-all" placeholder="Doe" />
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                      <div>
+                        <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Email Address</label>
+                        <input type="email" className="w-full p-4 border border-gray-200 bg-gray-50 rounded-xl focus:bg-white focus:ring-2 focus:ring-pau-blue/20 focus:border-pau-blue transition-all" placeholder="jane@example.com" />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Inquiry Type</label>
+                        <select className="w-full p-4 border border-gray-200 bg-gray-50 rounded-xl focus:bg-white focus:ring-2 focus:ring-pau-blue/20 focus:border-pau-blue transition-all text-gray-600">
+                          <option>General Admission</option>
+                          <option>Program Details (J.D.)</option>
+                          <option>Tuition & Financial Aid</option>
+                          <option>Technical Issue</option>
+                          <option>Other</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Message</label>
+                      <textarea rows={5} className="w-full p-4 border border-gray-200 bg-gray-50 rounded-xl focus:bg-white focus:ring-2 focus:ring-pau-blue/20 focus:border-pau-blue transition-all" placeholder="How can we assist you today?"></textarea>
+                    </div>
+                    <div className="flex justify-end">
+                      <button className="bg-pau-gold text-white px-10 py-4 rounded-xl font-bold uppercase text-xs tracking-widest hover:bg-pau-darkBlue transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                        Submit Inquiry
+                      </button>
+                    </div>
+                  </form>
                 </div>
-             </SectionWrapper>
+              </div>
+            </SectionWrapper>
           </>
         );
 
@@ -2089,48 +2147,48 @@ const App: React.FC = () => {
           <>
             <PageHeader title={"Contact\nUs"} subtitle="We are here to assist you." icon={PhoneIcon} />
             <SectionWrapper>
-               <div className="max-w-6xl mx-auto">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-                     <button onClick={() => handleNavigate('office-hours')} className="p-8 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-xl hover:border-pau-blue/30 transition-all group text-left">
-                        <div className="w-12 h-12 bg-blue-50 text-pau-blue rounded-xl flex items-center justify-center mb-6 group-hover:bg-pau-blue group-hover:text-white transition-colors">
-                           <ClockIcon className="h-6 w-6" />
-                        </div>
-                        <h3 className="text-xl font-bold text-pau-darkBlue mb-2 font-serif">Office Hours</h3>
-                        <p className="text-gray-500 text-sm mb-4">View operating hours for all university departments.</p>
-                        <span className="text-xs font-bold text-pau-gold uppercase tracking-wider group-hover:underline">View Schedule &rarr;</span>
-                     </button>
+              <div className="max-w-6xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                  <button onClick={() => handleNavigate('office-hours')} className="p-8 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-xl hover:border-pau-blue/30 transition-all group text-left">
+                    <div className="w-12 h-12 bg-blue-50 text-pau-blue rounded-xl flex items-center justify-center mb-6 group-hover:bg-pau-blue group-hover:text-white transition-colors">
+                      <ClockIcon className="h-6 w-6" />
+                    </div>
+                    <h3 className="text-xl font-bold text-pau-darkBlue mb-2 font-serif">Office Hours</h3>
+                    <p className="text-gray-500 text-sm mb-4">View operating hours for all university departments.</p>
+                    <span className="text-xs font-bold text-pau-gold uppercase tracking-wider group-hover:underline">View Schedule &rarr;</span>
+                  </button>
 
-                     <button onClick={() => handleNavigate('contact-info')} className="p-8 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-xl hover:border-pau-blue/30 transition-all group text-left">
-                        <div className="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center mb-6 group-hover:bg-purple-600 group-hover:text-white transition-colors">
-                           <BuildingOffice2Icon className="h-6 w-6" />
-                        </div>
-                        <h3 className="text-xl font-bold text-pau-darkBlue mb-2 font-serif">Department Directory</h3>
-                        <p className="text-gray-500 text-sm mb-4">Find direct contact information for Admissions, IT, and more.</p>
-                        <span className="text-xs font-bold text-pau-gold uppercase tracking-wider group-hover:underline">Browse Directory &rarr;</span>
-                     </button>
+                  <button onClick={() => handleNavigate('contact-info')} className="p-8 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-xl hover:border-pau-blue/30 transition-all group text-left">
+                    <div className="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center mb-6 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                      <BuildingOffice2Icon className="h-6 w-6" />
+                    </div>
+                    <h3 className="text-xl font-bold text-pau-darkBlue mb-2 font-serif">Department Directory</h3>
+                    <p className="text-gray-500 text-sm mb-4">Find direct contact information for Admissions, IT, and more.</p>
+                    <span className="text-xs font-bold text-pau-gold uppercase tracking-wider group-hover:underline">Browse Directory &rarr;</span>
+                  </button>
 
-                     <button onClick={() => handleNavigate('request-info')} className="p-8 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-xl hover:border-pau-blue/30 transition-all group text-left">
-                        <div className="w-12 h-12 bg-green-50 text-green-600 rounded-xl flex items-center justify-center mb-6 group-hover:bg-green-600 group-hover:text-white transition-colors">
-                           <InboxArrowDownIcon className="h-6 w-6" />
-                        </div>
-                        <h3 className="text-xl font-bold text-pau-darkBlue mb-2 font-serif">Send a Message</h3>
-                        <p className="text-gray-500 text-sm mb-4">Have a specific question? Submit an inquiry form directly.</p>
-                        <span className="text-xs font-bold text-pau-gold uppercase tracking-wider group-hover:underline">Start Inquiry &rarr;</span>
-                     </button>
+                  <button onClick={() => handleNavigate('request-info')} className="p-8 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-xl hover:border-pau-blue/30 transition-all group text-left">
+                    <div className="w-12 h-12 bg-green-50 text-green-600 rounded-xl flex items-center justify-center mb-6 group-hover:bg-green-600 group-hover:text-white transition-colors">
+                      <InboxArrowDownIcon className="h-6 w-6" />
+                    </div>
+                    <h3 className="text-xl font-bold text-pau-darkBlue mb-2 font-serif">Send a Message</h3>
+                    <p className="text-gray-500 text-sm mb-4">Have a specific question? Submit an inquiry form directly.</p>
+                    <span className="text-xs font-bold text-pau-gold uppercase tracking-wider group-hover:underline">Start Inquiry &rarr;</span>
+                  </button>
+                </div>
+
+                <div className="bg-pau-darkBlue rounded-3xl p-12 text-center text-white relative overflow-hidden">
+                  <div className="relative z-10">
+                    <h2 className="text-3xl font-serif font-bold mb-6">Need Immediate Assistance?</h2>
+                    <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
+                      Our admissions team is available to answer your questions by phone during regular business hours.
+                    </p>
+                    <a href="tel:+14085550199" className="inline-flex items-center bg-white text-pau-darkBlue px-8 py-4 rounded-full font-bold text-lg hover:bg-pau-gold hover:text-white transition-colors shadow-lg">
+                      <PhoneIcon className="h-6 w-6 mr-3" /> (408) 555-0199
+                    </a>
                   </div>
-
-                  <div className="bg-pau-darkBlue rounded-3xl p-12 text-center text-white relative overflow-hidden">
-                     <div className="relative z-10">
-                       <h2 className="text-3xl font-serif font-bold mb-6">Need Immediate Assistance?</h2>
-                       <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
-                         Our admissions team is available to answer your questions by phone during regular business hours.
-                       </p>
-                       <a href="tel:+14085550199" className="inline-flex items-center bg-white text-pau-darkBlue px-8 py-4 rounded-full font-bold text-lg hover:bg-pau-gold hover:text-white transition-colors shadow-lg">
-                          <PhoneIcon className="h-6 w-6 mr-3" /> (408) 555-0199
-                       </a>
-                     </div>
-                  </div>
-               </div>
+                </div>
+              </div>
             </SectionWrapper>
           </>
         );
@@ -2138,39 +2196,39 @@ const App: React.FC = () => {
       case 'tech-reqs':
         return (
           <>
-            <PageHeader 
-            title="Technical Requirements"
-            subtitle="Ensuring you are connected for success."
-            icon={ComputerDesktopIcon}
+            <PageHeader
+              title="Technical Requirements"
+              subtitle="Ensuring you are connected for success."
+              icon={ComputerDesktopIcon}
             />
             <SectionWrapper>
               <div className="max-w-6xl mx-auto">
                 {/* Hardware Requirements Section */}
                 <div className="mb-12 md:mb-16">
-                  <SectionHeader 
-                    title="Hardware Requirements" 
-                    icon={ComputerDesktopIcon} 
+                  <SectionHeader
+                    title="Hardware Requirements"
+                    icon={ComputerDesktopIcon}
                     variant="blue"
                   />
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                    <InfoCard 
-                      title="Computer" 
-                      description="PC or Mac less than 4 years old" 
+                    <InfoCard
+                      title="Computer"
+                      description="PC or Mac less than 4 years old"
                       variant="blue"
                     />
-                    <InfoCard 
-                      title="Webcam" 
-                      description="Internal or external camera" 
+                    <InfoCard
+                      title="Webcam"
+                      description="Internal or external camera"
                       variant="blue"
                     />
-                    <InfoCard 
-                      title="Audio Equipment" 
-                      description="Microphone and speakers (headset recommended)" 
+                    <InfoCard
+                      title="Audio Equipment"
+                      description="Microphone and speakers (headset recommended)"
                       variant="blue"
                     />
-                    <InfoCard 
-                      title="Memory" 
-                      description="Minimum 8GB RAM" 
+                    <InfoCard
+                      title="Memory"
+                      description="Minimum 8GB RAM"
                       variant="blue"
                     />
                   </div>
@@ -2178,25 +2236,25 @@ const App: React.FC = () => {
 
                 {/* Software & Connectivity Section */}
                 <div>
-                  <SectionHeader 
-                    title="Software & Connectivity" 
-                    icon={GlobeAltIcon} 
+                  <SectionHeader
+                    title="Software & Connectivity"
+                    icon={GlobeAltIcon}
                     variant="gold"
                   />
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                    <InfoCard 
-                      title="Internet Connection" 
-                      description="High-speed broadband or fiber recommended" 
+                    <InfoCard
+                      title="Internet Connection"
+                      description="High-speed broadband or fiber recommended"
                       variant="gold"
                     />
-                    <InfoCard 
-                      title="Web Browser" 
-                      description="Google Chrome or Mozilla Firefox" 
+                    <InfoCard
+                      title="Web Browser"
+                      description="Google Chrome or Mozilla Firefox"
                       variant="gold"
                     />
-                    <InfoCard 
-                      title="Adobe Acrobat Reader" 
-                      description="Free PDF reader software" 
+                    <InfoCard
+                      title="Adobe Acrobat Reader"
+                      description="Free PDF reader software"
                       variant="gold"
                     />
                   </div>
@@ -2205,17 +2263,17 @@ const App: React.FC = () => {
             </SectionWrapper>
           </>
         );
-      
+
       case 'admission-reqs':
         return <Admissions content={admissionsContent} shared={shared} />;
-      
+
       case 'app-steps':
         return (
           <>
-            <PageHeader 
-            title="Application Steps" 
-            subtitle="Your roadmap to enrollment."
-            icon={ClipboardDocumentListIcon}
+            <PageHeader
+              title="Application Steps"
+              subtitle="Your roadmap to enrollment."
+              icon={ClipboardDocumentListIcon}
             />
             <SectionWrapper>
               <div className="max-w-5xl mx-auto space-y-16">
@@ -2343,10 +2401,10 @@ const App: React.FC = () => {
       case 'transfer-int':
         return (
           <>
-            <PageHeader 
-            title="Transfer and International Students"
-            subtitle="Joining PAU from another institution or country."
-            icon={GlobeAltIcon}
+            <PageHeader
+              title="Transfer and International Students"
+              subtitle="Joining PAU from another institution or country."
+              icon={GlobeAltIcon}
             />
             <SectionWrapper>
               <div className="max-w-7xl mx-auto">
@@ -2507,7 +2565,7 @@ const App: React.FC = () => {
                     <p className="text-gray-700 text-lg leading-relaxed mb-8">
                       Non-native English speakers must demonstrate proficiency through one of the following methods:
                     </p>
-                    
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       {/* Prior Academic Study */}
                       <div className="bg-gradient-to-br from-blue-50 to-pau-light rounded-xl p-6 border border-blue-100 hover:shadow-lg transition-all group">
@@ -2641,26 +2699,26 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans text-gray-900">
       {isTranslating && <TranslationOverlay lang={currentLang} />}
-      
+
       {/* Skip to main content link for screen readers */}
-      <a 
-        href="#main-content" 
+      <a
+        href="#main-content"
         className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:bg-pau-blue focus:text-white focus:rounded-lg focus:font-bold focus:shadow-lg"
         aria-label="Skip to main content"
       >
         Skip to main content
       </a>
-      
-      <Navbar 
-        currentLang={currentLang} 
-        onLanguageChange={setCurrentLang} 
-        isTranslating={isTranslating} 
+
+      <Navbar
+        currentLang={currentLang}
+        onLanguageChange={setCurrentLang}
+        isTranslating={isTranslating}
         currentPage={currentPage}
         onNavigate={handleNavigate}
         shared={shared}
         globalAlert={globalAlert}
       />
-      
+
       <main id="main-content" className="flex-grow" role="main" tabIndex={-1}>
         {renderContent()}
       </main>

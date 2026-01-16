@@ -15,7 +15,7 @@ export const Hero: React.FC<HeroProps> = ({ content, shared, onNavigate }) => {
       {/* Background Image - Keeping the existing image as requested */}
       <div className="absolute inset-0 z-0">
         <img
-          className="w-full h-full object-cover object-[center_65%] md:object-center animate-fade-in scale-105 transform brightness-[0.55]"
+          className="w-full h-full object-cover object-[center_65%] md:object-center animate-fade-in scale-105 transform brightness-[1.1]"
           src="/images/hero-background.jpg"
           alt="Pacific American University Law Campus"
           loading="eager"

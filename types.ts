@@ -1,16 +1,16 @@
 
-export type SupportedLanguage = 
-  | 'English' 
-  | 'Spanish' 
-  | 'Chinese (Simplified)' 
-  | 'Korean' 
-  | 'Vietnamese' 
-  | 'Japanese' 
-  | 'French' 
+export type SupportedLanguage =
+  | 'English'
+  | 'Spanish'
+  | 'Chinese (Simplified)'
+  | 'Korean'
+  | 'Vietnamese'
+  | 'Japanese'
+  | 'French'
   | 'Tagalog';
 
-export type Page = 
-  | 'home' 
+export type Page =
+  | 'home'
   | 'about' | 'history-mission' | 'bar-reg' | 'disclosure' | 'president-welcome' | 'dean-message' | 'admin-staffs' | 'catalog' | 'school-form' | 'faqs'
   | 'academics' | 'academic-calendar' | 'bar-info' | 'curriculum-schedule' | 'course-desc' | 'counseling' | 'grad-reqs'
   | 'admissions' | 'apply-now' | 'app-steps' | 'admission-reqs' | 'transfer-int' | 'tech-reqs'
@@ -42,9 +42,9 @@ export interface NewsItem {
   title: string;
   date: string;
   summary: string;
-  body: string; 
-  category: 'Academic' | 'Event' | 'General' | 'Career' | 'Newsletter';
-  images?: string[]; 
+  body: string;
+  category: 'Academic' | 'Event' | 'General' | 'Career' | 'Newsletter' | 'Notice';
+  images?: string[];
   isPinned?: boolean;
 }
 
@@ -141,17 +141,21 @@ export interface AcademicsContent {
 }
 
 export interface FacultyMember {
+  id?: string;
   name: string;
   credential?: string;
   title: string;
   additionalInfo?: string;
   education: string[];
-  bio: string;
+  bio: string; // Brief bio
+  background?: string; // HTML full background
   expertise: string[];
   phone?: string;
   email?: string;
-  photoUrl?: string;
-  category?: 'Faculty' | 'Staff';
+  photoUrl?: string; // photo_url in DB
+  category?: 'Faculty' | 'Staff' | 'Admin';
+  isActive?: boolean; // is_active in DB
+  sortOrder?: number; // sort_order in DB
 }
 
 export interface FacultyContent {
@@ -202,6 +206,28 @@ export interface ConsumerInfoContent {
     tableData?: { label: string; value: string }[];
     hasDownloadButton?: boolean;
   }[];
+}
+
+export interface WeeklyDictaItem {
+  id: string;
+  title: string;
+  publishDate: string; // map to publish_date
+  intro: string;
+  notices: NewsItem[];
+  isPublished: boolean; // map to is_published
+}
+
+export interface RequestInfoItem {
+  id: string;
+  fullName: string; // full_name
+  email: string;
+  phone?: string;
+  interest?: string;
+  message?: string;
+  status: 'pending' | 'reviewed' | 'contacted';
+  adminNotes?: string; // admin_notes
+  submittedAt: string; // submitted_at
+  reviewedAt?: string; // reviewed_at
 }
 
 export interface SharedContent {
@@ -424,8 +450,8 @@ export const MOCK_HOME_CONTENT: HomeContent = {
   globalFutureTitle: "Your Global Future",
   globalFutureIntro: "Our JD program prepares you for diverse career paths in the legal sector.",
   globalFutureList: [
-    { 
-      title: "Technology Law", 
+    {
+      title: "Technology Law",
       description: "Specialize in IP, AI ethics, and Silicon Valley's unique legal needs.",
       detailTitle: "Innovation & Law",
       detailBody: "Lead the conversation in tech regulations.",
