@@ -215,6 +215,7 @@ export interface WeeklyDictaItem {
   title: string;
   publishDate: string; // map to publish_date
   intro: string;
+  body?: string; // HTML content for the newsletter
   notices: NewsItem[];
   isPublished: boolean; // map to is_published
 }

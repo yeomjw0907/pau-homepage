@@ -36,8 +36,8 @@ export const WeeklyDicta: React.FC<WeeklyDictaProps> = ({ items }) => {
                             <div
                                 key={item.id}
                                 className={`bg-white rounded-3xl overflow-hidden border transition-all duration-300 ${expandedId === item.id
-                                        ? 'shadow-xl border-pau-gold ring-1 ring-pau-gold/20'
-                                        : 'shadow-md border-gray-100 hover:shadow-lg'
+                                    ? 'shadow-xl border-pau-gold ring-1 ring-pau-gold/20'
+                                    : 'shadow-md border-gray-100 hover:shadow-lg'
                                     }`}
                             >
                                 {/* Header / Summary */}
@@ -72,29 +72,11 @@ export const WeeklyDicta: React.FC<WeeklyDictaProps> = ({ items }) => {
                                             </div>
 
                                             {/* Notices Dynamic Rendering */}
-                                            {/* Currently `notices` is defined as NewsItem[], but usually Dicta has HTML body. 
-                          The updated schema implementation might have mixed this. 
-                          Wait, existing code in App.tsx mock data shows `body` containing HTML.
-                          My `WeeklyDictaItem` in types.ts has `notices: NewsItem[]`.
-                          However, typically a newsletter is one big HTML or a list of sections.
-                          If `notices` is empty, maybe we rely on `intro` or I should have added a `body` field.
-                          Checking `adminService` & `types`: `WeeklyDictaItem` has `notices: NewsItem[]`.
-                          Wait, `Admin.tsx` doesn't provide a RichText editor for the *body* of the newsletter?
-                          It only has `title`, `date`, `intro`. And then it has `notices` list?
-                          Ah, looking at `Admin.tsx` I implemented: it only allows editing Title, Date, Intro. 
-                          The `notices` part was scaffolded as JSONB but `Admin.tsx` didn't implement a UI to add notices to it!
-                          I missed implementing the 'notices' management for Weekly Dicta in `Admin.tsx`.
-                          
-                          I should probably treat Weekly Dicta as a single Rich Text Body like `NewsItem` for simplicity, 
-                          OR implement a sub-list manager.
-                          Given urgency, I'll update `Admin.tsx` and `types.ts` to include a `body` HTML field for Weekly Dicta, 
-                          similar to `NewsItem`. That is much easier for the user to paste their newsletter content.
-                          
-                          Let's assume I will update `types.ts` to add `body` to `WeeklyDictaItem`.
-                      */}
-
-                                            {/* Fallback for now if I don't update DB yet */}
-                                            <p className="text-gray-500 italic">[Content display under construction - Please update Admin to support full newsletter body]</p>
+                                            {item.body ? (
+                                                <div dangerouslySetInnerHTML={{ __html: item.body }} />
+                                            ) : (
+                                                <p className="text-gray-500 italic">[Content display under construction - Please update Admin to support full newsletter body]</p>
+                                            )}
                                         </div>
                                     </div>
                                 )}

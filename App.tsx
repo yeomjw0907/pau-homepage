@@ -35,7 +35,7 @@ const ClinicDetail = lazy(() => import('./components/ClinicDetail').then(module 
 const Careers = lazy(() => import('./components/Careers').then(module => ({ default: module.Careers })));
 const ConsumerInfo = lazy(() => import('./components/ConsumerInfo').then(module => ({ default: module.ConsumerInfo })));
 
-const WeeklyDictaPage = lazy(() => import('./components/WeeklyDicta').then(module => ({ default: module.WeeklyDicta })));
+// WeeklyDicta uses HomeNews component directly (bulletin board style)
 const RequestInfoPage = lazy(() => import('./components/RequestInfo').then(module => ({ default: module.RequestInfo })));
 import * as adminService from './services/adminService';
 import { PageHeader } from './components/common/PageHeader';
@@ -206,17 +206,15 @@ const App: React.FC = () => {
         const news = await adminService.fetchNews();
         setHomeContent(prev => ({ ...prev, latestNews: news }));
 
-        // Load Faculty
-        const faculty = await adminService.fetchFaculty();
-        setFacultyContent(prev => ({ ...prev, facultyList: faculty }));
+        // Faculty uses hardcoded data from data/facultyData.ts (DEFAULT_FACULTY_CONTENT)
+        // No Supabase fetch needed - already initialized with hardcoded data
 
         // Load Notices
         const notices = await adminService.fetchNotices();
         setNoticesContent(prev => ({ ...prev, notices }));
 
-        // Load Weekly Dicta
-        const dicta = await adminService.fetchWeeklyDicta();
-        setWeeklyDictaContent(prev => ({ ...prev, notices: dicta as any }));
+        // Weekly Dicta uses hardcoded data from App.tsx initial state
+        // No Supabase fetch needed - already initialized with hardcoded data
 
       } catch (error) {
         console.error("Failed to load Supabase data:", error);
@@ -277,12 +275,7 @@ const App: React.FC = () => {
     }
 
     switch (currentPage) {
-      case 'weekly-dicta':
-        return (
-          <Suspense fallback={<LoadingSpinner message="Loading Weekly Dicta..." />}>
-            <WeeklyDictaPage items={weeklyDictaContent.notices as any} />
-          </Suspense>
-        );
+      // weekly-dicta case is handled below (line ~1381) using HomeNews component
 
       case 'request-info':
         return (
