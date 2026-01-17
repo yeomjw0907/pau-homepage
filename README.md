@@ -51,6 +51,20 @@ This is the official website for **Pacific American University School of Law**, 
 
 ---
 
+## 🌿 Git Branch Strategy
+
+| Branch | Purpose | Deployment |
+|--------|---------|------------|
+| `main` | Production (본 서비스) | https://pau-homepage.vercel.app/ |
+| `develop` | Development/Testing (테스트) | Preview URL (자동 생성) |
+
+### Workflow
+1. `develop` 브랜치에서 개발 및 테스트
+2. 테스트 완료 후 `main`으로 머지
+3. Production 자동 배포
+
+---
+
 ## 🛠️ Tech Stack
 
 - **Frontend Framework:** React 18
