@@ -13,9 +13,7 @@ import {
   AcademicCapIcon, 
   BanknotesIcon, 
   XMarkIcon,
-  BriefcaseIcon,
-  BookOpenIcon,
-  CheckBadgeIcon
+  BriefcaseIcon
 } from '@heroicons/react/24/outline';
 
 interface InfoSectionProps {
@@ -267,7 +265,7 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
       {/* 2. STUDY FROM ANYWHERE (Features) */}
       <section className="py-20 px-4 md:px-6 bg-white">
         <div className="max-w-7xl mx-auto">
-           <div className="text-left md:text-center mb-16">
+           <div className="text-center mb-16">
              <h2 className="text-4xl md:text-5xl font-serif font-bold text-pau-darkBlue mb-6">
                Study American Law From <br/> Anywhere
              </h2>
@@ -340,7 +338,7 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
       {/* 4. GLOBAL CAREER PATHS */}
       <section className="py-24 bg-gray-50">
          <div className="max-w-7xl mx-auto px-4 md:px-6">
-            <div className="text-left md:text-center mb-16">
+            <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-serif font-bold text-pau-darkBlue mb-6">Your Path to a Global Career</h2>
               <p className="text-lg text-gray-500 font-light max-w-2xl md:mx-auto leading-relaxed">
                 Our rigorous curriculum opens doors to diverse international fields, equipping you with the credentials needed for today's interconnected legal environment.
@@ -441,7 +439,7 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                <div className="grid grid-cols-1 gap-6 md:gap-8">
                   {/* Roles Card */}
                   <div className="bg-white p-8 rounded-2xl shadow-sm border-t-4 border-pau-blue hover:shadow-md transition-shadow">
                      <div className="flex items-center mb-6">
@@ -457,24 +455,6 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
                          </span>
                        ))}
                      </div>
-                  </div>
-
-                  {/* Courses Card */}
-                  <div className="bg-white p-8 rounded-2xl shadow-sm border-t-4 border-pau-gold hover:shadow-md transition-shadow">
-                     <div className="flex items-center mb-6">
-                       <div className="p-2 bg-yellow-50 text-pau-gold rounded-lg mr-3">
-                          <BookOpenIcon className="h-6 w-6" />
-                       </div>
-                       <h4 className="text-lg font-bold text-pau-darkBlue font-serif">Curriculum Focus</h4>
-                     </div>
-                     <ul className="space-y-3">
-                       {activePath.details.courses.map((course: string, i: number) => (
-                         <li key={i} className="flex items-start text-sm text-gray-600 group">
-                           <CheckBadgeIcon className="h-5 w-5 text-gray-300 group-hover:text-pau-gold mr-3 flex-shrink-0 transition-colors" />
-                           <span className="group-hover:text-gray-900 transition-colors">{course}</span>
-                         </li>
-                       ))}
-                     </ul>
                   </div>
                 </div>
 

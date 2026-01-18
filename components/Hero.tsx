@@ -73,6 +73,7 @@ export const Hero: React.FC<HeroProps> = ({ content, shared, onNavigate }) => {
             >
               Apply Now
               <ArrowRightIcon className="ml-3 h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+              <span className="ml-1">ext.</span>
             </button>
 
             {/* <button 

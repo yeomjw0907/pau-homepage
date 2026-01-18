@@ -91,7 +91,7 @@ export const DEFAULT_FACULTY_CONTENT: FacultyContent = {
       photoUrl: "/images/admin-timothy-weimer.jpg"
     },
     {
-      name: "Phillip Bohl",
+      name: "Phillip C. Bohl",
       credential: "J.D., M.L.I.S.",
       title: "Associate Dean for Academic Success and Student Affairs",
       education: [

@@ -59,10 +59,10 @@ export const HomeNews: React.FC<HomeNewsProps> = ({ title, newsItems, onNewsClic
       <div className="absolute top-0 right-0 w-1/2 h-full bg-pau-warm skew-x-12 transform translate-x-1/3 -z-0"></div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16">
-          <div>
+        <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-16">
+          <div className="text-center md:text-left">
              {!isWeeklyDicta && (
-               <div className="flex items-center space-x-2 mb-3">
+               <div className="flex items-center justify-center md:justify-start space-x-2 mb-3">
                  <span className="h-px w-8 bg-pau-gold"></span>
                  <span className="text-pau-gold font-bold tracking-widest uppercase text-xs">University Updates</span>
                </div>

@@ -624,9 +624,9 @@ const App: React.FC = () => {
                       </div>
                     </div>
                     <div className="space-y-4 text-gray-700 leading-relaxed pl-0 md:pl-24">
-                      <p className="font-semibold text-lg md:text-xl text-pau-darkBlue mb-2">Registration as a Correspondence Law School</p>
+                      <p className="font-semibold text-lg md:text-xl text-pau-darkBlue mb-2">Registration as an Unaccredited Correspondence Law School</p>
                       <p className="text-base md:text-lg leading-relaxed">
-                        Pacific American University School of Law (PAUSL) is a correspondence law school registered with the Committee of Bar Examiners of the State Bar of California. As a registered unaccredited correspondence law school, PAUSL has the authority to grant the Juris Doctor (J.D.) degree. Graduates of the J.D. program who fulfill the requirements of the State Bar of California are eligible to take the California Bar Examination.
+                        Pacific American University School of Law (PAUSL) is an unaccredited correspondence law school registered with the Committee of Bar Examiners of the State Bar of California. As a registered unaccredited correspondence law school, PAUSL has the authority to grant the Juris Doctor (J.D.) degree. Graduates of the J.D. program who fulfill the requirements of the State Bar of California are eligible to take the California Bar Examination.
                       </p>
                     </div>
                   </div>
@@ -782,12 +782,12 @@ const App: React.FC = () => {
             <PageHeader title={"Disclosure\nStatement"} subtitle="Transparency in our educational offering." icon={DocumentDuplicateIcon} />
             <SectionWrapper>
               <div className="max-w-4xl mx-auto">
-                <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8 md:p-12">
-                  <div className="space-y-8 text-gray-700 leading-relaxed">
+                <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-4 sm:p-6 md:p-8 lg:p-12">
+                  <div className="space-y-6 md:space-y-8 text-gray-700 leading-relaxed">
                     {/* Header */}
-                    <div className="text-center border-b border-gray-300 pb-6 mb-8">
-                      <h1 className="text-3xl md:text-4xl font-serif font-bold text-pau-darkBlue mb-4">Student Disclosure Statement</h1>
-                      <div className="text-base md:text-lg">
+                    <div className="text-center border-b border-gray-300 pb-4 md:pb-6 mb-6 md:mb-8">
+                      <h1 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-pau-darkBlue mb-3 md:mb-4">Student Disclosure Statement</h1>
+                      <div className="text-sm sm:text-base md:text-lg">
                         <p className="font-semibold">Pacific American University School of Law</p>
                         <p>3435 Wilshire Blvd. Suite 430</p>
                         <p>Los Angeles, CA 90010</p>
@@ -795,41 +795,41 @@ const App: React.FC = () => {
                       </div>
                     </div>
 
-                    <p className="text-sm md:text-base">
+                    <p className="text-xs sm:text-sm md:text-base">
                       The disclosures included herein are required by Rule 4.241 of the Unaccredited Law School Rules and Guideline 2.3(D) of the Guidelines for Unaccredited Law School Rules. This Disclosure statement must be provided to each prospective student upon payment of an application fee, but before payment of a registration fee, and to each new or returning student, prior to payment for any academic term. This disclosure must be signed by the enrolling student and the student shall receive a copy of the signed statement.
                     </p>
 
                     {/* Section 1 */}
-                    <div className="space-y-4">
-                      <h2 className="text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">1. The method of instruction at this law school for the Juris Doctor (J.D.) degree program is principally by correspondence.</h2>
+                    <div className="space-y-3 md:space-y-4">
+                      <h2 className="text-lg sm:text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">1. The method of instruction at this law school for the Juris Doctor (J.D.) degree program is principally by correspondence.</h2>
                     </div>
 
                     {/* Section 2 */}
-                    <div className="space-y-4">
-                      <h2 className="text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">2. Pacific American University School of Law (PAUSL) is not accredited by the Committee of Bar Examiners of the State Bar of California, but is registered as an unaccredited correspondence law school.</h2>
-                      <p className="font-semibold text-pau-darkBlue">
+                    <div className="space-y-3 md:space-y-4">
+                      <h2 className="text-lg sm:text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">2. Pacific American University School of Law (PAUSL) is not accredited by the Committee of Bar Examiners of the State Bar of California, but is registered as an unaccredited correspondence law school.</h2>
+                      <p className="text-xs sm:text-sm md:text-base font-semibold text-pau-darkBlue">
                         The method of instruction at this law school for the Juris Doctor (J.D.) degree program is principally by correspondence. Students enrolled in the J.D. degree program at this law school who successfully complete the first year of law study must pass the First-Year Law Students' Examination required by Business and Professions Code § 6060(h) and Title 4, Division 1, Chapter 1 Rule 4.3(I) of the of the Rules of the State Bar of California as part of the requirements to qualify to take the California Bar Examination. A student who passes the First-Year Law Students' Examination within three (3) administrations of the examination after first becoming eligible to take it will receive credit for all legal studies completed to the time the examination is passed. A student who does not pass the examination within three (3) administrations of the examination after first becoming eligible to take it must be promptly disqualified from the law school's J.D. degree program. If the dismissed student subsequently passes the examination, the student is eligible for re-enrollment in this law school's J.D. degree program, but will receive credit for only one year of legal study.
                       </p>
-                      <p className="font-semibold text-pau-darkBlue">
+                      <p className="text-xs sm:text-sm md:text-base font-semibold text-pau-darkBlue">
                         Study at, or graduation from, this law school may not qualify a student to take the bar examination or to satisfy the requirements for admission to practice in jurisdictions other than California. A student intending to seek admission to practice law in a jurisdiction other than California should contact the admitting authority in that jurisdiction for information regarding the legal education requirements in that jurisdiction for admission to the practice of law.
                       </p>
                     </div>
 
                     {/* Section 3 */}
-                    <div className="space-y-4">
-                      <h2 className="text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">3. PAUSL has not applied for accreditation in the previous five years.</h2>
+                    <div className="space-y-3 md:space-y-4">
+                      <h2 className="text-lg sm:text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">3. PAUSL has not applied for accreditation in the previous five years.</h2>
                     </div>
 
                     {/* Section 4 */}
-                    <div className="space-y-4">
-                      <h2 className="text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">4. PAUSL's Financial Status for the first ten years is as follow:</h2>
+                    <div className="space-y-3 md:space-y-4">
+                      <h2 className="text-lg sm:text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">4. PAUSL's Financial Status for the first ten years is as follow:</h2>
                       <div className="overflow-x-auto">
-                        <table className="w-full border-collapse border border-gray-300">
+                        <table className="w-full border-collapse border border-gray-300 text-xs md:text-sm">
                           <thead>
                             <tr className="bg-pau-darkBlue text-white">
-                              <th className="border border-gray-300 px-4 py-3 text-left font-bold">Year</th>
-                              <th className="border border-gray-300 px-4 py-3 text-right font-bold">Assets</th>
-                              <th className="border border-gray-300 px-4 py-3 text-right font-bold">Liabilities</th>
+                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-left font-bold">Year</th>
+                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-right font-bold">Assets</th>
+                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-right font-bold">Liabilities</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -846,45 +846,45 @@ const App: React.FC = () => {
                               { year: '2035', assets: 7227979, liabilities: 888122 }
                             ].map((row, idx) => (
                               <tr key={idx} className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                                <td className="border border-gray-300 px-4 py-3 font-bold text-pau-darkBlue">{row.year}</td>
-                                <td className="border border-gray-300 px-4 py-3 text-right font-mono">{row.assets.toLocaleString()}</td>
-                                <td className="border border-gray-300 px-4 py-3 text-right font-mono">{row.liabilities.toLocaleString()}</td>
+                                <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 font-bold text-pau-darkBlue">{row.year}</td>
+                                <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-right font-mono">{row.assets.toLocaleString()}</td>
+                                <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-right font-mono">{row.liabilities.toLocaleString()}</td>
                               </tr>
                             ))}
                           </tbody>
                         </table>
                       </div>
-                      <p className="text-sm italic">* The amount of assets may decrease, but PAUSL will always hold assets in excess of liabilities.</p>
+                      <p className="text-xs sm:text-sm italic">* The amount of assets may decrease, but PAUSL will always hold assets in excess of liabilities.</p>
                     </div>
 
                     {/* Section 5 */}
-                    <div className="space-y-4">
-                      <h2 className="text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">5. Pacific American University School of Law's pass rates for the California First-Year Law Students' Examination for the past five years are as follows:</h2>
-                      <p className="text-sm italic">*PAUSL has prospective FYLSX eligible students in 2027.</p>
+                    <div className="space-y-3 md:space-y-4">
+                      <h2 className="text-lg sm:text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">5. Pacific American University School of Law's pass rates for the California First-Year Law Students' Examination for the past five years are as follows:</h2>
+                      <p className="text-xs sm:text-sm italic">*PAUSL has prospective FYLSX eligible students in 2027.</p>
                       <div className="overflow-x-auto">
-                        <table className="w-full border-collapse border border-gray-300">
+                        <table className="w-full border-collapse border border-gray-300 text-xs md:text-sm">
                           <thead>
                             <tr className="bg-pau-darkBlue text-white">
-                              <th className="border border-gray-300 px-4 py-3 text-left font-bold">Year</th>
-                              <th className="border border-gray-300 px-4 py-3 text-center font-bold">First taker</th>
-                              <th className="border border-gray-300 px-4 py-3 text-center font-bold">Total takers</th>
-                              <th className="border border-gray-300 px-4 py-3 text-center font-bold">Passed (%)</th>
+                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-left font-bold">Year</th>
+                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center font-bold">First taker</th>
+                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center font-bold">Total takers</th>
+                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center font-bold">Passed (%)</th>
                             </tr>
                           </thead>
                           <tbody>
                             {['2025', '2024', '2023', '2022', '2021'].map((year, idx) => (
                               <tr key={idx} className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                                <td className="border border-gray-300 px-4 py-3 font-bold">{year}</td>
-                                <td className="border border-gray-300 px-4 py-3 text-center">N/A</td>
-                                <td className="border border-gray-300 px-4 py-3 text-center">N/A</td>
-                                <td className="border border-gray-300 px-4 py-3 text-center">N/A</td>
+                                <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 font-bold">{year}</td>
+                                <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center">N/A</td>
+                                <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center">N/A</td>
+                                <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center">N/A</td>
                               </tr>
                             ))}
                             <tr className="bg-pau-blue/10 font-bold">
-                              <td className="border border-gray-300 px-4 py-3">Total 5 Years</td>
-                              <td className="border border-gray-300 px-4 py-3 text-center">N/A</td>
-                              <td className="border border-gray-300 px-4 py-3 text-center">N/A</td>
-                              <td className="border border-gray-300 px-4 py-3 text-center">N/A</td>
+                              <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3">Total 5 Years</td>
+                              <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center">N/A</td>
+                              <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center">N/A</td>
+                              <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center">N/A</td>
                             </tr>
                           </tbody>
                         </table>
@@ -892,33 +892,33 @@ const App: React.FC = () => {
                     </div>
 
                     {/* Section 6 */}
-                    <div className="space-y-4">
-                      <h2 className="text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">6. Pacific American University School of Law's pass rates for the California Bar Examination for the past five years are as follows:</h2>
-                      <p className="text-sm italic">*PAUSL has prospective CA Bar Exam eligible students in 2030.</p>
+                    <div className="space-y-3 md:space-y-4">
+                      <h2 className="text-lg sm:text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">6. Pacific American University School of Law's pass rates for the California Bar Examination for the past five years are as follows:</h2>
+                      <p className="text-xs sm:text-sm italic">*PAUSL has prospective CA Bar Exam eligible students in 2030.</p>
                       <div className="overflow-x-auto">
-                        <table className="w-full border-collapse border border-gray-300">
+                        <table className="w-full border-collapse border border-gray-300 text-xs md:text-sm">
                           <thead>
                             <tr className="bg-pau-darkBlue text-white">
-                              <th className="border border-gray-300 px-4 py-3 text-left font-bold">Year</th>
-                              <th className="border border-gray-300 px-4 py-3 text-center font-bold">First taker</th>
-                              <th className="border border-gray-300 px-4 py-3 text-center font-bold">Total takers</th>
-                              <th className="border border-gray-300 px-4 py-3 text-center font-bold">Passed (%)</th>
+                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-left font-bold">Year</th>
+                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center font-bold">First taker</th>
+                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center font-bold">Total takers</th>
+                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center font-bold">Passed (%)</th>
                             </tr>
                           </thead>
                           <tbody>
                             {['2025', '2024', '2023', '2022', '2021'].map((year, idx) => (
                               <tr key={idx} className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                                <td className="border border-gray-300 px-4 py-3 font-bold">{year}</td>
-                                <td className="border border-gray-300 px-4 py-3 text-center">N/A</td>
-                                <td className="border border-gray-300 px-4 py-3 text-center">N/A</td>
-                                <td className="border border-gray-300 px-4 py-3 text-center">N/A</td>
+                                <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 font-bold">{year}</td>
+                                <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center">N/A</td>
+                                <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center">N/A</td>
+                                <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center">N/A</td>
                               </tr>
                             ))}
                             <tr className="bg-pau-blue/10 font-bold">
-                              <td className="border border-gray-300 px-4 py-3">Total 5 Years</td>
-                              <td className="border border-gray-300 px-4 py-3 text-center">N/A</td>
-                              <td className="border border-gray-300 px-4 py-3 text-center">N/A</td>
-                              <td className="border border-gray-300 px-4 py-3 text-center">N/A</td>
+                              <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3">Total 5 Years</td>
+                              <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center">N/A</td>
+                              <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center">N/A</td>
+                              <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center">N/A</td>
                             </tr>
                           </tbody>
                         </table>
@@ -926,14 +926,14 @@ const App: React.FC = () => {
                     </div>
 
                     {/* Section 7 */}
-                    <div className="space-y-6">
-                      <h2 className="text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">7. The educational background, qualifications, and experience of the faculty at PAUSL for the 2026-2027 Academic School Year and the names of any faculty who are licensees of the State Bar of California or who are admitted in another jurisdiction are as follows:</h2>
+                    <div className="space-y-4 md:space-y-6">
+                      <h2 className="text-lg sm:text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">7. The educational background, qualifications, and experience of the faculty at PAUSL for the 2026-2027 Academic School Year and the names of any faculty who are licensees of the State Bar of California or who are admitted in another jurisdiction are as follows:</h2>
 
-                      <div className="space-y-8">
+                      <div className="space-y-6 md:space-y-8">
                         {/* Michael Marino */}
-                        <div className="border-l-4 border-pau-blue pl-4">
-                          <h3 className="font-bold text-lg text-pau-darkBlue mb-2">Michael Marino, Esq.</h3>
-                          <div className="space-y-2 text-sm">
+                        <div className="border-l-4 border-pau-blue pl-3 md:pl-4">
+                          <h3 className="font-bold text-base sm:text-lg text-pau-darkBlue mb-2">Michael Marino, Esq.</h3>
+                          <div className="space-y-2 text-xs sm:text-sm">
                             <p><strong>Education:</strong></p>
                             <p className="pl-4">J.D., St. John's University School of Law (2007)</p>
                             <p className="pl-4">B.B.A., The George Washington University (2004)</p>
@@ -948,9 +948,9 @@ const App: React.FC = () => {
                         </div>
 
                         {/* Jonathan H. Levy */}
-                        <div className="border-l-4 border-pau-blue pl-4">
-                          <h3 className="font-bold text-lg text-pau-darkBlue mb-2">Jonathan H. Levy</h3>
-                          <div className="space-y-2 text-sm">
+                        <div className="border-l-4 border-pau-blue pl-3 md:pl-4">
+                          <h3 className="font-bold text-base sm:text-lg text-pau-darkBlue mb-2">Jonathan H. Levy</h3>
+                          <div className="space-y-2 text-xs sm:text-sm">
                             <p><strong>Education:</strong></p>
                             <p className="pl-4">Ph.D. in Political Science, University of Cincinnati (2006)</p>
                             <p className="pl-4">M.A. in Political Science, University of Cincinnati (1991)</p>
@@ -967,9 +967,9 @@ const App: React.FC = () => {
                         </div>
 
                         {/* Shandrea P. Williams */}
-                        <div className="border-l-4 border-pau-blue pl-4">
-                          <h3 className="font-bold text-lg text-pau-darkBlue mb-2">Shandrea P. Williams</h3>
-                          <div className="space-y-2 text-sm">
+                        <div className="border-l-4 border-pau-blue pl-3 md:pl-4">
+                          <h3 className="font-bold text-base sm:text-lg text-pau-darkBlue mb-2">Shandrea P. Williams</h3>
+                          <div className="space-y-2 text-xs sm:text-sm">
                             <p><strong>Education:</strong></p>
                             <p className="pl-4">J.D., Loyola University School of Law (1994)</p>
                             <p className="pl-4">B.A., Southern Agricultural & Mechanical University (1991)</p>
@@ -986,9 +986,9 @@ const App: React.FC = () => {
                         </div>
 
                         {/* John Chandler */}
-                        <div className="border-l-4 border-pau-blue pl-4">
-                          <h3 className="font-bold text-lg text-pau-darkBlue mb-2">John Chandler</h3>
-                          <div className="space-y-2 text-sm">
+                        <div className="border-l-4 border-pau-blue pl-3 md:pl-4">
+                          <h3 className="font-bold text-base sm:text-lg text-pau-darkBlue mb-2">John Chandler</h3>
+                          <div className="space-y-2 text-xs sm:text-sm">
                             <p><strong>Education:</strong></p>
                             <p className="pl-4">J.D., Loyola Marymount University School of Law (1993)</p>
                             <p className="pl-4">B.A., California State University (1989)</p>
@@ -1075,7 +1075,7 @@ const App: React.FC = () => {
 
                         {/* Phillip Bohl */}
                         <div className="border-l-4 border-pau-gold pl-4">
-                          <h3 className="font-bold text-lg text-pau-darkBlue mb-2">Phillip Bohl, J.D., M.L.I.S., Associate Dean</h3>
+                          <h3 className="font-bold text-lg text-pau-darkBlue mb-2">Phillip C. Bohl, J.D., M.L.I.S., Associate Dean</h3>
                           <div className="space-y-2 text-sm">
                             <p><strong>Education:</strong></p>
                             <p className="pl-4">B.A., Oral Roberts University (1989)</p>
@@ -1141,26 +1141,26 @@ const App: React.FC = () => {
 
                     {/* Section 11 */}
                     <div className="space-y-4">
-                      <h2 className="text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">11. The attrition rates of students who are enrolled in the J.D. Degree Program at PAUSL and do not matriculate into subsequent years of study, for the past five years, are as follows:</h2>
+                      <h2 className="text-lg sm:text-xl md:text-2xl font-serif font-bold text-pau-darkBlue">11. The attrition rates of students who are enrolled in the J.D. Degree Program at PAUSL and do not matriculate into subsequent years of study, for the past five years, are as follows:</h2>
                       <div className="overflow-x-auto">
-                        <table className="w-full border-collapse border border-gray-300">
+                        <table className="w-full border-collapse border border-gray-300 text-xs md:text-sm">
                           <thead>
                             <tr className="bg-pau-darkBlue text-white">
-                              <th className="border border-gray-300 px-4 py-3 text-left font-bold">Academic Year</th>
-                              <th className="border border-gray-300 px-4 py-3 text-center font-bold">1st year</th>
-                              <th className="border border-gray-300 px-4 py-3 text-center font-bold">2nd year</th>
-                              <th className="border border-gray-300 px-4 py-3 text-center font-bold">3rd year</th>
-                              <th className="border border-gray-300 px-4 py-3 text-center font-bold">4th year</th>
+                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-left font-bold">Academic Year</th>
+                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center font-bold">1st year</th>
+                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center font-bold">2nd year</th>
+                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center font-bold">3rd year</th>
+                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center font-bold">4th year</th>
                             </tr>
                           </thead>
                           <tbody>
                             {['2025-2026', '2024-2025', '2023-2024', '2022-2023', '2021-2022'].map((year, idx) => (
                               <tr key={idx} className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                                <td className="border border-gray-300 px-4 py-3 font-bold">{year}</td>
-                                <td className="border border-gray-300 px-4 py-3 text-center">N/A</td>
-                                <td className="border border-gray-300 px-4 py-3 text-center">N/A</td>
-                                <td className="border border-gray-300 px-4 py-3 text-center">N/A</td>
-                                <td className="border border-gray-300 px-4 py-3 text-center">N/A</td>
+                                <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 font-bold">{year}</td>
+                                <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center">N/A</td>
+                                <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center">N/A</td>
+                                <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center">N/A</td>
+                                <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center">N/A</td>
                               </tr>
                             ))}
                           </tbody>
@@ -1400,29 +1400,29 @@ const App: React.FC = () => {
                   </div>
                   <div className="p-8">
                     <div className="overflow-x-auto">
-                      <table className="w-full border-collapse border border-gray-300">
+                      <table className="w-full border-collapse border border-gray-300 text-xs md:text-sm">
                         <thead>
                           <tr className="bg-pau-darkBlue text-white">
-                            <th className="border border-gray-300 px-4 py-3 text-left font-bold">Description</th>
-                            <th className="border border-gray-300 px-4 py-3 text-right font-bold">Amount</th>
-                            <th className="border border-gray-300 px-4 py-3 text-left font-bold">Explanation</th>
+                            <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-left font-bold">Description</th>
+                            <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-right font-bold">Amount</th>
+                            <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-left font-bold">Explanation</th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr className="bg-white">
-                            <td className="border border-gray-300 px-4 py-3 font-semibold text-pau-darkBlue">Trimester tuition cost:</td>
-                            <td className="border border-gray-300 px-4 py-3 text-right font-mono">$3,000.00</td>
-                            <td className="border border-gray-300 px-4 py-3">Per trimester</td>
+                            <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 font-semibold text-pau-darkBlue">Trimester tuition cost:</td>
+                            <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-right font-mono">$3,000.00</td>
+                            <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3">Per trimester</td>
                           </tr>
                           <tr className="bg-gray-50">
-                            <td className="border border-gray-300 px-4 py-3 font-semibold text-pau-darkBlue">Yearly tuition:</td>
-                            <td className="border border-gray-300 px-4 py-3 text-right font-mono">$9,000.00</td>
-                            <td className="border border-gray-300 px-4 py-3">3 trimesters per year (3 x $3,000)</td>
+                            <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 font-semibold text-pau-darkBlue">Yearly tuition:</td>
+                            <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-right font-mono">$9,000.00</td>
+                            <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3">3 trimesters per year (3 x $3,000)</td>
                           </tr>
                           <tr className="bg-white">
-                            <td className="border border-gray-300 px-4 py-3 font-semibold text-pau-darkBlue">Total tuition:</td>
-                            <td className="border border-gray-300 px-4 py-3 text-right font-mono font-bold text-lg">$36,000.00</td>
-                            <td className="border border-gray-300 px-4 py-3">Four years of coursework are required (4 x $9,000)</td>
+                            <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 font-semibold text-pau-darkBlue">Total tuition:</td>
+                            <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-right font-mono font-bold text-sm md:text-lg">$36,000.00</td>
+                            <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3">Four years of coursework are required (4 x $9,000)</td>
                           </tr>
                         </tbody>
                       </table>
@@ -1438,56 +1438,52 @@ const App: React.FC = () => {
                   <div className="bg-pau-gold/10 p-6 border-b border-gray-200">
                     <h2 className="text-2xl font-bold font-serif text-pau-darkBlue">Additional Costs</h2>
                   </div>
-                  <div className="p-8">
-                    <div className="overflow-x-auto -mx-4 md:mx-0">
-                      <div className="inline-block min-w-full align-middle px-4 md:px-0">
-                        <table className="w-full border-collapse border border-gray-300 text-[10px] md:text-sm">
-                          <thead>
-                            <tr className="bg-pau-darkBlue text-white">
-                              <th className="border border-gray-300 px-2 md:px-4 py-2 md:py-3 text-left font-bold text-[9px] md:text-sm">Description</th>
-                              <th className="border border-gray-300 px-1 md:px-4 py-2 md:py-3 text-center font-bold text-[9px] md:text-sm whitespace-nowrap">Frequency</th>
-                              <th className="border border-gray-300 px-1 md:px-4 py-2 md:py-3 text-center font-bold text-[9px] md:text-sm whitespace-nowrap">Refundable/Non-Refundable</th>
-                              <th className="border border-gray-300 px-2 md:px-4 py-2 md:py-3 text-right font-bold text-[9px] md:text-sm">Amount</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {[
-                              { desc: "Application for Admissions", freq: "One time", refund: "Non-refundable", amount: "$70" },
-                              { desc: "Rush Processing, Admissions", freq: "One time", refund: "Non-refundable", amount: "$200" },
-                              { desc: "Student Services Fee", freq: "Per Year", refund: "Refundable*", amount: "$150" },
-                              { desc: "Registration Fee", freq: "One time", refund: "Non-refundable*", amount: "$200" },
-                              { desc: "Late Registration Fee", freq: "Upon request", refund: "Non-refundable", amount: "$20" },
-                              { desc: "Drop/Add Fee (per course)", freq: "Upon request", refund: "Non-refundable", amount: "$10" },
-                              { desc: "Readmission Fee", freq: "Upon request", refund: "Non-refundable", amount: "$50" },
-                              { desc: "Transfer Credit Fee (per credit)", freq: "Upon request", refund: "Non-refundable", amount: "$10" },
-                              { desc: "Academic Program Change Fee", freq: "Upon request", refund: "Non-refundable", amount: "$20" },
-                              { desc: "Leave of Absence Fee", freq: "Upon request", refund: "Non-refundable", amount: "$10" },
-                              { desc: "Enrollment Verification Letter (per copy)", freq: "Upon request", refund: "Non-refundable", amount: "$10" },
-                              { desc: "Official Transcript (per copy)", freq: "Upon request", refund: "Non-refundable", amount: "$10" },
-                              { desc: "Misc. Certification Fee (per copy)", freq: "Upon request", refund: "Non-refundable", amount: "$10" },
-                              { desc: "Duplicate Diploma", freq: "Upon request", refund: "Non-refundable", amount: "$50" },
-                              { desc: "Graduation Fee", freq: "One time", refund: "Non-refundable", amount: "$300" },
-                              { desc: "Late Application for Admissions", freq: "Upon Request", refund: "Non-Refundable", amount: "$350" },
-                              { desc: "Tuition Late Fee", freq: "Late Payment", refund: "Non-refundable", amount: "$100" },
-                              { desc: "Returned Check Fee", freq: "Per Returned Check", refund: "Non-refundable", amount: "$20" },
-                              { desc: "Installment Plan Option 1 Set-Up Fee", freq: "One Time per Year", refund: "Non-refundable", amount: "$100" },
-                              { desc: "Books", freq: "Per Year", refund: "Refundable***", amount: "$500 to $1,000**" },
-                              { desc: "Westlaw Set-Up Fee", freq: "Per Year", refund: "Non-refundable*", amount: "$200" },
-                              { desc: "CALI Set-Up Fee", freq: "Per Year", refund: "Non-refundable*", amount: "$100" },
-                              { desc: "ExamSoft Set-Up Fee", freq: "Per Year", refund: "Non-refundable*", amount: "$200" },
-                              { desc: "4L Elective Bar Review Preparation Course Set-Up Fee", freq: "One Time - Optional", refund: "Non-refundable", amount: "$200" },
-                            ].map((item, idx) => (
-                              <tr key={idx} className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                                <td className="border border-gray-300 px-2 md:px-4 py-2 md:py-3 text-[10px] md:text-sm leading-tight">{item.desc}</td>
-                                <td className="border border-gray-300 px-1 md:px-4 py-2 md:py-3 text-center text-[10px] md:text-sm whitespace-nowrap">{item.freq}</td>
-                                <td className="border border-gray-300 px-1 md:px-4 py-2 md:py-3 text-center text-[10px] md:text-sm whitespace-nowrap">{item.refund}</td>
-                                <td className="border border-gray-300 px-2 md:px-4 py-2 md:py-3 text-right font-mono text-[10px] md:text-sm">{item.amount}</td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
+                  <div className="p-4 sm:p-6 md:p-8">
+                    <table className="w-full border-collapse border border-gray-300 text-[9px] sm:text-[10px] md:text-sm">
+                      <thead>
+                        <tr className="bg-pau-darkBlue text-white">
+                          <th className="border border-gray-300 px-1.5 sm:px-2 md:px-4 py-1.5 sm:py-2 md:py-3 text-left font-bold text-[8px] sm:text-[9px] md:text-sm">Description</th>
+                          <th className="border border-gray-300 px-1 sm:px-2 md:px-4 py-1.5 sm:py-2 md:py-3 text-center font-bold text-[8px] sm:text-[9px] md:text-sm whitespace-nowrap">Frequency</th>
+                          <th className="border border-gray-300 px-1 sm:px-2 md:px-4 py-1.5 sm:py-2 md:py-3 text-center font-bold text-[8px] sm:text-[9px] md:text-sm whitespace-nowrap">Refundable/Non-Refundable</th>
+                          <th className="border border-gray-300 px-1.5 sm:px-2 md:px-4 py-1.5 sm:py-2 md:py-3 text-right font-bold text-[8px] sm:text-[9px] md:text-sm">Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {[
+                          { desc: "Application for Admissions", freq: "One time", refund: "Non-refundable", amount: "$70" },
+                          { desc: "Rush Processing, Admissions", freq: "One time", refund: "Non-refundable", amount: "$200" },
+                          { desc: "Student Services Fee", freq: "Per Year", refund: "Refundable*", amount: "$150" },
+                          { desc: "Registration Fee", freq: "One time", refund: "Non-refundable*", amount: "$200" },
+                          { desc: "Late Registration Fee", freq: "Upon request", refund: "Non-refundable", amount: "$20" },
+                          { desc: "Drop/Add Fee (per course)", freq: "Upon request", refund: "Non-refundable", amount: "$10" },
+                          { desc: "Readmission Fee", freq: "Upon request", refund: "Non-refundable", amount: "$50" },
+                          { desc: "Transfer Credit Fee (per credit)", freq: "Upon request", refund: "Non-refundable", amount: "$10" },
+                          { desc: "Academic Program Change Fee", freq: "Upon request", refund: "Non-refundable", amount: "$20" },
+                          { desc: "Leave of Absence Fee", freq: "Upon request", refund: "Non-refundable", amount: "$10" },
+                          { desc: "Enrollment Verification Letter (per copy)", freq: "Upon request", refund: "Non-refundable", amount: "$10" },
+                          { desc: "Official Transcript (per copy)", freq: "Upon request", refund: "Non-refundable", amount: "$10" },
+                          { desc: "Misc. Certification Fee (per copy)", freq: "Upon request", refund: "Non-refundable", amount: "$10" },
+                          { desc: "Duplicate Diploma", freq: "Upon request", refund: "Non-refundable", amount: "$50" },
+                          { desc: "Graduation Fee", freq: "One time", refund: "Non-refundable", amount: "$300" },
+                          { desc: "Late Application for Admissions", freq: "Upon Request", refund: "Non-Refundable", amount: "$350" },
+                          { desc: "Tuition Late Fee", freq: "Late Payment", refund: "Non-refundable", amount: "$100" },
+                          { desc: "Returned Check Fee", freq: "Per Returned Check", refund: "Non-refundable", amount: "$20" },
+                          { desc: "Installment Plan Option 1 Set-Up Fee", freq: "One Time per Year", refund: "Non-refundable", amount: "$100" },
+                          { desc: "Books", freq: "Per Year", refund: "Refundable***", amount: "$500 to $1,000**" },
+                          { desc: "Westlaw Set-Up Fee", freq: "Per Year", refund: "Non-refundable*", amount: "$200" },
+                          { desc: "CALI Set-Up Fee", freq: "Per Year", refund: "Non-refundable*", amount: "$100" },
+                          { desc: "ExamSoft Set-Up Fee", freq: "Per Year", refund: "Non-refundable*", amount: "$200" },
+                          { desc: "4L Elective Bar Review Preparation Course Set-Up Fee", freq: "One Time - Optional", refund: "Non-refundable", amount: "$200" },
+                        ].map((item, idx) => (
+                          <tr key={idx} className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                            <td className="border border-gray-300 px-1.5 sm:px-2 md:px-4 py-1.5 sm:py-2 md:py-3 text-[9px] sm:text-[10px] md:text-sm leading-tight">{item.desc}</td>
+                            <td className="border border-gray-300 px-1 sm:px-2 md:px-4 py-1.5 sm:py-2 md:py-3 text-center text-[9px] sm:text-[10px] md:text-sm whitespace-nowrap">{item.freq}</td>
+                            <td className="border border-gray-300 px-1 sm:px-2 md:px-4 py-1.5 sm:py-2 md:py-3 text-center text-[9px] sm:text-[10px] md:text-sm whitespace-nowrap">{item.refund}</td>
+                            <td className="border border-gray-300 px-1.5 sm:px-2 md:px-4 py-1.5 sm:py-2 md:py-3 text-right font-mono text-[9px] sm:text-[10px] md:text-sm">{item.amount}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                     <div className="mt-6 space-y-2 text-sm text-gray-600">
                       <p><strong>*</strong> These fees may be reimbursable if the Student provides notice of withdrawal within seven (7) days of signing the Enrollment Agreement. See the Refund section below for details.</p>
                       <p><strong>**</strong> Textbook shipping fees to destinations outside of the U.S. may be increased depending on shipping type, package weight, time of year, and destination. Email at reg@paucal.org if you have questions on shipping.</p>
@@ -1506,23 +1502,23 @@ const App: React.FC = () => {
                       Students pay a $500.00 in set-up fee each year, and 4L students may pay an additional $200 fee (for a total of $700) if they enroll in the Bar Review Preparation Course. Note that these fees are only refundable within seven (7) days of signing the enrollment agreement and after that date, they become non-refundable. These fees cover four software programs listed below. To see how these fees impact the total cost of education at PAUSL, see the section below entitled: Summary of Expected Fees by Year.
                     </p>
                     <div className="overflow-x-auto">
-                      <table className="w-full border-collapse border border-gray-300">
+                      <table className="w-full border-collapse border border-gray-300 text-xs md:text-sm">
                         <tbody>
                           <tr className="bg-white">
-                            <td className="border border-gray-300 px-4 py-3 font-semibold text-pau-darkBlue">Westlaw</td>
-                            <td className="border border-gray-300 px-4 py-3 text-right font-mono">$200.00 (annually)</td>
+                            <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 font-semibold text-pau-darkBlue">Westlaw</td>
+                            <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-right font-mono">$200.00 (annually)</td>
                           </tr>
                           <tr className="bg-gray-50">
-                            <td className="border border-gray-300 px-4 py-3 font-semibold text-pau-darkBlue">CALI</td>
-                            <td className="border border-gray-300 px-4 py-3 text-right font-mono">$100.00 (annually)</td>
+                            <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 font-semibold text-pau-darkBlue">CALI</td>
+                            <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-right font-mono">$100.00 (annually)</td>
                           </tr>
                           <tr className="bg-white">
-                            <td className="border border-gray-300 px-4 py-3 font-semibold text-pau-darkBlue">ExamSoft</td>
-                            <td className="border border-gray-300 px-4 py-3 text-right font-mono">$200.00 (annually)</td>
+                            <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 font-semibold text-pau-darkBlue">ExamSoft</td>
+                            <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-right font-mono">$200.00 (annually)</td>
                           </tr>
                           <tr className="bg-gray-50">
-                            <td className="border border-gray-300 px-4 py-3 font-semibold text-pau-darkBlue">Bar Preparation</td>
-                            <td className="border border-gray-300 px-4 py-3 text-right font-mono">$200.00 (4L year - Optional if enrolled in Bar Review Preparation course)</td>
+                            <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 font-semibold text-pau-darkBlue">Bar Preparation</td>
+                            <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-right font-mono leading-tight">$200.00 (4L year - Optional if enrolled in Bar Review Preparation course)</td>
                           </tr>
                         </tbody>
                       </table>

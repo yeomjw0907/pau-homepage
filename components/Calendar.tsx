@@ -159,7 +159,7 @@ export const Calendar: React.FC<CalendarProps> = ({ content, shared }) => {
                 Important Note
               </h4>
               <p className="text-sm text-gray-700 leading-relaxed">
-                Start dates vary by cohort as outlined in the Catalog (Page 20). Application deadline is <span className="font-bold text-pau-blue">45 days prior</span> to your intended start date. Contact the Registrar at{' '}
+                Application deadline is <span className="font-bold text-pau-blue">45 days prior</span> to your intended start date. Contact the Registrar at{' '}
                 <a href="mailto:registrar@paucal.org" className="text-pau-blue hover:text-pau-gold font-semibold underline">
                   registrar@paucal.org
                 </a>{' '}
