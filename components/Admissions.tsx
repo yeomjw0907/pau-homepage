@@ -101,12 +101,6 @@ export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
                     </div>
                     <span className="text-gray-700 text-lg pt-0.5"><strong>Required Disclosures:</strong> Applicants must disclose any prior criminal convictions or disciplinary actions from previous institutions.</span>
                   </li>
-                  <li className="flex items-start group">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
-                      <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
-                    </div>
-                    <span className="text-gray-700 text-lg pt-0.5"><strong>LSAC Number:</strong> While the LSAT is optional, the State Bar of California requires all applicants to obtain and provide an LSAC number on their application.</span>
-                  </li>
                 </ul>
               </div>
             </section>

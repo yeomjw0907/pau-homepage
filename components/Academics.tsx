@@ -63,29 +63,33 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
 
   // Course descriptions mapping
   const courseDescriptions: Record<string, string> = {
-    "Introduction to Law": "This introductory course explores the foundational concepts of common law and the history of the American legal system. It provides students with an understanding of legal principles and case analysis.",
-    "Contracts I": "This course examines the law governing private agreements, including the enforcement of promises, precontractual liability, and statutory requirements such as the statute of frauds. It covers the analysis of legal enforceability of agreements, breach of contract, and available remedies.",
-    "Contracts II": "This course examines the law governing private agreements, including the enforcement of promises, precontractual liability, and statutory requirements such as the statute of frauds. It covers the analysis of legal enforceability of agreements, breach of contract, and available remedies.",
-    "Torts I": "Focusing on personal injury law, this course examines negligence and the evolving nature of negligence law. It also covers intentional torts, contemporary rules, and strict liability.",
-    "Torts II": "Focusing on personal injury law, this course examines negligence and the evolving nature of negligence law. It also covers intentional torts, contemporary rules, and strict liability.",
-    "Criminal Law": "This course covers the core principles of criminal law, including the definitions of crime, actus reus, mens rea, and defenses like necessity, intoxication, and insanity.",
-    "Legal Writing & Analysis": "Provides a rigorous foundation in legal reasoning, analytical thinking, and professional writing. Students will develop essential skills for crafting clear, concise, and well-structured responses to legal issues.",
-    "FYLSX review": "Prepares students for the California First-Year Law Students' Examination through focused review of Contracts, Criminal Law, and Torts.",
-    "Civil Procedure": "Explores civil litigation procedures, including the commencement of suits, pleadings, discovery, and trial processes.",
-    "Property": "Examines property law, focusing on various property interests, landlord-tenant relationships, land use, and the sale and financing of real estate.",
-    "Remedies": "Surveys the law of remedies, addressing what courts can do for claimants who have been wronged, covering both legal and equitable remedies.",
-    "Criminal Procedure": "Focusing on constitutional constraints in criminal investigations, including searches and seizures, interrogations, and the right to counsel.",
-    "Evidence": "Delves into the principles and application of evidence law, focusing on the Federal Rules of Evidence.",
-    "Constitutional Law": "Explores the U.S. Constitution, including the distribution of governmental powers, judicial review, and individual rights (First Amendment).",
-    "Business Associations": "A study of legal principles governing business entities and agency relationships (Partnerships, Corporations, LLCs).",
-    "Community Property": "Detailed examination of California's community property system, covering property relations between spouses and domestic partners.",
-    "Professional Responsibility": "Covers the law and ethics governing legal practice, including confidentiality, conflicts of interest, and the lawyer-client relationship.",
-    "Wills & Succession": "Comprehensive study of succession law, focusing on the transfer of property upon death, intestate succession, and the validity of wills.",
-    "California Civil Procedure": "Focuses on California's specific civil procedural rules and the jury trial system.",
-    "Advanced Legal Research & Writing": "Refines legal research and writing skills for professional practice, emphasizing persuasive strategy in drafting legal documents.",
-    "California Evidence": "Focuses on California's Evidence Code, comparing it to the Federal Rules of Evidence.",
-    "Practical Competency Training": "Offers practical training through a law practice internship (Track 1) or an advanced in-class practical skills study (Track 2).",
-    "Bar Review (Elective)": "Comprehensive coverage of all subjects tested on the California State Bar Examination, including Business Associations, Community Property, and Wills and Succession."
+    "Introduction to Law": "This introductory course explores the foundational concepts of common law and the history of the American legal system. It provides students with an understanding of legal principles and case analysis. (1 Unit - 45 hours)",
+    "Contracts I": "This course examines the law governing private agreements, including the enforcement of promises, precontractual liability, and statutory requirements such as the statute of frauds. It covers the analysis of legal enforceability of agreements, breach of contract, and available remedies. Key issues include contract formation, the rights of parties under contracts, and performance conditions. (3.5 Units - 157.5 hours)",
+    "Contracts II": "Continuation of Contracts I. This course examines the law governing private agreements, including the enforcement of promises, precontractual liability, and statutory requirements such as the statute of frauds. Emphasis will be placed on contract interpretation and the interrelationship with other areas of law such as torts, property, and restitution. (3.5 Units - 157.5 hours)",
+    "Torts I": "Focusing on personal injury law, this course examines negligence and the evolving nature of negligence law. It also covers intentional torts, contemporary rules, and strict liability. The course explores alternative compensation systems such as no-fault insurance, addressing societal needs for victim compensation. (3.5 Units - 157.5 hours)",
+    "Torts II": "Continuation of Torts I. Focusing on personal injury law, this course examines negligence and the evolving nature of negligence law. It also covers intentional torts, contemporary rules, and strict liability. (3.5 Units - 157.5 hours)",
+    "Criminal Law": "This course covers the core principles of criminal law, including the definitions of crime, actus reus, mens rea, and doctrines such as ignorance of law and fact. It delves into defenses like necessity, intoxication, and insanity. The course offers an in-depth review of homicide and other offenses, focusing on the theoretical underpinnings of criminal law and its justification for punishment. (4 Units - 180 hours)",
+    "Legal Writing & Analysis": "Legal Writing & Analysis is a two-credit course taken throughout the first year of law school. It provides a rigorous foundation in legal reasoning, analytical thinking, and professional writing. Students will develop essential skills for crafting clear, concise, and well-structured responses to legal issues through a series of targeted writing assignments. The course also offers a brief introduction to legal research, equipping students with the knowledge and tools to locate and interpret relevant legal authorities. Instruction is delivered through a combination of lectures and practical exercises designed to simulate real-world legal practice and reinforce core competencies. (2 Units - 90 hours)",
+    "FYLSX Review": "This course prepares first-year law students for the California First-Year Law Students' Examination (FYLSX) through focused review of Contracts, Criminal Law, and Torts. Students develop doctrinal mastery, issue-spotting skills, and effective test-taking strategies through lectures, weekly practice quizzes, and timed simulated examinations. The course emphasizes accurate rule application, analytical precision, and performance under exam conditions, culminating in a final review and strategy session to support readiness for the FYLSX. (3 Units - 135 hours)",
+    "Civil Procedure I": "This course explores civil litigation procedures, including the commencement of suits, pleadings, discovery, and trial processes. Topics covered include court jurisdiction, class actions, summary judgment, and the appeal process. (4.5 Units - 202.5 hours)",
+    "Civil Procedure II": "Continuation of Civil Procedure I, exploring advanced civil litigation procedures. (4.5 Units - 202.5 hours)",
+    "Property I": "This course examines property law, focusing on various property interests, landlord-tenant relationships, land use, and the sale and financing of real estate. (4.5 Units - 202.5 hours)",
+    "Property II": "Continuation of Property I, examining advanced property law concepts. (4.5 Units - 202.5 hours)",
+    "Remedies": "This course surveys the law of remedies, addressing what courts can do for claimants who have been wronged. It covers both legal and equitable remedies, with attention to their justifications and how they protect substantive rights. (4 Units - 180 hours)",
+    "Criminal Procedure": "Focusing on constitutional constraints in criminal investigations, this course covers searches and seizures, interrogations, confessions, lineups, and the right to counsel under the Fourth, Fifth, and Sixth Amendments. (4 Units - 180 hours)",
+    "Evidence I": "This course delves into the principles and application of evidence law, focusing on the Federal Rules of Evidence. Topics include relevance, credibility, hearsay, impeachment, and the presentation of evidence in court. (4.5 Units - 202.5 hours)",
+    "Evidence II": "Continuation of Evidence I, covering advanced topics in evidence law. (4.5 Units - 202.5 hours)",
+    "Constitutional Law I": "This course explores the U.S. Constitution, including the distribution of governmental powers, judicial review, and individual rights. A primary focus will be on the First Amendment and its guarantees of free speech, press, assembly, and religious freedom. (4.5 Units - 202.5 hours)",
+    "Constitutional Law II": "Continuation of Constitutional Law I, exploring advanced constitutional topics. (4.5 Units - 202.5 hours)",
+    "Business Associations": "This course provides a comprehensive study of the legal principles governing business entities and agency relationships. Students will explore the formation, rights, duties, and liabilities of agents, principals, and various business structures including general partnerships, limited partnerships, limited liability partnerships, corporations, limited liability companies, joint ventures, and sole proprietorships. Emphasis is placed on understanding fiduciary obligations, authority, liability in contract and tort, and the mechanisms of dissociation, dissolution, and corporate governance. The course also examines securities regulation, mergers and acquisitions, and the unique rules applicable to closely-held and non-profit corporations. (4 Units - 180 hours)",
+    "Community Property": "As detailed examination of California's community property system, this course covers property relations between spouses and domestic partners, and the implications of divorce or death. The course prepares students for issues on the California State Bar Examination and encourages active participation through the 'assigned expert' system. (5 Units - 225 hours)",
+    "Professional Responsibility": "This course covers the law and ethics governing legal practice, including the duty to represent clients competently, confidentiality, conflicts of interest, and the lawyer-client relationship. It examines the standards of conduct expected of attorneys. (4 Units - 180 hours)",
+    "Wills & Succession": "This course provides a comprehensive study of succession law, focusing on the rules governing the transfer of property upon death. Students will explore the general provisions affecting married persons, contractual arrangements, and simultaneous death scenarios. The course examines intestate succession, the validity and execution of wills, and the doctrines surrounding revocation, revival, and omitted heirs. Special attention is given to the interpretation of testamentary instruments, the role of witnesses, and the choice of law in cross-jurisdictional contexts. (5 Units - 225 hours)",
+    "California Civil Procedure": "This course focuses on California's civil procedural rules, including the rules governing civil proceedings and the jury trial system. (4 Units - 180 hours)",
+    "Advanced Legal Research & Writing": "This course is designed to refine students' legal research and writing skills for professional practice. Building on foundational competencies, students will learn advanced techniques for locating, analyzing, and applying legal authority across jurisdictions. The writing component emphasizes clarity, precision, and persuasive strategy in drafting legal memoranda, motions, briefs, and client communications. (3 Units - 135 hours)",
+    "California Evidence": "This course focuses on California's Evidence Code, comparing it to the Federal Rules of Evidence, with particular attention to areas where the California rules differ. (4 Units - 180 hours)",
+    "Practical Competency Training": "This course offers practical training in legal practice, emphasizing the essential skills for ethical and competent lawyering. There are two available tracks: the first track (Track 1) is a legal internship/externship in a law practice environment focused on learning hands-on law practice skills and the second track (Track 2) is focused on an in-class academic study of advanced law practice skills. (6 Units - 270 hours)",
+    "Bar Review (Elective)": "The California State Bar Examination review course includes comprehensive coverage of all subjects tested on the California State Bar Examination. These subjects encompass Business Associations, Contracts, Criminal Law and Procedure, Remedies, Civil Procedure, Evidence, Torts, Community Property, Professional Responsibility, Trusts, Constitutional Law, Real Property, and Wills and Succession. The course also delves into essay writing techniques, performance test strategies, and multiple-choice questions consistent with those found on the Multistate Bar Exam (MBE). Note that separate from the Bar Review course, 4L students will be able to register for Bar Prep with a $200 setup fee (any additional costs will be covered by the school), take the course after graduation, and continue to receive support from the school even after graduating. (4 Units - 180 hours)"
   };
 
   const academicPortals = [
@@ -138,8 +142,10 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
                       year: "First Year (1L)", 
                       courses: [
                         "Introduction to Law", 
-                        "Contracts I & II", 
-                        "Torts I & II", 
+                        "Contracts I", 
+                        "Contracts II",
+                        "Torts I", 
+                        "Torts II", 
                         "Criminal Law", 
                         "Legal Writing & Analysis", 
                         "FYLSX Review"
@@ -148,8 +154,10 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
                     { 
                       year: "Second Year (2L)", 
                       courses: [
-                        "Civil Procedure", 
-                        "Property", 
+                        "Civil Procedure I",
+                        "Civil Procedure II", 
+                        "Property I",
+                        "Property II", 
                         "Remedies", 
                         "Criminal Procedure"
                       ] 
@@ -157,8 +165,10 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
                     { 
                       year: "Third Year (3L)", 
                       courses: [
-                        "Evidence", 
-                        "Constitutional Law", 
+                        "Evidence I",
+                        "Evidence II", 
+                        "Constitutional Law I",
+                        "Constitutional Law II", 
                         "Business Associations", 
                         "Community Property"
                       ] 
@@ -205,37 +215,26 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
                        color: "pau-blue",
                        trimesters: [
                          {
-                           name: "Fall (Sep.)",
+                           name: "Fall (Sept.)",
                            courses: [
-                             { classNum: "Law 100", className: "Introduction to Law", units: "1 unit", hours: "45 hours" },
-                             { classNum: "Law 101", className: "Contracts I", units: "3.5 units", hours: "157.5 hours" },
-                             { classNum: "Law 103", className: "Torts I", units: "3.5 units", hours: "157.5 hours" },
-                             { classNum: "Law 105", className: "Criminal Law", units: "3.5 units", hours: "157.5 hours" }
+                             { classNum: "L100", className: "Introduction to Law", units: "1 unit", hours: "45 hours" },
+                             { classNum: "L101", className: "Contracts I", units: "3.5 units", hours: "157.5 hours" },
+                             { classNum: "L103", className: "Torts I", units: "3.5 units", hours: "157.5 hours" }
                            ]
                          },
                          {
                            name: "Winter (Jan.)",
                            courses: [
-                             { classNum: "Law 100", className: "Introduction to Law", units: "1 unit", hours: "45 hours" },
-                             { classNum: "Law 101", className: "Contracts I", units: "3.5 units", hours: "157.5 hours" },
-                             { classNum: "Law 102", className: "Contracts II", units: "3.5 units", hours: "157.5 hours" },
-                             { classNum: "Law 103", className: "Torts I", units: "3.5 units", hours: "157.5 hours" },
-                             { classNum: "Law 104", className: "Torts II", units: "3.5 units", hours: "157.5 hours" },
-                             { classNum: "Law 105", className: "Criminal Law", units: "3.5 units", hours: "157.5 hours" },
-                             { classNum: "Law 106", className: "Legal Writing & Analysis", units: "2 units", hours: "90 hours" }
+                             { classNum: "L105", className: "Criminal Law", units: "4 units", hours: "180 hours" },
+                             { classNum: "L102", className: "Contracts II", units: "3.5 units", hours: "157.5 hours" }
                            ]
                          },
                          {
-                           name: "Spring (Apr.)",
+                           name: "Spring (May)",
                            courses: [
-                             { classNum: "Law 100", className: "Introduction to Law", units: "1 unit", hours: "45 hours" },
-                             { classNum: "Law 101", className: "Contracts I", units: "3.5 units", hours: "157.5 hours" },
-                             { classNum: "Law 102", className: "Contracts II", units: "3.5 units", hours: "157.5 hours" },
-                             { classNum: "Law 103", className: "Torts I", units: "3.5 units", hours: "157.5 hours" },
-                             { classNum: "Law 104", className: "Torts II", units: "3.5 units", hours: "157.5 hours" },
-                             { classNum: "Law 105", className: "Criminal Law", units: "6 units", hours: "270 hours" },
-                             { classNum: "Law 106", className: "Legal Writing & Analysis", units: "2 units", hours: "90 hours" },
-                             { classNum: "Law 107", className: "FYLSX review", units: "3 units", hours: "135 hours" }
+                             { classNum: "L104", className: "Torts II", units: "3.5 units", hours: "157.5 hours" },
+                             { classNum: "L106", className: "Legal Writing & Analysis", units: "2 units", hours: "90 hours" },
+                             { classNum: "L107", className: "FYLSX Review", units: "3 units", hours: "135 hours" }
                            ]
                          }
                        ]
@@ -246,22 +245,24 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
                        color: "pau-gold",
                        trimesters: [
                          {
-                           name: "Spring (Mar.)",
+                           name: "Fall (Sept.)",
                            courses: [
-                             { classNum: "Law 201", className: "Civil Procedure", units: "9 units", hours: "405 hours" }
+                             { classNum: "L201", className: "Civil Procedure I", units: "4.5 units", hours: "202.5 hours" },
+                             { classNum: "L203", className: "Property I", units: "4.5 units", hours: "202.5 hours" }
                            ]
                          },
                          {
-                           name: "Summer (Jul.)",
+                           name: "Winter (Jan.)",
                            courses: [
-                             { classNum: "Law 202", className: "Property", units: "9 units", hours: "405 hours" }
+                             { classNum: "L202", className: "Civil Procedure II", units: "4.5 units", hours: "202.5 hours" },
+                             { classNum: "L204", className: "Property II", units: "4.5 units", hours: "202.5 hours" }
                            ]
                          },
                          {
-                           name: "Fall (Nov.)",
+                           name: "Spring (May)",
                            courses: [
-                             { classNum: "Law 203", className: "Remedies", units: "4 units", hours: "180 hours" },
-                             { classNum: "Law 204", className: "Criminal Procedure", units: "4 units", hours: "180 hours" }
+                             { classNum: "L205", className: "Remedies", units: "4 units", hours: "180 hours" },
+                             { classNum: "L206", className: "Criminal Procedure", units: "4 units", hours: "180 hours" }
                            ]
                          }
                        ]
@@ -272,22 +273,24 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
                        color: "pau-blue",
                        trimesters: [
                          {
-                           name: "Spring (Mar.)",
+                           name: "Fall (Sept.)",
                            courses: [
-                             { classNum: "Law 301", className: "Evidence", units: "9 units", hours: "405 hours" }
+                             { classNum: "L301", className: "Constitutional Law I", units: "4.5 units", hours: "202.5 hours" },
+                             { classNum: "L303", className: "Evidence I", units: "4.5 units", hours: "202.5 hours" }
                            ]
                          },
                          {
-                           name: "Summer (Jul.)",
+                           name: "Winter (Jan.)",
                            courses: [
-                             { classNum: "Law 302", className: "Constitutional Law", units: "9 units", hours: "405 hours" }
+                             { classNum: "L302", className: "Constitutional Law II", units: "4.5 units", hours: "202.5 hours" },
+                             { classNum: "L304", className: "Evidence II", units: "4.5 units", hours: "202.5 hours" }
                            ]
                          },
                          {
-                           name: "Fall (Nov.)",
+                           name: "Spring (May)",
                            courses: [
-                             { classNum: "Law 303", className: "Business Associations", units: "4 units", hours: "180 hours" },
-                             { classNum: "Law 304", className: "Community Property", units: "5 units", hours: "225 hours" }
+                             { classNum: "L305", className: "Business Associations", units: "4 units", hours: "180 hours" },
+                             { classNum: "L306", className: "Community Property", units: "5 units", hours: "225 hours" }
                            ]
                          }
                        ]
@@ -298,25 +301,25 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
                        color: "pau-gold",
                        trimesters: [
                          {
+                           name: "Fall (Sept.)",
+                           courses: [
+                             { classNum: "L401", className: "Professional Responsibility", units: "4 units", hours: "180 hours" },
+                             { classNum: "L402", className: "Wills & Succession", units: "5 units", hours: "225 hours" }
+                           ]
+                         },
+                         {
                            name: "Winter (Jan.)",
                            courses: [
-                             { classNum: "Law 401", className: "Professional Responsibility", units: "4 units", hours: "180 hours" },
-                             { classNum: "Law 402", className: "Wills & Succession", units: "5 units", hours: "225 hours" }
+                             { classNum: "L403", className: "California Civil Procedure", units: "4 units", hours: "180 hours" },
+                             { classNum: "L404", className: "California Evidence", units: "4 units", hours: "180 hours" }
                            ]
                          },
                          {
-                           name: "Summer (Jul.)",
+                           name: "Spring (May)",
                            courses: [
-                             { classNum: "Law 403", className: "California Civil Procedure", units: "4 units", hours: "180 hours" },
-                             { classNum: "Law 404", className: "California Evidence", units: "4 units", hours: "180 hours" }
-                           ]
-                         },
-                         {
-                           name: "Fall (Nov.)",
-                           courses: [
-                             { classNum: "Law 405", className: "Advanced Legal Research & Writing", units: "3 units", hours: "135 hours" },
-                             { classNum: "Law 406", className: "Practical Competency Training", units: "6 units", hours: "270 hours" },
-                             { classNum: "Law 407", className: "Bar Review (Elective)", units: "4 units", hours: "180 hours" }
+                             { classNum: "L405", className: "Advanced Legal Research & Writing", units: "3 units", hours: "135 hours" },
+                             { classNum: "L406", className: "Practical Competency Training", units: "6 units", hours: "270 hours" },
+                             { classNum: "L407", className: "Bar Review (Elective)", units: "4 units", hours: "180 hours" }
                            ]
                          }
                        ]

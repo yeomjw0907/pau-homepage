@@ -1327,13 +1327,8 @@ const App: React.FC = () => {
           <Suspense fallback={<LoadingSpinner message="Loading calendar..." />}>
             <Calendar content={{
               title: "Academic Calendar",
-              intro: "Key dates and deadlines for the 2026-2027 academic year.",
-              events: [
-                { date: "Aug 25, 2026", event: "Fall Semester Begins", type: "Academic" },
-                { date: "Sept 7, 2026", event: "Labor Day (No Classes)", type: "Holiday" },
-                { date: "Nov 26-27, 2026", event: "Thanksgiving Break", type: "Holiday" },
-                { date: "Dec 14-18, 2026", event: "Final Examinations", type: "Exam" }
-              ]
+              intro: "Trimester-based schedule with flexible start options for the J.D. Program.",
+              events: []
             }} shared={shared} />
           </Suspense>
         );
@@ -1452,7 +1447,7 @@ const App: React.FC = () => {
                         {[
                           { desc: "Application for Admissions", freq: "One time", refund: "Non-refundable", amount: "$70" },
                           { desc: "Rush Processing, Admissions", freq: "One time", refund: "Non-refundable", amount: "$200" },
-                          { desc: "Student Services Fee", freq: "Per Year", refund: "Refundable*", amount: "$150" },
+                          { desc: "Student Service fee", freq: "Per Year", refund: "Refundable", amount: "$150" },
                           { desc: "Registration Fee", freq: "One time", refund: "Non-refundable*", amount: "$200" },
                           { desc: "Late Registration Fee", freq: "Upon request", refund: "Non-refundable", amount: "$20" },
                           { desc: "Drop/Add Fee (per course)", freq: "Upon request", refund: "Non-refundable", amount: "$10" },
@@ -1469,11 +1464,10 @@ const App: React.FC = () => {
                           { desc: "Tuition Late Fee", freq: "Late Payment", refund: "Non-refundable", amount: "$100" },
                           { desc: "Returned Check Fee", freq: "Per Returned Check", refund: "Non-refundable", amount: "$20" },
                           { desc: "Installment Plan Option 1 Set-Up Fee", freq: "One Time per Year", refund: "Non-refundable", amount: "$100" },
-                          { desc: "Books", freq: "Per Year", refund: "Refundable***", amount: "$500 to $1,000**" },
-                          { desc: "Westlaw Set-Up Fee", freq: "Per Year", refund: "Non-refundable*", amount: "$200" },
-                          { desc: "CALI Set-Up Fee", freq: "Per Year", refund: "Non-refundable*", amount: "$100" },
-                          { desc: "ExamSoft Set-Up Fee", freq: "Per Year", refund: "Non-refundable*", amount: "$200" },
-                          { desc: "4L Elective Bar Review Preparation Course Set-Up Fee", freq: "One Time - Optional", refund: "Non-refundable", amount: "$200" },
+                          { desc: "Westlaw Set-Up Fee", freq: "Per Year", refund: "Non-refundable**", amount: "$200" },
+                          { desc: "CALI Set-Up Fee", freq: "Per Year", refund: "Non-refundable**", amount: "$100" },
+                          { desc: "ExamSoft Set-Up Fee", freq: "Per Year", refund: "Non-refundable**", amount: "$200" },
+                          { desc: "4L Bar Preparation Set-Up Fee (optional)", freq: "One Time", refund: "Non-refundable**", amount: "$200" },
                         ].map((item, idx) => (
                           <tr key={idx} className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
                             <td className="border border-gray-300 px-1.5 sm:px-2 md:px-4 py-1.5 sm:py-2 md:py-3 text-[9px] sm:text-[10px] md:text-sm leading-tight">{item.desc}</td>
@@ -1485,9 +1479,8 @@ const App: React.FC = () => {
                       </tbody>
                     </table>
                     <div className="mt-6 space-y-2 text-sm text-gray-600">
-                      <p><strong>*</strong> These fees may be reimbursable if the Student provides notice of withdrawal within seven (7) days of signing the Enrollment Agreement. See the Refund section below for details.</p>
-                      <p><strong>**</strong> Textbook shipping fees to destinations outside of the U.S. may be increased depending on shipping type, package weight, time of year, and destination. Email at reg@paucal.org if you have questions on shipping.</p>
-                      <p><strong>***</strong> Books may often be returnable if in like-new condition and the return process is initiated within seven (7) days of the start of the term but shipping costs for returns must be covered by the student. Students are responsible for their own shipping insurance for returned materials.</p>
+                      <p><strong>*</strong> A one-time registration fee of $200 is charged at the time of enrollment in the first year of study. This fee is refundable if the enrollment agreement is canceled within 7 days of signing; however, it becomes non-refundable after the 7-day cancellation period. See the Refund section below for details.</p>
+                      <p><strong>**</strong> These set-up fees are reimbursed if the student provides notice of withdrawal within seven (7) days of signing the Enrollment Agreement. See the Refund section below for details.</p>
                     </div>
                   </div>
                 </div>
@@ -1499,7 +1492,7 @@ const App: React.FC = () => {
                   </div>
                   <div className="p-8">
                     <p className="text-gray-700 leading-relaxed mb-6">
-                      Students pay a $500.00 in set-up fee each year, and 4L students may pay an additional $200 fee (for a total of $700) if they enroll in the Bar Review Preparation Course. Note that these fees are only refundable within seven (7) days of signing the enrollment agreement and after that date, they become non-refundable. These fees cover four software programs listed below. To see how these fees impact the total cost of education at PAUSL, see the section below entitled: Summary of Expected Fees by Year.
+                      Students pay a $500 set-up fee each year, and 4L students may pay an additional $200 fee (for a total of $700) if they want to register in the Bar Prep. Note that these fees are only refundable within seven (7) days of signing the enrollment agreement and after that date, they become non-refundable. These fees cover the four (4) software programs listed below. To see how these fees impact the total cost of education at PAUSL, see the section below entitled: Summary of Expected Fees by Year.
                     </p>
                     <div className="overflow-x-auto">
                       <table className="w-full border-collapse border border-gray-300 text-xs md:text-sm">
@@ -1518,7 +1511,7 @@ const App: React.FC = () => {
                           </tr>
                           <tr className="bg-gray-50">
                             <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 font-semibold text-pau-darkBlue">Bar Preparation</td>
-                            <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-right font-mono leading-tight">$200.00 (4L year - Optional if enrolled in Bar Review Preparation course)</td>
+                            <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-right font-mono">$200.00 (4L year - Optional)</td>
                           </tr>
                         </tbody>
                       </table>
@@ -1603,11 +1596,10 @@ const App: React.FC = () => {
                               { cat: "Set-Up Fee CALI (annual)", year1L: "$100", year2L: "$100", year3L: "$100", year4L: "$100" },
                               { cat: "Set-Up Fee ExamSoft (annual)", year1L: "$200", year2L: "$200", year3L: "$200", year4L: "$200" },
                               { cat: "Set-Up Fee Bar Preparation (optional 4L) **", year1L: "$0", year2L: "$0", year3L: "$0", year4L: "$200" },
-                              { cat: "Textbooks (Estimated) ***", year1L: "$1,000", year2L: "$1,000", year3L: "$1,000", year4L: "$1,000" },
-                              { cat: "Payment Plan Fee (Optional) ****", year1L: "$100", year2L: "$100", year3L: "$100", year4L: "$100" },
+                              { cat: "Payment Plan Fee (Optional) ***", year1L: "$100", year2L: "$100", year3L: "$100", year4L: "$100" },
                               { cat: "Graduation Fee (4L only)", year1L: "$0", year2L: "$0", year3L: "$0", year4L: "$300" },
-                              { cat: "Subtotal: PAUSL Tuition & Fees", year1L: "$11,020", year2L: "$10,750", year3L: "$10,750", year4L: "$11,250", isSubtotal: true },
-                              { cat: "PAUSL Total 4-Year Estimated Tuition & Fees", year1L: "$43,770", year2L: "", year3L: "", year4L: "", isTotal: true },
+                              { cat: "Subtotal", year1L: "$10,020", year2L: "$9,750", year3L: "$9,750", year4L: "$10,250", isSubtotal: true },
+                              { cat: "PAUSL Total 4-Year Estimated Tuition & Fees", year1L: "$39,770", year2L: "", year3L: "", year4L: "", isTotal: true },
                             ].map((row, idx) => (
                               <tr key={idx} className={row.isSubtotal || row.isTotal ? 'bg-pau-blue/10 font-bold' : idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
                                 <td className="border border-gray-300 px-1.5 md:px-3 py-1.5 md:py-2 text-[9px] md:text-sm leading-tight">{row.cat}</td>
@@ -1618,7 +1610,7 @@ const App: React.FC = () => {
                               </tr>
                             ))}
                             <tr className="bg-pau-gold/10 font-bold">
-                              <td colSpan={5} className="border border-gray-300 px-1.5 md:px-4 py-1.5 md:py-3 text-[9px] md:text-sm">The State Bar Of California Fees (Paid directly to The State Bar)*****</td>
+                              <td colSpan={5} className="border border-gray-300 px-1.5 md:px-4 py-1.5 md:py-3 text-[9px] md:text-sm">The State Bar of California Fees (Paid directly to The State Bar)****</td>
                             </tr>
                             {[
                               { cat: "Law Student Registration (1L)", year1L: "$150", year2L: "$0", year3L: "$0", year4L: "$0" },
@@ -1641,14 +1633,14 @@ const App: React.FC = () => {
                             ))}
                             <tr className="bg-green-50 font-bold">
                               <td className="border border-gray-300 px-1.5 md:px-3 py-1.5 md:py-2 text-[9px] md:text-sm leading-tight">Annual Estimated Cost for Each of the Four Years</td>
-                              <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">$12,196</td>
-                              <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">$10,750</td>
-                              <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">$10,750</td>
-                              <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">$13,133</td>
+                              <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">$11,196</td>
+                              <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">$9,750</td>
+                              <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">$9,750</td>
+                              <td className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-sm">$12,133</td>
                             </tr>
                             <tr className="bg-green-100 font-bold text-lg">
                               <td className="border border-gray-300 px-1.5 md:px-3 py-1.5 md:py-2 text-[9px] md:text-lg leading-tight">Grand Total 4-Year Estimated Cost</td>
-                              <td colSpan={4} className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-lg">$46,829</td>
+                              <td colSpan={4} className="border border-gray-300 px-1 md:px-3 py-1.5 md:py-2 text-center font-mono text-[9px] md:text-lg">$42,829</td>
                             </tr>
                           </tbody>
                         </table>
@@ -1656,23 +1648,9 @@ const App: React.FC = () => {
                     </div>
                     <div className="mt-6 space-y-2 text-sm text-gray-600">
                       <p><strong>*</strong> Tuition and fees may change, and the cost of textbooks and study materials is not covered by the tuition.</p>
-                      <p><strong>**</strong> Fourth-Year students may opt to take the four credit elective Bar Review Preparation course which includes a $200 one-time set-up fee which is refundable within seven (7) days of enrollment.</p>
-                      <p><strong>***</strong> Note that Text Book costs are estimated at the highest expected cost and actual costs may be lower.</p>
-                      <p><strong>****</strong> Students opting for the Payment Plan Option 1 will pay $100 per year to set up their payment plan. See the Financial Aid section for more details. Also note that students who choose to pay via credit card must cover transaction and processing fees which may be as high as 4.5% of the amount charged.</p>
-                      <p><strong>*****</strong> All fees associated with The State Bar of California are based upon observed fees and expenses as presented in The State Bar of California's Schedule of Charges and Deadlines Title 4, Division 1 Admission Fees and could change at any time. Students are responsible to stay abreast of The State Bar of California law student-related fees.</p>
-                      <div className="mt-4">
-                        <a
-                          href="https://www.calbar.ca.gov/Portals/0/documents/rules/Rules_Appendix_A_Sched-Chgs-Deadlines.pdf"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center px-4 py-2 bg-pau-blue text-white text-sm font-bold rounded-lg hover:bg-pau-darkBlue transition-colors shadow-sm hover:shadow-md"
-                        >
-                          View Schedule of Charges and Deadlines
-                          <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                          </svg>
-                        </a>
-                      </div>
+                      <p><strong>**</strong> Fourth-Year students may register for the Bar Prep which includes a $200 one-time set-up fee which is refundable within seven (7) days of enrollment.</p>
+                      <p><strong>***</strong> Students opting for the Payment Plan Option 1 will pay $100 per year to set up their payment plan. See the Financial Aid section for more details. Also note that students who choose to pay via credit card must cover transaction and processing fees which may be as high as 4.5% of the amount charged.</p>
+                      <p><strong>****</strong> All fees associated with The State Bar of California are based upon observed fees and expenses as presented in The State Bar of California's Schedule of Charges and Deadlines Title 4, Division 1 Admission Fees and could change at any time. Students are responsible to stay abreast of The State Bar of California law student-related fees. <a href="https://www.calbar.ca.gov/Portals/0/documents/rules/Rules_Appendix_A_Sched-Chgs-Deadlines.pdf" target="_blank" rel="noopener noreferrer" className="text-pau-blue hover:text-pau-gold underline">www.calbar.ca.gov/Portals/0/documents/rules/Rules_Appendix_A_Sched-Chgs-Deadlines.pdf</a></p>
                     </div>
                   </div>
                 </div>
@@ -1762,7 +1740,7 @@ const App: React.FC = () => {
                     </p>
                   </div>
                   <p className="text-gray-700 leading-relaxed">
-                    Students enrolled in the PAUSL's Installment Payment Plan are expected to maintain timely payments. Failure to do so may result in dismissal from the law school. Specifically, students who miss two (2) payments in an academic year will be placed on non-academic probation, while those who miss three (3) payments during an academic year will face dismissal from the PAUSL.
+                    Students enrolled in PAUSL's Installment Payment Plan are expected to maintain timely payments. Failure to do so may result in dismissal from the law school. Specifically, students who miss two (2) payments in an academic year will no longer be eligible to enroll in a payment plan in the future, while those who miss three (3) payments during an academic year will face dismissal from PAUSL.
                   </p>
                 </div>
               </div>
@@ -1792,14 +1770,14 @@ const App: React.FC = () => {
                     Students may withdraw from the program according to the following guidelines.
                   </p>
                   <ul className="space-y-3 text-gray-700 leading-relaxed list-disc list-inside">
-                    <li>Students can withdraw from the school without penalty by submitting a written notice to the admissions office at any time before the final exam period (weeks forty-six (46) to fifty-two (52) of each academic year).</li>
-                    <li>Withdrawal requests during the final exam period (starting in week forty-six (46)) must be submitted as a written petition to the PAUSL Dean. The petition must clearly state that missing the final exam was due to a traumatic event or serious hardship preventing completion of the exam. Please note that these petitions are rarely approved.</li>
-                    <li>A student who does not voluntarily withdraw and fails to take final exams within the designated period will face "academic dismissal" for the affected course(s).</li>
+                    <li>Students can withdraw from the school without penalty by submitting a written notice to the registrar's office at any time before the final exam period.</li>
+                    <li>Withdrawal requests during the final exam period (starting in week forty-six (46)) must be submitted as a written petition to the Dean. The petition must clearly state that missing the final exam was due to a traumatic event or serious hardship preventing completion of the exam. Please note that these petitions are rarely approved.</li>
+                    <li>A student who does not voluntarily withdraw and fails to take final exams within the designated period will face "academic dismissal" and earn a grade of "F" for the affected course(s).</li>
                     <li>Tuition refunds upon withdrawal will follow the refund policy in the enrollment agreement. Withdrawal after the refund period, as specified in the agreement, does not exempt students paying tuition in installments from continuing monthly payments.</li>
-                    <li>Students experiencing financial difficulties and considering withdrawal are strongly encouraged to seek financial counseling to explore all available financial options before making a decision.</li>
+                    <li>Students experiencing financial difficulties and considering withdrawal are strongly encouraged to seek financial counseling to explore all available financial options before making a final decision.</li>
                   </ul>
                   <p className="text-gray-700 leading-relaxed mt-4">
-                    An official written notice is only recognized when it is mailed to PAUSL at the Law School's business address or emailed to the registrar (<a href="mailto:reg@paucal.org" className="text-pau-blue hover:text-pau-gold underline">reg@paucal.org</a>). Please note that sending an email to your professor does not constitute written notice. Withdrawal or cancellation will be effective from the date the notice is received.
+                    An official written notice is only recognized when it is mailed to PAUSL at the Law School's business address or emailed to the registrar (<a href="mailto:registrar@paucal.org" className="text-pau-blue hover:text-pau-gold underline">registrar@paucal.org</a>). Please note that sending an email to your professor does not constitute written notice. Withdrawal or cancellation will be effective from the date the notice is received.
                   </p>
                   <p className="text-gray-700 leading-relaxed mt-4">
                     If a student provides written notice of cancellation before attending the first class of a term, they may be eligible for a refund of the funds paid, excluding any nonrefundable fees.
@@ -1810,7 +1788,7 @@ const App: React.FC = () => {
                 <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8">
                   <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-4">Leave of Absence Policy</h3>
                   <p className="text-gray-700 leading-relaxed">
-                    Leaves of absence in the J.D. Program are only allowed between academic years. A student may petition the Dean and Faculty for a leave of absence based on good cause. A leave shall not exceed more than a period of twelve months.
+                    Leaves of absence in the J.D. Program are only allowed between academic years. A student may petition the Dean for a leave of absence based on good cause. A leave shall not exceed more than a period of twelve months.
                   </p>
                 </div>
 
@@ -1819,13 +1797,13 @@ const App: React.FC = () => {
                   <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-6">Refund Policy</h3>
                   <div className="space-y-4 text-gray-700 leading-relaxed">
                     <p>
-                      PAUSL will provide refunds in accordance with its written refund policy, accompanied by a clear explanation of the method of calculation, within thirty (30) days after a student withdraws from a class or a program, or thirty (30) days of the law school's discontinuing a course or educational program in which a student is enrolled.
+                      PAUSL will provide refunds in accordance with its written refund policy, within thirty (30) days after a student withdraws from a class or a program, or thirty (30) days of the law school's discontinuing a course or educational program in which a student is enrolled.
                     </p>
                     <p>
-                      Refundable tuition and fees refer to the remaining tuition and fees charged after deducting non-refundable fees that have already been retained.
+                      Refundable tuition and fees refer to the remaining tuition and fees received after deducting non-refundable fees that have already been retained.
                     </p>
                     <p>
-                      A student is entitled to receive a full refund of all payments made if they withdraw or cancel their enrollment within seven (7) days, by midnight (PST), from the date the Enrollment Agreement was signed. Similarly, set-up Fees are refundable only within seven (7) days of the date of signing the Enrollment Agreement.
+                      A student is entitled to receive a full refund of all payments made except admissions application fee if they withdraw or cancel their enrollment within seven (7) days, by midnight (PST), from the date the Enrollment Agreement was signed. Similarly, set-up Fees are refundable only within seven (7) days of the date of signing the Enrollment Agreement.
                     </p>
                     <p>
                       If a student withdraws after instruction has begun, they are eligible for a prorated refund based on the unused portion of tuition and other refundable charges. Instructional periods are calculated on a weekly basis, regardless of the specific day the course starts.
@@ -1834,13 +1812,23 @@ const App: React.FC = () => {
                       Beginning on day eight after the date of signing the Enrollment Agreement, all designated non-refundable fees will apply, thereby reducing the potential refund amount. For a comprehensive list of non-refundable fees, please refer to the Tuition, Fees, and Costs section of this Catalog.
                     </p>
                     <p>
-                      <strong>The State Bar of California Fee Refunds:</strong> Please note that any refund requests related to fees paid directly to The State Bar of California should be directed to their offices. The State Bar of California has a Refund of Fees Form on its website at: <a href="https://www.calbar.ca.gov/Admissions/Examinations/California-Bar-Examination/Refund-of-Fees-Policy" target="_blank" rel="noopener noreferrer" className="text-pau-blue hover:text-pau-gold underline">https://www.calbar.ca.gov/Admissions/Examinations/California-Bar-Examination/Refund-of-Fees-Policy</a>
+                      Refunds are calculated as follows: If more than 50% of the trimester has been completed, no refund will be issued, and regardless of student attendance and unless a timely withdrawal notice is given (before the completion of more than 50% of the trimester), the full tuition for the trimester will be due and owing to PAUSL.
                     </p>
-                    <div className="bg-red-50 border-l-4 border-red-500 p-6 mt-6">
-                      <p className="text-gray-800 font-semibold">
-                        No refunds will be issued by PAUSL to students who have completed 26 or more weeks of consecutive instruction. Upon completion of the 26th week of instruction, regardless of student attendance and unless a timely withdrawal notice is given (before the completion of 26 weeks of instruction), the full tuition for the academic year will be due and owing to PAUSL.
-                      </p>
+                    <div className="bg-white border border-gray-300 rounded-lg p-6 my-6">
+                      <div className="grid grid-cols-2 gap-4 text-sm font-mono">
+                        <div>Week 1 = 80% refund of refundable tuition</div>
+                        <div>Week 2 = 70% refund of refundable tuition</div>
+                        <div>Week 3 = 60% refund of refundable tuition</div>
+                        <div>Week 4 = 50% refund of refundable tuition</div>
+                        <div>Week 5 = 40% refund of refundable tuition</div>
+                        <div>Week 6 = 30% refund of refundable tuition</div>
+                        <div>Week 7 = 10% refund of refundable tuition</div>
+                        <div>Week 8 and after = 0% refund of refundable tuition</div>
+                      </div>
                     </div>
+                    <p>
+                      <strong>The State Bar of California Fee Refunds:</strong> Please note that any refund requests related to fees paid directly to the State Bar of California should be directed to their offices. The State Bar of California has a Refund of Fees Form on its website at: <a href="https://www.calbar.ca.gov/Admissions/Examinations/California-Bar-Examination/Refund-of-Fees-Policy" target="_blank" rel="noopener noreferrer" className="text-pau-blue hover:text-pau-gold underline">https://www.calbar.ca.gov/Admissions/Examinations/California-Bar-Examination/Refund-of-Fees-Policy</a>
+                    </p>
                     <p className="mt-6">
                       You may withdraw or cancel the J.D. Program agreement by providing clear and concise written notice ("I hereby choose to withdraw from the J.D. Program as of -insert date here-") to the Registrar by email <a href="mailto:registrar@paucal.org" className="text-pau-blue hover:text-pau-gold underline">registrar@paucal.org</a> or by USPS Certified Mail, addressed to:
                     </p>
@@ -1851,7 +1839,7 @@ const App: React.FC = () => {
                       <p>Los Angeles, CA 90010</p>
                     </div>
                     <p className="mt-4">
-                      In the event of a refund, the PAU School of Law will send a check to the student within 30 days.
+                      In the event of a refund, any refund will be returned to the authorizer via the same method used for the original payments(s) within 30 days.
                     </p>
                     <p className="mt-4">
                       See the Pro-rata Refund calculation example in the table below.
@@ -1863,7 +1851,7 @@ const App: React.FC = () => {
                 <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8">
                   <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-6">Pro-rata Refund Calculation Details</h3>
                   <p className="text-gray-700 leading-relaxed mb-6">
-                    Example of a J.D. Program refund based on the student withdrawing from the program after 13 weeks in the first year assuming fees have been paid for the entire year at the point of withdrawal:
+                    Example of a J.D. Program refund based on the student withdrawing from the program in the first year on 2 weeks attended before withdrawal:
                   </p>
                   <div className="overflow-x-auto">
                     <table className="w-full border-collapse border border-gray-300">
@@ -1875,35 +1863,31 @@ const App: React.FC = () => {
                       </thead>
                       <tbody>
                         <tr className="bg-white">
-                          <td className="border border-gray-300 px-4 py-3 font-semibold text-pau-darkBlue">Refundable portion: $10,150</td>
-                          <td className="border border-gray-300 px-4 py-3">Tuition is $9,000 per year plus additional costs of $1,150 per year (student services fee, text books, registration fee) for a total of $10,150. See the Tuition Fees and Costs section of the Catalog for more details.</td>
+                          <td className="border border-gray-300 px-4 py-3 font-semibold text-pau-darkBlue">Portion subject to refund review: $3,920</td>
+                          <td className="border border-gray-300 px-4 py-3">Tuition is $3,000 per trimester plus additional costs of $920 (admissions application fee, student services fee, registration fee, Setup Fees) for a total of $3,920. See the Tuition Fees and Costs section of the Catalog for more details.</td>
                         </tr>
                         <tr className="bg-gray-50">
-                          <td className="border border-gray-300 px-4 py-3 font-semibold text-pau-darkBlue">NOTE regarding the fees that are non-refundable at 13 weeks:</td>
+                          <td className="border border-gray-300 px-4 py-3 font-semibold text-pau-darkBlue">NOTE regarding the fees that are non-refundable at 2 weeks:</td>
                           <td className="border border-gray-300 px-4 py-3">
-                            <p className="mb-2">Non-refundable portion for 1L: $570</p>
-                            <p className="mb-2">Non-refundable portion for 2L, 3L: $500</p>
-                            <p>Non-refundable portion for 4L taking elective Bar Review Course: $700</p>
-                            <p className="mt-2 text-sm italic">The non-refundable amount examples listed here are not calculated into the total here because this example only discusses the refundable portion of payments made to PAUSL. One-time admission fee for new students of $70 plus the set-up fee $500 (annual fee for 1L, 2L, and 3L students) for a total non-refundable amount of $600. 4L set-up fee of $200 for 4L students that elect to take the elective Bar Review Course. 4L students may have a non-refundable amount of either $500 or $700 if they enroll in the elective Bar Review Course. Set-up fees are only refundable within seven (7) days of signing the Enrollment Agreement. This example is beyond that date. See the Tuition Fees and Costs section of the Catalog for more details.</p>
+                            <p className="mb-2">Non-refundable portion for 1L: $770</p>
+                            <p className="mb-2">Non-refundable portion for 2L-4L: $500</p>
+                            <p>Non-refundable portion for 4L registering in Bar Prep: $200</p>
+                            <p className="mt-4 text-sm italic">The non-refundable amount examples listed here are not calculated into the total here because this example only discusses the refundable portion of payments made to PAUSL. One-time admissions application fee of $70 plus the registration fee of $200 plus the set-up fee $500 for a total non-refundable amount of $770. Registration fee and Set-up fees are only refundable within seven (7) days of signing the Enrollment Agreement. This example is beyond that date. See the Tuition Fees and Costs section of the Catalog for more details.</p>
                           </td>
                         </tr>
                         <tr className="bg-white">
-                          <td className="border border-gray-300 px-4 py-3 font-semibold text-pau-darkBlue">Length of the Program is 48 weeks</td>
-                          <td className="border border-gray-300 px-4 py-3">One year of school is three 16 week trimesters</td>
-                        </tr>
-                        <tr className="bg-gray-50">
                           <td className="border border-gray-300 px-4 py-3 font-semibold text-pau-darkBlue">Refund Calculation:</td>
                           <td className="border border-gray-300 px-4 py-3">
-                            <p className="mb-2">This refund calculation example is using a withdrawal from PAUSL after 13 weeks in the first year. The refund in this scenario before the application of the termination fee is $7,409.50</p>
-                            <p className="text-sm">48 weeks - 13 weeks = 35 weeks</p>
-                            <p className="text-sm">35 weeks is 72.916% or 73% (all percentages are rounded to the nearest whole number)</p>
-                            <p className="text-sm font-semibold">73% x $10,150 = $7,409.50</p>
+                            <p className="mb-2">This refund calculation example is using a withdrawal from PAUSL on 2 weeks attended before withdrawal: The refund in this scenario is $2,205</p>
+                            <p className="text-sm mb-2">Week 2 = 70% refund of refundable tuition</p>
+                            <p className="text-sm">$3,920 - $770 (non-refundable fee) = $3,150</p>
+                            <p className="text-sm font-semibold">$3,150 X 70% = $2,205</p>
                           </td>
                         </tr>
                         <tr className="bg-green-50 font-bold">
                           <td className="border border-gray-300 px-4 py-3">Total Refund:</td>
                           <td className="border border-gray-300 px-4 py-3">
-                            The refund due to the student after 13 weeks is: $7,409.50
+                            The refund due to the student on 2 weeks is: $2,205.00
                           </td>
                         </tr>
                       </tbody>

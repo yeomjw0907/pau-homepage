@@ -8,47 +8,72 @@ interface CalendarProps {
   shared: SharedContent;
 }
 
-type Cohort = '1L' | '2L-3L' | '4L';
+type StartType = 'Fall' | 'Winter' | 'Spring';
 
 export const Calendar: React.FC<CalendarProps> = ({ content, shared }) => {
-  const [selectedCohort, setSelectedCohort] = useState<Cohort>('1L');
+  const [selectedStart, setSelectedStart] = useState<StartType>('Fall');
 
-  const cohortData = {
-    '1L': {
-      label: 'Incoming 1L',
-      startMonths: ['January', 'April', 'September'],
-      description: 'First-year students',
-      events: [
-        { date: 'January 2026', event: 'Spring Term Start (1L)', type: 'Academic' },
-        { date: 'April 2026', event: 'Summer Term Start (1L)', type: 'Academic' },
-        { date: 'September 2026', event: 'Fall Term Start (1L)', type: 'Academic' },
-        { date: 'May 2027', event: 'First-Year Law Students\' Examination (FYLSX)', type: 'Exam' }
+  const startData = {
+    'Fall': {
+      label: 'Fall Start (September)',
+      month: 'September',
+      description: 'Students commencing in September',
+      yearlySchedule: [
+        { year: '1L', term: 'Fall (Sept.)', courses: 'Introduction to Law, Contracts I, Torts I' },
+        { year: '1L', term: 'Winter (Jan.)', courses: 'Criminal Law, Contracts II' },
+        { year: '1L', term: 'Spring (May)', courses: 'Torts II, Legal Writing & Analysis, FYLSX Review' },
+        { year: '2L', term: 'Fall (Sept.)', courses: 'Civil Procedure I, Property I' },
+        { year: '2L', term: 'Winter (Jan.)', courses: 'Civil Procedure II, Property II' },
+        { year: '2L', term: 'Spring (May)', courses: 'Remedies, Criminal Procedure' },
+        { year: '3L', term: 'Fall (Sept.)', courses: 'Constitutional Law I, Evidence I' },
+        { year: '3L', term: 'Winter (Jan.)', courses: 'Constitutional Law II, Evidence II' },
+        { year: '3L', term: 'Spring (May)', courses: 'Business Associations, Community Property' },
+        { year: '4L', term: 'Fall (Sept.)', courses: 'Professional Responsibility, Wills & Succession' },
+        { year: '4L', term: 'Winter (Jan.)', courses: 'CA Civil Procedure, CA Evidence' },
+        { year: '4L', term: 'Spring (May)', courses: 'Adv. Legal Research & Writing, Practical Competency Training, Bar Review (Elective)' }
       ]
     },
-    '2L-3L': {
-      label: 'Continuing 2L & 3L',
-      startMonths: ['March', 'July', 'November'],
-      description: 'Second and third-year students',
-      events: [
-        { date: 'March 2026', event: 'Spring Term Start (2L/3L)', type: 'Academic' },
-        { date: 'July 2026', event: 'Summer Term Start (2L/3L)', type: 'Academic' },
-        { date: 'November 2026', event: 'Fall Term Start (2L/3L)', type: 'Academic' }
+    'Winter': {
+      label: 'Winter Start (January)',
+      month: 'January',
+      description: 'Students commencing in January',
+      yearlySchedule: [
+        { year: '1L', term: 'Winter (Jan.)', courses: 'Introduction to Law, Contracts I, Torts I' },
+        { year: '1L', term: 'Spring (May)', courses: 'Criminal Law, Contracts II' },
+        { year: '1L', term: 'Fall (Sept.)', courses: 'Torts II, Legal Writing & Analysis, FYLSX Review' },
+        { year: '2L', term: 'Winter (Jan.)', courses: 'Civil Procedure I, Property I' },
+        { year: '2L', term: 'Spring (May)', courses: 'Civil Procedure II, Property II' },
+        { year: '2L', term: 'Fall (Sept.)', courses: 'Remedies, Criminal Procedure' },
+        { year: '3L', term: 'Winter (Jan.)', courses: 'Constitutional Law I, Evidence I' },
+        { year: '3L', term: 'Spring (May)', courses: 'Constitutional Law II, Evidence II' },
+        { year: '3L', term: 'Fall (Sept.)', courses: 'Business Associations, Community Property' },
+        { year: '4L', term: 'Winter (Jan.)', courses: 'Professional Responsibility, Wills & Succession' },
+        { year: '4L', term: 'Spring (May)', courses: 'CA Civil Procedure, CA Evidence' },
+        { year: '4L', term: 'Fall (Sept.)', courses: 'Adv. Legal Research & Writing, Practical Competency Training, Bar Review (Elective)' }
       ]
     },
-    '4L': {
-      label: 'Graduating 4L',
-      startMonths: ['January', 'July', 'November'],
-      description: 'Fourth-year students',
-      events: [
-        { date: 'January 2026', event: 'Spring Term Start (4L)', type: 'Academic' },
-        { date: 'July 2026', event: 'Summer Term Start (4L)', type: 'Academic' },
-        { date: 'November 2026', event: 'Fall Term Start (4L)', type: 'Academic' },
-        { date: 'December 2026', event: 'Graduation Ceremony', type: 'Event' }
+    'Spring': {
+      label: 'Spring Start (May)',
+      month: 'May',
+      description: 'Students commencing in May',
+      yearlySchedule: [
+        { year: '1L', term: 'Spring (May)', courses: 'Introduction to Law, Contracts I, Torts I' },
+        { year: '1L', term: 'Fall (Sept.)', courses: 'Criminal Law, Contracts II' },
+        { year: '1L', term: 'Winter (Jan.)', courses: 'Torts II, Legal Writing & Analysis, FYLSX Review' },
+        { year: '2L', term: 'Spring (May)', courses: 'Civil Procedure I, Property I' },
+        { year: '2L', term: 'Fall (Sept.)', courses: 'Civil Procedure II, Property II' },
+        { year: '2L', term: 'Winter (Jan.)', courses: 'Remedies, Criminal Procedure' },
+        { year: '3L', term: 'Spring (May)', courses: 'Constitutional Law I, Evidence I' },
+        { year: '3L', term: 'Fall (Sept.)', courses: 'Constitutional Law II, Evidence II' },
+        { year: '3L', term: 'Winter (Jan.)', courses: 'Business Associations, Community Property' },
+        { year: '4L', term: 'Spring (May)', courses: 'Professional Responsibility, Wills & Succession' },
+        { year: '4L', term: 'Fall (Sept.)', courses: 'CA Civil Procedure, CA Evidence' },
+        { year: '4L', term: 'Winter (Jan.)', courses: 'Adv. Legal Research & Writing, Practical Competency Training, Bar Review (Elective)' }
       ]
     }
   };
 
-  const currentCohort = cohortData[selectedCohort];
+  const currentStart = startData[selectedStart];
 
   return (
     <div className="bg-white min-h-screen">
@@ -61,77 +86,78 @@ export const Calendar: React.FC<CalendarProps> = ({ content, shared }) => {
       </div>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        {/* Cohort Filter */}
+        {/* Start Type Filter */}
         <div className="mb-8 bg-gradient-to-r from-pau-darkBlue to-pau-blue rounded-2xl p-6 shadow-xl">
-          <label htmlFor="cohort-filter" className="block text-sm font-bold text-pau-gold uppercase tracking-wider mb-3">
-            Select Your Cohort
+          <label htmlFor="start-filter" className="block text-sm font-bold text-pau-gold uppercase tracking-wider mb-3">
+            Select Your Start Term
           </label>
           <div className="relative">
             <select
-              id="cohort-filter"
-              value={selectedCohort}
-              onChange={(e) => setSelectedCohort(e.target.value as Cohort)}
+              id="start-filter"
+              value={selectedStart}
+              onChange={(e) => setSelectedStart(e.target.value as StartType)}
               className="block w-full pl-4 pr-10 py-4 text-lg font-semibold bg-white border-2 border-pau-gold rounded-xl shadow-lg focus:outline-none focus:ring-4 focus:ring-pau-gold/30 focus:border-pau-gold transition-all cursor-pointer appearance-none text-pau-darkBlue"
             >
-              <option value="1L">Incoming 1L (Starts: Jan, Apr, Sep)</option>
-              <option value="2L-3L">Continuing 2L & 3L (Starts: Mar, Jul, Nov)</option>
-              <option value="4L">Graduating 4L (Starts: Jan, Jul, Nov)</option>
+              <option value="Fall">Fall Start (September)</option>
+              <option value="Winter">Winter Start (January)</option>
+              <option value="Spring">Spring Start (May)</option>
             </select>
             <ChevronDownIcon className="absolute right-4 top-1/2 -translate-y-1/2 h-6 w-6 text-pau-blue pointer-events-none" />
           </div>
         </div>
 
-        {/* Academic Start Dates Section */}
+        {/* Trimester Information */}
         <div className="mb-12 bg-white shadow-soft rounded-2xl border-2 border-pau-gold/20 p-8 animate-fade-in">
-          <div className="flex items-center justify-between mb-6 border-b border-gray-100 pb-4">
-            <div>
-              <h2 className="text-2xl font-serif font-bold text-pau-darkBlue">
-                Start Dates for {currentCohort.label}
-              </h2>
-              <p className="text-sm text-gray-500 mt-1">{currentCohort.description}</p>
-            </div>
+          <div className="mb-6 border-b border-gray-100 pb-4">
+            <h2 className="text-2xl font-serif font-bold text-pau-darkBlue mb-2">
+              {currentStart.label}
+            </h2>
+            <p className="text-sm text-gray-500">{currentStart.description}</p>
           </div>
-          <div className="flex flex-wrap gap-4">
-            {currentCohort.startMonths.map((month, idx) => (
-              <div key={idx} className="flex-1 min-w-[140px]">
-                <div className="bg-gradient-to-br from-pau-blue to-pau-darkBlue rounded-xl p-6 text-center shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
-                  <div className="text-3xl font-bold text-pau-gold mb-2">{month}</div>
-                  <div className="text-xs text-white uppercase tracking-wider">Term Start</div>
-                </div>
-              </div>
-            ))}
+          <div className="space-y-4 text-gray-700">
+            <div className="flex items-start gap-3">
+              <div className="w-2 h-2 rounded-full bg-pau-gold mt-2"></div>
+              <p><strong>Trimester Structure:</strong> Each trimester is a four (4) month term, totaling sixteen (16) weeks, with mid-terms and final exams.</p>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-2 h-2 rounded-full bg-pau-gold mt-2"></div>
+              <p><strong>Start Options:</strong> Students may commence their studies in January, May, or September.</p>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-2 h-2 rounded-full bg-pau-gold mt-2"></div>
+              <p><strong>Academic Year:</strong> The next academic year cannot begin before the anniversary date of the start of the previous year.</p>
+            </div>
           </div>
         </div>
 
-        {/* Events Schedule */}
+        {/* 4-Year Course Schedule */}
         <div className="bg-white shadow-soft rounded-2xl border border-gray-100 overflow-hidden">
           <div className="bg-gradient-to-r from-pau-light to-white px-8 py-6 border-b border-gray-200">
             <h3 className="text-xl font-serif font-bold text-pau-darkBlue">
-              Key Dates & Events
+              4-Year Course Schedule
             </h3>
+            <p className="text-sm text-gray-500 mt-1">Complete course sequence for {currentStart.label}</p>
           </div>
-          <ul role="list" className="divide-y divide-gray-100">
-            {currentCohort.events.map((event, idx) => (
-              <li key={idx} className="px-8 py-6 hover:bg-blue-50/50 transition duration-150 flex flex-col sm:flex-row sm:items-center sm:justify-between group cursor-default">
-                <div className="flex-grow">
-                  <div className="flex items-center mb-2 sm:mb-0">
-                     <span className="w-2 h-2 rounded-full bg-pau-gold mr-3 group-hover:scale-125 transition-transform"></span>
-                     <p className="text-lg font-bold text-pau-blue group-hover:text-pau-darkBlue">
-                       {event.event}
-                     </p>
-                  </div>
-                  <p className="text-sm text-gray-500 pl-5 sm:mt-1">
-                    {event.type}
-                  </p>
-                </div>
-                <div className="mt-4 sm:mt-0 pl-5 sm:pl-0">
-                  <span className="inline-flex items-center px-4 py-2 rounded-lg text-sm font-bold bg-white border border-gray-200 text-gray-900 shadow-sm group-hover:border-pau-blue/30 transition-colors">
-                    {event.date}
-                  </span>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead className="bg-pau-darkBlue text-white">
+                <tr>
+                  <th className="px-6 py-3 text-left font-bold">Year</th>
+                  <th className="px-6 py-3 text-left font-bold">Trimester</th>
+                  <th className="px-6 py-3 text-left font-bold">Courses</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-100">
+                {currentStart.yearlySchedule.map((row, idx) => (
+                  <tr key={idx} className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                    <td className="px-6 py-4 font-bold text-pau-blue">{row.year}</td>
+                    <td className="px-6 py-4 font-semibold text-pau-darkBlue">{row.term}</td>
+                    <td className="px-6 py-4 text-gray-700">{row.courses}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         {/* Academic Breaks */}
@@ -142,9 +168,23 @@ export const Calendar: React.FC<CalendarProps> = ({ content, shared }) => {
             </h3>
           </div>
           <div className="px-8 py-6">
-            <p className="text-gray-700 leading-relaxed">
-              There are one-week breaks for Spring Break in late March, Independence Day in July, and Thanksgiving in November.
+            <p className="text-gray-700 leading-relaxed mb-4">
+              Each trimester includes a one-week break:
             </p>
+            <ul className="space-y-2 text-gray-700">
+              <li className="flex items-center gap-3">
+                <span className="w-2 h-2 rounded-full bg-pau-gold"></span>
+                <span><strong>Spring Break</strong> in late March</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <span className="w-2 h-2 rounded-full bg-pau-gold"></span>
+                <span><strong>Independence Day</strong> in July</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <span className="w-2 h-2 rounded-full bg-pau-gold"></span>
+                <span><strong>Thanksgiving</strong> in November</span>
+              </li>
+            </ul>
           </div>
         </div>
 
