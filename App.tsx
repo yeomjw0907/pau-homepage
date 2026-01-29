@@ -2057,60 +2057,6 @@ const App: React.FC = () => {
           </>
         );
 
-      case 'request-info':
-        return (
-          <>
-            <PageHeader title={"Request\nInformation"} subtitle="Tell us how we can help you." icon={InboxArrowDownIcon} />
-            <SectionWrapper>
-              <div className="max-w-4xl mx-auto">
-                <div className="bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-gray-100">
-                  <div className="text-center mb-10">
-                    <h3 className="text-2xl font-serif font-bold text-pau-darkBlue mb-4">Send us a Message</h3>
-                    <p className="text-gray-500">Fill out the form below and our team will get back to you within 24 hours.</p>
-                  </div>
-                  <form className="space-y-8">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      <div>
-                        <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">First Name</label>
-                        <input type="text" className="w-full p-4 border border-gray-200 bg-gray-50 rounded-xl focus:bg-white focus:ring-2 focus:ring-pau-blue/20 focus:border-pau-blue transition-all" placeholder="Jane" />
-                      </div>
-                      <div>
-                        <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Last Name</label>
-                        <input type="text" className="w-full p-4 border border-gray-200 bg-gray-50 rounded-xl focus:bg-white focus:ring-2 focus:ring-pau-blue/20 focus:border-pau-blue transition-all" placeholder="Doe" />
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      <div>
-                        <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Email Address</label>
-                        <input type="email" className="w-full p-4 border border-gray-200 bg-gray-50 rounded-xl focus:bg-white focus:ring-2 focus:ring-pau-blue/20 focus:border-pau-blue transition-all" placeholder="jane@example.com" />
-                      </div>
-                      <div>
-                        <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Inquiry Type</label>
-                        <select className="w-full p-4 border border-gray-200 bg-gray-50 rounded-xl focus:bg-white focus:ring-2 focus:ring-pau-blue/20 focus:border-pau-blue transition-all text-gray-600">
-                          <option>General Admission</option>
-                          <option>Program Details (J.D.)</option>
-                          <option>Tuition & Financial Aid</option>
-                          <option>Technical Issue</option>
-                          <option>Other</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Message</label>
-                      <textarea rows={5} className="w-full p-4 border border-gray-200 bg-gray-50 rounded-xl focus:bg-white focus:ring-2 focus:ring-pau-blue/20 focus:border-pau-blue transition-all" placeholder="How can we assist you today?"></textarea>
-                    </div>
-                    <div className="flex justify-end">
-                      <button className="bg-pau-gold text-white px-10 py-4 rounded-xl font-bold uppercase text-xs tracking-widest hover:bg-pau-darkBlue transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
-                        Submit Inquiry
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </SectionWrapper>
-          </>
-        );
-
       case 'contact':
         return (
           <>
