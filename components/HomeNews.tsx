@@ -28,7 +28,7 @@ export const HomeNews: React.FC<HomeNewsProps> = ({ title, newsItems, onNewsClic
       id: 'n2',
       title: "Academic Calendar & Start Dates",
       date: "2026-2027",
-      summary: "Incoming First-Year (1L): January, April, or September\n\nSecond-Year (2L) & Third-Year (3L): March, July, or November\n\nFourth-Year (4L): January, July, or November",
+      summary: "Incoming First-Year (1L): January, May, or September\n\nSecond-Year (2L) & Third-Year (3L): September, January, or May\n\nFourth-Year (4L): September, January, or May",
       icon: ClockIcon,
       category: 'Academic',
       targetPage: 'academic-calendar' as Page
@@ -40,7 +40,7 @@ export const HomeNews: React.FC<HomeNewsProps> = ({ title, newsItems, onNewsClic
       summary: "Students must pass the 'Baby Bar' (FYLSX) after the first year.",
       icon: InformationCircleIcon,
       category: 'Compliance',
-      targetPage: 'bar-info' as Page
+      targetPage: 'bar-reg' as Page
     },
     {
       id: 'n4',

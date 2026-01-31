@@ -7,7 +7,7 @@ export const DEFAULT_FACULTY_CONTENT: FacultyContent = {
     {
       name: "Timothy P. Weimer",
       credential: "J.D., M.B.A.",
-      title: "Dean of School of Law",
+      title: "Dean and Professor of Law",
       education: [
         "Juris Doctor (J.D.), The University of Akron School of Law, Akron, Ohio (May 2015)",
         "Master of Business Administration (M.B.A.), Capella University, Minneapolis, Minnesota (February 2006)"
@@ -93,7 +93,7 @@ export const DEFAULT_FACULTY_CONTENT: FacultyContent = {
     {
       name: "Timothy P. Weimer",
       credential: "J.D., M.B.A.",
-      title: "Dean of School of Law",
+      title: "Dean and Professor of Law",
       education: [
         "Juris Doctor (J.D.), The University of Akron School of Law, Akron, Ohio (May 2015)",
         "Master of Business Administration (M.B.A.), Capella University, Minneapolis, Minnesota (February 2006)"

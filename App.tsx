@@ -502,7 +502,7 @@ const App: React.FC = () => {
                   <div className="w-64 md:w-80 aspect-[3/4] rounded-lg overflow-hidden shadow-lg">
                     <img
                       src="/images/admin-timothy-weimer.jpg"
-                      alt="Timothy P. Weimer, Dean of School of Law"
+                      alt="Timothy P. Weimer, Dean and Professor of Law"
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -515,7 +515,7 @@ const App: React.FC = () => {
                   </h2>
                   <div className="mt-6 mb-8">
                     <p className="font-serif text-xl text-pau-darkBlue font-semibold">Timothy P. Weimer</p>
-                    <p className="text-sm text-pau-gold font-bold uppercase tracking-widest mt-1">Dean of School of Law</p>
+                    <p className="text-sm text-pau-gold font-bold uppercase tracking-widest mt-1">Dean and Professor of Law</p>
                   </div>
                 </div>
 
@@ -539,7 +539,7 @@ const App: React.FC = () => {
                 {/* Signature Section */}
                 <div className="mt-16 pt-8 border-t border-gray-200 text-center">
                   <p className="font-serif text-2xl md:text-3xl text-pau-darkBlue font-bold mb-2">Timothy P. Weimer, Dean</p>
-                  <p className="text-sm font-bold text-pau-gold uppercase tracking-widest mb-4">Dean of School of Law</p>
+                  <p className="text-sm font-bold text-pau-gold uppercase tracking-widest mb-4">Dean and Professor of Law</p>
                   <p className="text-gray-500 text-sm">Pacific American University School of Law</p>
                 </div>
               </div>
@@ -624,9 +624,8 @@ const App: React.FC = () => {
                       </div>
                     </div>
                     <div className="space-y-4 text-gray-700 leading-relaxed pl-0 md:pl-24">
-                      <p className="font-semibold text-lg md:text-xl text-pau-darkBlue mb-2">Registration as an Unaccredited Correspondence Law School</p>
                       <p className="text-base md:text-lg leading-relaxed">
-                        Pacific American University School of Law (PAUSL) is an unaccredited correspondence law school registered with the Committee of Bar Examiners of the State Bar of California. As a registered unaccredited correspondence law school, PAUSL has the authority to grant the Juris Doctor (J.D.) degree. Graduates of the J.D. program who fulfill the requirements of the State Bar of California are eligible to take the California Bar Examination.
+                        All law students planning to apply as general candidates for admission to practice law in California are required to register with the State Bar of California within 90 days of commencing their legal studies. Registration must be completed online via the State Bar's official site at www.calbar.ca.gov, and a registration fee is payable at the time of submission. Students who have questions or need assistance may reach out directly to the State Bar of California through www.calbar.ca.gov/Contact-Us.
                       </p>
                     </div>
                   </div>

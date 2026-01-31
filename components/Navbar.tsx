@@ -266,7 +266,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       setActiveDropdown(null);
                     }
                   }}
-                  className={navLinkClass([/*'academics',*/ 'academic-calendar', 'bar-info', 'curriculum-schedule', 'counseling', 'grad-reqs'/*, 'centers', 'student-resources', 'library'*/].includes(currentPage))}
+                  className={navLinkClass([/*'academics',*/ 'academic-calendar', /*'bar-info',*/ 'curriculum-schedule', 'counseling', 'grad-reqs'/*, 'centers', 'student-resources', 'library'*/].includes(currentPage))}
                   aria-label={`${shared.nav.academics} menu`}
                   aria-expanded={activeDropdown === 'academics'}
                   aria-haspopup="true"
@@ -281,7 +281,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       {/* <SubmenuBtn page="centers" label={shared.nav.centers} /> */}
                       {/* <SubmenuBtn page="library" label={shared.nav.library} /> */}
                       <SubmenuBtn page="academic-calendar" label={shared.nav.academicCalendar} />
-                      <SubmenuBtn page="bar-info" label={shared.nav.barInfo} />
+                      {/* <SubmenuBtn page="bar-info" label={shared.nav.barInfo} /> */}
                       <SubmenuBtn page="curriculum-schedule" label={shared.nav.curriculum} />
                       <SubmenuBtn page="counseling" label={shared.nav.counseling} />
                       <SubmenuBtn page="grad-reqs" label={shared.nav.gradReqs} />
@@ -355,8 +355,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                       <SubmenuBtn page="home" label="CALI" external />
                       <SubmenuBtn page="home" label="ExamSoft" external />
                       <SubmenuBtn page="home" label="Transcripts" external />
-                      <SubmenuBtn page="home" label="Finance Office" external />
-                      <SubmenuBtn page="home" label="Course Enrollment" external />
                       <SubmenuBtn page="home" label="Student Store (PAUSL Gear)" external />
                     </div>
                   </DropdownWrapper>
@@ -478,7 +476,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 {/* <MobileSubLink page="centers" label={shared.nav.centers} /> */}
                 {/* <MobileSubLink page="library" label={shared.nav.library} /> */}
                 <MobileSubLink page="academic-calendar" label={shared.nav.academicCalendar} />
-                <MobileSubLink page="bar-info" label={shared.nav.barInfo} />
+                {/* <MobileSubLink page="bar-info" label={shared.nav.barInfo} /> */}
                 <MobileSubLink page="curriculum-schedule" label={shared.nav.curriculum} />
                 <MobileSubLink page="counseling" label={shared.nav.counseling} />
                 <MobileSubLink page="grad-reqs" label={shared.nav.gradReqs} />
@@ -507,8 +505,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <MobileSubLink page="home" label="CALI" external />
                 <MobileSubLink page="home" label="ExamSoft" external />
                 <MobileSubLink page="home" label="Transcripts" external />
-                <MobileSubLink page="home" label="Finance Office" external />
-                <MobileSubLink page="home" label="Course Enrollment" external />
                 <MobileSubLink page="home" label="Student Store (PAUSL Gear)" external />
               </MobileSection>
 

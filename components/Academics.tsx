@@ -100,13 +100,13 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
       icon: MapIcon,
       color: "text-pau-gold"
     },
-    {
-      id: 'bar-info' as Page,
-      title: "The California State Bar",
-      desc: "Information on FYLSX and California Bar Exam eligibility.",
-      icon: CheckBadgeIcon,
-      color: "text-blue-500"
-    },
+    // {
+    //   id: 'bar-info' as Page,
+    //   title: "The California State Bar",
+    //   desc: "Information on FYLSX and California Bar Exam eligibility.",
+    //   icon: CheckBadgeIcon,
+    //   color: "text-blue-500"
+    // },
     {
       id: 'counseling' as Page,
       title: "Academic Counseling and Academic Support",
@@ -413,10 +413,10 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
                <div className="bg-white p-10 rounded-[40px] shadow-premium border border-gray-100">
                   <h3 className="text-2xl font-serif font-bold text-pau-blue mb-6">Student Registration</h3>
                   <p className="text-gray-600 leading-relaxed font-light mb-6">
-                    Law school students must register as students with the State Bar of California. The registration form must be completed accurately under penalty of perjury.
+                    All law students planning to apply as general candidates for admission to practice law in California are required to register with the State Bar of California within 90 days of commencing their legal studies. Registration must be completed online via the State Bar's official site at www.calbar.ca.gov, and a registration fee is payable at the time of submission. Students who have questions or need assistance may reach out directly to the State Bar of California through www.calbar.ca.gov/Contact-Us.
                   </p>
                   <p className="text-gray-600 leading-relaxed font-light mb-6">
-                    Potential students with any questions may contact the Committee of Bar Examiners of the State Bar of California at:
+                    The State Bar of California contact information:
                   </p>
                   <div className="bg-gray-50 p-6 rounded-2xl border border-gray-200 mb-6">
                     <p className="font-semibold text-pau-darkBlue mb-4">The State Bar of California</p>
@@ -434,13 +434,22 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
                         <p>(213) 765-1000</p>
                       </div>
                       <div className="pt-3 border-t border-gray-300">
+                        <p className="font-semibold mb-1">Website:</p>
                         <a 
                           href="https://www.calbar.ca.gov" 
                           target="_blank" 
                           rel="noopener noreferrer"
-                          className="text-pau-blue hover:text-pau-darkBlue underline font-semibold"
+                          className="text-pau-blue hover:text-pau-darkBlue underline font-semibold block"
                         >
                           www.calbar.ca.gov
+                        </a>
+                        <a 
+                          href="https://www.calbar.ca.gov/Contact-Us" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-pau-blue hover:text-pau-darkBlue underline font-semibold block mt-1"
+                        >
+                          www.calbar.ca.gov/Contact-Us
                         </a>
                       </div>
                     </div>
@@ -500,19 +509,13 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
                        <CheckBadgeIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
                      </div>
-                     <span className="text-gray-700 text-lg pt-0.5">Complete a minimum of 864 hours of study annually, spanning forty-eight (48) to fifty-two (52) consecutive weeks, for a total of four (4) years.</span>
+                     <span className="text-gray-700 text-lg pt-0.5">Complete a minimum of 864 hours of study annually.</span>
                    </li>
                    <li className="flex items-start group">
                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
                        <CheckBadgeIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
                      </div>
-                     <span className="text-gray-700 text-lg pt-0.5">Each course entails a minimum of 140 Credit Hours (comprising three (3) units with forty-five (45) hours of class time/academic engagement and a minimum of ninety (90) study hours).</span>
-                   </li>
-                   <li className="flex items-start group">
-                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
-                       <CheckBadgeIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
-                     </div>
-                     <span className="text-gray-700 text-lg pt-0.5">Successfully pass the State Bar of California's First-Year Law Students' Examination (FYLSX) following the completion of their first year of study.</span>
+                     <span className="text-gray-700 text-lg pt-0.5">Successfully pass the State Bar of California's First-Year Law Students' Examination (FYLSX).</span>
                    </li>
                    <li className="flex items-start group">
                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
@@ -530,9 +533,19 @@ export const Academics: React.FC<AcademicsProps> = ({ content, onNavigate, curre
                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
                        <CheckBadgeIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
                      </div>
-                     <span className="text-gray-700 text-lg pt-0.5">Successfully pass all required courses to qualify for the J.D. degree.</span>
+                     <span className="text-gray-700 text-lg pt-0.5">Successfully pass all required courses.</span>
                    </li>
                  </ul>
+               </div>
+
+               <div className="bg-white rounded-2xl shadow-soft border border-gray-100 p-10 mb-12">
+                 <h3 className="text-xl font-bold text-pau-darkBlue mb-6">Transferability of PAUSL Credits to Another Institution</h3>
+                 <p className="text-gray-700 text-lg leading-relaxed mb-6">
+                   Credits earned at PAUSL may not be eligible for transfer to any other college, university, or law school. In the United States higher education system, the acceptance of credit transfer depends on the receiving institution's evaluation, considering factors like course content, grades, and accreditation.
+                 </p>
+                 <p className="text-gray-700 text-lg leading-relaxed">
+                   While the PAUSL is authorized to grant a Juris Doctor degree, this approval does not imply that credits earned at PAUSL will be recognized by other law schools.
+                 </p>
                </div>
             </div>
           </>
