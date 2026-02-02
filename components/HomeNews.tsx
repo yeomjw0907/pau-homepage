@@ -28,7 +28,7 @@ export const HomeNews: React.FC<HomeNewsProps> = ({ title, newsItems, onNewsClic
       id: 'n2',
       title: "Academic Calendar & Start Dates",
       date: "2026-2027",
-      summary: "Incoming First-Year (1L): January, May, or September\n\nSecond-Year (2L) & Third-Year (3L): September, January, or May\n\nFourth-Year (4L): September, January, or May",
+      summary: "All cohorts start in January, May, or September",
       icon: ClockIcon,
       category: 'Academic',
       targetPage: 'academic-calendar' as Page
