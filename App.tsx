@@ -627,6 +627,15 @@ const App: React.FC = () => {
                       <p className="text-base md:text-lg leading-relaxed">
                         The Pacific American University School of Law ("PAUSL") is registered with the Committee of Bar Examiners of the State Bar of California as a Registered Unaccredited Correspondence Law School and thus PAUSL enables its graduates to take the California bar examination upon completion of the Juris Doctor("JD") program. PAUSL is not accredited by The State Bar of California or approved by the American Bar Association ("ABA"). PAUSL's degree-granting authority in connection with its students qualifying to take the California Bar Examination and obtain admission to the practice of law in California is based on its registration as an unaccredited correspondence law school with The State Bar of California's Committee of Bar Examiners.
                       </p>
+                      <p className="text-base md:text-lg leading-relaxed">
+                        "The method of instruction at this law school for the Juris Doctor (J.D.) degree program is principally by correspondence."
+                      </p>
+                      <p className="text-base md:text-lg leading-relaxed">
+                        "Students enrolled in the J.D. degree program at this law school who successfully complete the first year of law study must pass the First-Year Law Students' Examination required by Business and Professions Code § 6060(h) and Title 4, Division 1, Chapter 1 Rule 4.3(I) of the of the Rules of the State Bar of California as part of the requirements to qualify to take the California Bar Examination. A student who passes the First-Year Law Students' Examination within three (3) administrations of the examination after first becoming eligible to take it will receive credit for all legal studies completed to the time the examination is passed. A student who does not pass the examination within three (3) administrations of the examination after first becoming eligible to take it must be promptly disqualified from the law school's J.D. degree program. If the dismissed student subsequently passes the examination, the student is eligible for re-enrollment in this law school's J.D. degree program, but will receive credit for only one year of legal study."
+                      </p>
+                      <p className="text-base md:text-lg leading-relaxed">
+                        "Study at, or graduation from, this law school may not qualify a student to take the bar examination or to satisfy the requirements for admission to practice in jurisdictions other than California. A student intending to seek admission to practice law in a jurisdiction other than California should contact the admitting authority in that jurisdiction for information regarding the legal education requirements in that jurisdiction for admission to the practice of law."
+                      </p>
                     </div>
                   </div>
                 </div>
