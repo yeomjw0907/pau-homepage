@@ -22,15 +22,15 @@ export const Calendar: React.FC<CalendarProps> = ({ content, shared }) => {
         { year: '1L', term: 'Fall (Sept.)', courses: 'Introduction to Law, Contracts I, Torts I' },
         { year: '1L', term: 'Winter (Jan.)', courses: 'Criminal Law, Contracts II' },
         { year: '1L', term: 'Spring (May)', courses: 'Torts II, Legal Writing & Analysis, FYLSX Review' },
-        { year: '2L', term: 'Fall (Sept.)', courses: 'Civil Procedure I, Property I' },
-        { year: '2L', term: 'Winter (Jan.)', courses: 'Civil Procedure II, Property II' },
-        { year: '2L', term: 'Spring (May)', courses: 'Remedies, Criminal Procedure' },
-        { year: '3L', term: 'Fall (Sept.)', courses: 'Constitutional Law I, Evidence I' },
-        { year: '3L', term: 'Winter (Jan.)', courses: 'Constitutional Law II, Evidence II' },
-        { year: '3L', term: 'Spring (May)', courses: 'Business Associations, Community Property' },
-        { year: '4L', term: 'Fall (Sept.)', courses: 'Professional Responsibility, Wills & Succession' },
-        { year: '4L', term: 'Winter (Jan.)', courses: 'CA Civil Procedure, CA Evidence' },
-        { year: '4L', term: 'Spring (May)', courses: 'Adv. Legal Research & Writing, Practical Competency Training, Bar Review (Elective)' }
+        { year: '2L', term: 'Fall (Sept.)', courses: 'Civil Procedure, Uniform Commercial Code (Elective), Law & Motion (Elective)' },
+        { year: '2L', term: 'Winter (Jan.)', courses: 'Property, Uniform Commercial Code (Elective), Law & Motion (Elective)' },
+        { year: '2L', term: 'Spring (May)', courses: 'Remedies, Criminal Procedure, Uniform Commercial Code (Elective), Law & Motion (Elective)' },
+        { year: '3L', term: 'Fall (Sept.)', courses: 'Constitutional Law, Alternative Dispute Resolution (Elective), Judicial Decision Making (Elective)' },
+        { year: '3L', term: 'Winter (Jan.)', courses: 'Evidence, Alternative Dispute Resolution (Elective), Judicial Decision Making (Elective)' },
+        { year: '3L', term: 'Spring (May)', courses: 'Business Associations, Community Property, Alternative Dispute Resolution (Elective), Judicial Decision Making (Elective)' },
+        { year: '4L', term: 'Fall (Sept.)', courses: 'Professional Responsibility, California Civil Procedure, Bar Review (Elective)' },
+        { year: '4L', term: 'Winter (Jan.)', courses: 'Wills & Succession, California Evidence, Bar Review (Elective)' },
+        { year: '4L', term: 'Spring (May)', courses: 'Advanced Legal Research & Writing, Practical Competency Training, Bar Review (Elective)' }
       ]
     },
     'Winter': {
@@ -41,15 +41,15 @@ export const Calendar: React.FC<CalendarProps> = ({ content, shared }) => {
         { year: '1L', term: 'Winter (Jan.)', courses: 'Introduction to Law, Contracts I, Torts I' },
         { year: '1L', term: 'Spring (May)', courses: 'Criminal Law, Contracts II' },
         { year: '1L', term: 'Fall (Sept.)', courses: 'Torts II, Legal Writing & Analysis, FYLSX Review' },
-        { year: '2L', term: 'Winter (Jan.)', courses: 'Civil Procedure I, Property I' },
-        { year: '2L', term: 'Spring (May)', courses: 'Civil Procedure II, Property II' },
-        { year: '2L', term: 'Fall (Sept.)', courses: 'Remedies, Criminal Procedure' },
-        { year: '3L', term: 'Winter (Jan.)', courses: 'Constitutional Law I, Evidence I' },
-        { year: '3L', term: 'Spring (May)', courses: 'Constitutional Law II, Evidence II' },
-        { year: '3L', term: 'Fall (Sept.)', courses: 'Business Associations, Community Property' },
-        { year: '4L', term: 'Winter (Jan.)', courses: 'Professional Responsibility, Wills & Succession' },
-        { year: '4L', term: 'Spring (May)', courses: 'CA Civil Procedure, CA Evidence' },
-        { year: '4L', term: 'Fall (Sept.)', courses: 'Adv. Legal Research & Writing, Practical Competency Training, Bar Review (Elective)' }
+        { year: '2L', term: 'Winter (Jan.)', courses: 'Civil Procedure, Uniform Commercial Code (Elective), Law & Motion (Elective)' },
+        { year: '2L', term: 'Spring (May)', courses: 'Property, Uniform Commercial Code (Elective), Law & Motion (Elective)' },
+        { year: '2L', term: 'Fall (Sept.)', courses: 'Remedies, Criminal Procedure, Uniform Commercial Code (Elective), Law & Motion (Elective)' },
+        { year: '3L', term: 'Winter (Jan.)', courses: 'Constitutional Law, Alternative Dispute Resolution (Elective), Judicial Decision Making (Elective)' },
+        { year: '3L', term: 'Spring (May)', courses: 'Evidence, Alternative Dispute Resolution (Elective), Judicial Decision Making (Elective)' },
+        { year: '3L', term: 'Fall (Sept.)', courses: 'Business Associations, Community Property, Alternative Dispute Resolution (Elective), Judicial Decision Making (Elective)' },
+        { year: '4L', term: 'Winter (Jan.)', courses: 'Professional Responsibility, California Civil Procedure, Bar Review (Elective)' },
+        { year: '4L', term: 'Spring (May)', courses: 'Wills & Succession, California Evidence, Bar Review (Elective)' },
+        { year: '4L', term: 'Fall (Sept.)', courses: 'Advanced Legal Research & Writing, Practical Competency Training, Bar Review (Elective)' }
       ]
     },
     'Spring': {
@@ -60,15 +60,15 @@ export const Calendar: React.FC<CalendarProps> = ({ content, shared }) => {
         { year: '1L', term: 'Spring (May)', courses: 'Introduction to Law, Contracts I, Torts I' },
         { year: '1L', term: 'Fall (Sept.)', courses: 'Criminal Law, Contracts II' },
         { year: '1L', term: 'Winter (Jan.)', courses: 'Torts II, Legal Writing & Analysis, FYLSX Review' },
-        { year: '2L', term: 'Spring (May)', courses: 'Civil Procedure I, Property I' },
-        { year: '2L', term: 'Fall (Sept.)', courses: 'Civil Procedure II, Property II' },
-        { year: '2L', term: 'Winter (Jan.)', courses: 'Remedies, Criminal Procedure' },
-        { year: '3L', term: 'Spring (May)', courses: 'Constitutional Law I, Evidence I' },
-        { year: '3L', term: 'Fall (Sept.)', courses: 'Constitutional Law II, Evidence II' },
-        { year: '3L', term: 'Winter (Jan.)', courses: 'Business Associations, Community Property' },
-        { year: '4L', term: 'Spring (May)', courses: 'Professional Responsibility, Wills & Succession' },
-        { year: '4L', term: 'Fall (Sept.)', courses: 'CA Civil Procedure, CA Evidence' },
-        { year: '4L', term: 'Winter (Jan.)', courses: 'Adv. Legal Research & Writing, Practical Competency Training, Bar Review (Elective)' }
+        { year: '2L', term: 'Spring (May)', courses: 'Civil Procedure, Uniform Commercial Code (Elective), Law & Motion (Elective)' },
+        { year: '2L', term: 'Fall (Sept.)', courses: 'Property, Uniform Commercial Code (Elective), Law & Motion (Elective)' },
+        { year: '2L', term: 'Winter (Jan.)', courses: 'Remedies, Criminal Procedure, Uniform Commercial Code (Elective), Law & Motion (Elective)' },
+        { year: '3L', term: 'Spring (May)', courses: 'Constitutional Law, Alternative Dispute Resolution (Elective), Judicial Decision Making (Elective)' },
+        { year: '3L', term: 'Fall (Sept.)', courses: 'Evidence, Alternative Dispute Resolution (Elective), Judicial Decision Making (Elective)' },
+        { year: '3L', term: 'Winter (Jan.)', courses: 'Business Associations, Community Property, Alternative Dispute Resolution (Elective), Judicial Decision Making (Elective)' },
+        { year: '4L', term: 'Spring (May)', courses: 'Professional Responsibility, California Civil Procedure, Bar Review (Elective)' },
+        { year: '4L', term: 'Fall (Sept.)', courses: 'Wills & Succession, California Evidence, Bar Review (Elective)' },
+        { year: '4L', term: 'Winter (Jan.)', courses: 'Advanced Legal Research & Writing, Practical Competency Training, Bar Review (Elective)' }
       ]
     }
   };

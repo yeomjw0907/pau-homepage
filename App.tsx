@@ -842,16 +842,16 @@ const App: React.FC = () => {
                           </thead>
                           <tbody>
                             {[
-                              { year: '2026', assets: 379352, liabilities: 17486 },
-                              { year: '2027', assets: 951645, liabilities: 215422 },
-                              { year: '2028', assets: 2717265, liabilities: 631172 },
-                              { year: '2029', assets: 3124855, liabilities: 662731 },
-                              { year: '2030', assets: 3593583, liabilities: 695867 },
-                              { year: '2031', assets: 4132620, liabilities: 730660 },
-                              { year: '2032', assets: 4752513, liabilities: 767194 },
-                              { year: '2033', assets: 5465390, liabilities: 805553 },
-                              { year: '2034', assets: 6285199, liabilities: 845831 },
-                              { year: '2035', assets: 7227979, liabilities: 888122 }
+                              { year: '2026', assets: 948220, liabilities: 129765 },
+                              { year: '2027', assets: 1681427, liabilities: 295889 },
+                              { year: '2028', assets: 3434183, liabilities: 690523 },
+                              { year: '2029', assets: 3949310, liabilities: 725049 },
+                              { year: '2030', assets: 4541707, liabilities: 761302 },
+                              { year: '2031', assets: 5222963, liabilities: 799367 },
+                              { year: '2032', assets: 6006408, liabilities: 839335 },
+                              { year: '2033', assets: 6907369, liabilities: 881302 },
+                              { year: '2034', assets: 7943474, liabilities: 925367 },
+                              { year: '2035', assets: 9134995, liabilities: 971635 }
                             ].map((row, idx) => (
                               <tr key={idx} className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
                                 <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 font-bold text-pau-darkBlue">{row.year}</td>
