@@ -144,7 +144,7 @@ Last Updated: January 2026`
               <div>
                 <strong className="text-white text-[10px] block mb-1 uppercase tracking-wider">Website:</strong>
                 <a href="https://law.paucal.org/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
-                  www.law.paucal.org
+                  https://law.paucal.org/
                 </a>
               </div>
             </div>
