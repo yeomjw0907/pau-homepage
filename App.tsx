@@ -627,6 +627,15 @@ const App: React.FC = () => {
                       <p className="text-base md:text-lg leading-relaxed">
                         The Pacific American University School of Law ("PAUSL") is registered with the Committee of Bar Examiners of the State Bar of California as a Registered Unaccredited Correspondence Law School and thus PAUSL enables its graduates to take the California bar examination upon completion of the Juris Doctor("JD") program. PAUSL is not accredited by The State Bar of California or approved by the American Bar Association ("ABA"). PAUSL's degree-granting authority in connection with its students qualifying to take the California Bar Examination and obtain admission to the practice of law in California is based on its registration as an unaccredited correspondence law school with The State Bar of California's Committee of Bar Examiners.
                       </p>
+                      <p className="text-base md:text-lg leading-relaxed">
+                        "The method of instruction at this law school for the Juris Doctor (J.D.) degree program is principally by correspondence."
+                      </p>
+                      <p className="text-base md:text-lg leading-relaxed">
+                        "Students enrolled in the J.D. degree program at this law school who successfully complete the first year of law study must pass the First-Year Law Students' Examination required by Business and Professions Code § 6060(h) and Title 4, Division 1, Chapter 1 Rule 4.3(I) of the of the Rules of the State Bar of California as part of the requirements to qualify to take the California Bar Examination. A student who passes the First-Year Law Students' Examination within three (3) administrations of the examination after first becoming eligible to take it will receive credit for all legal studies completed to the time the examination is passed. A student who does not pass the examination within three (3) administrations of the examination after first becoming eligible to take it must be promptly disqualified from the law school's J.D. degree program. If the dismissed student subsequently passes the examination, the student is eligible for re-enrollment in this law school's J.D. degree program, but will receive credit for only one year of legal study."
+                      </p>
+                      <p className="text-base md:text-lg leading-relaxed">
+                        "Study at, or graduation from, this law school may not qualify a student to take the bar examination or to satisfy the requirements for admission to practice in jurisdictions other than California. A student intending to seek admission to practice law in a jurisdiction other than California should contact the admitting authority in that jurisdiction for information regarding the legal education requirements in that jurisdiction for admission to the practice of law."
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -833,16 +842,16 @@ const App: React.FC = () => {
                           </thead>
                           <tbody>
                             {[
-                              { year: '2026', assets: 379352, liabilities: 17486 },
-                              { year: '2027', assets: 951645, liabilities: 215422 },
-                              { year: '2028', assets: 2717265, liabilities: 631172 },
-                              { year: '2029', assets: 3124855, liabilities: 662731 },
-                              { year: '2030', assets: 3593583, liabilities: 695867 },
-                              { year: '2031', assets: 4132620, liabilities: 730660 },
-                              { year: '2032', assets: 4752513, liabilities: 767194 },
-                              { year: '2033', assets: 5465390, liabilities: 805553 },
-                              { year: '2034', assets: 6285199, liabilities: 845831 },
-                              { year: '2035', assets: 7227979, liabilities: 888122 }
+                              { year: '2026', assets: 948220, liabilities: 129765 },
+                              { year: '2027', assets: 1681427, liabilities: 295889 },
+                              { year: '2028', assets: 3434183, liabilities: 690523 },
+                              { year: '2029', assets: 3949310, liabilities: 725049 },
+                              { year: '2030', assets: 4541707, liabilities: 761302 },
+                              { year: '2031', assets: 5222963, liabilities: 799367 },
+                              { year: '2032', assets: 6006408, liabilities: 839335 },
+                              { year: '2033', assets: 6907369, liabilities: 881302 },
+                              { year: '2034', assets: 7943474, liabilities: 925367 },
+                              { year: '2035', assets: 9134995, liabilities: 971635 }
                             ].map((row, idx) => (
                               <tr key={idx} className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
                                 <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 font-bold text-pau-darkBlue">{row.year}</td>
