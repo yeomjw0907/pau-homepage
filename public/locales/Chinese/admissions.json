@@ -1,0 +1,52 @@
+{
+  "title": "招生",
+  "intro": "与 Pacific American University 一起开启您的法律职业生涯。",
+  "deadlinesTitle": "申请截止日期",
+  "deadlines": [
+    {
+      "term": "冬季入学",
+      "date": "1月开学（截止日期：11月中旬）",
+      "type": "一年级学生"
+    },
+    {
+      "term": "春季入学",
+      "date": "4月开学（截止日期：2月中旬）",
+      "type": "一年级学生"
+    },
+    {
+      "term": "秋季入学",
+      "date": "9月开学（截止日期：7月中旬）",
+      "type": "一年级学生"
+    }
+  ],
+  "requirementsTitle": "录取要求",
+  "requirements": [
+    "获得认可机构的学士学位",
+    "个人陈述",
+    "两封推荐信",
+    "LSAT 成绩（可选）",
+    "官方成绩单"
+  ],
+  "tuitionTitle": "学费与价值",
+  "tuitionInfo": "California 最具性价比的 JD 项目之一。我们致力于提供高质量的法律教育，且不让学生背负沉重的债务负担。",
+  "tuitionCost": "$9,000",
+  "faqTitle": "招生常见问题",
+  "faqs": [
+    {
+      "question": "该项目是 100% 在线吗？",
+      "answer": "是的。PAUSL 是一所注册的未经认证的函授法学院。虽然该项目通过我们的学习管理系统 Populi 100% 在线授课，但它结合了高质量的录制（异步）视频讲座和实时同步课程，以促进学生与教师之间必要的互动。这种灵活的形式让您可以在世界任何地方攻读 J.D.，同时兼顾全球时差。"
+    },
+    {
+      "question": "我需要参加 LSAT 考试吗？",
+      "answer": "不需要，LSAT 不是强制要求的，但强烈建议参加。PAUSL 对候选人进行全面评估，虽然 LSAT 分数是法学院成功与否的可靠预测指标，但它们并不是录取的强制性先决条件。"
+    },
+    {
+      "question": "我可以在 California 以外的州执业吗？",
+      "answer": "PAUSL 的注册专门为了满足 State Bar of California 的教育要求。如果您计划在 California 以外的司法管辖区执业，我们强烈建议您联系该管辖区的相关 State Bar 机构，以确定我们的 J.D. 项目是否符合其特定标准。"
+    },
+    {
+      "question": "什么是“一年级法学生考试” (FYLSX)？",
+      "answer": "作为未经认证的函授法学院的学生，根据 California 法律，您必须在完成第一年学习后通过 FYLSX（通常称为“Baby Bar”），才能获得法律教育学分并继续攻读 J.D.。"
+    }
+  ]
+}

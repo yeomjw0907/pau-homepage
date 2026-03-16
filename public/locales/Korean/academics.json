@@ -1,0 +1,22 @@
+{
+  "title": "학사 과정",
+  "intro": "차세대 법률 전문가를 위한 엄격한 법률 교육.",
+  "programsTitle": "학위 프로그램",
+  "programs": [
+    {
+      "name": "Juris Doctor (JD)",
+      "description": "State Bar of California에 등록된 4년제 온라인 프로그램."
+    },
+    {
+      "name": "Master of Laws (LLM)",
+      "description": "국제 변호사를 위한 심화 전문 법률 연구."
+    }
+  ],
+  "concentrationsTitle": "전공 분야",
+  "concentrations": [
+    "기술법",
+    "형법",
+    "기업법",
+    "공익법"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "title": "Akademiko",
+  "intro": "Mahigpit na pagsasanay sa batas para sa susunod na henerasyon ng mga tagapagtanggol.",
+  "programsTitle": "Mga Programa sa Digri",
+  "programs": [
+    {
+      "name": "Juris Doctor (JD)",
+      "description": "Isang 4-na taong online na programa na rehistrado sa State Bar of California."
+    },
+    {
+      "name": "Master of Laws (LLM)",
+      "description": "Abanteng espesyalisadong pag-aaral sa batas para sa mga internasyonal na abogado."
+    }
+  ],
+  "concentrationsTitle": "Mga Konsentrasyon",
+  "concentrations": [
+    "Batas sa Teknolohiya",
+    "Batas Kriminal",
+    "Batas sa Negosyo",
+    "Interes ng Publiko"
+  ]
+}

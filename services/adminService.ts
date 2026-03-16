@@ -13,6 +13,7 @@ import {
     WeeklyDictaItem,
     RequestInfoItem
 } from '../types';
+import { translateNewsItem } from './geminiService';
 
 // Helper to handle Supabase errors
 const handleServiceError = (error: any, context: string) => {
@@ -57,13 +58,49 @@ export const fetchNews = async (): Promise<NewsItem[]> => {
 
 export const createNews = async (news: Omit<NewsItem, 'id'>): Promise<NewsItem> => {
     if (!supabase) throw new Error('Supabase not configured');
-    const { data, error } = await supabase.from('news').insert([news]).select().single();
+
+    // Auto-translate and store translations in DB alongside the item
+    let translations: Record<string, any> = {};
+    try {
+        translations = await translateNewsItem({
+            title: news.title,
+            summary: news.summary,
+            body: news.body,
+        });
+    } catch (e) {
+        console.warn('[adminService] Auto-translation failed, saving without translations:', e);
+    }
+
+    const { data, error } = await supabase
+        .from('news')
+        .insert([{ ...news, translations }])
+        .select()
+        .single();
     if (error) handleServiceError(error, 'createNews');
     return data;
 };
 
 export const updateNews = async (id: string, updates: Partial<NewsItem>) => {
     if (!supabase) return;
+
+    // Re-translate if any translatable fields changed
+    const textFields = ['title', 'summary', 'body'] as const;
+    const hasTextChanges = textFields.some(f => f in updates);
+    if (hasTextChanges) {
+        try {
+            const existing = await supabase.from('news').select('title,summary,body').eq('id', id).single();
+            const merged = { ...existing.data, ...updates };
+            const translations = await translateNewsItem({
+                title: merged.title,
+                summary: merged.summary,
+                body: merged.body,
+            });
+            (updates as any).translations = translations;
+        } catch (e) {
+            console.warn('[adminService] Re-translation failed on update:', e);
+        }
+    }
+
     const { error } = await supabase.from('news').update(updates).eq('id', id);
     if (error) handleServiceError(error, 'updateNews');
 };
@@ -88,13 +125,47 @@ export const fetchNotices = async (): Promise<NewsItem[]> => {
 
 export const createNotice = async (notice: Omit<NewsItem, 'id'>): Promise<NewsItem> => {
     if (!supabase) throw new Error('Supabase not configured');
-    const { data, error } = await supabase.from('notices').insert([notice]).select().single();
+
+    let translations: Record<string, any> = {};
+    try {
+        translations = await translateNewsItem({
+            title: notice.title,
+            summary: notice.summary,
+            body: notice.body,
+        });
+    } catch (e) {
+        console.warn('[adminService] Auto-translation failed, saving without translations:', e);
+    }
+
+    const { data, error } = await supabase
+        .from('notices')
+        .insert([{ ...notice, translations }])
+        .select()
+        .single();
     if (error) handleServiceError(error, 'createNotice');
     return data;
 };
 
 export const updateNotice = async (id: string, updates: Partial<NewsItem>) => {
     if (!supabase) return;
+
+    const textFields = ['title', 'summary', 'body'] as const;
+    const hasTextChanges = textFields.some(f => f in updates);
+    if (hasTextChanges) {
+        try {
+            const existing = await supabase.from('notices').select('title,summary,body').eq('id', id).single();
+            const merged = { ...existing.data, ...updates };
+            const translations = await translateNewsItem({
+                title: merged.title,
+                summary: merged.summary,
+                body: merged.body,
+            });
+            (updates as any).translations = translations;
+        } catch (e) {
+            console.warn('[adminService] Re-translation failed on update:', e);
+        }
+    }
+
     const { error } = await supabase.from('notices').update(updates).eq('id', id);
     if (error) handleServiceError(error, 'updateNotice');
 };

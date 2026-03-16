@@ -1,0 +1,83 @@
+{
+  "heroTitle": "Empoderando Defensores.\nTransformando Vidas.",
+  "heroSubtitle": "Experimente una educación legal de clase mundial desde el corazón de Silicon Valley hasta dondequiera que se encuentre.",
+  "visionStatement": "Nuestra visión es proporcionar una puerta de acceso accesible a la profesión legal para estudiantes de todos los orígenes.",
+  "missionTitle": "La Misión de PAU",
+  "missionDescription": "Cerramos la brecha entre la teoría académica y la práctica legal del mundo real a través de una pedagogía impulsada por la tecnología.",
+  "missionPoints": [
+    {
+      "title": "Innovación",
+      "description": "Utilizando herramientas modernas para la investigación y educación legal.",
+      "icon": "innovation"
+    },
+    {
+      "title": "Acceso",
+      "description": "Brindando oportunidades para estudiantes remotos y no tradicionales.",
+      "icon": "access"
+    },
+    {
+      "title": "Impacto Global",
+      "description": "Preparando abogados para un panorama legal interconectado.",
+      "icon": "globe"
+    }
+  ],
+  "introTitle": "Un Nuevo Paradigma en el Derecho",
+  "introText": "Pacific American University School of Law ofrece un riguroso programa de Juris Doctor adaptado a la era moderna.",
+  "features": [
+    {
+      "title": "Aprendizaje Flexible",
+      "description": "Estudie a su propio ritmo con nuestra sólida plataforma en línea.",
+      "icon": "clock"
+    },
+    {
+      "title": "Facultad Experta",
+      "description": "Aprenda de abogados en ejercicio y académicos distinguidos.",
+      "icon": "academic"
+    },
+    {
+      "title": "Educación Asequible",
+      "description": "Programa de JD de alto valor con tasas de matrícula competitivas.",
+      "icon": "currency"
+    }
+  ],
+  "successTitle": "Excelencia Comprobada",
+  "successText": "Nuestros graduados ejercen en firmas prestigiosas y en el servicio público en todo California.",
+  "stats": [
+    {
+      "label": "Tasa de Aprobación del Bar",
+      "value": "85%"
+    },
+    {
+      "label": "Empleo",
+      "value": "92%"
+    },
+    {
+      "label": "Facultad",
+      "value": "45+"
+    },
+    {
+      "label": "Exalumnos",
+      "value": "2k+"
+    }
+  ],
+  "globalFutureTitle": "Su Futuro Global",
+  "globalFutureIntro": "Nuestro programa de JD le prepara para diversas trayectorias profesionales en el sector legal.",
+  "globalFutureList": [
+    {
+      "title": "Derecho Tecnológico",
+      "description": "Especialícese en PI, ética de la IA y las necesidades legales únicas de Silicon Valley.",
+      "detailTitle": "Innovación y Derecho",
+      "detailBody": "Lidere la conversación en regulaciones tecnológicas.",
+      "stats": [
+        {
+          "label": "Crecimiento",
+          "value": "+20%"
+        }
+      ]
+    }
+  ],
+  "globalFutureClosing": "Únase a la próxima generación de líderes legales.",
+  "clinicsTitle": "Oportunidades Clínicas",
+  "clinicsIntro": "Obtenga experiencia práctica a través de nuestras clínicas legales especializadas.",
+  "newsTitle": "Últimas Noticias"
+}

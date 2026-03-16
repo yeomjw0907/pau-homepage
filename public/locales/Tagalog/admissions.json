@@ -1,0 +1,52 @@
+{
+  "title": "Admissions",
+  "intro": "Simulan ang iyong paglalakbay patungo sa isang legal na karera kasama ang Pacific American University.",
+  "deadlinesTitle": "Mga Deadline ng Aplikasyon",
+  "deadlines": [
+    {
+      "term": "Winter Intake",
+      "date": "Magsisimula sa Enero (Deadline: kalagitnaan ng Nobyembre)",
+      "type": "Mga Estudyanteng 1L"
+    },
+    {
+      "term": "Spring Intake",
+      "date": "Magsisimula sa Abril (Deadline: kalagitnaan ng Pebrero)",
+      "type": "Mga Estudyanteng 1L"
+    },
+    {
+      "term": "Fall Intake",
+      "date": "Magsisimula sa Setyembre (Deadline: kalagitnaan ng Hulyo)",
+      "type": "Mga Estudyanteng 1L"
+    }
+  ],
+  "requirementsTitle": "Mga Kinakailangan sa Pagpasok",
+  "requirements": [
+    "Bachelor's Degree mula sa isang akreditadong institusyon",
+    "Personal Statement",
+    "Dalawang Letters of Recommendation",
+    "LSAT Score (Opsyonal)",
+    "Opisyal na mga Transcript"
+  ],
+  "tuitionTitle": "Matrikula at Halaga",
+  "tuitionInfo": "Isa sa mga pinaka-abot-kayang programang JD sa California. Naniniwala kami sa pagbibigay ng mataas na kalidad na legal na edukasyon nang walang mabigat na pasanin ng utang.",
+  "tuitionCost": "$9,000",
+  "faqTitle": "Mga FAQ sa Admissions",
+  "faqs": [
+    {
+      "question": "Ang programa ba ay 100% online?",
+      "answer": "Oo. Ang PAUSL ay isang Registered Unaccredited Correspondence Law School. Bagama't ang programa ay 100% online sa pamamagitan ng aming Learning Management System, Populi, nagtatampok ito ng dinamikong kumbinasyon ng mataas na kalidad na mga recorded (asynchronous) na video lecture at real-time synchronous sessions upang itaguyod ang mahalagang interaksyon sa pagitan ng mga estudyante at guro. Ang flexible na format na ito ay nagbibigay-daan sa iyo na ituloy ang iyong J.D. mula sa kahit saan sa mundo habang iginagalang ang mga pagkakaiba sa oras sa buong mundo."
+    },
+    {
+      "question": "Kailangan ko bang kumuha ng LSAT?",
+      "answer": "Hindi, hindi kinakailangan ang LSAT, ngunit ito ay lubos na inirerekomenda. Sinusuri ng PAUSL ang mga kandidato sa paraang holistiko, at bagama't ang mga LSAT score ay isang maaasahang tagapagpahiwatig ng tagumpay sa law school, hindi sila isang mandatoryong kinakailangan para sa pagpasok."
+    },
+    {
+      "question": "Maaari ba akong mag-practice ng batas sa ibang mga estado maliban sa California?",
+      "answer": "Ang PAUSL ay partikular na nakarehistro upang matugunan ang mga kinakailangang pang-edukasyon para sa State Bar of California. Kung plano mong mag-practice ng batas sa isang hurisdiksyon maliban sa California, lubos naming ipinapayo na makipag-ugnayan sa kaugnay na awtoridad ng State Bar sa hurisdiksyong iyon upang matukoy kung ang aming programang J.D. ay nakakatugon sa kanilang mga partikular na pamantayan."
+    },
+    {
+      "question": "Ano ang \"First-Year Law Students' Examination\" (FYLSX)?",
+      "answer": "Bilang isang estudyante sa isang unaccredited correspondence law school, kinakailangan ka ng batas ng California na pumasa sa FYLSX (madalas na tinatawag na \"Baby Bar\") pagkatapos makumpleto ang iyong unang taon ng pag-aaral upang makatanggap ng kredito para sa iyong legal na edukasyon at magpatuloy patungo sa iyong J.D.."
+    }
+  ]
+}

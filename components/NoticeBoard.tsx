@@ -39,7 +39,7 @@ export const NoticeBoard: React.FC<NoticeBoardProps> = ({ content, onNewsClick, 
                   <div className="absolute top-0 right-12 transform -translate-y-1/2">
                     <span className="bg-pau-gold text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-md flex items-center">
                        <BookmarkSolidIcon className="h-3 w-3 mr-1" />
-                       Pinned
+                       {shared.labels?.pinned ?? "Pinned"}
                     </span>
                   </div>
                 )}

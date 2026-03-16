@@ -1,0 +1,22 @@
+{
+  "title": "学术",
+  "intro": "为下一代法律倡导者提供严谨的法律培训。",
+  "programsTitle": "学位项目",
+  "programs": [
+    {
+      "name": "Juris Doctor (JD)",
+      "description": "在 State Bar of California 注册的四年制在线项目。"
+    },
+    {
+      "name": "法律硕士 (LLM)",
+      "description": "为国际律师提供的进阶专业法律研究。"
+    }
+  ],
+  "concentrationsTitle": "专业方向",
+  "concentrations": [
+    "技术法",
+    "刑法",
+    "商法",
+    "公共利益"
+  ]
+}

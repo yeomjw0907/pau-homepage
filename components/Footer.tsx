@@ -115,16 +115,14 @@ Last Updated: January 2026`
               className="h-12 md:h-14 w-auto max-w-[200px] md:max-w-[240px] object-contain"
             />
           </div>
-          {/* Source: Catalog Page 11 (Mission Statement) */}
           <p className="text-gray-500 text-xs leading-relaxed font-light">
-            Pacific American University School of Law is dedicated to excellence in legal education, 
-            nurturing global leaders to resolve complex challenges without borders.
+            {shared.footer.schoolDesc}
           </p>
         </div>
 
         {/* Contact - Expanded to 2 columns */}
         <div className="col-span-1 md:col-span-2">
-          <h3 className="text-[10px] font-bold text-pau-gold uppercase tracking-[0.2em] mb-6">Contact</h3>
+          <h3 className="text-[10px] font-bold text-pau-gold uppercase tracking-[0.2em] mb-6">{shared.footer.contact}</h3>
           {/* Source: Catalog Page 48 (Contact Information) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 text-xs text-gray-300 font-light">
             <div className="space-y-4">
@@ -173,10 +171,10 @@ Last Updated: January 2026`
 
         {/* Quick Links */}
         <div className="col-span-1">
-          <h3 className="text-[10px] font-bold text-pau-gold uppercase tracking-[0.2em] mb-6">Quick Links</h3>
+          <h3 className="text-[10px] font-bold text-pau-gold uppercase tracking-[0.2em] mb-6">{shared.footer.quickLinks}</h3>
           <ul className="text-xs text-gray-300 space-y-3 font-bold">
-            <li><button onClick={() => onNavigate('apply-now')} className="hover:text-white transition-colors" aria-label="Navigate to application page">Apply Now</button></li>
-            <li><button onClick={() => onNavigate('academic-calendar')} className="hover:text-white transition-colors" aria-label="Navigate to academic calendar">Academic Calendar</button></li>
+            <li><button onClick={() => onNavigate('apply-now')} className="hover:text-white transition-colors" aria-label="Navigate to application page">{shared.footer.applyNow}</button></li>
+            <li><button onClick={() => onNavigate('academic-calendar')} className="hover:text-white transition-colors" aria-label="Navigate to academic calendar">{shared.footer.academicCalendar}</button></li>
             {/* <li><button onClick={() => onNavigate('library')} className="hover:text-white transition-colors">Law Library</button></li> */}
             {/* <li><button onClick={() => onNavigate('careers')} className="hover:text-white transition-colors">Career Services</button></li> */}
           </ul>

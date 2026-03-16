@@ -1,0 +1,22 @@
+{
+  "title": "Academia",
+  "intro": "Formación jurídica rigurosa para la próxima generación de defensores.",
+  "programsTitle": "Programas de Grado",
+  "programs": [
+    {
+      "name": "Juris Doctor (JD)",
+      "description": "Un programa en línea de 4 años registrado ante el State Bar of California."
+    },
+    {
+      "name": "Master of Laws (LLM)",
+      "description": "Estudio jurídico especializado avanzado para abogados internacionales."
+    }
+  ],
+  "concentrationsTitle": "Concentraciones",
+  "concentrations": [
+    "Derecho Tecnológico",
+    "Derecho Penal",
+    "Derecho Empresarial",
+    "Interés Público"
+  ]
+}

@@ -8,14 +8,16 @@ interface FacultyItemProps {
   isBioExpanded: boolean;
   onToggleEd: (name: string) => void;
   onToggleBio: (name: string) => void;
+  shared?: SharedContent;
 }
 
-const FacultyItem: React.FC<FacultyItemProps> = ({ 
-  prof, 
-  isEdExpanded, 
-  isBioExpanded, 
-  onToggleEd, 
-  onToggleBio 
+const FacultyItem: React.FC<FacultyItemProps> = ({
+  prof,
+  isEdExpanded,
+  isBioExpanded,
+  onToggleEd,
+  onToggleBio,
+  shared
 }) => {
   return (
     <div className="py-8 md:py-12 border-b border-gray-100 last:border-0 flex flex-col md:flex-row gap-6 md:gap-12 group animate-fade-in">
@@ -55,7 +57,7 @@ const FacultyItem: React.FC<FacultyItemProps> = ({
           <div className="flex flex-col space-y-2 text-[12px] md:text-sm text-gray-500 font-medium bg-gray-50/50 p-4 rounded-xl border border-gray-100 text-left">
             {prof.email && (
               <div className="flex flex-wrap items-center overflow-hidden">
-                <span className="font-bold text-gray-400 w-16 md:w-20">Email:</span> 
+                <span className="font-bold text-gray-400 w-16 md:w-20">{shared?.labels?.emailLabel ?? "Email:"}</span>
                 <a href={`mailto:${prof.email}`} className="text-pau-blue hover:text-pau-gold transition-colors font-bold underline decoration-pau-gold/30 break-all">
                   {prof.email}
                 </a>
@@ -70,7 +72,7 @@ const FacultyItem: React.FC<FacultyItemProps> = ({
               onClick={() => onToggleEd(prof.name)}
               className="w-full py-3 flex items-center justify-between text-left"
             >
-              <span className="text-[9px] md:text-xs font-bold text-pau-darkBlue uppercase tracking-[0.15em]">Education</span>
+              <span className="text-[9px] md:text-xs font-bold text-pau-darkBlue uppercase tracking-[0.15em]">{shared?.labels?.education ?? "Education"}</span>
               <div className={`p-1 border rounded transition-colors ${isEdExpanded ? 'border-pau-gold' : 'border-gray-200'}`}>
                 {isEdExpanded ? <MinusIcon className="h-3 w-3 text-pau-gold" /> : <PlusIcon className="h-3 w-3 text-gray-400" />}
               </div>
@@ -91,7 +93,7 @@ const FacultyItem: React.FC<FacultyItemProps> = ({
               onClick={() => onToggleBio(prof.name)}
               className="w-full py-3 flex items-center justify-between text-left"
             >
-              <span className="text-[9px] md:text-xs font-bold text-pau-darkBlue uppercase tracking-[0.15em]">Background</span>
+              <span className="text-[9px] md:text-xs font-bold text-pau-darkBlue uppercase tracking-[0.15em]">{shared?.labels?.background ?? "Background"}</span>
               <div className={`p-1 border rounded transition-colors ${isBioExpanded ? 'border-pau-gold' : 'border-gray-200'}`}>
                 {isBioExpanded ? <MinusIcon className="h-3 w-3 text-pau-gold" /> : <PlusIcon className="h-3 w-3 text-gray-400" />}
               </div>
@@ -117,9 +119,11 @@ interface FacultyProps {
   shared: SharedContent;
   currentPage: Page;
   onNavigate: (page: Page) => void;
+  pagesContent?: any;
 }
 
-export const Faculty: React.FC<FacultyProps> = ({ content, shared, currentPage, onNavigate }) => {
+export const Faculty: React.FC<FacultyProps> = ({ content, shared, currentPage, onNavigate, pagesContent }) => {
+  const fc = pagesContent?.faculty;
   const [expandedEducation, setExpandedEducation] = useState<Record<string, boolean>>({});
   const [expandedBio, setExpandedBio] = useState<Record<string, boolean>>({});
   const [activeTab, setActiveTab] = useState<'Faculty' | 'Staff'>('Faculty');
@@ -161,10 +165,10 @@ export const Faculty: React.FC<FacultyProps> = ({ content, shared, currentPage, 
       <div className="bg-pau-darkBlue pt-32 md:pt-44 pb-12 md:pb-24 px-6 text-center">
         <div className="relative z-10 max-w-4xl mx-auto animate-fade-in-up">
            <h1 className="text-2xl md:text-6xl font-serif font-bold text-white leading-tight mb-4 md:mb-6">
-             {activeTab === 'Faculty' ? 'Academic Faculty' : 'Administrative Team'}
+             {activeTab === 'Faculty' ? (fc?.academicFaculty ?? 'Academic Faculty') : (fc?.adminTeam ?? 'Administrative Team')}
            </h1>
            <p className="text-xs md:text-xl text-gray-300 font-light max-w-2xl mx-auto">
-             Dedicated professionals committed to excellence in legal education.
+             {fc?.dedicatedProfessionals ?? 'Dedicated professionals committed to excellence in legal education.'}
            </p>
         </div>
       </div>
@@ -181,17 +185,17 @@ export const Faculty: React.FC<FacultyProps> = ({ content, shared, currentPage, 
                     : 'bg-white text-gray-400 border border-gray-200'
                   }`}
                 >
-                  Academic Faculty
+                  {fc?.academicFaculty ?? 'Academic Faculty'}
                 </button>
-                <button 
+                <button
                   onClick={() => handleTabChange('Staff')}
                   className={`flex-shrink-0 md:w-full py-3 md:py-5 px-4 md:px-6 rounded-xl text-[9px] md:text-[11px] font-bold uppercase tracking-widest transition-all ${
-                    activeTab === 'Staff' 
-                    ? 'bg-pau-blue text-white shadow-md' 
+                    activeTab === 'Staff'
+                    ? 'bg-pau-blue text-white shadow-md'
                     : 'bg-white text-gray-400 border border-gray-200'
                   }`}
                 >
-                  Administrative Staff
+                  {fc?.adminStaff ?? 'Administrative Staff'}
                 </button>
              </div>
           </aside>
@@ -199,12 +203,12 @@ export const Faculty: React.FC<FacultyProps> = ({ content, shared, currentPage, 
           <div className="flex-grow">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8 pb-4 border-b border-gray-100">
               <h2 className="text-xl md:text-4xl font-serif font-bold text-pau-darkBlue text-center sm:text-left">
-                {activeTab === 'Faculty' ? 'Faculty Profiles' : 'Team Members'}
+                {activeTab === 'Faculty' ? (fc?.facultyProfiles ?? 'Faculty Profiles') : (fc?.teamMembers ?? 'Team Members')}
               </h2>
               
               <div className="flex items-center space-x-2">
                 <span className="text-lg md:text-2xl font-bold text-pau-blue">{filteredProfiles.length}</span>
-                <span className="text-[8px] md:text-[10px] font-bold text-gray-400 uppercase tracking-widest">Profiles</span>
+                <span className="text-[8px] md:text-[10px] font-bold text-gray-400 uppercase tracking-widest">{fc?.profiles ?? 'Profiles'}</span>
               </div>
             </div>
             
@@ -212,13 +216,14 @@ export const Faculty: React.FC<FacultyProps> = ({ content, shared, currentPage, 
               {filteredProfiles.length > 0 ? (
                 <div className="flex flex-col">
                   {filteredProfiles.map((member) => (
-                    <FacultyItem 
-                      key={member.name} 
-                      prof={member} 
+                    <FacultyItem
+                      key={member.name}
+                      prof={member}
                       isEdExpanded={!!expandedEducation[member.name]}
                       isBioExpanded={!!expandedBio[member.name]}
                       onToggleEd={toggleEducation}
                       onToggleBio={toggleBio}
+                      shared={shared}
                     />
                   ))}
                 </div>

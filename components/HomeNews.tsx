@@ -14,39 +14,40 @@ interface HomeNewsProps {
 export const HomeNews: React.FC<HomeNewsProps> = ({ title, newsItems, onNewsClick, onNavigate, shared }) => {
   const isWeeklyDicta = title === 'Weekly Dicta';
   
+  const hc = shared.homeCards;
   const staticAdmissionsNews = [
     {
       id: 'n1',
-      title: "Rolling Admissions",
-      date: "Open Year-Round",
-      summary: "Accepting applications year-round for Winter, Spring, and Fall terms.",
+      title: hc?.rollingAdmissions?.title ?? "Rolling Admissions",
+      date: hc?.rollingAdmissions?.date ?? "Open Year-Round",
+      summary: hc?.rollingAdmissions?.summary ?? "Accepting applications year-round for Winter, Spring, and Fall terms.",
       icon: ClipboardDocumentCheckIcon,
       category: 'Admissions',
       targetPage: 'apply-now' as Page
     },
     {
       id: 'n2',
-      title: "Academic Calendar & Start Dates",
-      date: "2026-2027",
-      summary: "All cohorts start in January, May, or September",
+      title: hc?.academicCalendar?.title ?? "Academic Calendar & Start Dates",
+      date: hc?.academicCalendar?.date ?? "2026-2027",
+      summary: hc?.academicCalendar?.summary ?? "All cohorts start in January, May, or September",
       icon: ClockIcon,
       category: 'Academic',
       targetPage: 'academic-calendar' as Page
     },
     {
       id: 'n3',
-      title: "FYLSX Requirement",
-      date: "Important Notice",
-      summary: "Students must pass the 'Baby Bar' (FYLSX) after the first year.",
+      title: hc?.fylsx?.title ?? "FYLSX Requirement",
+      date: hc?.fylsx?.date ?? "Important Notice",
+      summary: hc?.fylsx?.summary ?? "Students must pass the 'Baby Bar' (FYLSX) after the first year.",
       icon: InformationCircleIcon,
       category: 'Compliance',
       targetPage: 'bar-reg' as Page
     },
     {
       id: 'n4',
-      title: "Weekly Dicta",
-      date: "February 3, 2025",
-      summary: "Learning, Serving, and Leading Together. Official announcements and updates for the PAU School of Law community.",
+      title: hc?.weeklyDicta?.title ?? "Weekly Dicta",
+      date: hc?.weeklyDicta?.date ?? "February 3, 2025",
+      summary: hc?.weeklyDicta?.summary ?? "Learning, Serving, and Leading Together. Official announcements and updates for the PAU School of Law community.",
       icon: NewspaperIcon,
       category: 'Newsletter',
       targetPage: 'weekly-dicta' as Page
@@ -64,7 +65,7 @@ export const HomeNews: React.FC<HomeNewsProps> = ({ title, newsItems, onNewsClic
              {!isWeeklyDicta && (
                <div className="flex items-center justify-center md:justify-start space-x-2 mb-3">
                  <span className="h-px w-8 bg-pau-gold"></span>
-                 <span className="text-pau-gold font-bold tracking-widest uppercase text-xs">University Updates</span>
+                 <span className="text-pau-gold font-bold tracking-widest uppercase text-xs">{shared.labels?.universityUpdates ?? 'University Updates'}</span>
                </div>
              )}
              <h2 className="text-4xl font-serif font-bold text-pau-darkBlue">{title}</h2>
@@ -74,7 +75,7 @@ export const HomeNews: React.FC<HomeNewsProps> = ({ title, newsItems, onNewsClic
               onClick={() => onNavigate('notices')}
               className="hidden md:block px-8 py-3 border border-gray-200 text-sm font-bold text-gray-600 rounded-full hover:border-pau-blue hover:text-white hover:bg-pau-blue transition-all bg-white shadow-sm"
             >
-               View All Announcements
+               {shared.buttons?.viewAllAnnouncements ?? 'View All Announcements'}
             </button>
           )}
         </div>
@@ -131,7 +132,7 @@ export const HomeNews: React.FC<HomeNewsProps> = ({ title, newsItems, onNewsClic
                     
                     <div className="mt-auto pt-6 border-t border-gray-50 flex items-center justify-between">
                       <span className="text-xs font-bold text-gray-400 group-hover:text-pau-darkBlue transition-colors uppercase tracking-wide">
-                        Read More
+                        {shared.buttons.readMore}
                       </span>
                       <div className="w-8 h-8 rounded-full border border-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-pau-blue group-hover:text-white group-hover:border-pau-blue transition-all duration-300">
                         <ArrowLongRightIcon className="h-4 w-4 transform group-hover:translate-x-0.5 transition-transform" />
@@ -180,7 +181,7 @@ export const HomeNews: React.FC<HomeNewsProps> = ({ title, newsItems, onNewsClic
                     
                     <div className="mt-auto pt-6 border-t border-gray-50 flex items-center justify-between">
                       <span className="text-xs font-bold text-gray-400 group-hover:text-pau-darkBlue transition-colors uppercase tracking-wide">
-                        Learn More
+                        {shared.buttons.learnMore}
                       </span>
                       <div className="w-8 h-8 rounded-full border border-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-pau-blue group-hover:text-white group-hover:border-pau-blue transition-all duration-300">
                         <ArrowLongRightIcon className="h-4 w-4 transform group-hover:translate-x-0.5 transition-transform" />

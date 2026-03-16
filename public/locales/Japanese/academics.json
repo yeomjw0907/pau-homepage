@@ -1,0 +1,22 @@
+{
+  "title": "アカデミックス",
+  "intro": "次世代の法曹界のリーダーのための厳格な法学教育。",
+  "programsTitle": "学位プログラム",
+  "programs": [
+    {
+      "name": "Juris Doctor (JD)",
+      "description": "State Bar of Californiaに登録された4年間のオンラインプログラム。"
+    },
+    {
+      "name": "Master of Laws (LLM)",
+      "description": "国際的な弁護士のための高度で専門的な法学研究。"
+    }
+  ],
+  "concentrationsTitle": "専攻分野",
+  "concentrations": [
+    "テクノロジー法",
+    "刑法",
+    "ビジネス法",
+    "公益法"
+  ]
+}

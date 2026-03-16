@@ -6,9 +6,11 @@ import { BookOpenIcon, ClockIcon, ComputerDesktopIcon, XMarkIcon, ChatBubbleLeft
 interface LibraryProps {
   content: LibraryContent;
   shared: SharedContent;
+  pagesContent?: any;
 }
 
-export const Library: React.FC<LibraryProps> = ({ content, shared }) => {
+export const Library: React.FC<LibraryProps> = ({ content, shared, pagesContent }) => {
+  const lib = pagesContent?.library;
   const [activeModal, setActiveModal] = useState<'chat' | 'reserve' | null>(null);
   const [chatMessage, setChatMessage] = useState('');
   const [chatHistory, setChatHistory] = useState<{sender: 'user' | 'bot', text: string}[]>([
@@ -73,7 +75,7 @@ export const Library: React.FC<LibraryProps> = ({ content, shared }) => {
         {/* Legal Research Resources */}
         <div className="mt-20 bg-white rounded-2xl shadow-soft border border-gray-100 p-10">
           <h2 className="text-3xl font-serif font-bold text-pau-darkBlue mb-8 text-center border-b border-gray-100 pb-6">
-            Legal Research Resources
+            {lib?.researchResources ?? "Legal Research Resources"}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center p-6 border border-gray-100 rounded-xl hover:shadow-md transition-all">
@@ -82,7 +84,7 @@ export const Library: React.FC<LibraryProps> = ({ content, shared }) => {
               </div>
               <h3 className="text-xl font-bold text-pau-darkBlue mb-3">Westlaw</h3>
               <p className="text-gray-600 leading-relaxed">
-                Access to the world's largest online law library.
+                {lib?.westlawDesc ?? "Access to the world's largest online law library."}
               </p>
             </div>
             <div className="text-center p-6 border border-gray-100 rounded-xl hover:shadow-md transition-all">
@@ -91,7 +93,7 @@ export const Library: React.FC<LibraryProps> = ({ content, shared }) => {
               </div>
               <h3 className="text-xl font-bold text-pau-darkBlue mb-3">CALI</h3>
               <p className="text-gray-600 leading-relaxed">
-                Center for Computer-Assisted Legal Instruction: Access to over 1,300 interactive tutorials.
+                {lib?.caliDesc ?? "Center for Computer-Assisted Legal Instruction: Access to over 1,300 interactive tutorials."}
               </p>
             </div>
             <div className="text-center p-6 border border-gray-100 rounded-xl hover:shadow-md transition-all">
@@ -100,14 +102,14 @@ export const Library: React.FC<LibraryProps> = ({ content, shared }) => {
               </div>
               <h3 className="text-xl font-bold text-pau-darkBlue mb-3">ExamSoft</h3>
               <p className="text-gray-600 leading-relaxed">
-                Secure exam delivery software.
+                {lib?.examSoftDesc ?? "Secure exam delivery software."}
               </p>
             </div>
           </div>
         </div>
 
         <div className="mt-20 bg-pau-light rounded-2xl p-12 text-center border border-gray-100">
-          <h2 className="text-3xl font-serif font-bold text-pau-blue mb-6">Research Assistance</h2>
+          <h2 className="text-3xl font-serif font-bold text-pau-blue mb-6">{lib?.researchAssistance ?? "Research Assistance"}</h2>
           <p className="text-gray-600 mb-10 text-lg max-w-2xl mx-auto">Our reference librarians are available to assist with complex legal research questions.</p>
           <div className="flex justify-center gap-6 flex-col sm:flex-row">
             <button 

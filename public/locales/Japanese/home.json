@@ -1,0 +1,83 @@
+{
+  "heroTitle": "擁護者を力づけ、\n人生を変革する。",
+  "heroSubtitle": "Silicon Valley の中心から、あなたがどこにいても、世界クラスの法学教育を体験してください。",
+  "visionStatement": "私たちのビジョンは、あらゆる背景を持つ学生に法曹界へのアクセシブルな入り口を提供することです。",
+  "missionTitle": "PAUのミッション",
+  "missionDescription": "私たちは、テクノロジー主導の教育法を通じて、学術理論と現実世界の法務実務の架け橋となります。",
+  "missionPoints": [
+    {
+      "title": "イノベーション",
+      "description": "法的リサーチと教育のための最新ツールを活用します。",
+      "icon": "innovation"
+    },
+    {
+      "title": "アクセス",
+      "description": "リモート学習者や非伝統的な学生に機会を提供します。",
+      "icon": "access"
+    },
+    {
+      "title": "グローバルな影響",
+      "description": "相互に連結した法的状況に備えて弁護士を育成します。",
+      "icon": "globe"
+    }
+  ],
+  "introTitle": "法律における新しいパラダイム",
+  "introText": "Pacific American University School of Law は、現代に合わせて調整された厳格な Juris Doctor プログラムを提供しています。",
+  "features": [
+    {
+      "title": "柔軟な学習",
+      "description": "強固なオンラインプラットフォームで、あなたのスケジュールに合わせて学習できます。",
+      "icon": "clock"
+    },
+    {
+      "title": "専門家による教授陣",
+      "description": "現役の弁護士や著名な学者から学びます。",
+      "icon": "academic"
+    },
+    {
+      "title": "手頃な教育",
+      "description": "競争力のある授業料で価値の高い JD プログラムを提供します。",
+      "icon": "currency"
+    }
+  ],
+  "successTitle": "実証された卓越性",
+  "successText": "私たちの卒業生は、California 全土の著名な法律事務所や公共サービスで活躍しています。",
+  "stats": [
+    {
+      "label": "司法試験合格率",
+      "value": "85%"
+    },
+    {
+      "label": "就職率",
+      "value": "92%"
+    },
+    {
+      "label": "教授陣",
+      "value": "45+"
+    },
+    {
+      "label": "卒業生",
+      "value": "2k+"
+    }
+  ],
+  "globalFutureTitle": "あなたのグローバルな未来",
+  "globalFutureIntro": "私たちの JD プログラムは、法曹界における多様なキャリアパスに備えさせます。",
+  "globalFutureList": [
+    {
+      "title": "テクノロジー法",
+      "description": "知的財産、AI倫理、そして Silicon Valley 独自の法的ニーズを専門とします。",
+      "detailTitle": "イノベーションと法律",
+      "detailBody": "テクノロジー規制における議論をリードします。",
+      "stats": [
+        {
+          "label": "成長率",
+          "value": "+20%"
+        }
+      ]
+    }
+  ],
+  "globalFutureClosing": "次世代の法的リーダーに加わりましょう。",
+  "clinicsTitle": "クリニカル・オポチュニティ",
+  "clinicsIntro": "専門的なリーガル・クリニックを通じて、実践的な経験を積むことができます。",
+  "newsTitle": "最新ニュース"
+}

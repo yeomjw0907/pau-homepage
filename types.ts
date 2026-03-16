@@ -46,6 +46,8 @@ export interface NewsItem {
   category: 'Academic' | 'Event' | 'General' | 'Career' | 'Newsletter' | 'Notice';
   images?: string[];
   isPinned?: boolean;
+  /** Multilingual translations stored by admin save. Key = SupportedLanguage */
+  translations?: Record<string, { title?: string; summary?: string; body?: string }>;
 }
 
 export interface FeatureItem {
@@ -306,10 +308,18 @@ export interface SharedContent {
     reserveRoom: string;
     downloadCalendar: string;
     applyLsac: string;
+    viewAllAnnouncements: string;
+  };
+  homeCards?: {
+    rollingAdmissions?: { title: string; date: string; summary: string };
+    academicCalendar?: { title: string; date: string; summary: string };
+    fylsx?: { title: string; date: string; summary: string };
+    weeklyDicta?: { title: string; date: string; summary: string };
   };
   labels: {
     interestedInClinic: string;
     clinicPositions: string;
+    universityUpdates: string;
     clinicInquiryForm: string;
     sendMessageTo: string;
     fullName: string;
@@ -321,6 +331,14 @@ export interface SharedContent {
     statementInterest: string;
     aboutPauNews: string;
     aboutPauNewsDetail: string;
+    // Faculty / common UI labels
+    education?: string;
+    background?: string;
+    emailLabel?: string;
+    pinned?: string;
+    // Hero labels
+    theFutureLegalEd?: string;
+    scroll?: string;
   };
 }
 
@@ -405,6 +423,7 @@ export const DEFAULT_SHARED_CONTENT: SharedContent = {
     reserveRoom: "Reserve Room",
     downloadCalendar: "Download Calendar",
     applyLsac: "Apply Online",
+    viewAllAnnouncements: "View All Announcements",
   },
   labels: {
     interestedInClinic: "Interested in this Clinic?",
@@ -420,50 +439,60 @@ export const DEFAULT_SHARED_CONTENT: SharedContent = {
     statementInterest: "Statement of Interest",
     aboutPauNews: "About PAU News",
     aboutPauNewsDetail: "Official announcements and updates from the Pacific American University administration.",
+    universityUpdates: "University Updates",
+    education: "Education",
+    background: "Background",
+    emailLabel: "Email:",
+    pinned: "Pinned",
+    theFutureLegalEd: "The Future of Legal Education",
+    scroll: "Scroll",
+  },
+  homeCards: {
+    rollingAdmissions: { title: "Rolling Admissions", date: "Open Year-Round", summary: "Accepting applications year-round for Winter, Spring, and Fall terms." },
+    academicCalendar: { title: "Academic Calendar & Start Dates", date: "2026-2027", summary: "All cohorts start in January, May, or September" },
+    fylsx: { title: "FYLSX Requirement", date: "Important Notice", summary: "Students must pass the 'Baby Bar' (FYLSX) after the first year." },
+    weeklyDicta: { title: "Weekly Dicta", date: "February 3, 2025", summary: "Learning, Serving, and Leading Together. Official announcements and updates for the PAU School of Law community." },
   },
 };
 
 // Default Home Content
 export const MOCK_HOME_CONTENT: HomeContent = {
-  heroTitle: "Empowering Advocates.\nTransforming Lives.",
-  heroSubtitle: "Experience world-class legal education from the heart of Silicon Valley to wherever you are.",
+  heroTitle: "Legal Education\nWithout Borders",
+  heroSubtitle: "The mission of Pacific American University (\"PAU\") is to nurture impactful, balanced-minded leaders, who are equipped to resolve complex global issues, making a positive impact on the growth of a healthy and inclusive society through a student-centered academic community and programs.",
   heroImageDesktop: "/images/hero-desktop.jpg",
   heroImageMobile: "/images/hero-mobile.jpg",
-  visionStatement: "Our vision is to provide an accessible gateway to the legal profession for students of all backgrounds.",
-  missionTitle: "The PAU Mission",
-  missionDescription: "We bridge the gap between academic theory and real-world legal practice through technology-driven pedagogy.",
+  visionStatement: "\u201cAs educational borders dissolve, we nurture global leaders with balanced, critical perspectives. We are a platform for shaping thoughtful, solution-oriented professionals prepared to engage with the world\u2019s most pressing challenges.\u201d",
+  missionTitle: "Our Mission",
+  missionDescription: "To redefine legal education by breaking down geographic barriers and empowering talented students worldwide.",
   missionPoints: [
-    { title: "Innovation", description: "Utilizing modern tools for legal research and education.", icon: 'innovation' },
-    { title: "Access", description: "Providing opportunities for remote and non-traditional students.", icon: 'access' },
-    { title: "Global Impact", description: "Preparing lawyers for an interconnected legal landscape.", icon: 'globe' },
+    { title: "Innovation Without Boundaries", description: "Merging rigorous American legal instruction with flexible, technology-driven delivery systems.", icon: 'innovation' },
+    { title: "Global Accessibility", description: "Lowering barriers to entry and respecting global time zones to cultivate globally active professionals.", icon: 'globe' },
+    { title: "Real-World Mastery", description: "Combining dynamic video lectures with real-time sessions to ensure deep mastery of U.S. law.", icon: 'access' },
   ],
-  introTitle: "A New Paradigm in Law",
-  introText: "Pacific American University School of Law offers a rigorous Juris Doctor program tailored for the modern era.",
+  introTitle: "Study American Law From\nAnywhere",
+  introText: "A fully online J.D. program designed for motivated students seeking flexibility, world-class instruction, and a clear path to a California law license.",
   features: [
-    { title: "Flexible Learning", description: "Study on your schedule with our robust online platform.", icon: 'clock' },
-    { title: "Expert Faculty", description: "Learn from practicing attorneys and distinguished scholars.", icon: 'academic' },
-    { title: "Affordable Education", description: "High-value JD program with competitive tuition rates.", icon: 'currency' },
+    { title: "Flexible Learning", description: "Complete two-thirds of your coursework asynchronously on your schedule\u2014anytime, anywhere, without sacrificing academic rigor.", icon: 'clock' },
+    { title: "World-Class Mentorship", description: "Learn from experienced legal professionals who provide personalized feedback and guidance to help you succeed academically.", icon: 'academic' },
+    { title: "Accessible Tuition", description: "We offer a high-quality legal education at a significantly lower cost than traditional U.S. law schools, making the J.D. dream accessible.", icon: 'currency' },
   ],
-  successTitle: "Proven Excellence",
-  successText: "Our graduates are practicing in prestigious firms and public service across California.",
+  successTitle: "A Student-Centered\nLaw School",
+  successText: "From academic support to bar examination preparation, every part of the PAU Law program is designed to help you thrive. You\u2019ll receive structured guidance from your first course through your preparation for the California Bar.",
   stats: [
-    { label: "Bar Pass Rate", value: "85%" },
-    { label: "Employment", value: "92%" },
-    { label: "Faculty", value: "45+" },
-    { label: "Alumni", value: "2k+" },
+    { value: "100%", label: "Online Coursework" },
+    { value: "66%", label: "Asynchronous" },
+    { value: "15:1", label: "Student-Faculty Ratio" },
+    { value: "Included", label: "Bar Prep Support" },
   ],
-  globalFutureTitle: "Your Global Future",
-  globalFutureIntro: "Our JD program prepares you for diverse career paths in the legal sector.",
+  globalFutureTitle: "Your Path to a Global Career",
+  globalFutureIntro: "Our rigorous curriculum opens doors to diverse international fields, equipping you with the credentials needed for today\u2019s interconnected legal environment.",
   globalFutureList: [
-    {
-      title: "Technology Law",
-      description: "Specialize in IP, AI ethics, and Silicon Valley's unique legal needs.",
-      detailTitle: "Innovation & Law",
-      detailBody: "Lead the conversation in tech regulations.",
-      image: "/images/innovation-law.jpg",
-      stats: [{ label: "Growth", value: "+20%" }],
-      relatedPathways: [{ label: "IP Clinic", targetPage: "academics", description: "Hands-on tech law" }]
-    },
+    { title: "International Business", description: "Navigate the complex landscape of global commerce and trade.", detailTitle: "International Business", detailBody: "Prepare for a career facilitating transactions between entities in different countries.", image: "/images/info-international-business.jpg", stats: [], relatedPathways: [] },
+    { title: "Corporate Governance", description: "Advise boards and executives on fiduciary duties and ethical compliance.", detailTitle: "Corporate Governance", detailBody: "Ensure companies operate within the law and adhere to ethical standards.", image: "/images/info-corporate-governance.jpg", stats: [], relatedPathways: [] },
+    { title: "Legal Consulting", description: "Provide strategic legal insight to non-legal entities and organizations.", detailTitle: "Legal Consulting", detailBody: "Leverage your J.D. to provide specialized advice to consulting firms, NGOs, and corporations.", image: "/images/info-legal-consulting.jpg", stats: [], relatedPathways: [] },
+    { title: "Cross-border Trade", description: "Master the regulations governing imports, exports, and tariffs.", detailTitle: "Cross-border Trade", detailBody: "Become an expert in the movement of goods, services, and capital across borders.", image: "/images/info-cross-border-trade.jpg", stats: [], relatedPathways: [] },
+    { title: "Regulatory Affairs", description: "Ensure compliance with government agencies like the FDA, SEC, and EPA.", detailTitle: "Regulatory Affairs", detailBody: "Act as the liaison between private industry and government regulatory agencies.", image: "/images/info-regulatory-affairs.jpg", stats: [], relatedPathways: [] },
+    { title: "Graduate Study", description: "Pursue advanced degrees at prestigious universities in US, Canada or London.", detailTitle: "Graduate Study", detailBody: "The PAU J.D. serves as a foundation for admission into specialized LL.M. programs.", image: "/images/info-graduate-study.jpg", stats: [], relatedPathways: [] },
   ],
   globalFutureClosing: "Join the next generation of legal leaders.",
   clinicsTitle: "Clinical Opportunities",

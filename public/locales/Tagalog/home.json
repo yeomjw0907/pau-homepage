@@ -1,0 +1,83 @@
+{
+  "heroTitle": "Pagpapalakas sa mga Tagapagtanggol.\nPagbabago ng mga Buhay.",
+  "heroSubtitle": "Damhin ang world-class na legal na edukasyon mula sa puso ng Silicon Valley hanggang sa kung nasaan ka man.",
+  "visionStatement": "Ang aming bisyon ay magbigay ng madaling daan patungo sa legal na propesyon para sa mga mag-aaral mula sa lahat ng pinagmulan.",
+  "missionTitle": "Ang Misyon ng PAU",
+  "missionDescription": "Pinag-uugnay namin ang agwat sa pagitan ng teoryang akademiko at tunay na legal na pagsasanay sa pamamagitan ng pedagogy na hinihimok ng teknolohiya.",
+  "missionPoints": [
+    {
+      "title": "Inobasyon",
+      "description": "Paggamit ng mga modernong kagamitan para sa legal na pananaliksik at edukasyon.",
+      "icon": "innovation"
+    },
+    {
+      "title": "Akses",
+      "description": "Pagbibigay ng mga pagkakataon para sa mga remote at non-traditional na mag-aaral.",
+      "icon": "access"
+    },
+    {
+      "title": "Pandaigdigang Epekto",
+      "description": "Paghahanda sa mga abogado para sa isang magkakaugnay na legal na kapaligiran.",
+      "icon": "globe"
+    }
+  ],
+  "introTitle": "Isang Bagong Paradigm sa Batas",
+  "introText": "Ang Pacific American University School of Law ay nag-aalok ng isang mahigpit na programang Juris Doctor na iniakma para sa modernong panahon.",
+  "features": [
+    {
+      "title": "Flexible na Pag-aaral",
+      "description": "Mag-aral sa iyong sariling iskedyul gamit ang aming matatag na online platform.",
+      "icon": "clock"
+    },
+    {
+      "title": "Ekspertong Faculty",
+      "description": "Matuto mula sa mga nagsasanay na abogado at mga kilalang iskolar.",
+      "icon": "academic"
+    },
+    {
+      "title": "Abot-kayang Edukasyon",
+      "description": "Mataas na halagang programang JD na may mapagkumpitensyang mga rate ng matrikula.",
+      "icon": "currency"
+    }
+  ],
+  "successTitle": "Napatunayang Kahusayan",
+  "successText": "Ang aming mga nagtapos ay nagsasanay sa mga prestihiyosong kumpanya at serbisyo publiko sa buong California.",
+  "stats": [
+    {
+      "label": "Antas ng Pagpasa sa Bar",
+      "value": "85%"
+    },
+    {
+      "label": "Trabaho",
+      "value": "92%"
+    },
+    {
+      "label": "Faculty",
+      "value": "45+"
+    },
+    {
+      "label": "Alumni",
+      "value": "2k+"
+    }
+  ],
+  "globalFutureTitle": "Ang Iyong Pandaigdigang Kinabukasan",
+  "globalFutureIntro": "Inihahanda ka ng aming programang JD para sa iba't ibang landas ng karera sa sektor ng batas.",
+  "globalFutureList": [
+    {
+      "title": "Batas sa Teknolohiya",
+      "description": "Magpakadalubhasa sa IP, etika ng AI, at ang mga natatanging legal na pangangailangan ng Silicon Valley.",
+      "detailTitle": "Inobasyon at Batas",
+      "detailBody": "Pangunahan ang usapan sa mga regulasyon sa teknolohiya.",
+      "stats": [
+        {
+          "label": "Paglago",
+          "value": "+20%"
+        }
+      ]
+    }
+  ],
+  "globalFutureClosing": "Sumali sa susunod na henerasyon ng mga legal na lider.",
+  "clinicsTitle": "Mga Klinikal na Pagkakataon",
+  "clinicsIntro": "Magkaroon ng hands-on na karanasan sa pamamagitan ng aming mga espesyal na legal na klinika.",
+  "newsTitle": "Pinakabagong Balita"
+}

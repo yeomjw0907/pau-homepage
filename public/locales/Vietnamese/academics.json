@@ -1,0 +1,22 @@
+{
+  "title": "Học thuật",
+  "intro": "Chương trình đào tạo pháp lý nghiêm ngặt cho thế hệ luật sư bào chữa tiếp theo.",
+  "programsTitle": "Chương trình Cấp bằng",
+  "programs": [
+    {
+      "name": "Juris Doctor (JD)",
+      "description": "Chương trình trực tuyến 4 năm được đăng ký với State Bar of California."
+    },
+    {
+      "name": "Master of Laws (LLM)",
+      "description": "Nghiên cứu pháp lý chuyên sâu nâng cao dành cho các luật sư quốc tế."
+    }
+  ],
+  "concentrationsTitle": "Chuyên ngành",
+  "concentrations": [
+    "Luật Công nghệ",
+    "Luật Hình sự",
+    "Luật Kinh doanh",
+    "Lợi ích Công cộng"
+  ]
+}

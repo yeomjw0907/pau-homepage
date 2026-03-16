@@ -46,6 +46,7 @@ import { InfoCard } from './components/common/InfoCard';
 import { StepCard } from './components/common/StepCard';
 import { SectionHeader } from './components/common/SectionHeader';
 import { useTranslation } from './hooks/useTranslation';
+import { applyNewsTranslation } from './utils/applyTranslation';
 import { DEFAULT_FACULTY_CONTENT } from './data/facultyData';
 import { DEFAULT_ADMISSIONS_CONTENT } from './data/admissionsData';
 import { DEFAULT_ACADEMICS_CONTENT } from './data/academicsData';
@@ -169,7 +170,20 @@ const App: React.FC = () => {
 
   const [academicsContent, setAcademicsContent] = useState<AcademicsContent>(DEFAULT_ACADEMICS_CONTENT);
 
-  const shared: SharedContent = DEFAULT_SHARED_CONTENT;
+  const [shared, setShared] = useState<SharedContent>(DEFAULT_SHARED_CONTENT);
+  // pagesContent: loaded from /locales/{lang}/pages.json — covers all sub-page text
+  const [pagesContent, setPagesContent] = useState<any>(null);
+
+  // Apply DB-stored translations to dynamic Supabase content (news/notices)
+  // Static content is handled by the translation hook via JSON locale files
+  const translatedNews = React.useMemo(
+    () => homeContent.latestNews.map(item => applyNewsTranslation(item, currentLang)),
+    [homeContent.latestNews, currentLang]
+  );
+  const translatedNotices = React.useMemo(
+    () => (noticesContent.notices as any[]).map(item => applyNewsTranslation(item, currentLang)),
+    [noticesContent.notices, currentLang]
+  );
 
   // Use translation hook
   const { isTranslating } = useTranslation({
@@ -187,6 +201,9 @@ const App: React.FC = () => {
     setWeeklyDictaContent,
     noticesContent,
     setNoticesContent,
+    sharedContent: shared,
+    setSharedContent: setShared,
+    setPagesContent,
     setGlobalAlert
   });
 
@@ -206,15 +223,27 @@ const App: React.FC = () => {
         const news = await adminService.fetchNews();
         setHomeContent(prev => ({ ...prev, latestNews: news }));
 
-        // Faculty uses hardcoded data from data/facultyData.ts (DEFAULT_FACULTY_CONTENT)
-        // No Supabase fetch needed - already initialized with hardcoded data
-
         // Load Notices
         const notices = await adminService.fetchNotices();
         setNoticesContent(prev => ({ ...prev, notices }));
 
-        // Weekly Dicta uses hardcoded data from App.tsx initial state
-        // No Supabase fetch needed - already initialized with hardcoded data
+        // Load Faculty from Supabase (fallback: hardcoded DEFAULT_FACULTY_CONTENT)
+        const facultyFromDB = await adminService.fetchFaculty();
+        if (facultyFromDB && facultyFromDB.length > 0) {
+          setFacultyContent(prev => ({ ...prev, facultyList: facultyFromDB }));
+        }
+
+        // Load Weekly Dicta from Supabase (fallback: hardcoded initial state)
+        const weeklyDictaFromDB = await adminService.fetchWeeklyDicta();
+        if (weeklyDictaFromDB && weeklyDictaFromDB.length > 0) {
+          setWeeklyDictaContent((prev: any) => ({ ...prev, notices: weeklyDictaFromDB }));
+        }
+
+        // Load Admissions from Supabase (fallback: DEFAULT_ADMISSIONS_CONTENT)
+        const admissionsFromDB = await adminService.fetchAdmissionsContent();
+        if (admissionsFromDB) {
+          setAdmissionsContent(admissionsFromDB);
+        }
 
       } catch (error) {
         console.error("Failed to load Supabase data:", error);
@@ -280,7 +309,7 @@ const App: React.FC = () => {
       case 'request-info':
         return (
           <Suspense fallback={<LoadingSpinner message="Loading Request Form..." />}>
-            <RequestInfoPage />
+            <RequestInfoPage pagesContent={pagesContent} />
           </Suspense>
         );
 
@@ -290,34 +319,32 @@ const App: React.FC = () => {
           <>
             <Hero content={homeContent} shared={shared} onNavigate={handleNavigate} />
             <InfoSection content={homeContent} shared={shared} onClinicClick={setSelectedClinic} onNavigate={handleNavigate} />
-            <HomeNews title={homeContent.newsTitle} newsItems={homeContent.latestNews} onNewsClick={setSelectedNews} onNavigate={handleNavigate} shared={shared} />
+            <HomeNews title={homeContent.newsTitle} newsItems={translatedNews} onNewsClick={setSelectedNews} onNavigate={handleNavigate} shared={shared} />
           </>
         );
 
       // --- ABOUT SECTION PAGES ---
-      case 'history-mission':
+      case 'history-mission': {
+        const hm = pagesContent?.historyMission;
         return (
           <>
-            <PageHeader title={"Mission &\nIdentity"} subtitle="Nurturing impactful leaders for a global society." icon={GlobeAmericasIcon} />
+            <PageHeader title={hm?.pageTitle ?? "Mission &\nIdentity"} subtitle={hm?.pageSubtitle ?? "Nurturing impactful leaders for a global society."} icon={GlobeAmericasIcon} />
 
             {/* Mission Statement Section */}
             <SectionWrapper>
               <div className="max-w-5xl mx-auto">
                 <div className="bg-gradient-to-br from-pau-darkBlue to-pau-blue p-10 md:p-16 rounded-3xl shadow-2xl relative overflow-hidden">
-                  {/* Decorative Elements */}
                   <div className="absolute top-0 right-0 w-64 h-64 bg-pau-gold opacity-5 rounded-full -mr-32 -mt-32"></div>
                   <div className="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-5 rounded-full -ml-24 -mb-24"></div>
-
                   <div className="relative z-10">
                     <div className="flex items-center mb-8">
                       <div className="w-16 h-16 bg-pau-gold rounded-full flex items-center justify-center mr-4">
                         <GlobeAmericasIcon className="h-8 w-8 text-pau-darkBlue" />
                       </div>
-                      <h2 className="text-2xl md:text-3xl font-serif font-bold text-white">Our Mission</h2>
+                      <h2 className="text-2xl md:text-3xl font-serif font-bold text-white">{hm?.ourMission ?? "Our Mission"}</h2>
                     </div>
-
                     <blockquote className="text-lg md:text-2xl text-white leading-relaxed font-light italic border-l-4 border-pau-gold pl-6">
-                      The mission of Pacific American University ("PAU") is to nurture impactful, balanced-minded leaders, who are equipped to resolve complex global issues, making a positive impact on the growth of a healthy and inclusive society through a student-centered academic community and programs.
+                      {hm?.missionText ?? 'The mission of Pacific American University ("PAU") is to nurture impactful, balanced-minded leaders, who are equipped to resolve complex global issues, making a positive impact on the growth of a healthy and inclusive society through a student-centered academic community and programs.'}
                     </blockquote>
                   </div>
                 </div>
@@ -332,90 +359,62 @@ const App: React.FC = () => {
                     <div className="w-16 h-16 bg-pau-blue rounded-full flex items-center justify-center mr-4">
                       <BookOpenIcon className="h-8 w-8 text-white" />
                     </div>
-                    <h2 className="text-2xl md:text-3xl font-serif font-bold text-pau-darkBlue">Our History</h2>
+                    <h2 className="text-2xl md:text-3xl font-serif font-bold text-pau-darkBlue">{hm?.ourHistory ?? "Our History"}</h2>
                   </div>
-
                   <div className="space-y-6 text-gray-700 leading-relaxed text-lg">
-                    <p>
-                      Pacific American University (PAU) was founded in 2018 and initially offered a Graduate Certificate in Business Administration (GCBA) and a Master of Business Administration (MBA) program, both approved by the California Bureau for Private Postsecondary Education (BPPE). After successfully graduating students from the MBA program, President Kang—who had long aspired to establish a correspondence law school in California to train future U.S. lawyers through a Juris Doctor (J.D.) program—redirected the university's full focus toward the development of the J.D. program.
-                    </p>
-                    <p>
-                      Today, PAU offers the J.D. program through Pacific American University School of Law (PAUSL) as an Unaccredited Correspondence Law School registered with the Committee of Bar Examiners of the State Bar of California.
-                    </p>
+                    <p>{hm?.historyP1 ?? "Pacific American University (PAU) was founded in 2018 and initially offered a Graduate Certificate in Business Administration (GCBA) and a Master of Business Administration (MBA) program, both approved by the California Bureau for Private Postsecondary Education (BPPE). After successfully graduating students from the MBA program, President Kang—who had long aspired to establish a correspondence law school in California to train future U.S. lawyers through a Juris Doctor (J.D.) program—redirected the university's full focus toward the development of the J.D. program."}</p>
+                    <p>{hm?.historyP2 ?? "Today, PAU offers the J.D. program through Pacific American University School of Law (PAUSL) as an Unaccredited Correspondence Law School registered with the Committee of Bar Examiners of the State Bar of California."}</p>
                   </div>
                 </div>
               </div>
             </SectionWrapper>
 
             {/* Core Values Section */}
-            <SectionWrapper title="Our Core Values">
+            <SectionWrapper title={hm?.coreValues ?? "Our Core Values"}>
               <div className="max-w-6xl mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                  {/* Value 1 */}
                   <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-2xl hover:border-pau-gold transition-all duration-300 group">
                     <div className="w-14 h-14 bg-pau-light rounded-xl flex items-center justify-center mb-6 group-hover:bg-pau-gold transition-colors">
-                      <svg className="w-7 h-7 text-pau-blue group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                      </svg>
+                      <svg className="w-7 h-7 text-pau-blue group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
                     </div>
-                    <h3 className="text-xl font-serif font-bold text-pau-darkBlue mb-3">Student-Centered</h3>
-                    <p className="text-gray-600 leading-relaxed">
-                      We prioritize individual student growth and success through personalized support and flexible learning pathways.
-                    </p>
+                    <h3 className="text-xl font-serif font-bold text-pau-darkBlue mb-3">{hm?.value1Title ?? "Student-Centered"}</h3>
+                    <p className="text-gray-600 leading-relaxed">{hm?.value1Desc ?? "We prioritize individual student growth and success through personalized support and flexible learning pathways."}</p>
                   </div>
-
-                  {/* Value 2 */}
                   <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-2xl hover:border-pau-gold transition-all duration-300 group">
                     <div className="w-14 h-14 bg-pau-light rounded-xl flex items-center justify-center mb-6 group-hover:bg-pau-gold transition-colors">
-                      <svg className="w-7 h-7 text-pau-blue group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
+                      <svg className="w-7 h-7 text-pau-blue group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                     </div>
-                    <h3 className="text-xl font-serif font-bold text-pau-darkBlue mb-3">Global Perspective</h3>
-                    <p className="text-gray-600 leading-relaxed">
-                      We foster understanding of international legal systems and prepare students to address complex global challenges.
-                    </p>
+                    <h3 className="text-xl font-serif font-bold text-pau-darkBlue mb-3">{hm?.value2Title ?? "Global Perspective"}</h3>
+                    <p className="text-gray-600 leading-relaxed">{hm?.value2Desc ?? "We foster understanding of international legal systems and prepare students to address complex global challenges."}</p>
                   </div>
-
-                  {/* Value 3 */}
                   <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-2xl hover:border-pau-gold transition-all duration-300 group">
                     <div className="w-14 h-14 bg-pau-light rounded-xl flex items-center justify-center mb-6 group-hover:bg-pau-gold transition-colors">
-                      <svg className="w-7 h-7 text-pau-blue group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                      </svg>
+                      <svg className="w-7 h-7 text-pau-blue group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                     </div>
-                    <h3 className="text-xl font-serif font-bold text-pau-darkBlue mb-3">Inclusive Excellence</h3>
-                    <p className="text-gray-600 leading-relaxed">
-                      We cultivate a diverse and welcoming community that values every perspective and promotes equitable access to legal education.
-                    </p>
+                    <h3 className="text-xl font-serif font-bold text-pau-darkBlue mb-3">{hm?.value3Title ?? "Inclusive Excellence"}</h3>
+                    <p className="text-gray-600 leading-relaxed">{hm?.value3Desc ?? "We cultivate a diverse and welcoming community that values every perspective and promotes equitable access to legal education."}</p>
                   </div>
                 </div>
               </div>
             </SectionWrapper>
 
             {/* Institutional Status Section */}
-            <SectionWrapper title="Institutional Status">
+            <SectionWrapper title={hm?.institutionalStatus ?? "Institutional Status"}>
               <div className="max-w-4xl mx-auto">
                 <div className="bg-gradient-to-r from-gray-50 to-white p-8 md:p-12 rounded-3xl shadow-xl border-2 border-gray-200 relative">
                   <div className="absolute -top-6 left-8">
                     <div className="bg-pau-darkBlue px-6 py-3 rounded-full shadow-lg">
-                      <span className="text-xs font-bold text-pau-gold uppercase tracking-widest">Official Designation</span>
+                      <span className="text-xs font-bold text-pau-gold uppercase tracking-widest">{hm?.officialDesignation ?? "Official Designation"}</span>
                     </div>
                   </div>
-
                   <div className="mt-4">
                     <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
                       Pacific American University School of Law is registered with the Committee of Bar Examiners of the State Bar of California as a{' '}
-                      <span className="font-bold text-pau-darkBlue bg-pau-light px-3 py-1 rounded">Registered Unaccredited Correspondence Law School</span>.
+                      <span className="font-bold text-pau-darkBlue bg-pau-light px-3 py-1 rounded">{hm?.registeredLabel ?? "Registered Unaccredited Correspondence Law School"}</span>.
                     </p>
-                    <p className="text-lg md:text-xl text-gray-700 leading-relaxed mt-6">
-                      PAUSL is not accredited by the State Bar of California or the American Bar Association.
-                    </p>
-
+                    <p className="text-lg md:text-xl text-gray-700 leading-relaxed mt-6">{hm?.notAccredited ?? "PAUSL is not accredited by the State Bar of California or the American Bar Association."}</p>
                     <div className="mt-8 pt-6 border-t border-gray-200">
-                      <p className="text-sm text-gray-500 italic">
-                        This designation reflects our commitment to transparency and compliance with California legal education requirements.
-                      </p>
+                      <p className="text-sm text-gray-500 italic">{hm?.transparencyNote ?? "This designation reflects our commitment to transparency and compliance with California legal education requirements."}</p>
                     </div>
                   </div>
                 </div>
@@ -423,11 +422,13 @@ const App: React.FC = () => {
             </SectionWrapper>
           </>
         );
+      }
 
-      case 'president-welcome':
+      case 'president-welcome': {
+        const pw = pagesContent?.presidentWelcome;
         return (
           <>
-            <PageHeader title={"President's\nWelcome"} subtitle="A strategic vision for legal leaders." icon={UserIcon} />
+            <PageHeader title={pw?.pageTitle ?? "President's\nWelcome"} subtitle={pw?.pageSubtitle ?? "A strategic vision for legal leaders."} icon={UserIcon} />
             <SectionWrapper>
               <div className="max-w-4xl mx-auto">
                 {/* Image Section */}
@@ -444,7 +445,7 @@ const App: React.FC = () => {
                 {/* Welcome Message */}
                 <div className="text-center mb-12">
                   <h2 className="text-3xl md:text-4xl font-serif font-bold text-pau-darkBlue leading-tight mb-4">
-                    Welcome to Pacific American University – <span className="text-pau-blue">small but strong!</span>
+                    {pw?.welcomeHeading ? pw.welcomeHeading : <>Welcome to Pacific American University – <span className="text-pau-blue">small but strong!</span></>}
                   </h2>
                   <div className="mt-6 mb-8">
                     <p className="font-serif text-xl text-pau-darkBlue font-semibold">Dr. Hyun Joo Kang</p>
@@ -490,11 +491,13 @@ const App: React.FC = () => {
             </SectionWrapper>
           </>
         );
+      }
 
-      case 'dean-message':
+      case 'dean-message': {
+        const dm = pagesContent?.deanMessage;
         return (
           <>
-            <PageHeader title={"Message from the Dean"} subtitle="Academic leadership committed to student outcomes." icon={AcademicCapIcon} />
+            <PageHeader title={dm?.pageTitle ?? "Message from the Dean"} subtitle={dm?.pageSubtitle ?? "Academic leadership committed to student outcomes."} icon={AcademicCapIcon} />
             <SectionWrapper>
               <div className="max-w-4xl mx-auto">
                 {/* Image Section */}
@@ -511,7 +514,7 @@ const App: React.FC = () => {
                 {/* Welcome Message */}
                 <div className="text-center mb-12">
                   <h2 className="text-3xl md:text-4xl font-serif font-bold text-pau-darkBlue leading-tight mb-4">
-                    Welcome to Pacific American University School of Law
+                    {dm?.welcomeHeading ?? "Welcome to Pacific American University School of Law"}
                   </h2>
                   <div className="mt-6 mb-8">
                     <p className="font-serif text-xl text-pau-darkBlue font-semibold">Timothy P. Weimer</p>
@@ -546,48 +549,53 @@ const App: React.FC = () => {
             </SectionWrapper>
           </>
         );
+      }
 
-      case 'school-form':
+      case 'school-form': {
+        const sf = pagesContent?.schoolForm;
         return (
           <>
-            <PageHeader title={"School\nForms"} subtitle="Streamlining your administrative needs." icon={ClipboardDocumentListIcon} />
-            <SectionWrapper title="Administrative Requests">
+            <PageHeader title={sf?.pageTitle ?? "School\nForms"} subtitle={sf?.pageSubtitle ?? "Streamlining your administrative needs."} icon={ClipboardDocumentListIcon} />
+            <SectionWrapper title={sf?.adminRequests ?? "Administrative Requests"}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 max-w-4xl mx-auto">
-                <DocumentLink title="Application for Admission" />
-                <DocumentLink title="Transcript Request Form" />
-                <DocumentLink title="Notice of Cancellation / Withdrawal" />
-                <DocumentLink title="Credit Card Authorization Form" />
-                <DocumentLink title="Grade Appeal Petition" />
-                <DocumentLink title="Leave of Absence Request" />
+                <DocumentLink title={sf?.formNames?.[0] ?? "Application for Admission"} />
+                <DocumentLink title={sf?.formNames?.[1] ?? "Transcript Request Form"} />
+                <DocumentLink title={sf?.formNames?.[2] ?? "Notice of Cancellation / Withdrawal"} />
+                <DocumentLink title={sf?.formNames?.[3] ?? "Credit Card Authorization Form"} />
+                <DocumentLink title={sf?.formNames?.[4] ?? "Grade Appeal Petition"} />
+                <DocumentLink title={sf?.formNames?.[5] ?? "Leave of Absence Request"} />
               </div>
             </SectionWrapper>
           </>
         );
+      }
 
-      case 'faqs':
+      case 'faqs': {
+        const fq = pagesContent?.faqs;
+        const faqItems = fq?.items ?? [
+          {
+            q: "Is the school accredited?",
+            a: "Pacific American University School of Law is registered as an Unaccredited Correspondence Law School with the Committee of Bar Examiners of the State Bar of California."
+          },
+          {
+            q: "Can I take the Bar Exam?",
+            a: "Graduates are eligible to sit for the California Bar Examination, provided they meet all other State Bar requirements."
+          },
+          {
+            q: "What technical equipment do I need?",
+            a: "Students must have a computer with reliable high-speed internet access, a webcam, and a microphone to participate in live sessions and access course materials."
+          },
+          {
+            q: "Is financial aid available?",
+            a: "PAU offers competitive tuition rates and flexible payment plans. We do not participate in federal financial aid programs (Title IV) at this time."
+          }
+        ];
         return (
           <>
-            <PageHeader title={"Frequently Asked\nQuestions"} subtitle="Expert answers to your queries." icon={QuestionMarkCircleIcon} />
+            <PageHeader title={fq?.pageTitle ?? "Frequently Asked\nQuestions"} subtitle={fq?.pageSubtitle ?? "Expert answers to your queries."} icon={QuestionMarkCircleIcon} />
             <SectionWrapper>
               <div className="max-w-4xl mx-auto space-y-6 md:space-y-10">
-                {[
-                  {
-                    q: "Is the school accredited?",
-                    a: "Pacific American University School of Law is registered as an Unaccredited Correspondence Law School with the Committee of Bar Examiners of the State Bar of California."
-                  },
-                  {
-                    q: "Can I take the Bar Exam?",
-                    a: "Graduates are eligible to sit for the California Bar Examination, provided they meet all other State Bar requirements."
-                  },
-                  {
-                    q: "What technical equipment do I need?",
-                    a: "Students must have a computer with reliable high-speed internet access, a webcam, and a microphone to participate in live sessions and access course materials."
-                  },
-                  {
-                    q: "Is financial aid available?",
-                    a: "PAU offers competitive tuition rates and flexible payment plans. We do not participate in federal financial aid programs (Title IV) at this time."
-                  }
-                ].map((faq, i) => (
+                {faqItems.map((faq, i) => (
                   <div key={i} className="bg-white p-6 md:p-12 rounded-2xl md:rounded-[40px] shadow-premium border border-gray-50">
                     <h4 className="text-lg md:text-2xl font-serif font-bold text-pau-blue mb-4">
                       <span className="text-pau-gold mr-3">Q.</span>{faq.q}
@@ -601,11 +609,13 @@ const App: React.FC = () => {
             </SectionWrapper>
           </>
         );
+      }
 
-      case 'bar-reg':
+      case 'bar-reg': {
+        const br = pagesContent?.barReg;
         return (
           <>
-            <PageHeader title={"California State Bar\nRegistration"} subtitle="Official status in California." icon={ShieldCheckIcon} />
+            <PageHeader title={br?.pageTitle ?? "California State Bar\nRegistration"} subtitle={br?.pageSubtitle ?? "Official status in California."} icon={ShieldCheckIcon} />
             <SectionWrapper>
               <div className="max-w-5xl mx-auto space-y-16">
                 {/* 1. Registration Status */}
@@ -619,7 +629,7 @@ const App: React.FC = () => {
                       <div className="flex-grow">
                         <div className="flex items-center gap-2 md:gap-3 mb-2">
                           <span className="w-8 h-8 md:w-10 md:h-10 bg-pau-gold/10 text-pau-gold rounded-full flex items-center justify-center font-bold text-base md:text-lg">1</span>
-                          <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif font-bold text-pau-darkBlue">Registration Status</h2>
+                          <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif font-bold text-pau-darkBlue">{br?.section1 ?? "Registration Status"}</h2>
                         </div>
                       </div>
                     </div>
@@ -651,7 +661,7 @@ const App: React.FC = () => {
                       <div className="flex-grow">
                         <div className="flex items-center gap-2 md:gap-3 mb-2">
                           <span className="w-8 h-8 md:w-10 md:h-10 bg-pau-blue/10 text-pau-blue rounded-full flex items-center justify-center font-bold text-base md:text-lg">2</span>
-                          <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif font-bold text-pau-darkBlue">Law Student Registration</h2>
+                          <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif font-bold text-pau-darkBlue">{br?.section2 ?? "Law Student Registration"}</h2>
                         </div>
                       </div>
                     </div>
@@ -659,22 +669,22 @@ const App: React.FC = () => {
                       <div>
                         <h3 className="font-semibold text-lg md:text-xl text-pau-blue mb-3 md:mb-4 flex items-center gap-2">
                           <ClockIcon className="h-5 w-5" />
-                          Mandatory Registration within 90 Days
+                          {br?.mandatoryReg ?? "Mandatory Registration within 90 Days"}
                         </h3>
                         <p className="text-gray-700 leading-relaxed text-base md:text-lg">
-                          All students must register with the Committee of Bar Examiners of the State Bar of California. Registration must be completed online through the State Bar's website (calbar.ca.gov) within 90 days of commencing law studies.
+                          {br?.mandatoryRegText ?? "All students must register with the Committee of Bar Examiners of the State Bar of California. Registration must be completed online through the State Bar's website (calbar.ca.gov) within 90 days of commencing law studies."}
                         </p>
                       </div>
                       <div className="bg-white p-6 md:p-8 rounded-xl md:rounded-2xl border-2 border-pau-blue/30 shadow-md">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                           <div className="p-5 md:p-6 bg-gradient-to-br from-pau-blue/5 to-transparent rounded-xl border border-pau-blue/20">
-                            <p className="text-xs font-bold text-pau-blue uppercase tracking-widest mb-3">Registration Fee</p>
+                            <p className="text-xs font-bold text-pau-blue uppercase tracking-widest mb-3">{br?.registrationFeeLabel ?? "Registration Fee"}</p>
                             <p className="text-2xl md:text-3xl font-bold text-pau-blue mb-2">$150</p>
                             <p className="text-sm text-gray-500 italic">(Subject to change by the State Bar)</p>
                           </div>
                           <div className="p-5 md:p-6 bg-gradient-to-br from-pau-gold/5 to-transparent rounded-xl border border-pau-gold/20">
-                            <p className="text-xs font-bold text-pau-gold uppercase tracking-widest mb-3">Requirement</p>
-                            <p className="text-gray-700 leading-relaxed text-sm md:text-base">After registering, students must provide their Registration Number to the PAUSL Registrar's Office.</p>
+                            <p className="text-xs font-bold text-pau-gold uppercase tracking-widest mb-3">{br?.requirementLabel ?? "Requirement"}</p>
+                            <p className="text-gray-700 leading-relaxed text-sm md:text-base">{br?.requirementText ?? "After registering, students must provide their Registration Number to the PAUSL Registrar's Office."}</p>
                           </div>
                         </div>
                       </div>
@@ -693,16 +703,16 @@ const App: React.FC = () => {
                       <div className="flex-grow">
                         <div className="flex items-center gap-2 md:gap-3 mb-2">
                           <span className="w-8 h-8 md:w-10 md:h-10 bg-pau-gold/10 text-pau-gold rounded-full flex items-center justify-center font-bold text-base md:text-lg">3</span>
-                          <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif font-bold text-pau-darkBlue">First-Year Law Students' Examination</h2>
+                          <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif font-bold text-pau-darkBlue">{br?.section3 ?? "First-Year Law Students' Examination"}</h2>
                         </div>
-                        <p className="text-xs md:text-sm text-gray-500 uppercase tracking-widest font-bold">FYLSX / "Baby Bar"</p>
+                        <p className="text-xs md:text-sm text-gray-500 uppercase tracking-widest font-bold">{br?.section3Sub ?? 'FYLSX / "Baby Bar"'}</p>
                       </div>
                     </div>
                     <div className="space-y-6 md:space-y-8 pl-0 md:pl-24">
                       <div>
-                        <h3 className="font-semibold text-lg md:text-xl text-pau-blue mb-3 md:mb-4">The First-Year Law Students' Examination Requirement</h3>
+                        <h3 className="font-semibold text-lg md:text-xl text-pau-blue mb-3 md:mb-4">{br?.fylsxRequirement ?? "The First-Year Law Students' Examination Requirement"}</h3>
                         <p className="text-gray-700 leading-relaxed text-base md:text-lg">
-                          Students attending an unaccredited law school must take and pass the First-Year Law Students' Examination (FYLSX) after completing their first year of law study (approximately 27 units).
+                          {br?.fylsxText ?? "Students attending an unaccredited law school must take and pass the First-Year Law Students' Examination (FYLSX) after completing their first year of law study (approximately 27 units)."}
                         </p>
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
@@ -711,18 +721,18 @@ const App: React.FC = () => {
                             <div className="w-10 h-10 md:w-12 md:h-12 bg-pau-gold rounded-lg md:rounded-xl flex items-center justify-center">
                               <CheckBadgeIcon className="h-5 w-5 md:h-6 md:w-6 text-white" />
                             </div>
-                            <p className="text-xs md:text-sm font-bold text-pau-gold uppercase tracking-widest">Passing Requirement</p>
+                            <p className="text-xs md:text-sm font-bold text-pau-gold uppercase tracking-widest">{br?.passingReq ?? "Passing Requirement"}</p>
                           </div>
-                          <p className="text-gray-700 leading-relaxed text-sm md:text-base">Students must pass the FYLSX within three (3) administrations of the exam after becoming eligible to take it.</p>
+                          <p className="text-gray-700 leading-relaxed text-sm md:text-base">{br?.passingReqText ?? "Students must pass the FYLSX within three (3) administrations of the exam after becoming eligible to take it."}</p>
                         </div>
                         <div className="bg-gradient-to-br from-pau-gold/10 to-pau-gold/5 p-6 md:p-8 rounded-xl md:rounded-2xl border-2 border-pau-gold/30 shadow-md hover:shadow-lg transition-all">
                           <div className="flex items-center gap-3 mb-4">
                             <div className="w-10 h-10 md:w-12 md:h-12 bg-pau-gold rounded-lg md:rounded-xl flex items-center justify-center">
                               <AcademicCapIcon className="h-5 w-5 md:h-6 md:w-6 text-white" />
                             </div>
-                            <p className="text-xs md:text-sm font-bold text-pau-gold uppercase tracking-widest">Credit Recognition</p>
+                            <p className="text-xs md:text-sm font-bold text-pau-gold uppercase tracking-widest">{br?.creditRecognition ?? "Credit Recognition"}</p>
                           </div>
-                          <p className="text-gray-700 leading-relaxed text-sm md:text-base">If the exam is passed within three administrations, the student receives credit for all law studies completed up to the time of passing. If passed later, only one year of credit will be awarded.</p>
+                          <p className="text-gray-700 leading-relaxed text-sm md:text-base">{br?.creditRecognitionText ?? "If the exam is passed within three administrations, the student receives credit for all law studies completed up to the time of passing. If passed later, only one year of credit will be awarded."}</p>
                         </div>
                       </div>
                       <div className="bg-gradient-to-r from-blue-50 to-pau-light p-6 md:p-8 rounded-xl md:rounded-2xl border-l-4 border-pau-blue shadow-md">
@@ -731,8 +741,8 @@ const App: React.FC = () => {
                             <DocumentTextIcon className="h-4 w-4 md:h-5 md:w-5 text-white" />
                           </div>
                           <div>
-                            <p className="text-xs md:text-sm font-bold text-pau-blue uppercase tracking-widest mb-2">Exemption</p>
-                            <p className="text-gray-700 leading-relaxed text-sm md:text-base">Students who have completed at least two years of college work and subsequently passed the FYLSX (or are exempt based on State Bar rules) may proceed to upper-division studies.</p>
+                            <p className="text-xs md:text-sm font-bold text-pau-blue uppercase tracking-widest mb-2">{br?.exemption ?? "Exemption"}</p>
+                            <p className="text-gray-700 leading-relaxed text-sm md:text-base">{br?.exemptionText ?? "Students who have completed at least two years of college work and subsequently passed the FYLSX (or are exempt based on State Bar rules) may proceed to upper-division studies."}</p>
                           </div>
                         </div>
                       </div>
@@ -753,18 +763,18 @@ const App: React.FC = () => {
                       <div className="flex-grow">
                         <div className="flex items-center gap-2 md:gap-3 mb-2">
                           <span className="w-8 h-8 md:w-10 md:h-10 bg-pau-gold/20 text-pau-gold rounded-full flex items-center justify-center font-bold text-base md:text-lg">4</span>
-                          <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif font-bold text-pau-gold">Qualifications for Admission to Practice Law in California</h2>
+                          <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif font-bold text-pau-gold">{br?.section4 ?? "Qualifications for Admission to Practice Law in California"}</h2>
                         </div>
-                        <p className="text-gray-300 text-base md:text-lg mt-3 md:mt-4">To be certified to the California Supreme Court for admission to practice law, a student must:</p>
+                        <p className="text-gray-300 text-base md:text-lg mt-3 md:mt-4">{br?.section4Subtitle ?? "To be certified to the California Supreme Court for admission to practice law, a student must:"}</p>
                       </div>
                     </div>
                     <div className="space-y-4 md:space-y-6 pl-0 md:pl-24">
                       {[
-                        { title: "Complete the J.D. Degree", desc: "Successfully finish the 4-year curriculum at PAUSL.", icon: AcademicCapIcon },
-                        { title: "Pass the FYLSX", desc: "Unless exempt under State Bar rules.", icon: DocumentCheckIcon },
-                        { title: "Moral Character Determination", desc: "Receive a positive moral character determination.", icon: ShieldCheckIcon },
-                        { title: "Multistate Professional Responsibility Examination (MPRE)", desc: "Achieve a passing score on the MPRE.", icon: DocumentTextIcon },
-                        { title: "California Bar Examination", desc: "Pass the final California Bar Examination.", icon: CheckBadgeIcon }
+                        { title: br?.qual1 ?? "Complete the J.D. Degree", desc: br?.qual1Desc ?? "Successfully finish the 4-year curriculum at PAUSL.", icon: AcademicCapIcon },
+                        { title: br?.qual2 ?? "Pass the FYLSX", desc: br?.qual2Desc ?? "Unless exempt under State Bar rules.", icon: DocumentCheckIcon },
+                        { title: br?.qual3 ?? "Moral Character Determination", desc: br?.qual3Desc ?? "Receive a positive moral character determination.", icon: ShieldCheckIcon },
+                        { title: br?.qual4 ?? "Multistate Professional Responsibility Examination (MPRE)", desc: br?.qual4Desc ?? "Achieve a passing score on the MPRE.", icon: DocumentTextIcon },
+                        { title: br?.qual5 ?? "California Bar Examination", desc: br?.qual5Desc ?? "Pass the final California Bar Examination.", icon: CheckBadgeIcon }
                       ].map((item, idx) => (
                         <div key={idx} className="flex items-start gap-3 md:gap-4 group">
                           <div className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 bg-white/10 rounded-lg md:rounded-xl flex items-center justify-center group-hover:bg-pau-gold group-hover:scale-110 transition-all duration-300 border border-white/20">
@@ -783,18 +793,20 @@ const App: React.FC = () => {
             </SectionWrapper>
           </>
         );
+      }
 
-      case 'disclosure':
+      case 'disclosure': {
+        const ds = pagesContent?.disclosure;
         return (
           <>
-            <PageHeader title={"Disclosure\nStatement"} subtitle="Transparency in our educational offering." icon={DocumentDuplicateIcon} />
+            <PageHeader title={ds?.pageTitle ?? "Disclosure\nStatement"} subtitle={ds?.pageSubtitle ?? "Transparency in our educational offering."} icon={DocumentDuplicateIcon} />
             <SectionWrapper>
               <div className="max-w-4xl mx-auto">
                 <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-4 sm:p-6 md:p-8 lg:p-12">
                   <div className="space-y-6 md:space-y-8 text-gray-700 leading-relaxed">
                     {/* Header */}
                     <div className="text-center border-b border-gray-300 pb-4 md:pb-6 mb-6 md:mb-8">
-                      <h1 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-pau-darkBlue mb-3 md:mb-4">Student Disclosure Statement</h1>
+                      <h1 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-pau-darkBlue mb-3 md:mb-4">{ds?.studentDisclosure ?? "Student Disclosure Statement"}</h1>
                       <div className="text-sm sm:text-base md:text-lg">
                         <p className="font-semibold">Pacific American University School of Law</p>
                         <p>3435 Wilshire Blvd. Suite 430</p>
@@ -835,9 +847,9 @@ const App: React.FC = () => {
                         <table className="w-full border-collapse border border-gray-300 text-xs md:text-sm">
                           <thead>
                             <tr className="bg-pau-darkBlue text-white">
-                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-left font-bold">Year</th>
-                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-right font-bold">Assets</th>
-                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-right font-bold">Liabilities</th>
+                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-left font-bold">{ds?.year ?? "Year"}</th>
+                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-right font-bold">{ds?.assets ?? "Assets"}</th>
+                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-right font-bold">{ds?.liabilities ?? "Liabilities"}</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -873,10 +885,10 @@ const App: React.FC = () => {
                         <table className="w-full border-collapse border border-gray-300 text-xs md:text-sm">
                           <thead>
                             <tr className="bg-pau-darkBlue text-white">
-                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-left font-bold">Year</th>
-                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center font-bold">First taker</th>
-                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center font-bold">Total takers</th>
-                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center font-bold">Passed (%)</th>
+                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-left font-bold">{ds?.year ?? "Year"}</th>
+                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center font-bold">{ds?.firstTaker ?? "First taker"}</th>
+                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center font-bold">{ds?.totalTakers ?? "Total takers"}</th>
+                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center font-bold">{ds?.passed ?? "Passed (%)"}</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -889,7 +901,7 @@ const App: React.FC = () => {
                               </tr>
                             ))}
                             <tr className="bg-pau-blue/10 font-bold">
-                              <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3">Total 5 Years</td>
+                              <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3">{ds?.total5Years ?? "Total 5 Years"}</td>
                               <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center">N/A</td>
                               <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center">N/A</td>
                               <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center">N/A</td>
@@ -907,10 +919,10 @@ const App: React.FC = () => {
                         <table className="w-full border-collapse border border-gray-300 text-xs md:text-sm">
                           <thead>
                             <tr className="bg-pau-darkBlue text-white">
-                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-left font-bold">Year</th>
-                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center font-bold">First taker</th>
-                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center font-bold">Total takers</th>
-                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center font-bold">Passed (%)</th>
+                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-left font-bold">{ds?.year ?? "Year"}</th>
+                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center font-bold">{ds?.firstTaker ?? "First taker"}</th>
+                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center font-bold">{ds?.totalTakers ?? "Total takers"}</th>
+                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center font-bold">{ds?.passed ?? "Passed (%)"}</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -923,7 +935,7 @@ const App: React.FC = () => {
                               </tr>
                             ))}
                             <tr className="bg-pau-blue/10 font-bold">
-                              <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3">Total 5 Years</td>
+                              <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3">{ds?.total5Years ?? "Total 5 Years"}</td>
                               <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center">N/A</td>
                               <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center">N/A</td>
                               <td className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center">N/A</td>
@@ -942,15 +954,15 @@ const App: React.FC = () => {
                         <div className="border-l-4 border-pau-blue pl-3 md:pl-4">
                           <h3 className="font-bold text-base sm:text-lg text-pau-darkBlue mb-2">Michael Marino, Esq.</h3>
                           <div className="space-y-2 text-xs sm:text-sm">
-                            <p><strong>Education:</strong></p>
+                            <p><strong>{ds?.educationLabel ?? "Education:"}</strong></p>
                             <p className="pl-4">J.D., St. John's University School of Law (2007)</p>
                             <p className="pl-4">B.B.A., The George Washington University (2004)</p>
-                            <p><strong>Qualifications:</strong></p>
+                            <p><strong>{ds?.qualificationsLabel ?? "Qualifications:"}</strong></p>
                             <p className="pl-4">Attorney Licensed in California and New York (2007)</p>
-                            <p><strong>Experience:</strong></p>
+                            <p><strong>{ds?.experienceLabel ?? "Experience:"}</strong></p>
                             <p className="pl-4">Adjunct Professor, New York Law School (2008-2012)</p>
                             <p className="pl-4">Creating and Designing Legal Education Program (Marino Legal Academy) (2009-present)</p>
-                            <p><strong>Teaches:</strong></p>
+                            <p><strong>{ds?.teachesLabel ?? "Teaches:"}</strong></p>
                             <p className="pl-4">Legal Writing and Analysis, FYLSX review</p>
                           </div>
                         </div>
@@ -959,17 +971,17 @@ const App: React.FC = () => {
                         <div className="border-l-4 border-pau-blue pl-3 md:pl-4">
                           <h3 className="font-bold text-base sm:text-lg text-pau-darkBlue mb-2">Jonathan H. Levy</h3>
                           <div className="space-y-2 text-xs sm:text-sm">
-                            <p><strong>Education:</strong></p>
+                            <p><strong>{ds?.educationLabel ?? "Education:"}</strong></p>
                             <p className="pl-4">Ph.D. in Political Science, University of Cincinnati (2006)</p>
                             <p className="pl-4">M.A. in Political Science, University of Cincinnati (1991)</p>
                             <p className="pl-4">J.D., Taft Law School (1991)</p>
                             <p className="pl-4">B.A., San Francisco State University</p>
-                            <p><strong>Qualifications:</strong></p>
+                            <p><strong>{ds?.qualificationsLabel ?? "Qualifications:"}</strong></p>
                             <p className="pl-4">Attorney Licensed in California (1992)</p>
-                            <p><strong>Experience:</strong></p>
+                            <p><strong>{ds?.experienceLabel ?? "Experience:"}</strong></p>
                             <p className="pl-4">Adjunct Professor, Kaplan University (2009-2017)</p>
                             <p className="pl-4">Adjunct Professor, South University (2023-present)</p>
-                            <p><strong>Teaches:</strong></p>
+                            <p><strong>{ds?.teachesLabel ?? "Teaches:"}</strong></p>
                             <p className="pl-4">Introduction to Law, Torts I & II</p>
                           </div>
                         </div>
@@ -978,17 +990,17 @@ const App: React.FC = () => {
                         <div className="border-l-4 border-pau-blue pl-3 md:pl-4">
                           <h3 className="font-bold text-base sm:text-lg text-pau-darkBlue mb-2">Shandrea P. Williams</h3>
                           <div className="space-y-2 text-xs sm:text-sm">
-                            <p><strong>Education:</strong></p>
+                            <p><strong>{ds?.educationLabel ?? "Education:"}</strong></p>
                             <p className="pl-4">J.D., Loyola University School of Law (1994)</p>
                             <p className="pl-4">B.A., Southern Agricultural & Mechanical University (1991)</p>
-                            <p><strong>Qualifications:</strong></p>
+                            <p><strong>{ds?.qualificationsLabel ?? "Qualifications:"}</strong></p>
                             <p className="pl-4">Attorney Licensed in Louisiana (1994)</p>
-                            <p><strong>Experience:</strong></p>
+                            <p><strong>{ds?.experienceLabel ?? "Experience:"}</strong></p>
                             <p className="pl-4">Associate Professor, Southern University Law Center (2021-present)</p>
                             <p className="pl-4">Co-Director, Common Law Bar Program, Southern University Law Center (2022-present)</p>
                             <p className="pl-4">Professor, Concord Law School at Purdue University Global (2017-2023)</p>
                             <p className="pl-4">Adjunct Professor, Academic Support and Bar Prep Summer Pre-Law Program, Southern University Law Center (2016, 2020, 2021)</p>
-                            <p><strong>Teaches:</strong></p>
+                            <p><strong>{ds?.teachesLabel ?? "Teaches:"}</strong></p>
                             <p className="pl-4">Contract I & II</p>
                           </div>
                         </div>
@@ -997,18 +1009,18 @@ const App: React.FC = () => {
                         <div className="border-l-4 border-pau-blue pl-3 md:pl-4">
                           <h3 className="font-bold text-base sm:text-lg text-pau-darkBlue mb-2">John Chandler</h3>
                           <div className="space-y-2 text-xs sm:text-sm">
-                            <p><strong>Education:</strong></p>
+                            <p><strong>{ds?.educationLabel ?? "Education:"}</strong></p>
                             <p className="pl-4">J.D., Loyola Marymount University School of Law (1993)</p>
                             <p className="pl-4">B.A., California State University (1989)</p>
-                            <p><strong>Qualifications:</strong></p>
+                            <p><strong>{ds?.qualificationsLabel ?? "Qualifications:"}</strong></p>
                             <p className="pl-4">Attorney Licensed in California (1993)</p>
-                            <p><strong>Experience:</strong></p>
+                            <p><strong>{ds?.experienceLabel ?? "Experience:"}</strong></p>
                             <p className="pl-4">Professor, Westwood College (2010-2014)</p>
                             <p className="pl-4">Assistant Program Chair, Westwood College (2010-2011)</p>
                             <p className="pl-4">Adjunct Instructor, Paloma College (2008-2010)</p>
                             <p className="pl-4">Adjunct Instructor, City of Long Beach (2000-2009)</p>
                             <p className="pl-4">Adjunct Instructor, Rancho Santiago Community College (1997-2006; 2007-2009)</p>
-                            <p><strong>Teaches:</strong></p>
+                            <p><strong>{ds?.teachesLabel ?? "Teaches:"}</strong></p>
                             <p className="pl-4">Criminal Law</p>
                           </div>
                         </div>
@@ -1024,16 +1036,16 @@ const App: React.FC = () => {
                         <div className="border-l-4 border-pau-gold pl-4">
                           <h3 className="font-bold text-lg text-pau-darkBlue mb-2">Hyun Joo Kang, SJD, CEO & President</h3>
                           <div className="space-y-2 text-sm">
-                            <p><strong>Education:</strong></p>
+                            <p><strong>{ds?.educationLabel ?? "Education:"}</strong></p>
                             <p className="pl-4">LL.M. thesis & S.J.D., Indiana University Maurer School of Law (2010)</p>
                             <p className="pl-4">LL.B.(Magna Cum Laude), LL.M., PhD. coursework completed, Ewha Womans University (1993, 1995, 1998)</p>
-                            <p><strong>Awards and Honors</strong></p>
+                            <p><strong>{ds?.awardsLabel ?? "Awards and Honors"}</strong></p>
                             <p className="pl-4">Korea Foreign Minister Award (2022)</p>
                             <p className="pl-4">Ewha Distinguished Alumni Award (2022)</p>
                             <p className="pl-4">Paul Harris Fellow (2016, 2021, 2022, 2023)</p>
                             <p className="pl-4">Appenzeller Memorial Scholarship (2004)</p>
                             <p className="pl-4">Kim-Eda Award (1993)</p>
-                            <p><strong>Experience:</strong></p>
+                            <p><strong>{ds?.experienceLabel ?? "Experience:"}</strong></p>
                             <p className="pl-4">President of Pacific American University (2022-present)</p>
                             <p className="pl-4">Adjunct Professor at Kookmin University (2019-2022)</p>
                             <p className="pl-4">Senior Advisor, I-Sung Labor Law Firm (2019-2022)</p>
@@ -1047,14 +1059,14 @@ const App: React.FC = () => {
                         <div className="border-l-4 border-pau-gold pl-4">
                           <h3 className="font-bold text-lg text-pau-darkBlue mb-2">Timothy P. Weimer, JD, MBA, Dean</h3>
                           <div className="space-y-2 text-sm">
-                            <p><strong>Education:</strong></p>
+                            <p><strong>{ds?.educationLabel ?? "Education:"}</strong></p>
                             <p className="pl-4">J.D., The University of Akron School of Law, Akron, Ohio (2015)</p>
                             <p className="pl-4">MBA, Capella University, Minneapolis, Minnesota (2006)</p>
                             <p><strong>Certifications and Awards</strong></p>
                             <p className="pl-4">Health Law Certificate, University of Akron School of Law, Westlaw and Lexis Advance National Certifications, CALI Excellence for the Future Awards for Statutory Interpretation, and Food and Drug Law</p>
-                            <p><strong>Qualifications:</strong></p>
+                            <p><strong>{ds?.qualificationsLabel ?? "Qualifications:"}</strong></p>
                             <p className="pl-4">Attorney Licensed in Ohio</p>
-                            <p><strong>Experience:</strong></p>
+                            <p><strong>{ds?.experienceLabel ?? "Experience:"}</strong></p>
                             <p className="pl-4">Discovery/Document Review Attorney (2023-2026)</p>
                             <p className="pl-4">Solo Practice (2016-2026)</p>
                             <p className="pl-4">Dean and Professor of Law, San Francisco Law School (SFLS) (2020-2023)</p>
@@ -1067,12 +1079,12 @@ const App: React.FC = () => {
                         <div className="border-l-4 border-pau-gold pl-4">
                           <h3 className="font-bold text-lg text-pau-darkBlue mb-2">Natali Badillo-Casas, JD, Associate Dean for Academic Affairs & Registrar</h3>
                           <div className="space-y-2 text-sm">
-                            <p><strong>Education:</strong></p>
+                            <p><strong>{ds?.educationLabel ?? "Education:"}</strong></p>
                             <p className="pl-4">J.D., Whittier Law School (2014)</p>
                             <p className="pl-4">B.A., UC Santa Cruz (2010)</p>
-                            <p><strong>Qualifications:</strong></p>
+                            <p><strong>{ds?.qualificationsLabel ?? "Qualifications:"}</strong></p>
                             <p className="pl-4">Attorney Licensed in California</p>
-                            <p><strong>Experience:</strong></p>
+                            <p><strong>{ds?.experienceLabel ?? "Experience:"}</strong></p>
                             <p className="pl-4">Associate Dean and Registrar, Pacific Coast University School of Law (2022-2026)</p>
                             <p className="pl-4">Registrar, Pacific Coast University School of Law (2020-2022)</p>
                             <p className="pl-4">Director of Registrar, Whittier Law School (2017-2019)</p>
@@ -1085,13 +1097,13 @@ const App: React.FC = () => {
                         <div className="border-l-4 border-pau-gold pl-4">
                           <h3 className="font-bold text-lg text-pau-darkBlue mb-2">Phillip C. Bohl, J.D., M.L.I.S., Associate Dean</h3>
                           <div className="space-y-2 text-sm">
-                            <p><strong>Education:</strong></p>
+                            <p><strong>{ds?.educationLabel ?? "Education:"}</strong></p>
                             <p className="pl-4">B.A., Oral Roberts University (1989)</p>
                             <p className="pl-4">J.D., Pepperdine University School of Law (1992)</p>
                             <p className="pl-4">Master of Library and Information Science, San Jose State University (1999)</p>
-                            <p><strong>Qualifications:</strong></p>
+                            <p><strong>{ds?.qualificationsLabel ?? "Qualifications:"}</strong></p>
                             <p className="pl-4">Attorney Licensed in California, United States District Court</p>
-                            <p><strong>Experience:</strong></p>
+                            <p><strong>{ds?.experienceLabel ?? "Experience:"}</strong></p>
                             <p className="pl-4">Attorney at Law, Law Office of Philip C. Bohl (1992-1994)</p>
                             <p className="pl-4">Technology Manager, Pepperdine University School of Law (1992-1996)</p>
                             <p className="pl-4">Computer Reference & Service Librarian, Pepperdine University School of Law (1996-1999)</p>
@@ -1105,11 +1117,11 @@ const App: React.FC = () => {
                         <div className="border-l-4 border-pau-gold pl-4">
                           <h3 className="font-bold text-lg text-pau-darkBlue mb-2">Nam Hwan Jung, Ed.D., Dean of Admissions</h3>
                           <div className="space-y-2 text-sm">
-                            <p><strong>Education:</strong></p>
+                            <p><strong>{ds?.educationLabel ?? "Education:"}</strong></p>
                             <p className="pl-4">Ed.D, LaSalle University Graduate School (1997)</p>
                             <p className="pl-4">M.A., Dankook University Graduate School (1995)</p>
                             <p className="pl-4">B.A., Kyungpook National University (1977)</p>
-                            <p><strong>Experience:</strong></p>
+                            <p><strong>{ds?.experienceLabel ?? "Experience:"}</strong></p>
                             <p className="pl-4">Professor, Hoseo University (1999-2022)</p>
                             <p className="pl-4">Professor, Hoseo University Graduate School (2016-2022)</p>
                             <p className="pl-4">Admissions Officer, Hoseo University (2016-2022)</p>
@@ -1121,11 +1133,11 @@ const App: React.FC = () => {
                         <div className="border-l-4 border-pau-gold pl-4">
                           <h3 className="font-bold text-lg text-pau-darkBlue mb-2">Joyee J. Jea, IT and Marketing Director</h3>
                           <div className="space-y-2 text-sm">
-                            <p><strong>Education:</strong></p>
+                            <p><strong>{ds?.educationLabel ?? "Education:"}</strong></p>
                             <p className="pl-4">LL.M., Regent University School of Law (2017)</p>
                             <p className="pl-4">J.D., Handong International Law School (2017)</p>
                             <p className="pl-4">B.A. in Mechanical Engineering and Electronic Engineering, Handong Global University (2007)</p>
-                            <p><strong>Experience:</strong></p>
+                            <p><strong>{ds?.experienceLabel ?? "Experience:"}</strong></p>
                             <p className="pl-4">Marketing Manager, Seoul National University of Science and Tech. IACF (2024)</p>
                             <p className="pl-4">Lab Startup Innovator, Sungkyunkwan University Startup Center (2023)</p>
                             <p className="pl-4">Lab Startup Innovator, Tech University of Korea IACF (2021-2023)</p>
@@ -1154,7 +1166,7 @@ const App: React.FC = () => {
                         <table className="w-full border-collapse border border-gray-300 text-xs md:text-sm">
                           <thead>
                             <tr className="bg-pau-darkBlue text-white">
-                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-left font-bold">Academic Year</th>
+                              <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-left font-bold">{ds?.academicYear ?? "Academic Year"}</th>
                               <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center font-bold">1st year</th>
                               <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center font-bold">2nd year</th>
                               <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-center font-bold">3rd year</th>
@@ -1190,17 +1202,17 @@ const App: React.FC = () => {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
                         <div>
                           <div className="border-b-2 border-gray-400 mb-2 pb-1 min-h-[40px]"></div>
-                          <p className="text-sm font-semibold">Name of Student</p>
+                          <p className="text-sm font-semibold">{ds?.nameOfStudent ?? "Name of Student"}</p>
                         </div>
                         <div>
                           <div className="border-b-2 border-gray-400 mb-2 pb-1 min-h-[40px]"></div>
-                          <p className="text-sm font-semibold">Signature of Student</p>
+                          <p className="text-sm font-semibold">{ds?.signatureOfStudent ?? "Signature of Student"}</p>
                         </div>
                       </div>
 
                       <div className="w-48">
                         <div className="border-b-2 border-gray-400 mb-2 pb-1 min-h-[40px]"></div>
-                        <p className="text-sm font-semibold">Date</p>
+                        <p className="text-sm font-semibold">{ds?.dateLabel ?? "Date"}</p>
                       </div>
                     </div>
                   </div>
@@ -1209,33 +1221,36 @@ const App: React.FC = () => {
             </SectionWrapper>
           </>
         );
+      }
 
-      case 'catalog':
+      case 'catalog': {
+        const cat = pagesContent?.catalog;
         return (
           <>
-            <PageHeader title={"School\nCatalog"} subtitle="Complete guide to policies and programs." icon={BookOpenIcon} />
+            <PageHeader title={cat?.pageTitle ?? "School\nCatalog"} subtitle={cat?.pageSubtitle ?? "Complete guide to policies and programs."} icon={BookOpenIcon} />
             <SectionWrapper>
               <div className="max-w-4xl mx-auto flex flex-col items-center">
                 <div className="w-48 h-64 bg-gray-200 shadow-2xl mb-10 flex items-center justify-center rounded-r-2xl border-l-8 border-pau-darkBlue relative overflow-hidden group cursor-pointer hover:scale-105 transition-transform duration-500">
                   <div className="absolute inset-0 bg-gradient-to-br from-pau-blue to-pau-darkBlue"></div>
                   <div className="relative z-10 text-center text-white p-4">
                     <span className="block text-4xl font-serif font-bold mb-2">2026</span>
-                    <span className="text-[10px] uppercase tracking-[0.2em] block">Academic Catalog</span>
+                    <span className="text-[10px] uppercase tracking-[0.2em] block">{cat?.academicCatalog ?? "Academic Catalog"}</span>
                   </div>
                 </div>
                 <button className="bg-pau-gold text-white px-10 py-4 rounded-full font-bold uppercase text-xs tracking-widest hover:bg-pau-darkBlue transition-colors shadow-lg">
-                  Download PDF Catalog
+                  {cat?.downloadButton ?? "Download PDF Catalog"}
                 </button>
               </div>
             </SectionWrapper>
           </>
         );
+      }
 
       case 'admin-staffs':
       case 'faculty':
         return (
           <Suspense fallback={<LoadingSpinner message="Loading faculty..." />}>
-            <Faculty content={facultyContent} shared={shared} currentPage={currentPage} onNavigate={handleNavigate} />
+            <Faculty content={facultyContent} shared={shared} currentPage={currentPage} onNavigate={handleNavigate} pagesContent={pagesContent} />
           </Suspense>
         );
 
@@ -1270,7 +1285,7 @@ const App: React.FC = () => {
                   hasDownloadButton: true
                 }
               ]
-            }} />
+            }} pagesContent={pagesContent} />
           </Suspense>
         );
 
@@ -1288,13 +1303,14 @@ const App: React.FC = () => {
         );
 
       case 'centers':
-      case 'student-resources':
+      case 'student-resources': {
+        const sr = pagesContent?.studentResources;
         return (
           <Suspense fallback={<LoadingSpinner message="Loading resources..." />}>
             <StudentResources
-              title="Student Success & Resources"
-              subtitle="Comprehensive support systems designed to ensure academic achievement and professional growth."
-              resources={[
+              title={sr?.pageTitle ?? "Student Success & Resources"}
+              subtitle={sr?.pageSubtitle ?? "Comprehensive support systems designed to ensure academic achievement and professional growth."}
+              resources={sr?.resources ?? [
                 {
                   title: "Academic Success Program (ASP)",
                   description: "A dedicated program designed to support students in mastering legal concepts and improving exam performance. It includes mandatory sessions for students on academic probation and offers personalized guidance on legal writing, case analysis, and MBE strategies.",
@@ -1311,9 +1327,11 @@ const App: React.FC = () => {
                   icon: "fraternity"
                 }
               ]}
+              pagesContent={pagesContent}
             />
           </Suspense>
         );
+      }
 
       case 'library':
         return (
@@ -1326,7 +1344,7 @@ const App: React.FC = () => {
                 { title: "Research Guides", content: "Curated pathfinders for specific areas of law including Torts, Contracts, and Civil Procedure." },
                 { title: "Reference Support", content: "Schedule a Zoom consultation with our reference librarians for research strategy assistance." }
               ]
-            }} shared={shared} />
+            }} shared={shared} pagesContent={pagesContent} />
           </Suspense>
         );
 
@@ -1337,7 +1355,7 @@ const App: React.FC = () => {
               title: "Academic Calendar",
               intro: "Trimester-based schedule with flexible start options for the J.D. Program.",
               events: []
-            }} shared={shared} />
+            }} shared={shared} pagesContent={pagesContent} />
           </Suspense>
         );
 
@@ -1346,7 +1364,7 @@ const App: React.FC = () => {
       case 'apply-now':
         return (
           <Suspense fallback={<LoadingSpinner message="Loading admissions..." />}>
-            <Admissions content={admissionsContent} shared={shared} />
+            <Admissions content={admissionsContent} shared={shared} pagesContent={pagesContent} />
           </Suspense>
         );
 
@@ -1365,25 +1383,26 @@ const App: React.FC = () => {
                 { title: "Resume & Cover Letter Review", description: "Expert feedback to make your application materials stand out." },
                 { title: "Mock Interviews", description: "Practice your interview skills with practicing attorneys." }
               ]
-            }} />
+            }} pagesContent={pagesContent} />
           </Suspense>
         );
 
       case 'notices':
         return (
           <Suspense fallback={<LoadingSpinner message="Loading notices..." />}>
-            <NoticeBoard content={noticesContent} onNewsClick={setSelectedNews} shared={shared} />
+            <NoticeBoard content={{ ...noticesContent, notices: translatedNotices }} onNewsClick={setSelectedNews} shared={shared} />
           </Suspense>
         );
 
       case 'weekly-dicta':
-        return <HomeNews title={weeklyDictaContent.title} newsItems={weeklyDictaContent.notices} onNewsClick={setSelectedNews} onNavigate={handleNavigate} shared={shared} />;
+        return <HomeNews title={weeklyDictaContent.title} newsItems={(weeklyDictaContent.notices as any[]).map(item => applyNewsTranslation(item, currentLang))} onNewsClick={setSelectedNews} onNavigate={handleNavigate} shared={shared} />;
 
       // --- TUITION & OTHER ---
-      case 'tuition-fees':
+      case 'tuition-fees': {
+        const tf = pagesContent?.tuitionFees;
         return (
           <>
-            <PageHeader title={"Tuition, Fees\nand Costs"} subtitle="Transparent pricing for your legal education." icon={CurrencyDollarIcon} />
+            <PageHeader title={tf?.pageTitle ?? "Tuition, Fees\nand Costs"} subtitle={tf?.pageSubtitle ?? "Transparent pricing for your legal education."} icon={CurrencyDollarIcon} />
             <SectionWrapper>
               <div className="max-w-6xl mx-auto space-y-12">
                 {/* Introduction */}
@@ -1399,16 +1418,16 @@ const App: React.FC = () => {
                 {/* Tuition Table */}
                 <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
                   <div className="bg-pau-blue p-6 text-white">
-                    <h2 className="text-2xl font-bold font-serif">Tuition</h2>
+                    <h2 className="text-2xl font-bold font-serif">{tf?.tuition ?? "Tuition"}</h2>
                   </div>
                   <div className="p-8">
                     <div className="overflow-x-auto">
                       <table className="w-full border-collapse border border-gray-300 text-xs md:text-sm">
                         <thead>
                           <tr className="bg-pau-darkBlue text-white">
-                            <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-left font-bold">Description</th>
-                            <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-right font-bold">Amount</th>
-                            <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-left font-bold">Explanation</th>
+                            <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-left font-bold">{tf?.description ?? "Description"}</th>
+                            <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-right font-bold">{tf?.amount ?? "Amount"}</th>
+                            <th className="border border-gray-300 px-2 py-2 md:px-4 md:py-3 text-left font-bold">{tf?.explanation ?? "Explanation"}</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -1439,16 +1458,16 @@ const App: React.FC = () => {
                 {/* Additional Costs Table */}
                 <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
                   <div className="bg-pau-gold/10 p-6 border-b border-gray-200">
-                    <h2 className="text-2xl font-bold font-serif text-pau-darkBlue">Additional Costs</h2>
+                    <h2 className="text-2xl font-bold font-serif text-pau-darkBlue">{tf?.additionalCosts ?? "Additional Costs"}</h2>
                   </div>
                   <div className="p-4 sm:p-6 md:p-8">
                     <table className="w-full border-collapse border border-gray-300 text-[9px] sm:text-[10px] md:text-sm">
                       <thead>
                         <tr className="bg-pau-darkBlue text-white">
-                          <th className="border border-gray-300 px-1.5 sm:px-2 md:px-4 py-1.5 sm:py-2 md:py-3 text-left font-bold text-[8px] sm:text-[9px] md:text-sm">Description</th>
-                          <th className="border border-gray-300 px-1 sm:px-2 md:px-4 py-1.5 sm:py-2 md:py-3 text-center font-bold text-[8px] sm:text-[9px] md:text-sm whitespace-nowrap">Frequency</th>
-                          <th className="border border-gray-300 px-1 sm:px-2 md:px-4 py-1.5 sm:py-2 md:py-3 text-center font-bold text-[8px] sm:text-[9px] md:text-sm whitespace-nowrap">Refundable/Non-Refundable</th>
-                          <th className="border border-gray-300 px-1.5 sm:px-2 md:px-4 py-1.5 sm:py-2 md:py-3 text-right font-bold text-[8px] sm:text-[9px] md:text-sm">Amount</th>
+                          <th className="border border-gray-300 px-1.5 sm:px-2 md:px-4 py-1.5 sm:py-2 md:py-3 text-left font-bold text-[8px] sm:text-[9px] md:text-sm">{tf?.description ?? "Description"}</th>
+                          <th className="border border-gray-300 px-1 sm:px-2 md:px-4 py-1.5 sm:py-2 md:py-3 text-center font-bold text-[8px] sm:text-[9px] md:text-sm whitespace-nowrap">{tf?.frequency ?? "Frequency"}</th>
+                          <th className="border border-gray-300 px-1 sm:px-2 md:px-4 py-1.5 sm:py-2 md:py-3 text-center font-bold text-[8px] sm:text-[9px] md:text-sm whitespace-nowrap">{tf?.refundable ?? "Refundable/Non-Refundable"}</th>
+                          <th className="border border-gray-300 px-1.5 sm:px-2 md:px-4 py-1.5 sm:py-2 md:py-3 text-right font-bold text-[8px] sm:text-[9px] md:text-sm">{tf?.amount ?? "Amount"}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1496,7 +1515,7 @@ const App: React.FC = () => {
                 {/* Set-Up Fees */}
                 <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
                   <div className="bg-pau-gold/10 p-6 border-b border-gray-200">
-                    <h2 className="text-2xl font-bold font-serif text-pau-darkBlue">Set-Up Fees</h2>
+                    <h2 className="text-2xl font-bold font-serif text-pau-darkBlue">{tf?.setupFees ?? "Set-Up Fees"}</h2>
                   </div>
                   <div className="p-8">
                     <p className="text-gray-700 leading-relaxed mb-6">
@@ -1530,7 +1549,7 @@ const App: React.FC = () => {
                 {/* The State Bar of California Fees */}
                 <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
                   <div className="bg-pau-gold/10 p-6 border-b border-gray-200">
-                    <h2 className="text-2xl font-bold font-serif text-pau-darkBlue">The State Bar of California Fees</h2>
+                    <h2 className="text-2xl font-bold font-serif text-pau-darkBlue">{tf?.stateBarFees ?? "The State Bar of California Fees"}</h2>
                   </div>
                   <div className="p-8">
                     <p className="text-gray-700 leading-relaxed mb-6">
@@ -1541,8 +1560,8 @@ const App: React.FC = () => {
                         <table className="w-full border-collapse border border-gray-300 text-[10px] md:text-sm">
                           <thead>
                             <tr className="bg-pau-darkBlue text-white">
-                              <th className="border border-gray-300 px-2 md:px-4 py-2 md:py-3 text-left font-bold text-[9px] md:text-sm">Fee Description</th>
-                              <th className="border border-gray-300 px-2 md:px-4 py-2 md:py-3 text-right font-bold text-[9px] md:text-sm">Amount</th>
+                              <th className="border border-gray-300 px-2 md:px-4 py-2 md:py-3 text-left font-bold text-[9px] md:text-sm">{tf?.feeDescription ?? "Fee Description"}</th>
+                              <th className="border border-gray-300 px-2 md:px-4 py-2 md:py-3 text-right font-bold text-[9px] md:text-sm">{tf?.amount ?? "Amount"}</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -1666,17 +1685,19 @@ const App: React.FC = () => {
             </SectionWrapper>
           </>
         );
+      }
 
-      case 'payment-plan':
+      case 'payment-plan': {
+        const pp = pagesContent?.paymentPlan;
         return (
           <>
-            <PageHeader title={"Payment\nPlans"} subtitle="Flexible options to manage your investment." icon={CreditCardIcon} />
+            <PageHeader title={pp?.pageTitle ?? "Payment\nPlans"} subtitle={pp?.pageSubtitle ?? "Flexible options to manage your investment."} icon={CreditCardIcon} />
             <SectionWrapper>
               <div className="max-w-5xl mx-auto space-y-12">
                 {/* Introduction */}
                 <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8">
-                  <h2 className="text-2xl font-bold font-serif text-pau-darkBlue mb-4">Financial Aid</h2>
-                  <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-6">Installment Plans</h3>
+                  <h2 className="text-2xl font-bold font-serif text-pau-darkBlue mb-4">{pp?.financialAid ?? "Financial Aid"}</h2>
+                  <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-6">{pp?.installmentPlans ?? "Installment Plans"}</h3>
                   <p className="text-gray-700 leading-relaxed font-semibold mb-8">
                     STUDENTS CHOOSING A STUDENT INSTALLMENT PLAN AGREE TO PAY THE TUITION, ANY ACCRUED INTEREST, AND RELATED FEES.
                   </p>
@@ -1687,7 +1708,7 @@ const App: React.FC = () => {
                   {/* Option 1 */}
                   <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
                     <div className="bg-pau-blue p-6 text-white">
-                      <h3 className="text-xl font-bold font-serif">Option 1: $350/month Minimum Payment Plan with 5% Annual Interest</h3>
+                      <h3 className="text-xl font-bold font-serif">{pp?.option1Title ?? "Option 1: $350/month Minimum Payment Plan with 5% Annual Interest"}</h3>
                     </div>
                     <div className="p-8">
                       <p className="text-gray-700 leading-relaxed mb-4">
@@ -1702,7 +1723,7 @@ const App: React.FC = () => {
                   {/* Option 2 */}
                   <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
                     <div className="bg-pau-gold p-6 text-white">
-                      <h3 className="text-xl font-bold font-serif">Option 2: $750/month Maximum Payment Plan with 0% Interest</h3>
+                      <h3 className="text-xl font-bold font-serif">{pp?.option2Title ?? "Option 2: $750/month Maximum Payment Plan with 0% Interest"}</h3>
                     </div>
                     <div className="p-8">
                       <p className="text-gray-700 leading-relaxed">
@@ -1715,21 +1736,21 @@ const App: React.FC = () => {
                 {/* Additional Information */}
                 <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8 space-y-6">
                   <div>
-                    <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-4">Payment Plan Processing Fee</h3>
+                    <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-4">{pp?.processingFee ?? "Payment Plan Processing Fee"}</h3>
                     <p className="text-gray-700 leading-relaxed">
                       There is a payment plan processing fee of $100.00 per year, which is charged to students who choose to use an installment plan to finance their tuition and related fees.
                     </p>
                   </div>
 
                   <div>
-                    <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-4">Credit Card Payments</h3>
+                    <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-4">{pp?.creditCard ?? "Credit Card Payments"}</h3>
                     <p className="text-gray-700 leading-relaxed">
                       We accept credit cards for processing payments, and any associated surcharges or processing fees are the responsibility of the students. Typically, such fees do not exceed 4.5% of the full amount of the charges. Make sure that if a credit card payment is planned for tuition and/or fees that you have a full understanding of the fee structure for processing your card before initiating payment. Consult with the PAUSL finance office for details regarding credit card processing fees.
                     </p>
                   </div>
 
                   <div>
-                    <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-4">Accelerating Payments</h3>
+                    <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-4">{pp?.accelerating ?? "Accelerating Payments"}</h3>
                     <p className="text-gray-700 leading-relaxed">
                       At any point in time, students have the flexibility to settle their tuition balance or make a lump sum payment without incurring any penalties.
                     </p>
@@ -1738,7 +1759,7 @@ const App: React.FC = () => {
 
                 {/* Applying for Installment Payment Plans */}
                 <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8">
-                  <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-4">Applying for Installment Payment Plans</h3>
+                  <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-4">{pp?.applying ?? "Applying for Installment Payment Plans"}</h3>
                   <p className="text-gray-700 leading-relaxed mb-6">
                     To initiate an Installment Payment Plan, please get in touch with the PAUSL via email (<a href="mailto:registrar@paucal.org" className="text-pau-blue hover:text-pau-gold underline">registrar@paucal.org</a>). PAUSL representatives will guide each student in selecting the most suitable plan.
                   </p>
@@ -1755,17 +1776,19 @@ const App: React.FC = () => {
             </SectionWrapper>
           </>
         );
+      }
 
-      case 'refund-policy':
+      case 'refund-policy': {
+        const rp = pagesContent?.refundPolicy;
         return (
           <>
-            <PageHeader title={"Refund\nPolicy"} subtitle="Fair and transparent withdrawal guidelines." icon={DocumentCheckIcon} />
+            <PageHeader title={rp?.pageTitle ?? "Refund\nPolicy"} subtitle={rp?.pageSubtitle ?? "Fair and transparent withdrawal guidelines."} icon={DocumentCheckIcon} />
             <SectionWrapper>
               <div className="max-w-5xl mx-auto space-y-12">
                 {/* Students' Right to Cancel, Withdraw or Leave of Absence */}
                 <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8">
-                  <h2 className="text-2xl font-bold font-serif text-pau-darkBlue mb-6">CANCELLATION & TUITION REFUND POLICY</h2>
-                  <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-4">Students' Right to Cancel, Withdraw or Leave of Absence</h3>
+                  <h2 className="text-2xl font-bold font-serif text-pau-darkBlue mb-6">{rp?.cancellationTitle ?? "CANCELLATION & TUITION REFUND POLICY"}</h2>
+                  <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-4">{rp?.rightToCancel ?? "Students' Right to Cancel, Withdraw or Leave of Absence"}</h3>
                   <p className="text-gray-700 leading-relaxed">
                     Students have the right to cancel the enrollment agreement, withdraw from PAUSL, or leave a course according to the terms and conditions outlined in this Pacific American University School of Law catalog.
                   </p>
@@ -1773,7 +1796,7 @@ const App: React.FC = () => {
 
                 {/* Withdrawal or Cancellation Policy */}
                 <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8">
-                  <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-6">Withdrawal or Cancellation Policy</h3>
+                  <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-6">{rp?.withdrawalPolicy ?? "Withdrawal or Cancellation Policy"}</h3>
                   <p className="text-gray-700 leading-relaxed mb-4">
                     Students may withdraw from the program according to the following guidelines.
                   </p>
@@ -1794,7 +1817,7 @@ const App: React.FC = () => {
 
                 {/* Leave of Absence Policy */}
                 <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8">
-                  <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-4">Leave of Absence Policy</h3>
+                  <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-4">{rp?.leaveOfAbsence ?? "Leave of Absence Policy"}</h3>
                   <p className="text-gray-700 leading-relaxed">
                     Leaves of absence in the J.D. Program are only allowed between academic years. A student may petition the Dean for a leave of absence based on good cause. A leave shall not exceed more than a period of twelve months.
                   </p>
@@ -1802,7 +1825,7 @@ const App: React.FC = () => {
 
                 {/* Refund Policy */}
                 <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8">
-                  <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-6">Refund Policy</h3>
+                  <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-6">{rp?.refundPolicyHeading ?? "Refund Policy"}</h3>
                   <div className="space-y-4 text-gray-700 leading-relaxed">
                     <p>
                       PAUSL will provide refunds in accordance with its written refund policy, within thirty (30) days after a student withdraws from a class or a program, or thirty (30) days of the law school's discontinuing a course or educational program in which a student is enrolled.
@@ -1857,7 +1880,7 @@ const App: React.FC = () => {
 
                 {/* Pro-rata Refund Calculation Details */}
                 <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8">
-                  <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-6">Pro-rata Refund Calculation Details</h3>
+                  <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-6">{rp?.proRata ?? "Pro-rata Refund Calculation Details"}</h3>
                   <p className="text-gray-700 leading-relaxed mb-6">
                     Example of a J.D. Program refund based on the student withdrawing from the program in the first year on 2 weeks attended before withdrawal:
                   </p>
@@ -1906,11 +1929,13 @@ const App: React.FC = () => {
             </SectionWrapper>
           </>
         );
+      }
 
-      case 'tuition':
+      case 'tuition': {
+        const tu = pagesContent?.tuition;
         return (
           <>
-            <PageHeader title={"Tuition &\nFinancial Services"} subtitle="Investing in your future with transparent costs." icon={BanknotesIcon} />
+            <PageHeader title={tu?.pageTitle ?? "Tuition &\nFinancial Services"} subtitle={tu?.pageSubtitle ?? "Investing in your future with transparent costs."} icon={BanknotesIcon} />
             <SectionWrapper>
               <div className="max-w-4xl mx-auto space-y-12">
                 <div className="bg-white p-8 rounded-2xl shadow-premium border border-gray-100 flex flex-col md:flex-row gap-8 items-center">
@@ -1918,7 +1943,7 @@ const App: React.FC = () => {
                     <CurrencyDollarIcon className="h-12 w-12 text-green-600" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold text-pau-darkBlue mb-2">J.D. Program Tuition</h3>
+                    <h3 className="text-2xl font-bold text-pau-darkBlue mb-2">{tu?.jdTuition ?? "J.D. Program Tuition"}</h3>
                     <p className="text-gray-600 leading-relaxed mb-4">
                       Tuition is charged on a per-unit basis. The current rate is <span className="font-bold text-green-700">$300 per unit</span>.
                     </p>
@@ -1929,7 +1954,7 @@ const App: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <button onClick={() => handleNavigate('payment-plan')} className="text-left bg-gray-50 p-8 rounded-2xl border border-gray-200 hover:border-pau-gold hover:shadow-md transition-all group">
                     <h4 className="font-bold text-pau-blue mb-4 flex items-center group-hover:text-pau-gold transition-colors">
-                      <CreditCardIcon className="h-5 w-5 mr-2" /> Payment Options
+                      <CreditCardIcon className="h-5 w-5 mr-2" /> {tu?.paymentOptions ?? "Payment Options"}
                     </h4>
                     <ul className="space-y-3 text-sm text-gray-600">
                       <li>• Pay in full per semester</li>
@@ -1939,7 +1964,7 @@ const App: React.FC = () => {
                   </button>
                   <button onClick={() => handleNavigate('refund-policy')} className="text-left bg-gray-50 p-8 rounded-2xl border border-gray-200 hover:border-pau-gold hover:shadow-md transition-all group">
                     <h4 className="font-bold text-pau-blue mb-4 flex items-center group-hover:text-pau-gold transition-colors">
-                      <DocumentCheckIcon className="h-5 w-5 mr-2" /> Refund Policy
+                      <DocumentCheckIcon className="h-5 w-5 mr-2" /> {tu?.refundPolicyLink ?? "Refund Policy"}
                     </h4>
                     <p className="text-sm text-gray-600">
                       100% refund if withdrawn by the 1st week of classes. Prorated refunds available up to the 60% point of the semester.
@@ -1950,19 +1975,21 @@ const App: React.FC = () => {
             </SectionWrapper>
           </>
         );
+      }
 
-      case 'office-hours':
+      case 'office-hours': {
+        const oh = pagesContent?.officeHours;
         return (
           <>
-            <PageHeader title={"Office\nHours"} subtitle="We are available to assist you during these times." icon={ClockIcon} />
-            <SectionWrapper title="Operating Schedule">
+            <PageHeader title={oh?.pageTitle ?? "Office\nHours"} subtitle={oh?.pageSubtitle ?? "We are available to assist you during these times."} icon={ClockIcon} />
+            <SectionWrapper title={oh?.operatingSchedule ?? "Operating Schedule"}>
               <div className="max-w-4xl mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   {[
-                    { dept: "General Administration", hours: ["Mon-Fri: 9:00 AM - 5:00 PM PST", "Sat-Sun: Closed"], icon: BuildingOffice2Icon },
-                    { dept: "Admissions Office", hours: ["Mon-Fri: 9:00 AM - 5:00 PM PST", "Sat-Sun: Closed"], icon: UserGroupIcon },
-                    { dept: "Registrar & Records", hours: ["Mon-Fri: 9:00 AM - 5:00 PM PST", "Sat-Sun: Closed"], icon: ClipboardDocumentListIcon },
-                    { dept: "IT Support Helpdesk", hours: ["Mon-Fri: 9:00 AM - 5:00 PM PST", "Sat-Sun: Closed"], icon: ComputerDesktopIcon },
+                    { dept: oh?.depts?.[0] ?? "General Administration", hours: ["Mon-Fri: 9:00 AM - 5:00 PM PST", "Sat-Sun: Closed"], icon: BuildingOffice2Icon },
+                    { dept: oh?.depts?.[1] ?? "Admissions Office", hours: ["Mon-Fri: 9:00 AM - 5:00 PM PST", "Sat-Sun: Closed"], icon: UserGroupIcon },
+                    { dept: oh?.depts?.[2] ?? "Registrar & Records", hours: ["Mon-Fri: 9:00 AM - 5:00 PM PST", "Sat-Sun: Closed"], icon: ClipboardDocumentListIcon },
+                    { dept: oh?.depts?.[3] ?? "IT Support Helpdesk", hours: ["Mon-Fri: 9:00 AM - 5:00 PM PST", "Sat-Sun: Closed"], icon: ComputerDesktopIcon },
                   ].map((item, i) => (
                     <div key={i} className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:border-pau-blue transition-colors">
                       <div className="flex items-center mb-6">
@@ -1987,7 +2014,7 @@ const App: React.FC = () => {
                     * Note: All times are in Pacific Standard Time (PST). Office hours may vary during holidays and semester breaks.
                   </div>
                   <div className="p-4 bg-amber-50 text-amber-800 text-xs rounded-lg border border-amber-100">
-                    <div className="font-bold mb-2">Federal Holiday and additional closure:</div>
+                    <div className="font-bold mb-2">{oh?.federalHoliday ?? "Federal Holiday and additional closure:"}</div>
                     <div className="space-y-1 text-left">
                       <div>• President's Day (3rd Monday in February)</div>
                       <div>• Memorial Day (Last Monday in May)</div>
@@ -2006,16 +2033,18 @@ const App: React.FC = () => {
             </SectionWrapper>
           </>
         );
+      }
 
-      case 'contact-info':
+      case 'contact-info': {
+        const ci = pagesContent?.contactInfo;
         return (
           <>
-            <PageHeader title={"Contact\nInformation"} subtitle="Reach out to the right department." icon={PhoneIcon} />
+            <PageHeader title={ci?.pageTitle ?? "Contact\nInformation"} subtitle={ci?.pageSubtitle ?? "Reach out to the right department."} icon={PhoneIcon} />
             <SectionWrapper>
               <div className="max-w-5xl mx-auto">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-16">
                   <div className="lg:col-span-1 bg-white p-8 rounded-2xl border border-gray-100 shadow-lg h-fit">
-                    <h3 className="text-sm font-bold text-pau-gold uppercase tracking-widest mb-6">Mailing Address</h3>
+                    <h3 className="text-sm font-bold text-pau-gold uppercase tracking-widest mb-6">{ci?.mailingAddress ?? "Mailing Address"}</h3>
                     <div className="flex items-start text-gray-700 mb-8">
                       <MapPinIcon className="h-5 w-5 mr-3 mt-1 flex-shrink-0 text-pau-blue" />
                       <div>
@@ -2025,7 +2054,7 @@ const App: React.FC = () => {
                         <p>Los Angeles, CA 90010</p>
                       </div>
                     </div>
-                    <h3 className="text-sm font-bold text-pau-gold uppercase tracking-widest mb-6">Main Line</h3>
+                    <h3 className="text-sm font-bold text-pau-gold uppercase tracking-widest mb-6">{ci?.mainLine ?? "Main Line"}</h3>
                     <div className="flex items-center text-gray-700">
                       <PhoneIcon className="h-5 w-5 mr-3 text-pau-blue" />
                       <p className="font-bold">(213) 674-7174</p>
@@ -2033,13 +2062,13 @@ const App: React.FC = () => {
                   </div>
 
                   <div className="lg:col-span-2">
-                    <h3 className="text-2xl font-serif font-bold text-pau-darkBlue mb-8">Department Directory</h3>
+                    <h3 className="text-2xl font-serif font-bold text-pau-darkBlue mb-8">{ci?.deptDirectory ?? "Department Directory"}</h3>
                     <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
                       {[
-                        { name: "Help Desk", email: "help@paucal.org", phone: "Ext. 100" },
-                        { name: "Admissions Office", email: "admissions@paucal.org", phone: "Ext. 101" },
-                        { name: "Registrar's Office", email: "registrar@paucal.org", phone: "Ext. 102" },
-                        { name: "Student Services", email: "studentservices@paucal.org", phone: "Ext. 103" },
+                        { name: ci?.depts?.[0] ?? "Help Desk", email: "help@paucal.org", phone: "Ext. 100" },
+                        { name: ci?.depts?.[1] ?? "Admissions Office", email: "admissions@paucal.org", phone: "Ext. 101" },
+                        { name: ci?.depts?.[2] ?? "Registrar's Office", email: "registrar@paucal.org", phone: "Ext. 102" },
+                        { name: ci?.depts?.[3] ?? "Student Services", email: "studentservices@paucal.org", phone: "Ext. 103" },
                       ].map((dept, i) => (
                         <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between p-6 border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors">
                           <div className="mb-2 sm:mb-0">
@@ -2064,11 +2093,13 @@ const App: React.FC = () => {
             </SectionWrapper>
           </>
         );
+      }
 
-      case 'contact':
+      case 'contact': {
+        const ct = pagesContent?.contact;
         return (
           <>
-            <PageHeader title={"Contact\nUs"} subtitle="We are here to assist you." icon={PhoneIcon} />
+            <PageHeader title={ct?.pageTitle ?? "Contact\nUs"} subtitle={ct?.pageSubtitle ?? "We are here to assist you."} icon={PhoneIcon} />
             <SectionWrapper>
               <div className="max-w-6xl mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
@@ -2076,33 +2107,33 @@ const App: React.FC = () => {
                     <div className="w-12 h-12 bg-blue-50 text-pau-blue rounded-xl flex items-center justify-center mb-6 group-hover:bg-pau-blue group-hover:text-white transition-colors">
                       <ClockIcon className="h-6 w-6" />
                     </div>
-                    <h3 className="text-xl font-bold text-pau-darkBlue mb-2 font-serif">Office Hours</h3>
-                    <p className="text-gray-500 text-sm mb-4">View operating hours for all university departments.</p>
-                    <span className="text-xs font-bold text-pau-gold uppercase tracking-wider group-hover:underline">View Schedule &rarr;</span>
+                    <h3 className="text-xl font-bold text-pau-darkBlue mb-2 font-serif">{ct?.officeHoursTitle ?? "Office Hours"}</h3>
+                    <p className="text-gray-500 text-sm mb-4">{ct?.officeHoursDesc ?? "View operating hours for all university departments."}</p>
+                    <span className="text-xs font-bold text-pau-gold uppercase tracking-wider group-hover:underline">{ct?.officeHoursLink ?? "View Schedule"} &rarr;</span>
                   </button>
 
                   <button onClick={() => handleNavigate('contact-info')} className="p-8 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-xl hover:border-pau-blue/30 transition-all group text-left">
                     <div className="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center mb-6 group-hover:bg-purple-600 group-hover:text-white transition-colors">
                       <BuildingOffice2Icon className="h-6 w-6" />
                     </div>
-                    <h3 className="text-xl font-bold text-pau-darkBlue mb-2 font-serif">Department Directory</h3>
-                    <p className="text-gray-500 text-sm mb-4">Find direct contact information for Admissions, IT, and more.</p>
-                    <span className="text-xs font-bold text-pau-gold uppercase tracking-wider group-hover:underline">Browse Directory &rarr;</span>
+                    <h3 className="text-xl font-bold text-pau-darkBlue mb-2 font-serif">{ct?.deptDirTitle ?? "Department Directory"}</h3>
+                    <p className="text-gray-500 text-sm mb-4">{ct?.deptDirDesc ?? "Find direct contact information for Admissions, IT, and more."}</p>
+                    <span className="text-xs font-bold text-pau-gold uppercase tracking-wider group-hover:underline">{ct?.deptDirLink ?? "Browse Directory"} &rarr;</span>
                   </button>
 
                   <button onClick={() => handleNavigate('request-info')} className="p-8 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-xl hover:border-pau-blue/30 transition-all group text-left">
                     <div className="w-12 h-12 bg-green-50 text-green-600 rounded-xl flex items-center justify-center mb-6 group-hover:bg-green-600 group-hover:text-white transition-colors">
                       <InboxArrowDownIcon className="h-6 w-6" />
                     </div>
-                    <h3 className="text-xl font-bold text-pau-darkBlue mb-2 font-serif">Send a Message</h3>
-                    <p className="text-gray-500 text-sm mb-4">Have a specific question? Submit an inquiry form directly.</p>
-                    <span className="text-xs font-bold text-pau-gold uppercase tracking-wider group-hover:underline">Start Inquiry &rarr;</span>
+                    <h3 className="text-xl font-bold text-pau-darkBlue mb-2 font-serif">{ct?.sendMessageTitle ?? "Send a Message"}</h3>
+                    <p className="text-gray-500 text-sm mb-4">{ct?.sendMessageDesc ?? "Have a specific question? Submit an inquiry form directly."}</p>
+                    <span className="text-xs font-bold text-pau-gold uppercase tracking-wider group-hover:underline">{ct?.sendMessageLink ?? "Start Inquiry"} &rarr;</span>
                   </button>
                 </div>
 
                 <div className="bg-pau-darkBlue rounded-3xl p-12 text-center text-white relative overflow-hidden">
                   <div className="relative z-10">
-                    <h2 className="text-3xl font-serif font-bold mb-6">Need Immediate Assistance?</h2>
+                    <h2 className="text-3xl font-serif font-bold mb-6">{ct?.immediateAssistance ?? "Need Immediate Assistance?"}</h2>
                     <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
                       Our admissions team is available to answer your questions by phone during regular business hours.
                     </p>
@@ -2115,13 +2146,15 @@ const App: React.FC = () => {
             </SectionWrapper>
           </>
         );
+      }
 
-      case 'tech-reqs':
+      case 'tech-reqs': {
+        const tr = pagesContent?.techReqs;
         return (
           <>
             <PageHeader
-              title="Technical Requirements"
-              subtitle="Ensuring you are connected for success."
+              title={tr?.pageTitle ?? "Technical Requirements"}
+              subtitle={tr?.pageSubtitle ?? "Ensuring you are connected for success."}
               icon={ComputerDesktopIcon}
             />
             <SectionWrapper>
@@ -2129,28 +2162,28 @@ const App: React.FC = () => {
                 {/* Hardware Requirements Section */}
                 <div className="mb-12 md:mb-16">
                   <SectionHeader
-                    title="Hardware Requirements"
+                    title={tr?.hardware ?? "Hardware Requirements"}
                     icon={ComputerDesktopIcon}
                     variant="blue"
                   />
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <InfoCard
-                      title="Computer"
+                      title={tr?.computer ?? "Computer"}
                       description="PC or Mac less than 4 years old"
                       variant="blue"
                     />
                     <InfoCard
-                      title="Webcam"
+                      title={tr?.webcam ?? "Webcam"}
                       description="Internal or external camera"
                       variant="blue"
                     />
                     <InfoCard
-                      title="Audio Equipment"
+                      title={tr?.audio ?? "Audio Equipment"}
                       description="Microphone and speakers (headset recommended)"
                       variant="blue"
                     />
                     <InfoCard
-                      title="Memory"
+                      title={tr?.memory ?? "Memory"}
                       description="Minimum 8GB RAM"
                       variant="blue"
                     />
@@ -2160,23 +2193,23 @@ const App: React.FC = () => {
                 {/* Software & Connectivity Section */}
                 <div>
                   <SectionHeader
-                    title="Software & Connectivity"
+                    title={tr?.software ?? "Software & Connectivity"}
                     icon={GlobeAltIcon}
                     variant="gold"
                   />
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <InfoCard
-                      title="Internet Connection"
+                      title={tr?.internet ?? "Internet Connection"}
                       description="High-speed broadband or fiber recommended"
                       variant="gold"
                     />
                     <InfoCard
-                      title="Web Browser"
+                      title={tr?.browser ?? "Web Browser"}
                       description="Google Chrome or Mozilla Firefox"
                       variant="gold"
                     />
                     <InfoCard
-                      title="Adobe Acrobat Reader"
+                      title={tr?.acrobat ?? "Adobe Acrobat Reader"}
                       description="Free PDF reader software"
                       variant="gold"
                     />
@@ -2186,16 +2219,18 @@ const App: React.FC = () => {
             </SectionWrapper>
           </>
         );
+      }
 
       case 'admission-reqs':
         return <Admissions content={admissionsContent} shared={shared} />;
 
-      case 'app-steps':
+      case 'app-steps': {
+        const as_ = pagesContent?.appSteps;
         return (
           <>
             <PageHeader
-              title="Application Steps"
-              subtitle="Your roadmap to enrollment."
+              title={as_?.pageTitle ?? "Application Steps"}
+              subtitle={as_?.pageSubtitle ?? "Your roadmap to enrollment."}
               icon={ClipboardDocumentListIcon}
             />
             <SectionWrapper>
@@ -2206,7 +2241,7 @@ const App: React.FC = () => {
                     <div className="w-12 h-12 bg-pau-blue rounded-xl flex items-center justify-center shadow-md">
                       <DocumentCheckIcon className="h-6 w-6 text-white" />
                     </div>
-                    <h2 className="text-3xl font-serif font-bold text-pau-darkBlue">On-line Application</h2>
+                    <h2 className="text-3xl font-serif font-bold text-pau-darkBlue">{as_?.onlineApp ?? "On-line Application"}</h2>
                   </div>
                   <p className="text-gray-700 leading-relaxed mb-8 text-lg">
                     PAU School of Law employs a digital application and enrollment system, eliminating the need for paper-based processes. The Application, Enrollment Agreement, Disclosure, and all pertinent documents or forms are accomplished and electronically signed online. To finalize the application procedure, you should: Complete and electronically sign the Application at <a href="https://law.paucal.org/Apply-Now" target="_blank" rel="noopener noreferrer" className="text-pau-blue hover:text-pau-darkBlue font-semibold underline">https://law.paucal.org/Apply-Now</a>
@@ -2271,7 +2306,7 @@ const App: React.FC = () => {
                     <div className="w-12 h-12 bg-pau-blue rounded-xl flex items-center justify-center shadow-md">
                       <GlobeAltIcon className="h-6 w-6 text-white" />
                     </div>
-                    <h2 className="text-3xl font-serif font-bold text-pau-darkBlue">International Applicants</h2>
+                    <h2 className="text-3xl font-serif font-bold text-pau-darkBlue">{as_?.intlApplicants ?? "International Applicants"}</h2>
                   </div>
                   <p className="text-gray-700 leading-relaxed text-lg">
                     Pacific American University school of Law welcomes students from all over the world. PAU provides a vitally technology-based education environment to engage students interactively in an abundant, multimedia learning experience. Students may enroll and study at any time from any location in the world where sufficient Internet access is available.
@@ -2284,7 +2319,7 @@ const App: React.FC = () => {
                     <div className="w-12 h-12 bg-pau-blue rounded-xl flex items-center justify-center shadow-md">
                       <DocumentDuplicateIcon className="h-6 w-6 text-white" />
                     </div>
-                    <h2 className="text-3xl font-serif font-bold text-pau-darkBlue">Submitting Academic Documentation</h2>
+                    <h2 className="text-3xl font-serif font-bold text-pau-darkBlue">{as_?.submitDocs ?? "Submitting Academic Documentation"}</h2>
                   </div>
                   <p className="text-gray-700 leading-relaxed text-lg">
                     Students are required to have official copies of transcripts from secondary schools and colleges and universities that they have attended sent directly to PAU. Transcripts in languages other than English must be accompanied by a certified translation.
@@ -2297,7 +2332,7 @@ const App: React.FC = () => {
                     <div className="w-12 h-12 bg-pau-blue rounded-xl flex items-center justify-center shadow-md">
                       <ShieldCheckIcon className="h-6 w-6 text-white" />
                     </div>
-                    <h2 className="text-3xl font-serif font-bold text-pau-darkBlue">Foreign Transcript Evaluation</h2>
+                    <h2 className="text-3xl font-serif font-bold text-pau-darkBlue">{as_?.foreignTranscript ?? "Foreign Transcript Evaluation"}</h2>
                   </div>
                   <p className="text-gray-700 leading-relaxed text-lg">
                     Transcripts for comparable university-level courses completed in a country other than the United States must be evaluated by an outside credential evaluation company before they are submitted to PAUSL. The National Association of Credential Evaluation Services members are acceptable sources for foreign credential evaluation and translation services.
@@ -2310,7 +2345,7 @@ const App: React.FC = () => {
                     <div className="w-12 h-12 bg-pau-blue rounded-xl flex items-center justify-center shadow-md">
                       <CheckCircleIcon className="h-6 w-6 text-white" />
                     </div>
-                    <h2 className="text-3xl font-serif font-bold text-pau-darkBlue">Verifying English Proficiency</h2>
+                    <h2 className="text-3xl font-serif font-bold text-pau-darkBlue">{as_?.englishProficiency ?? "Verifying English Proficiency"}</h2>
                   </div>
                   <p className="text-gray-700 leading-relaxed text-lg">
                     Applicants whose native language is not English and have not completed their studies at an accredited U.S. college or university must submit evidence of English proficiency such as TOEFL, IELTS, or duolingo score. Transcripts not in English must be evaluated by an appropriate third party and translated into English or evaluated by a trained transcript evaluation fluent in the language on the transcript. In this case, the evaluation must have expertise in the educational practices of the country of origin and include an English translation of the review.
@@ -2320,13 +2355,15 @@ const App: React.FC = () => {
             </SectionWrapper>
           </>
         );
+      }
 
-      case 'transfer-int':
+      case 'transfer-int': {
+        const ti = pagesContent?.transferInt;
         return (
           <>
             <PageHeader
-              title="Transfer and International Students"
-              subtitle="Joining PAU from another institution or country."
+              title={ti?.pageTitle ?? "Transfer and International Students"}
+              subtitle={ti?.pageSubtitle ?? "Joining PAU from another institution or country."}
               icon={GlobeAltIcon}
             />
             <SectionWrapper>
@@ -2344,7 +2381,7 @@ const App: React.FC = () => {
                           <AcademicCapIcon className="h-8 w-8 text-pau-darkBlue" />
                         </div>
                         <div>
-                          <h2 className="text-3xl md:text-4xl font-serif font-bold text-white mb-2">Transfer Students Policy</h2>
+                          <h2 className="text-3xl md:text-4xl font-serif font-bold text-white mb-2">{ti?.transferPolicy ?? "Transfer Students Policy"}</h2>
                           <div className="w-20 h-1 bg-pau-gold"></div>
                         </div>
                       </div>
@@ -2363,7 +2400,7 @@ const App: React.FC = () => {
                           <ShieldCheckIcon className="h-6 w-6 text-white" />
                         </div>
                         <div className="flex-1">
-                          <h3 className="text-xl font-serif font-bold text-pau-darkBlue mb-3">Eligibility</h3>
+                          <h3 className="text-xl font-serif font-bold text-pau-darkBlue mb-3">{ti?.eligibility ?? "Eligibility"}</h3>
                           <div className="w-12 h-0.5 bg-pau-gold mb-4"></div>
                         </div>
                       </div>
@@ -2379,7 +2416,7 @@ const App: React.FC = () => {
                           <ClockIcon className="h-6 w-6 text-white" />
                         </div>
                         <div className="flex-1">
-                          <h3 className="text-xl font-serif font-bold text-pau-darkBlue mb-3">Credit Validity</h3>
+                          <h3 className="text-xl font-serif font-bold text-pau-darkBlue mb-3">{ti?.creditValidity ?? "Credit Validity"}</h3>
                           <div className="w-12 h-0.5 bg-pau-gold mb-4"></div>
                         </div>
                       </div>
@@ -2395,7 +2432,7 @@ const App: React.FC = () => {
                           <CheckBadgeIcon className="h-6 w-6 text-pau-darkBlue" />
                         </div>
                         <div className="flex-1">
-                          <h3 className="text-xl font-serif font-bold text-pau-darkBlue mb-3">Credit Limit</h3>
+                          <h3 className="text-xl font-serif font-bold text-pau-darkBlue mb-3">{ti?.creditLimit ?? "Credit Limit"}</h3>
                           <div className="w-12 h-0.5 bg-pau-gold mb-4"></div>
                         </div>
                       </div>
@@ -2412,7 +2449,7 @@ const App: React.FC = () => {
                           <CurrencyDollarIcon className="h-6 w-6 text-pau-darkBlue" />
                         </div>
                         <div className="flex-1">
-                          <h3 className="text-xl font-serif font-bold text-pau-darkBlue mb-3">Evaluation Fee</h3>
+                          <h3 className="text-xl font-serif font-bold text-pau-darkBlue mb-3">{ti?.evaluationFee ?? "Evaluation Fee"}</h3>
                           <div className="w-12 h-0.5 bg-pau-gold mb-4"></div>
                         </div>
                       </div>
@@ -2433,7 +2470,7 @@ const App: React.FC = () => {
                         <DocumentTextIcon className="h-6 w-6 text-pau-darkBlue" />
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-xl font-serif font-bold text-pau-darkBlue mb-3">"Starting Over"</h3>
+                        <h3 className="text-xl font-serif font-bold text-pau-darkBlue mb-3">{ti?.startingOver ?? '"Starting Over"'}</h3>
                         <p className="text-gray-700 leading-relaxed">
                           If not seeking transfer credit, you must submit the <span className="font-semibold text-pau-darkBlue">"Starting First-Year Law Studies Over Certification"</span> to the State Bar.
                         </p>
@@ -2454,7 +2491,7 @@ const App: React.FC = () => {
                           <GlobeAltIcon className="h-8 w-8 text-pau-darkBlue" />
                         </div>
                         <div>
-                          <h2 className="text-3xl md:text-4xl font-serif font-bold text-pau-darkBlue mb-2">International Students Requirements</h2>
+                          <h2 className="text-3xl md:text-4xl font-serif font-bold text-pau-darkBlue mb-2">{ti?.intlRequirements ?? "International Students Requirements"}</h2>
                           <div className="w-20 h-1 bg-pau-gold"></div>
                         </div>
                       </div>
@@ -2471,7 +2508,7 @@ const App: React.FC = () => {
                         <ExclamationCircleIcon className="h-6 w-6 text-red-600" />
                       </div>
                       <div>
-                        <h3 className="text-xl font-serif font-bold text-red-900 mb-3">No ESL</h3>
+                        <h3 className="text-xl font-serif font-bold text-red-900 mb-3">{ti?.noESL ?? "No ESL"}</h3>
                         <p className="text-red-800 leading-relaxed">
                           PAUSL does not provide ESL instruction. <span className="font-semibold">High proficiency in oral and written English is mandatory.</span>
                         </p>
@@ -2483,7 +2520,7 @@ const App: React.FC = () => {
                   <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 md:p-10 mb-8">
                     <h3 className="text-2xl font-serif font-bold text-pau-darkBlue mb-6 flex items-center">
                       <span className="w-10 h-1 bg-pau-gold mr-4"></span>
-                      English Language Proficiency Requirements
+                      {ti?.englishProficiency ?? "English Language Proficiency Requirements"}
                     </h3>
                     <p className="text-gray-700 text-lg leading-relaxed mb-8">
                       Non-native English speakers must demonstrate proficiency through one of the following methods:
@@ -2606,6 +2643,7 @@ const App: React.FC = () => {
             </SectionWrapper>
           </>
         );
+      }
 
       default:
         // Fallback

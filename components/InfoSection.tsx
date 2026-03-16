@@ -30,41 +30,18 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
   const firstFocusableRef = useRef<HTMLElement | null>(null);
   const lastFocusableRef = useRef<HTMLElement | null>(null);
 
-  const missionFeatures = [
-    { 
-      icon: LightBulbIcon, 
-      title: "Innovation Without Boundaries", 
-      desc: "Merging rigorous American legal instruction with flexible, technology-driven delivery systems." 
-    },
-    { 
-      icon: GlobeAsiaAustraliaIcon, 
-      title: "Global Accessibility", 
-      desc: "Lowering barriers to entry and respecting global time zones to cultivate globally active professionals." 
-    },
-    { 
-      icon: ScaleIcon, 
-      title: "Real-World Mastery", 
-      desc: "Combining dynamic video lectures with real-time sessions to ensure deep mastery of U.S. law." 
-    }
-  ];
+  // Icon maps for data-driven content from HomeContent
+  const missionIconMap: Record<string, React.ElementType> = {
+    innovation: LightBulbIcon,
+    globe: GlobeAsiaAustraliaIcon,
+    access: ScaleIcon,
+  };
 
-  const features = [
-    { 
-      icon: ClockIcon, 
-      title: "Flexible Learning", 
-      desc: "Complete two-thirds of your coursework asynchronously on your schedule—anytime, anywhere, without sacrificing academic rigor." 
-    },
-    { 
-      icon: UserGroupIcon, 
-      title: "World-Class Mentorship", 
-      desc: "Learn from experienced legal professionals who provide personalized feedback and guidance to help you succeed academically." 
-    },
-    { 
-      icon: BanknotesIcon, 
-      title: "Accessible Tuition", 
-      desc: "We offer a high-quality legal education at a significantly lower cost than traditional U.S. law schools, making the J.D. dream accessible." 
-    }
-  ];
+  const featureIconMap: Record<string, React.ElementType> = {
+    clock: ClockIcon,
+    academic: UserGroupIcon,
+    currency: BanknotesIcon,
+  };
 
   // Focus trap and keyboard navigation for modal
   useEffect(() => {
@@ -229,7 +206,7 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
             </span>
             
             <blockquote className="text-xl md:text-2xl font-serif leading-relaxed mb-10 text-white font-medium">
-              "As educational borders dissolve, we nurture global leaders with balanced, critical perspectives. We are a platform for shaping thoughtful, solution-oriented professionals prepared to engage with the world's most pressing challenges."
+              {content.visionStatement}
             </blockquote>
             
             <div className="flex items-center space-x-3">
@@ -242,21 +219,24 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
           {/* Increased top padding (pt-14 md:pt-16) to ensure content is not too close to the top edge */}
           <div className="lg:col-span-3 bg-white p-10 md:p-12 pt-14 md:pt-16 flex flex-col">
              <p className="text-gray-500 font-light mb-10 leading-relaxed text-sm md:text-base border-b border-gray-100 pb-8">
-               To redefine legal education by breaking down geographic barriers and empowering talented students worldwide.
+               {content.missionDescription}
              </p>
-             
+
              <div className="space-y-8">
-               {missionFeatures.map((item, i) => (
-                 <div key={i} className="flex gap-5 group items-start">
-                   <div className="flex-shrink-0 w-12 h-12 rounded-full border border-gray-100 flex items-center justify-center text-gray-400 group-hover:border-pau-gold group-hover:text-pau-gold transition-colors duration-300 bg-white">
-                     <item.icon className="h-5 w-5 stroke-[1.5]" />
+               {(content.missionPoints || []).map((item, i) => {
+                 const Icon = missionIconMap[item.icon] || LightBulbIcon;
+                 return (
+                   <div key={i} className="flex gap-5 group items-start">
+                     <div className="flex-shrink-0 w-12 h-12 rounded-full border border-gray-100 flex items-center justify-center text-gray-400 group-hover:border-pau-gold group-hover:text-pau-gold transition-colors duration-300 bg-white">
+                       <Icon className="h-5 w-5 stroke-[1.5]" />
+                     </div>
+                     <div className="pt-1">
+                       <h3 className="text-[11px] font-bold uppercase tracking-widest text-pau-darkBlue mb-2">{item.title}</h3>
+                       <p className="text-xs md:text-sm text-gray-500 font-light leading-relaxed">{item.description}</p>
+                     </div>
                    </div>
-                   <div className="pt-1">
-                     <h3 className="text-[11px] font-bold uppercase tracking-widest text-pau-darkBlue mb-2">{item.title}</h3>
-                     <p className="text-xs md:text-sm text-gray-500 font-light leading-relaxed">{item.desc}</p>
-                   </div>
-                 </div>
-               ))}
+                 );
+               })}
              </div>
           </div>
         </div>
@@ -267,23 +247,28 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
         <div className="max-w-7xl mx-auto">
            <div className="text-center mb-16">
              <h2 className="text-4xl md:text-5xl font-serif font-bold text-pau-darkBlue mb-6">
-               Study American Law From <br/> Anywhere
+               {content.introTitle.split('\n').map((line, i) => (
+                 <React.Fragment key={i}>{i > 0 && <br />}{line}</React.Fragment>
+               ))}
              </h2>
              <p className="text-lg text-gray-500 font-light max-w-2xl md:mx-auto leading-relaxed">
-               A fully online J.D. program designed for motivated students seeking flexibility, world-class instruction, and a clear path to a California law license.
+               {content.introText}
              </p>
            </div>
 
            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-             {features.map((feat, i) => (
-               <div key={i} className="p-10 border border-gray-100 rounded-sm hover:shadow-xl hover:border-pau-gold/30 transition-all duration-300 group bg-white">
-                 <feat.icon className="h-8 w-8 text-pau-blue mb-6 stroke-1 group-hover:scale-110 transition-transform origin-left" />
-                 <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-4">{feat.title}</h3>
-                 <p className="text-sm text-gray-500 leading-relaxed font-light">
-                   {feat.desc}
-                 </p>
-               </div>
-             ))}
+             {(content.features || []).map((feat, i) => {
+               const Icon = featureIconMap[feat.icon] || ClockIcon;
+               return (
+                 <div key={i} className="p-10 border border-gray-100 rounded-sm hover:shadow-xl hover:border-pau-gold/30 transition-all duration-300 group bg-white">
+                   <Icon className="h-8 w-8 text-pau-blue mb-6 stroke-1 group-hover:scale-110 transition-transform origin-left" />
+                   <h3 className="text-xl font-bold font-serif text-pau-darkBlue mb-4">{feat.title}</h3>
+                   <p className="text-sm text-gray-500 leading-relaxed font-light">
+                     {feat.description}
+                   </p>
+                 </div>
+               );
+             })}
            </div>
         </div>
       </section>
@@ -301,10 +286,12 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
                  <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-pau-gold">Student Success</span>
                </div>
                <h2 className="text-4xl md:text-6xl font-serif font-bold mb-8 leading-tight">
-                 A Student-Centered <br/> Law School
+                 {content.successTitle.split('\n').map((line, i) => (
+                   <React.Fragment key={i}>{i > 0 && <br />}{line}</React.Fragment>
+                 ))}
                </h2>
                <p className="text-gray-400 font-light text-lg leading-relaxed mb-10 max-w-lg">
-                 From academic support to bar examination preparation, every part of the PAU Law program is designed to help you thrive. You'll receive structured guidance from your first course through your preparation for the California Bar.
+                 {content.successText}
                </p>
                
                <div className="flex items-center gap-4">
@@ -319,14 +306,9 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
              </div>
 
              <div className="grid grid-cols-2 gap-px bg-white/10 border border-white/10">
-                {[
-                  { val: "100%", label: "Online Coursework", sub: "Fully Remote" },
-                  { val: "66%", label: "Asynchronous", sub: "Flexible Schedule" },
-                  { val: "15:1", label: "Student-Faculty Ratio", sub: "Personal Attention" },
-                  { val: "Included", label: "Bar Prep Support", sub: "Comprehensive" }
-                ].map((stat, i) => (
+                {(content.stats || []).map((stat, i) => (
                   <div key={i} className="bg-[#051626] p-10 flex flex-col justify-center group hover:bg-white/5 transition-colors">
-                    <span className="text-3xl md:text-4xl font-serif font-bold text-white mb-2 group-hover:text-pau-gold transition-colors">{stat.val}</span>
+                    <span className="text-3xl md:text-4xl font-serif font-bold text-white mb-2 group-hover:text-pau-gold transition-colors">{stat.value}</span>
                     <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-gray-400 mb-1">{stat.label}</span>
                   </div>
                 ))}
@@ -339,31 +321,37 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ content, shared, onCli
       <section className="py-24 bg-gray-50">
          <div className="max-w-7xl mx-auto px-4 md:px-6">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-serif font-bold text-pau-darkBlue mb-6">Your Path to a Global Career</h2>
+              <h2 className="text-4xl md:text-5xl font-serif font-bold text-pau-darkBlue mb-6">{content.globalFutureTitle}</h2>
               <p className="text-lg text-gray-500 font-light max-w-2xl md:mx-auto leading-relaxed">
-                Our rigorous curriculum opens doors to diverse international fields, equipping you with the credentials needed for today's interconnected legal environment.
+                {content.globalFutureIntro}
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {careerPaths.map((path, i) => (
-                <div 
-                  key={i} 
+              {careerPaths.map((path, i) => {
+                // Use translated title/description from content if available, fall back to local data
+                const translated = content.globalFutureList?.[i];
+                const displayTitle = translated?.title || path.title;
+                const displayDesc = translated?.description || path.desc;
+                return (
+                <div
+                  key={i}
                   onClick={() => startTransition(() => setActivePath(path))}
                   className="bg-white p-8 border border-gray-100 hover:border-pau-gold/50 hover:shadow-lg transition-all duration-300 group cursor-pointer"
                 >
                    <div className="w-10 h-10 rounded bg-blue-50 text-pau-blue flex items-center justify-center mb-6 group-hover:bg-pau-blue group-hover:text-white transition-colors">
                       <path.icon className="h-5 w-5" />
                    </div>
-                   <h3 className="text-lg font-serif font-bold text-pau-darkBlue mb-3">{path.title}</h3>
+                   <h3 className="text-lg font-serif font-bold text-pau-darkBlue mb-3">{displayTitle}</h3>
                    <p className="text-xs text-gray-500 leading-relaxed font-light mb-6 min-h-[40px]">
-                     {path.desc}
+                     {displayDesc}
                    </p>
                    <div className="flex items-center text-[10px] font-bold uppercase tracking-widest text-pau-gold group-hover:text-pau-darkBlue transition-colors">
-                     Explore Path <ArrowRightIcon className="ml-2 h-3 w-3 group-hover:translate-x-1 transition-transform" />
+                     {shared.buttons?.exploreCenter || 'Explore Path'} <ArrowRightIcon className="ml-2 h-3 w-3 group-hover:translate-x-1 transition-transform" />
                    </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
          </div>
       </section>

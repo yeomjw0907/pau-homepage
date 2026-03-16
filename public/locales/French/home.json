@@ -1,0 +1,83 @@
+{
+  "heroTitle": "Donner du pouvoir aux défenseurs.\nTransformer des vies.",
+  "heroSubtitle": "Découvrez une formation juridique de classe mondiale depuis le cœur de la Silicon Valley, où que vous soyez.",
+  "visionStatement": "Notre vision est de fournir une passerelle accessible vers la profession juridique pour les étudiants de tous horizons.",
+  "missionTitle": "La mission de PAU",
+  "missionDescription": "Nous comblons le fossé entre la théorie académique et la pratique juridique réelle grâce à une pédagogie axée sur la technologie.",
+  "missionPoints": [
+    {
+      "title": "Innovation",
+      "description": "Utilisation d'outils modernes pour la recherche et l'éducation juridiques.",
+      "icon": "innovation"
+    },
+    {
+      "title": "Accès",
+      "description": "Offrir des opportunités aux étudiants à distance et non traditionnels.",
+      "icon": "access"
+    },
+    {
+      "title": "Impact mondial",
+      "description": "Préparer les avocats à un paysage juridique interconnecté.",
+      "icon": "globe"
+    }
+  ],
+  "introTitle": "Un nouveau paradigme en droit",
+  "introText": "Pacific American University School of Law propose un programme de Juris Doctor rigoureux, adapté à l'ère moderne.",
+  "features": [
+    {
+      "title": "Apprentissage flexible",
+      "description": "Étudiez selon votre emploi du temps grâce à notre plateforme en ligne robuste.",
+      "icon": "clock"
+    },
+    {
+      "title": "Corps professoral d'experts",
+      "description": "Apprenez auprès d'avocats praticiens et d'universitaires distingués.",
+      "icon": "academic"
+    },
+    {
+      "title": "Éducation abordable",
+      "description": "Programme JD de haute valeur avec des frais de scolarité compétitifs.",
+      "icon": "currency"
+    }
+  ],
+  "successTitle": "Excellence prouvée",
+  "successText": "Nos diplômés exercent dans des cabinets prestigieux et dans la fonction publique à travers la California.",
+  "stats": [
+    {
+      "label": "Taux de réussite au barreau",
+      "value": "85%"
+    },
+    {
+      "label": "Emploi",
+      "value": "92%"
+    },
+    {
+      "label": "Corps professoral",
+      "value": "45+"
+    },
+    {
+      "label": "Anciens élèves",
+      "value": "2k+"
+    }
+  ],
+  "globalFutureTitle": "Votre avenir mondial",
+  "globalFutureIntro": "Notre programme JD vous prépare à divers parcours de carrière dans le secteur juridique.",
+  "globalFutureList": [
+    {
+      "title": "Droit de la technologie",
+      "description": "Spécialisez-vous en PI, en éthique de l'IA et dans les besoins juridiques uniques de la Silicon Valley.",
+      "detailTitle": "Innovation et droit",
+      "detailBody": "Menez la conversation sur les réglementations technologiques.",
+      "stats": [
+        {
+          "label": "Croissance",
+          "value": "+20%"
+        }
+      ]
+    }
+  ],
+  "globalFutureClosing": "Rejoignez la prochaine génération de leaders juridiques.",
+  "clinicsTitle": "Opportunités cliniques",
+  "clinicsIntro": "Acquérez une expérience pratique grâce à nos cliniques juridiques spécialisées.",
+  "newsTitle": "Dernières actualités"
+}

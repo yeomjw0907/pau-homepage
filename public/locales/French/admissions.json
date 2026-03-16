@@ -1,0 +1,52 @@
+{
+  "title": "Admissions",
+  "intro": "Commencez votre parcours vers une carrière juridique avec Pacific American University.",
+  "deadlinesTitle": "Dates limites de candidature",
+  "deadlines": [
+    {
+      "term": "Rentrée d'hiver",
+      "date": "Débute en janvier (Date limite : mi-novembre)",
+      "type": "Étudiants de 1L"
+    },
+    {
+      "term": "Rentrée de printemps",
+      "date": "Débute en avril (Date limite : mi-février)",
+      "type": "Étudiants de 1L"
+    },
+    {
+      "term": "Rentrée d'automne",
+      "date": "Débute en septembre (Date limite : mi-juillet)",
+      "type": "Étudiants de 1L"
+    }
+  ],
+  "requirementsTitle": "Conditions d'admission",
+  "requirements": [
+    "Licence d'un établissement accrédité",
+    "Déclaration personnelle",
+    "Deux lettres de recommandation",
+    "Score LSAT (Optionnel)",
+    "Relevés de notes officiels"
+  ],
+  "tuitionTitle": "Frais de scolarité et valeur",
+  "tuitionInfo": "L'un des programmes JD les plus accessibles en California. Nous croyons en la fourniture d'une éducation juridique de haute qualité sans le fardeau d'une dette écrasante.",
+  "tuitionCost": "$9,000",
+  "faqTitle": "FAQ sur les admissions",
+  "faqs": [
+    {
+      "question": "Le programme est-il 100 % en ligne ?",
+      "answer": "Oui. PAUSL est une école de droit par correspondance non accréditée enregistrée. Bien que le programme soit dispensé à 100 % en ligne via notre système de gestion de l'apprentissage, Populi, il propose une combinaison dynamique de cours vidéo enregistrés (asynchrones) de haute qualité et de sessions synchrones en temps réel pour favoriser l'interaction essentielle entre les étudiants et le corps enseignant. Ce format flexible vous permet de poursuivre votre J.D. de n'importe où dans le monde tout en respectant les décalages horaires mondiaux."
+    },
+    {
+      "question": "Dois-je passer le LSAT ?",
+      "answer": "Non, le LSAT n'est pas requis, mais il est fortement recommandé. PAUSL évalue les candidats de manière holistique, et bien que les scores LSAT soient un indicateur fiable de réussite en école de droit, ils ne constituent pas un prérequis obligatoire pour l'admission."
+    },
+    {
+      "question": "Puis-je exercer le droit dans des États autres que la California ?",
+      "answer": "PAUSL est spécifiquement enregistrée pour répondre aux exigences éducatives du State Bar of California. Si vous prévoyez d'exercer le droit dans une juridiction autre que la California, nous vous conseillons vivement de contacter l'autorité compétente du State Bar de cette juridiction pour déterminer si notre programme J.D. répond à leurs critères spécifiques."
+    },
+    {
+      "question": "Qu'est-ce que le « First-Year Law Students' Examination » (FYLSX) ?",
+      "answer": "En tant qu'étudiant dans une école de droit par correspondance non accréditée, vous êtes tenu par la loi de California de réussir le FYLSX (souvent appelé le « Baby Bar ») après avoir terminé votre première année d'études pour recevoir des crédits pour votre formation juridique et poursuivre vers votre J.D.."
+    }
+  ]
+}

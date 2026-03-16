@@ -7,9 +7,11 @@ import { useForm } from '../hooks/useForm';
 interface AdmissionsProps {
   content: AdmissionsContent;
   shared: SharedContent;
+  pagesContent?: any;
 }
 
-export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
+export const Admissions: React.FC<AdmissionsProps> = ({ content, shared, pagesContent }) => {
+  const as_ = pagesContent?.admissionsSections;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeFaqIndex, setActiveFaqIndex] = useState<number | null>(null);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -76,30 +78,30 @@ export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
             <section className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
               <h2 className="text-3xl font-serif font-bold text-pau-blue mb-8 flex items-center">
                 <span className="w-8 h-1 bg-pau-gold mr-4"></span>
-                1. Overview
+                {as_?.section1Title ?? "1. Overview"}
               </h2>
               <div className="bg-white rounded-xl shadow-soft border border-gray-100 p-8">
                 <p className="text-gray-700 text-lg leading-relaxed mb-6">
-                  PAUSL employs a holistic admissions process that evaluates not only academic achievements but also personal qualities and the applicant's potential to contribute to the legal profession.
+                  {as_?.section1Intro ?? "PAUSL employs a holistic admissions process that evaluates not only academic achievements but also personal qualities and the applicant's potential to contribute to the legal profession."}
                 </p>
                 <ul className="space-y-4">
                   <li className="flex items-start group">
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
                       <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
                     </div>
-                    <span className="text-gray-700 text-lg pt-0.5"><strong>Academic Excellence:</strong> Applicants must demonstrate strong academic performance, typically reflected in their undergraduate GPA with a minimum of 2.0.</span>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>{as_?.s1item1Label ?? "Academic Excellence"}:</strong> {as_?.s1item1Text ?? "Applicants must demonstrate strong academic performance, typically reflected in their undergraduate GPA with a minimum of 2.0."}</span>
                   </li>
                   <li className="flex items-start group">
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
                       <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
                     </div>
-                    <span className="text-gray-700 text-lg pt-0.5"><strong>Character Assessment:</strong> The review process assesses whether the applicant's moral character meets the standards expected of individuals entering the practice of law in California.</span>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>{as_?.s1item2Label ?? "Character Assessment"}:</strong> {as_?.s1item2Text ?? "The review process assesses whether the applicant's moral character meets the standards expected of individuals entering the practice of law in California."}</span>
                   </li>
                   <li className="flex items-start group">
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
                       <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
                     </div>
-                    <span className="text-gray-700 text-lg pt-0.5"><strong>Required Disclosures:</strong> Applicants must disclose any prior criminal convictions or disciplinary actions from previous institutions.</span>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>{as_?.s1item3Label ?? "Required Disclosures"}:</strong> {as_?.s1item3Text ?? "Applicants must disclose any prior criminal convictions or disciplinary actions from previous institutions."}</span>
                   </li>
                 </ul>
               </div>
@@ -109,36 +111,36 @@ export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
             <section className="animate-fade-in mt-12" style={{ animationDelay: '0.2s' }}>
               <h2 className="text-3xl font-serif font-bold text-pau-blue mb-8 flex items-center">
                 <span className="w-8 h-1 bg-pau-gold mr-4"></span>
-                2. English Language Requirement (International Applicants)
+                {as_?.section2Title ?? "2. English Language Requirement (International Applicants)"}
               </h2>
               <div className="bg-white rounded-xl shadow-soft border border-gray-100 p-8">
                 <p className="text-gray-700 text-lg leading-relaxed mb-6">
-                  International applicants who are non-native speakers of English must demonstrate English proficiency through one of the following methods:
+                  {as_?.section2Intro ?? "International applicants who are non-native speakers of English must demonstrate English proficiency through one of the following methods:"}
                 </p>
                 <ul className="space-y-4">
                   <li className="flex items-start group">
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
                       <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
                     </div>
-                    <span className="text-gray-700 text-lg pt-0.5"><strong>Prior Education:</strong> Completion of at least two years of study at a college or university where the language of instruction was English.</span>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>{as_?.s2item1Label ?? "Prior Education"}:</strong> {as_?.s2item1Text ?? "Completion of at least two years of study at a college or university where the language of instruction was English."}</span>
                   </li>
                   <li className="flex items-start group">
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
                       <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
                     </div>
-                    <span className="text-gray-700 text-lg pt-0.5"><strong>TOEFL (Test of English as a Foreign Language):</strong> A minimum score of 79 on the internet-based test (iBT), 550 on the paper-based test (PBT), or 213 on the computer-based test (CBT).</span>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>{as_?.s2item2Label ?? "TOEFL (Test of English as a Foreign Language)"}:</strong> {as_?.s2item2Text ?? "A minimum score of 79 on the internet-based test (iBT), 550 on the paper-based test (PBT), or 213 on the computer-based test (CBT)."}</span>
                   </li>
                   <li className="flex items-start group">
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
                       <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
                     </div>
-                    <span className="text-gray-700 text-lg pt-0.5"><strong>IELTS (International English Language Testing System):</strong> An overall band score of 6.0 or higher.</span>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>{as_?.s2item3Label ?? "IELTS (International English Language Testing System)"}:</strong> {as_?.s2item3Text ?? "An overall band score of 6.0 or higher."}</span>
                   </li>
                   <li className="flex items-start group">
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
                       <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
                     </div>
-                    <span className="text-gray-700 text-lg pt-0.5"><strong>Duolingo English Test:</strong> A score of 105 or higher.</span>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>{as_?.s2item4Label ?? "Duolingo English Test"}:</strong> {as_?.s2item4Text ?? "A score of 105 or higher."}</span>
                   </li>
                 </ul>
               </div>
@@ -148,42 +150,42 @@ export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
             <section className="animate-fade-in mt-12" style={{ animationDelay: '0.3s' }}>
               <h2 className="text-3xl font-serif font-bold text-pau-blue mb-8 flex items-center">
                 <span className="w-8 h-1 bg-pau-gold mr-4"></span>
-                3. Minimum Entrance Requirements (Admission Criteria)
+                {as_?.section3Title ?? "3. Minimum Entrance Requirements (Admission Criteria)"}
               </h2>
               <div className="bg-white rounded-xl shadow-soft border border-gray-100 p-8">
                 <p className="text-gray-700 text-lg leading-relaxed mb-6">
-                  To be eligible for admission, prospective students must meet at least one of the following five criteria:
+                  {as_?.section3Intro ?? "To be eligible for admission, prospective students must meet at least one of the following five criteria:"}
                 </p>
                 <ul className="space-y-4">
                   <li className="flex items-start group">
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
                       <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
                     </div>
-                    <span className="text-gray-700 text-lg pt-0.5"><strong>Master's Degree:</strong> A master's degree from an accredited U.S. institution with a minimum cumulative GPA of 2.0.</span>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>{as_?.s3item1Label ?? "Master's Degree"}:</strong> {as_?.s3item1Text ?? "A master's degree from an accredited U.S. institution with a minimum cumulative GPA of 2.0."}</span>
                   </li>
                   <li className="flex items-start group">
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
                       <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
                     </div>
-                    <span className="text-gray-700 text-lg pt-0.5"><strong>Bachelor's Degree:</strong> A bachelor's degree from an accredited American institution or an equivalent non-U.S. institution with a minimum cumulative GPA of 2.0.</span>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>{as_?.s3item2Label ?? "Bachelor's Degree"}:</strong> {as_?.s3item2Text ?? "A bachelor's degree from an accredited American institution or an equivalent non-U.S. institution with a minimum cumulative GPA of 2.0."}</span>
                   </li>
                   <li className="flex items-start group">
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
                       <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
                     </div>
-                    <span className="text-gray-700 text-lg pt-0.5"><strong>Associate's Degree:</strong> An associate's degree from an accredited college or university with a minimum cumulative GPA of 2.0.</span>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>{as_?.s3item3Label ?? "Associate's Degree"}:</strong> {as_?.s3item3Text ?? "An associate's degree from an accredited college or university with a minimum cumulative GPA of 2.0."}</span>
                   </li>
                   <li className="flex items-start group">
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
                       <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
                     </div>
-                    <span className="text-gray-700 text-lg pt-0.5"><strong>Sixty (60) or More College Units:</strong> Earned college units from an accredited institution with a minimum cumulative GPA of 2.0.</span>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>{as_?.s3item4Label ?? "Sixty (60) or More College Units"}:</strong> {as_?.s3item4Text ?? "Earned college units from an accredited institution with a minimum cumulative GPA of 2.0."}</span>
                   </li>
                   <li className="flex items-start group">
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
                       <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
                     </div>
-                    <span className="text-gray-700 text-lg pt-0.5"><strong>CLEP Exams:</strong> For those without a degree or 60 units, achieving a score of 50 or above on specified College-Level Examination Program (CLEP) exams, including the required College Composition exam.</span>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>{as_?.s3item5Label ?? "CLEP Exams"}:</strong> {as_?.s3item5Text ?? "For those without a degree or 60 units, achieving a score of 50 or above on specified College-Level Examination Program (CLEP) exams, including the required College Composition exam."}</span>
                   </li>
                 </ul>
               </div>
@@ -193,42 +195,42 @@ export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
             <section className="animate-fade-in mt-12" style={{ animationDelay: '0.4s' }}>
               <h2 className="text-3xl font-serif font-bold text-pau-blue mb-8 flex items-center">
                 <span className="w-8 h-1 bg-pau-gold mr-4"></span>
-                4. Verification of Pre-Legal Study
+                {as_?.section4Title ?? "4. Verification of Pre-Legal Study"}
               </h2>
               <div className="bg-white rounded-xl shadow-soft border border-gray-100 p-8">
                 <p className="text-gray-700 text-lg leading-relaxed mb-6">
-                  PAUSL is responsible for verifying that each applicant has satisfied the pre-legal education requirement prior to admission to the J.D. program. This verification process is conducted in accordance with Guideline 5.28 of the Guidelines for Unaccredited Law Schools and Rule VII, Section 1 of the Rules Regulating Admission to Practice Law in California.
+                  {as_?.section4Intro ?? "PAUSL is responsible for verifying that each applicant has satisfied the pre-legal education requirement prior to admission to the J.D. program. This verification process is conducted in accordance with Guideline 5.28 of the Guidelines for Unaccredited Law Schools and Rule VII, Section 1 of the Rules Regulating Admission to Practice Law in California."}
                 </p>
                 <ul className="space-y-4">
                   <li className="flex items-start group">
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
                       <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
                     </div>
-                    <span className="text-gray-700 text-lg pt-0.5"><strong>Official Transcripts:</strong> All applicants must provide official transcripts from every college or university previously attended. If applicable, official CLEP (College Level Examination Program) score reports must also be sent directly to PAUSL from the College Board.</span>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>{as_?.s4item1Label ?? "Official Transcripts"}:</strong> {as_?.s4item1Text ?? "All applicants must provide official transcripts from every college or university previously attended. If applicable, official CLEP (College Level Examination Program) score reports must also be sent directly to PAUSL from the College Board."}</span>
                   </li>
                   <li className="flex items-start group">
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
                       <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
                     </div>
-                    <span className="text-gray-700 text-lg pt-0.5"><strong>Verification Standards:</strong> The Admissions Office will review academic records to ensure the completion of at least two years of college work (minimum 60 semester or 90 quarter units) at an accredited institution, or the equivalent through approved CLEP examinations.</span>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>{as_?.s4item2Label ?? "Verification Standards"}:</strong> {as_?.s4item2Text ?? "The Admissions Office will review academic records to ensure the completion of at least two years of college work (minimum 60 semester or 90 quarter units) at an accredited institution, or the equivalent through approved CLEP examinations."}</span>
                   </li>
                   <li className="flex items-start group">
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
                       <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
                     </div>
-                    <span className="text-gray-700 text-lg pt-0.5"><strong>State Bar Evaluation:</strong> In cases where PAUSL cannot definitively determine whether an applicant's pre-legal study meets the required standards, the applicant may be required to obtain a formal "Evaluation of Pre-Legal Education" from the Committee of Bar Examiners of the State Bar of California. The responsibility for requesting this evaluation and paying any associated fees rests with the applicant.</span>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>{as_?.s4item3Label ?? "State Bar Evaluation"}:</strong> {as_?.s4item3Text ?? "In cases where PAUSL cannot definitively determine whether an applicant's pre-legal study meets the required standards, the applicant may be required to obtain a formal \"Evaluation of Pre-Legal Education\" from the Committee of Bar Examiners of the State Bar of California. The responsibility for requesting this evaluation and paying any associated fees rests with the applicant."}</span>
                   </li>
                   <li className="flex items-start group">
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
                       <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
                     </div>
-                    <span className="text-gray-700 text-lg pt-0.5"><strong>Foreign Credentials:</strong> Applicants seeking to satisfy requirements with credits from foreign institutions must provide a credential evaluation from an agency approved by the Committee of Bar Examiners.</span>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>{as_?.s4item4Label ?? "Foreign Credentials"}:</strong> {as_?.s4item4Text ?? "Applicants seeking to satisfy requirements with credits from foreign institutions must provide a credential evaluation from an agency approved by the Committee of Bar Examiners."}</span>
                   </li>
                   <li className="flex items-start group">
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mr-4 group-hover:bg-pau-blue transition-colors duration-300">
                       <CheckCircleIcon className="h-5 w-5 text-pau-blue group-hover:text-white transition-colors duration-300" />
                     </div>
-                    <span className="text-gray-700 text-lg pt-0.5"><strong>Final Admission Status:</strong> Final admission to the J.D. program is contingent upon the successful verification of all pre-legal study requirements. An applicant will not be considered fully admitted until PAUSL or the Committee of Bar Examiners has officially confirmed their eligibility.</span>
+                    <span className="text-gray-700 text-lg pt-0.5"><strong>{as_?.s4item5Label ?? "Final Admission Status"}:</strong> {as_?.s4item5Text ?? "Final admission to the J.D. program is contingent upon the successful verification of all pre-legal study requirements. An applicant will not be considered fully admitted until PAUSL or the Committee of Bar Examiners has officially confirmed their eligibility."}</span>
                   </li>
                 </ul>
               </div>
@@ -356,7 +358,7 @@ export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
                     {/* Cohort Selection */}
                     <div>
                       <label htmlFor="cohort-select" className="block text-xs font-bold text-pau-darkBlue uppercase tracking-wide mb-2">
-                        Select Your Start Term <span className="text-red-500" aria-label="required">*</span>
+                        {as_?.selectStartTerm ?? "Select Your Start Term"} <span className="text-red-500" aria-label="required">*</span>
                       </label>
                       <select
                         id="cohort-select"
@@ -368,9 +370,9 @@ export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
                         aria-describedby="cohort-description"
                         className="block w-full border-2 border-pau-gold/30 rounded-lg shadow-sm focus:ring-2 focus:ring-pau-gold focus:border-pau-gold text-base p-4 bg-white font-semibold text-pau-darkBlue"
                       >
-                        <option value="winter">Winter Intake - Starts January (Deadline: mid-November)</option>
-                        <option value="spring">Spring Intake - Starts April (Deadline: mid-February)</option>
-                        <option value="fall">Fall Intake - Starts September (Deadline: mid-July)</option>
+                        <option value="winter">{as_?.winterIntake ?? "Winter Intake - Starts January (Deadline: mid-November)"}</option>
+                        <option value="spring">{as_?.springIntake ?? "Spring Intake - Starts April (Deadline: mid-February)"}</option>
+                        <option value="fall">{as_?.fallIntake ?? "Fall Intake - Starts September (Deadline: mid-July)"}</option>
                       </select>
                       <p id="cohort-description" className="mt-2 text-xs text-gray-500 italic">
                         Application deadline is 45 days prior to the start date.
@@ -396,7 +398,7 @@ export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
                     <div className="grid grid-cols-2 gap-5">
                       <div>
                         <label htmlFor="firstName" className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">
-                          First Name <span className="text-red-500" aria-label="required">*</span>
+                          {as_?.firstName ?? "First Name"} <span className="text-red-500" aria-label="required">*</span>
                         </label>
                         <input 
                           id="firstName"
@@ -408,7 +410,7 @@ export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
                       </div>
                       <div>
                         <label htmlFor="lastName" className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">
-                          Last Name <span className="text-red-500" aria-label="required">*</span>
+                          {as_?.lastName ?? "Last Name"} <span className="text-red-500" aria-label="required">*</span>
                         </label>
                         <input 
                           id="lastName"
@@ -423,9 +425,9 @@ export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
                     {/* Contact Fields */}
                     <div>
                       <label htmlFor="email" className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">
-                        Email Address <span className="text-red-500" aria-label="required">*</span>
+                        {as_?.emailAddress ?? "Email Address"} <span className="text-red-500" aria-label="required">*</span>
                       </label>
-                      <input 
+                      <input
                         id="email"
                         type="email" name="email" required
                         value={formData.email} onChange={handleChange}
@@ -436,7 +438,7 @@ export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
                     </div>
                     <div>
                       <label htmlFor="phone" className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">
-                        Phone Number <span className="text-red-500" aria-label="required">*</span>
+                        {as_?.phoneNumber ?? "Phone Number"} <span className="text-red-500" aria-label="required">*</span>
                       </label>
                       <input 
                         id="phone"
@@ -452,7 +454,7 @@ export const Admissions: React.FC<AdmissionsProps> = ({ content, shared }) => {
                 <div className="bg-gray-50 px-6 py-4 sm:px-8 sm:flex sm:flex-row-reverse border-t border-gray-100">
                     <button type="submit" className="w-full inline-flex justify-center items-center rounded-md border border-transparent shadow-sm px-6 py-3 bg-pau-gold text-base font-bold text-white hover:bg-yellow-600 sm:ml-3 sm:w-auto transition-colors" aria-label="Submit application form">
                       <ArrowRightIcon className="h-5 w-5 mr-2" aria-hidden="true" />
-                      Continue Application
+                      {as_?.continueApplication ?? "Continue Application"}
                     </button>
                     <button type="button" onClick={() => setIsModalOpen(false)} className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-6 py-3 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm transition-colors" aria-label="Close application modal">
                       Cancel

@@ -5,9 +5,11 @@ import { InformationCircleIcon, DocumentCheckIcon, ArrowDownTrayIcon } from '@he
 
 interface ConsumerInfoProps {
   content: ConsumerInfoContent;
+  pagesContent?: any;
 }
 
-export const ConsumerInfo: React.FC<ConsumerInfoProps> = ({ content }) => {
+export const ConsumerInfo: React.FC<ConsumerInfoProps> = ({ content, pagesContent }) => {
+  const ci = pagesContent?.consumerInfo;
   return (
     <div className="bg-white min-h-screen">
       {/* Header */}
@@ -75,7 +77,7 @@ export const ConsumerInfo: React.FC<ConsumerInfoProps> = ({ content }) => {
                     className="inline-flex items-center px-6 py-3 border-2 border-pau-blue text-pau-blue font-semibold rounded-lg hover:bg-pau-blue hover:text-white transition-all duration-300 shadow-sm hover:shadow-md group"
                   >
                     <ArrowDownTrayIcon className="h-5 w-5 mr-2 group-hover:animate-bounce" />
-                    Download Full Disclosure Statement
+                    {ci?.downloadDisclosure ?? "Download Full Disclosure Statement"}
                   </a>
                 </div>
               )}
@@ -87,7 +89,7 @@ export const ConsumerInfo: React.FC<ConsumerInfoProps> = ({ content }) => {
         <div className="mt-16 bg-white shadow-soft rounded-2xl border border-gray-100 p-10">
           <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center border-b border-gray-100 pb-4">
             <DocumentCheckIcon className="h-6 w-6 text-pau-blue mr-2" />
-            State Bar Registration & Accreditation Status
+            {ci?.stateBarStatus ?? "State Bar Registration & Accreditation Status"}
           </h2>
           <div className="space-y-4 text-gray-700 leading-relaxed">
             <p>

@@ -1,0 +1,83 @@
+{
+  "heroTitle": "Trao quyền cho những người bảo vệ công lý.\nThay đổi cuộc sống.",
+  "heroSubtitle": "Trải nghiệm giáo dục pháp luật đẳng cấp thế giới từ trung tâm Silicon Valley đến bất cứ nơi nào bạn ở.",
+  "visionStatement": "Tầm nhìn của chúng tôi là cung cấp một cánh cửa tiếp cận nghề luật cho sinh viên thuộc mọi tầng lớp.",
+  "missionTitle": "Sứ mệnh của PAU",
+  "missionDescription": "Chúng tôi thu hẹp khoảng cách giữa lý thuyết học thuật và thực hành pháp lý thực tế thông qua phương pháp giảng dạy định hướng công nghệ.",
+  "missionPoints": [
+    {
+      "title": "Đổi mới",
+      "description": "Sử dụng các công cụ hiện đại cho nghiên cứu và giáo dục pháp luật.",
+      "icon": "innovation"
+    },
+    {
+      "title": "Tiếp cận",
+      "description": "Cung cấp cơ hội cho sinh viên học từ xa và sinh viên không theo truyền thống.",
+      "icon": "access"
+    },
+    {
+      "title": "Tác động toàn cầu",
+      "description": "Chuẩn bị cho các luật sư một bối cảnh pháp lý kết nối toàn cầu.",
+      "icon": "globe"
+    }
+  ],
+  "introTitle": "Một mô hình mới trong ngành Luật",
+  "introText": "Pacific American University School of Law cung cấp chương trình Juris Doctor nghiêm ngặt được thiết kế cho kỷ nguyên hiện đại.",
+  "features": [
+    {
+      "title": "Học tập linh hoạt",
+      "description": "Học theo lịch trình của bạn với nền tảng trực tuyến mạnh mẽ của chúng tôi.",
+      "icon": "clock"
+    },
+    {
+      "title": "Đội ngũ giảng viên chuyên gia",
+      "description": "Học hỏi từ các luật sư đang hành nghề và các học giả ưu tú.",
+      "icon": "academic"
+    },
+    {
+      "title": "Giáo dục với chi phí hợp lý",
+      "description": "Chương trình JD giá trị cao với mức học phí cạnh tranh.",
+      "icon": "currency"
+    }
+  ],
+  "successTitle": "Sự xuất sắc đã được chứng minh",
+  "successText": "Sinh viên tốt nghiệp của chúng tôi đang hành nghề tại các công ty danh tiếng và dịch vụ công trên khắp California.",
+  "stats": [
+    {
+      "label": "Tỷ lệ vượt qua kỳ thi Luật sư",
+      "value": "85%"
+    },
+    {
+      "label": "Việc làm",
+      "value": "92%"
+    },
+    {
+      "label": "Giảng viên",
+      "value": "45+"
+    },
+    {
+      "label": "Cựu sinh viên",
+      "value": "2k+"
+    }
+  ],
+  "globalFutureTitle": "Tương lai toàn cầu của bạn",
+  "globalFutureIntro": "Chương trình JD của chúng tôi chuẩn bị cho bạn những con đường sự nghiệp đa dạng trong lĩnh vực pháp lý.",
+  "globalFutureList": [
+    {
+      "title": "Luật Công nghệ",
+      "description": "Chuyên sâu về sở hữu trí tuệ (IP), đạo đức AI và các nhu cầu pháp lý đặc thù của Silicon Valley.",
+      "detailTitle": "Đổi mới & Luật pháp",
+      "detailBody": "Dẫn đầu các cuộc thảo luận về quy định công nghệ.",
+      "stats": [
+        {
+          "label": "Tăng trưởng",
+          "value": "+20%"
+        }
+      ]
+    }
+  ],
+  "globalFutureClosing": "Gia nhập thế hệ lãnh đạo pháp lý tiếp theo.",
+  "clinicsTitle": "Cơ hội thực hành lâm sàng",
+  "clinicsIntro": "Tích lũy kinh nghiệm thực tế thông qua các phòng thực hành luật chuyên sâu của chúng tôi.",
+  "newsTitle": "Tin tức mới nhất"
+}

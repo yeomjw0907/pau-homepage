@@ -4,7 +4,12 @@ import { SectionWrapper } from './common/SectionWrapper';
 import { InboxArrowDownIcon, PaperAirplaneIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
 import * as adminService from '../services/adminService';
 
-export const RequestInfo: React.FC = () => {
+interface RequestInfoProps {
+    pagesContent?: any;
+}
+
+export const RequestInfo: React.FC<RequestInfoProps> = ({ pagesContent }) => {
+    const ri = pagesContent?.requestInfo;
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
@@ -30,8 +35,8 @@ export const RequestInfo: React.FC = () => {
     return (
         <>
             <PageHeader
-                title={"Request\nInformation"}
-                subtitle="Learn more about our programs and community."
+                title={ri?.pageTitle ?? "Request\nInformation"}
+                subtitle={ri?.pageSubtitle ?? "Learn more about our programs and community."}
                 icon={InboxArrowDownIcon}
             />
 
@@ -42,27 +47,27 @@ export const RequestInfo: React.FC = () => {
                             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
                                 <CheckCircleIcon className="h-10 w-10 text-green-600" />
                             </div>
-                            <h3 className="text-2xl font-serif font-bold text-green-800 mb-4">Inquiry Received!</h3>
+                            <h3 className="text-2xl font-serif font-bold text-green-800 mb-4">{ri?.inquiryReceived ?? "Inquiry Received!"}</h3>
                             <p className="text-green-700 text-lg mb-8">
-                                Thank you for your interest in PAU. Our admissions team will review your request and contact you shortly.
+                                {ri?.thankYou ?? "Thank you for your interest in PAU. Our admissions team will review your request and contact you shortly."}
                             </p>
                             <button
                                 onClick={() => setStatus('idle')}
                                 className="bg-green-600 text-white px-8 py-3 rounded-full font-bold hover:bg-green-700 transition-colors"
                             >
-                                Send Another Request
+                                {ri?.sendAnother ?? "Send Another Request"}
                             </button>
                         </div>
                     ) : (
                         <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8 md:p-12">
                             <div className="text-center mb-10">
-                                <h2 className="text-2xl font-serif font-bold text-pau-darkBlue">Get in Touch</h2>
-                                <p className="text-gray-500 mt-2">Fill out the form below and we'll get back to you.</p>
+                                <h2 className="text-2xl font-serif font-bold text-pau-darkBlue">{ri?.getInTouch ?? "Get in Touch"}</h2>
+                                <p className="text-gray-500 mt-2">{ri?.formSubtitle ?? "Fill out the form below and we'll get back to you."}</p>
                             </div>
 
                             <form onSubmit={handleSubmit} className="space-y-6">
                                 <div>
-                                    <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">Full Name</label>
+                                    <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">{ri?.fullName ?? "Full Name"}</label>
                                     <input
                                         required
                                         type="text"
@@ -75,7 +80,7 @@ export const RequestInfo: React.FC = () => {
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
-                                        <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">Email Address</label>
+                                        <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">{ri?.emailAddress ?? "Email Address"}</label>
                                         <input
                                             required
                                             type="email"
@@ -86,7 +91,7 @@ export const RequestInfo: React.FC = () => {
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">Phone (Optional)</label>
+                                        <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">{ri?.phoneOptional ?? "Phone (Optional)"}</label>
                                         <input
                                             type="tel"
                                             className="w-full p-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pau-blue focus:bg-white transition-all"
@@ -98,25 +103,25 @@ export const RequestInfo: React.FC = () => {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">Area of Interest</label>
+                                    <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">{ri?.areaOfInterest ?? "Area of Interest"}</label>
                                     <select
                                         className="w-full p-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pau-blue focus:bg-white transition-all"
                                         value={formData.interest}
                                         onChange={(e) => setFormData({ ...formData, interest: e.target.value })}
                                     >
-                                        <option value="">Select an option...</option>
-                                        <option value="JD Program">Juris Doctor (JD) Program</option>
-                                        <option value="Transfer">Transfer Admission</option>
-                                        <option value="Tuition">Tuition & Financials</option>
-                                        <option value="General">General Inquiry</option>
+                                        <option value="">{ri?.selectOption ?? "Select an option..."}</option>
+                                        <option value="JD Program">{ri?.optionJD ?? "Juris Doctor (JD) Program"}</option>
+                                        <option value="Transfer">{ri?.optionTransfer ?? "Transfer Admission"}</option>
+                                        <option value="Tuition">{ri?.optionTuition ?? "Tuition & Financials"}</option>
+                                        <option value="General">{ri?.optionGeneral ?? "General Inquiry"}</option>
                                     </select>
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">Message / Questions</label>
+                                    <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">{ri?.messageQuestions ?? "Message / Questions"}</label>
                                     <textarea
                                         className="w-full p-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pau-blue focus:bg-white transition-all h-32"
-                                        placeholder="How can we help you?"
+                                        placeholder={ri?.howCanWeHelp ?? "How can we help you?"}
                                         value={formData.message}
                                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                                     />
@@ -127,9 +132,9 @@ export const RequestInfo: React.FC = () => {
                                     disabled={status === 'submitting'}
                                     className="w-full bg-pau-gold text-pau-darkBlue font-bold py-5 rounded-xl text-lg hover:bg-yellow-400 transform hover:scale-[1.02] transition-all shadow-lg flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed"
                                 >
-                                    {status === 'submitting' ? 'Sending...' : (
+                                    {status === 'submitting' ? (ri?.sending ?? 'Sending...') : (
                                         <>
-                                            Submit Inquiry <PaperAirplaneIcon className="h-5 w-5" />
+                                            {ri?.submitInquiry ?? "Submit Inquiry"} <PaperAirplaneIcon className="h-5 w-5" />
                                         </>
                                     )}
                                 </button>

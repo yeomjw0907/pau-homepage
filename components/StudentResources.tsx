@@ -12,9 +12,11 @@ interface StudentResourcesProps {
   title: string;
   subtitle: string;
   resources: Resource[];
+  pagesContent?: any;
 }
 
-export const StudentResources: React.FC<StudentResourcesProps> = ({ title, subtitle, resources }) => {
+export const StudentResources: React.FC<StudentResourcesProps> = ({ title, subtitle, resources, pagesContent }) => {
+  const sr = pagesContent?.studentResources;
   const getIcon = (iconType: string) => {
     switch (iconType) {
       case 'academic':
@@ -87,10 +89,10 @@ export const StudentResources: React.FC<StudentResourcesProps> = ({ title, subti
         <div className="mt-20 bg-gradient-to-r from-pau-light to-white rounded-3xl p-10 border border-gray-200 shadow-xl">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl font-serif font-bold text-pau-darkBlue mb-4">
-              Committed to Your Success
+              {sr?.committedTitle ?? "Committed to Your Success"}
             </h2>
             <p className="text-lg text-gray-600 leading-relaxed">
-              Pacific American University School of Law provides comprehensive support systems to ensure every student has the resources needed to excel academically and professionally. From personalized academic guidance to professional networking opportunities, we are dedicated to helping you achieve your legal career goals.
+              {sr?.committedText ?? "Pacific American University School of Law provides comprehensive support systems to ensure every student has the resources needed to excel academically and professionally. From personalized academic guidance to professional networking opportunities, we are dedicated to helping you achieve your legal career goals."}
             </p>
           </div>
         </div>

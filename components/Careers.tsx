@@ -5,9 +5,11 @@ import { BriefcaseIcon, XMarkIcon, BuildingOfficeIcon, UserGroupIcon } from '@he
 
 interface CareersProps {
   content: CareersContent;
+  pagesContent?: any;
 }
 
-export const Careers: React.FC<CareersProps> = ({ content }) => {
+export const Careers: React.FC<CareersProps> = ({ content, pagesContent }) => {
+  const car = pagesContent?.careers;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -45,7 +47,7 @@ export const Careers: React.FC<CareersProps> = ({ content }) => {
                <div className="p-3 bg-pau-light rounded-lg text-pau-blue mr-4">
                  <BriefcaseIcon className="h-8 w-8" />
                </div>
-               <h2 className="text-3xl font-serif font-bold text-gray-900">Student Services</h2>
+               <h2 className="text-3xl font-serif font-bold text-gray-900">{car?.studentServices ?? "Student Services"}</h2>
             </div>
             
             <div className="space-y-8">
@@ -56,8 +58,8 @@ export const Careers: React.FC<CareersProps> = ({ content }) => {
                 </div>
               ))}
               <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-pau-gold shadow-sm">
-                  <h3 className="text-xl font-bold text-pau-blue mb-2">Alumni Network Access</h3>
-                  <p className="text-gray-600 leading-relaxed">Connect with our vast network of alumni practicing in top firms, government agencies, and non-profits worldwide.</p>
+                  <h3 className="text-xl font-bold text-pau-blue mb-2">{car?.alumniAccess ?? "Alumni Network Access"}</h3>
+                  <p className="text-gray-600 leading-relaxed">{car?.alumniAccessDesc ?? "Connect with our vast network of alumni practicing in top firms, government agencies, and non-profits worldwide."}</p>
               </div>
             </div>
           </div>
@@ -68,7 +70,7 @@ export const Careers: React.FC<CareersProps> = ({ content }) => {
             </div>
             <div className="relative z-10">
                <h2 className="text-3xl font-serif font-bold mb-6 flex items-center">
-                 Employer Recruitment
+                 {car?.employerRecruitment ?? "Employer Recruitment"}
                </h2>
                <p className="text-blue-100 mb-8 text-lg leading-relaxed">
                  PAU Law students are trained to be practice-ready from day one. We invite legal employers to participate in our Fall and Spring On-Campus Interview (OCI) programs.

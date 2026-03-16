@@ -1,0 +1,52 @@
+{
+  "title": "Tuyển sinh",
+  "intro": "Bắt đầu hành trình hướng tới sự nghiệp pháp lý cùng Pacific American University.",
+  "deadlinesTitle": "Hạn chót nộp hồ sơ",
+  "deadlines": [
+    {
+      "term": "Kỳ nhập học mùa Đông",
+      "date": "Bắt đầu tháng 1 (Hạn chót: giữa tháng 11)",
+      "type": "1L Students"
+    },
+    {
+      "term": "Kỳ nhập học mùa Xuân",
+      "date": "Bắt đầu tháng 4 (Hạn chót: giữa tháng 2)",
+      "type": "1L Students"
+    },
+    {
+      "term": "Kỳ nhập học mùa Thu",
+      "date": "Bắt đầu tháng 9 (Hạn chót: giữa tháng 7)",
+      "type": "1L Students"
+    }
+  ],
+  "requirementsTitle": "Yêu cầu tuyển sinh",
+  "requirements": [
+    "Bằng Cử nhân từ một tổ chức được công nhận",
+    "Bài luận cá nhân",
+    "Hai thư giới thiệu",
+    "Điểm LSAT (Tùy chọn)",
+    "Bảng điểm chính thức"
+  ],
+  "tuitionTitle": "Học phí & Giá trị",
+  "tuitionInfo": "Một trong những chương trình JD dễ tiếp cận nhất tại California. Chúng tôi tin tưởng vào việc cung cấp giáo dục pháp luật chất lượng cao mà không gây gánh nặng nợ nần chồng chất.",
+  "tuitionCost": "$9,000",
+  "faqTitle": "Câu hỏi thường gặp về tuyển sinh",
+  "faqs": [
+    {
+      "question": "Chương trình có học trực tuyến 100% không?",
+      "answer": "Có. PAUSL là một Trường Luật đào tạo từ xa chưa được kiểm định đã đăng ký. Mặc dù chương trình được cung cấp trực tuyến 100% thông qua Hệ thống Quản lý Học tập của chúng tôi, Populi, chương trình có sự kết hợp năng động giữa các bài giảng video chất lượng cao được ghi hình sẵn (bất đồng bộ) và các buổi học trực tiếp theo thời gian thực (đồng bộ) để thúc đẩy sự tương tác thiết yếu giữa sinh viên và giảng viên. Hình thức linh hoạt này cho phép bạn theo đuổi bằng J.D. từ bất kỳ đâu trên thế giới trong khi vẫn tôn trọng sự khác biệt về múi giờ toàn cầu."
+    },
+    {
+      "question": "Tôi có cần phải thi LSAT không?",
+      "answer": "Không, LSAT không bắt buộc, nhưng rất được khuyến khích. PAUSL đánh giá ứng viên một cách toàn diện, và mặc dù điểm LSAT là một chỉ số dự báo đáng tin cậy về sự thành công trong trường luật, chúng không phải là điều kiện tiên quyết bắt buộc để nhập học."
+    },
+    {
+      "question": "Tôi có thể hành nghề luật ở các bang khác ngoài California không?",
+      "answer": "PAUSL được đăng ký cụ thể để đáp ứng các yêu cầu giáo dục của State Bar of California. Nếu bạn có kế hoạch hành nghề luật tại một khu vực tài phán khác ngoài California, chúng tôi khuyên bạn nên liên hệ với cơ quan State Bar có thẩm quyền tại khu vực đó để xác định xem chương trình J.D. của chúng tôi có đáp ứng các tiêu chí cụ thể của họ hay không."
+    },
+    {
+      "question": "Kỳ thi sinh viên luật năm thứ nhất (FYLSX) là gì?",
+      "answer": "Là sinh viên tại một trường luật đào tạo từ xa chưa được kiểm định, bạn được luật pháp California yêu cầu phải vượt qua kỳ thi FYLSX (thường được gọi là \"Baby Bar\") sau khi hoàn thành năm học đầu tiên để được công nhận tín chỉ cho quá trình giáo dục pháp luật của mình và tiếp tục hướng tới bằng J.D.."
+    }
+  ]
+}

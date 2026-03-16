@@ -1,0 +1,83 @@
+{
+  "heroTitle": "赋能法律倡导者。\n改变人生。",
+  "heroSubtitle": "无论您身在何处，都能体验来自 Silicon Valley 中心的世界级法学教育。",
+  "visionStatement": "我们的愿景是为各种背景的学生提供进入法律行业的便捷途径。",
+  "missionTitle": "PAU 的使命",
+  "missionDescription": "我们通过技术驱动的教学法，弥合学术理论与现实法律实践之间的差距。",
+  "missionPoints": [
+    {
+      "title": "创新",
+      "description": "利用现代工具进行法律研究和教育。",
+      "icon": "innovation"
+    },
+    {
+      "title": "准入",
+      "description": "为远程和非传统学生提供机会。",
+      "icon": "access"
+    },
+    {
+      "title": "全球影响",
+      "description": "为律师应对互联的法律格局做好准备。",
+      "icon": "globe"
+    }
+  ],
+  "introTitle": "法律的新范式",
+  "introText": "Pacific American University School of Law 提供专为现代量身定制的严谨 Juris Doctor 课程。",
+  "features": [
+    {
+      "title": "灵活学习",
+      "description": "通过我们强大的在线平台，按照您的时间表进行学习。",
+      "icon": "clock"
+    },
+    {
+      "title": "专家师资",
+      "description": "向执业律师和杰出学者学习。",
+      "icon": "academic"
+    },
+    {
+      "title": "负担得起的教育",
+      "description": "具有竞争力的学费和高价值的 JD 课程。",
+      "icon": "currency"
+    }
+  ],
+  "successTitle": "卓越成就",
+  "successText": "我们的毕业生在 California 各地的知名律所和公共服务部门执业。",
+  "stats": [
+    {
+      "label": "律师考试通过率",
+      "value": "85%"
+    },
+    {
+      "label": "就业率",
+      "value": "92%"
+    },
+    {
+      "label": "教职员工",
+      "value": "45+"
+    },
+    {
+      "label": "校友",
+      "value": "2k+"
+    }
+  ],
+  "globalFutureTitle": "您的全球未来",
+  "globalFutureIntro": "我们的 JD 课程为您在法律领域的多元化职业道路做好准备。",
+  "globalFutureList": [
+    {
+      "title": "技术法",
+      "description": "专注于知识产权、人工智能伦理以及 Silicon Valley 独特的法律需求。",
+      "detailTitle": "创新与法律",
+      "detailBody": "引领技术监管领域的对话。",
+      "stats": [
+        {
+          "label": "增长",
+          "value": "+20%"
+        }
+      ]
+    }
+  ],
+  "globalFutureClosing": "加入下一代法律领袖的行列。",
+  "clinicsTitle": "临床实践机会",
+  "clinicsIntro": "通过我们的专业法律诊所获得实践经验。",
+  "newsTitle": "最新动态"
+}
