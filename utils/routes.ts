@@ -25,6 +25,15 @@ export const SEO_ROUTES: SeoRoute[] = [
     description: 'Learn about Pacific American University School of Law, its mission, history, identity, and correspondence law school registration in California.',
     priority: '0.9',
   },
+  { page: 'bar-reg', path: '/about/california-state-bar-registration', title: 'California State Bar Registration | PAU School of Law', description: 'Review PAU School of Law registration status with the Committee of Bar Examiners of the State Bar of California.', priority: '0.7' },
+  { page: 'disclosure', path: '/about/disclosure', title: 'Disclosure Statement | PAU School of Law', description: 'Read PAU School of Law disclosure statements, transparency information, and required institutional notices.', priority: '0.7' },
+  { page: 'president-welcome', path: '/about/president-welcome', title: "President's Welcome | PAU School of Law", description: 'Read the welcome message from the President of Pacific American University and the vision for PAU School of Law.', priority: '0.6' },
+  { page: 'dean-message', path: '/about/dean-message', title: 'Message from the Dean | PAU School of Law', description: 'Read the Dean’s message about academic leadership, student outcomes, and PAU School of Law legal education.', priority: '0.6' },
+  { page: 'admin-staffs', path: '/about/administration-staff', title: 'Administration & Staff | PAU School of Law', description: 'Meet the administration and staff supporting Pacific American University School of Law students and operations.', priority: '0.6' },
+  { page: 'faculty', path: '/about/faculty', title: 'Faculty | PAU School of Law', description: 'Meet the faculty and academic leadership of Pacific American University School of Law.', priority: '0.6' },
+  { page: 'catalog', path: '/about/school-catalog', title: 'School Catalog | PAU School of Law', description: 'Access the PAU School of Law school catalog, program guide, policies, and institutional information.', priority: '0.6' },
+  { page: 'school-form', path: '/about/school-forms', title: 'School Forms | PAU School of Law', description: 'Find PAU School of Law administrative forms, student forms, and school document resources.', priority: '0.5' },
+  { page: 'faqs', path: '/about/faqs', title: 'FAQs | PAU School of Law', description: 'Frequently asked questions about PAU School of Law admissions, academics, tuition, and student services.', priority: '0.6' },
   {
     page: 'academics',
     path: '/academics',
@@ -67,8 +76,6 @@ export const SEO_ROUTES: SeoRoute[] = [
   { page: 'contact-info', path: '/contact/information', title: 'Contact Information | PAU School of Law', description: 'Find PAU School of Law phone numbers, email addresses, address, and office contact details.', priority: '0.6' },
   { page: 'office-hours', path: '/contact/office-hours', title: 'Office Hours | PAU School of Law', description: 'View PAU School of Law office hours and administrative support availability.', priority: '0.6' },
   { page: 'request-info', path: '/contact/request-information', title: 'Request Information | PAU School of Law', description: 'Request information from PAU School of Law admissions and student services.', priority: '0.7' },
-  { page: 'faculty', path: '/about/faculty', title: 'Faculty | PAU School of Law', description: 'Meet the faculty and academic leadership of Pacific American University School of Law.', priority: '0.6' },
-  { page: 'faqs', path: '/about/faqs', title: 'FAQs | PAU School of Law', description: 'Frequently asked questions about PAU School of Law admissions, academics, tuition, and student services.', priority: '0.6' },
   { page: 'weekly-dicta', path: '/my-pausl/weekly-dicta', title: 'Weekly Dicta | PAU School of Law', description: 'Read Weekly Dicta announcements and updates for the PAU School of Law community.', priority: '0.5' },
 ];
 

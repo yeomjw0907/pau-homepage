@@ -461,6 +461,15 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         <div className="sr-only" aria-label="Search engine navigation links">
           <a href={getPathForPage('history-mission')}>About PAU School of Law</a>
+          <a href={getPathForPage('bar-reg')}>California State Bar Registration</a>
+          <a href={getPathForPage('disclosure')}>Disclosure Statement</a>
+          <a href={getPathForPage('president-welcome')}>President's Welcome</a>
+          <a href={getPathForPage('dean-message')}>Message from the Dean</a>
+          <a href={getPathForPage('admin-staffs')}>Administration & Staff</a>
+          <a href={getPathForPage('faculty')}>Faculty</a>
+          <a href={getPathForPage('catalog')}>School Catalog</a>
+          <a href={getPathForPage('school-form')}>School Forms</a>
+          <a href={getPathForPage('faqs')}>FAQs</a>
           <a href={getPathForPage('academics')}>Academics</a>
           <a href={getPathForPage('admissions')}>Admissions</a>
           <a href={getPathForPage('tuition')}>Tuition</a>
