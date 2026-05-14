@@ -47,6 +47,7 @@ import { StepCard } from './components/common/StepCard';
 import { SectionHeader } from './components/common/SectionHeader';
 import { useTranslation } from './hooks/useTranslation';
 import { applyNewsTranslation } from './utils/applyTranslation';
+import { applyPageSeo, getPageForPath, getPathForPage } from './utils/routes';
 import { DEFAULT_FACULTY_CONTENT } from './data/facultyData';
 import { DEFAULT_ADMISSIONS_CONTENT } from './data/admissionsData';
 import { DEFAULT_ACADEMICS_CONTENT } from './data/academicsData';
@@ -84,7 +85,7 @@ import {
 
 
 const App: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState<Page>('home');
+  const [currentPage, setCurrentPage] = useState<Page>(() => getPageForPath(window.location.pathname));
   const [currentLang, setCurrentLang] = useState<SupportedLanguage>('English');
   const [selectedClinic, setSelectedClinic] = useState<Clinic | null>(null);
   const [, startTransition] = useTransition();
@@ -254,6 +255,11 @@ const App: React.FC = () => {
   }, []);
 
   const handleNavigate = (page: Page) => {
+    const nextPath = getPathForPage(page);
+    if (window.location.pathname !== nextPath) {
+      window.history.pushState({ page }, '', nextPath);
+    }
+
     // Use startTransition to make navigation non-blocking
     startTransition(() => {
       setCurrentPage(page);
@@ -265,6 +271,23 @@ const App: React.FC = () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   };
+
+  React.useEffect(() => {
+    const handlePopState = () => {
+      startTransition(() => {
+        setCurrentPage(getPageForPath(window.location.pathname));
+        setSelectedClinic(null);
+        setSelectedNews(null);
+      });
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  React.useEffect(() => {
+    applyPageSeo(currentPage);
+  }, [currentPage]);
 
   const renderContent = () => {
     if (currentPage === 'admin') {
@@ -2651,7 +2674,7 @@ const App: React.FC = () => {
           <div className="pt-44 pb-20 text-center">
             <h1 className="text-4xl text-gray-300 font-bold">Page Under Construction</h1>
             <p className="mt-4 text-gray-500">The requested page "{currentPage}" is currently being updated.</p>
-            <button onClick={() => setCurrentPage('home')} className="mt-8 text-pau-blue hover:underline">Return Home</button>
+            <button onClick={() => handleNavigate('home')} className="mt-8 text-pau-blue hover:underline">Return Home</button>
           </div>
         );
     }
@@ -2676,6 +2699,7 @@ const App: React.FC = () => {
         isTranslating={isTranslating}
         currentPage={currentPage}
         onNavigate={handleNavigate}
+        getPathForPage={getPathForPage}
         shared={shared}
         globalAlert={globalAlert}
       />
@@ -2684,7 +2708,7 @@ const App: React.FC = () => {
         {renderContent()}
       </main>
 
-      <Footer onNavigate={handleNavigate} shared={shared} />
+      <Footer onNavigate={handleNavigate} getPathForPage={getPathForPage} shared={shared} />
     </div>
   );
 };

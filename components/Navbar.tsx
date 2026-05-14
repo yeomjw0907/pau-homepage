@@ -9,6 +9,7 @@ interface NavbarProps {
   isTranslating: boolean;
   currentPage: Page;
   onNavigate: (page: Page) => void;
+  getPathForPage: (page: Page) => string;
   shared: SharedContent;
   globalAlert: GlobalAlert;
 }
@@ -32,6 +33,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   isTranslating, 
   currentPage,
   onNavigate,
+  getPathForPage,
   shared,
   globalAlert
 }) => {
@@ -55,6 +57,17 @@ export const Navbar: React.FC<NavbarProps> = ({
     onNavigate(page);
     setIsMobileMenuOpen(false);
     setMobileExpandedSection(null);
+  };
+
+  const handleInternalLinkClick = (event: React.MouseEvent<HTMLAnchorElement>, page: Page) => {
+    event.preventDefault();
+    onNavigate(page);
+    setActiveDropdown(null);
+  };
+
+  const handleMobileInternalLinkClick = (event: React.MouseEvent<HTMLAnchorElement>, page: Page) => {
+    event.preventDefault();
+    navigateAndClose(page);
   };
 
   const handleMouseEnter = (menu: string) => {
@@ -103,14 +116,16 @@ export const Navbar: React.FC<NavbarProps> = ({
   const SubmenuBtn = ({ page, label, external, externalUrl }: { page: Page, label: string, external?: boolean, externalUrl?: string }) => {
     const isActive = currentPage === page;
     return (
-      <button 
-        onClick={() => { 
+      <a
+        href={external && externalUrl ? externalUrl : getPathForPage(page)}
+        onClick={(event) => { 
           if (external) {
+            event.preventDefault();
             onNavigate('home'); 
+            setActiveDropdown(null);
           } else {
-            onNavigate(page); 
+            handleInternalLinkClick(event, page); 
           }
-          setActiveDropdown(null); 
         }} 
         className={`relative text-[15px] transition-all text-left w-full group flex items-center py-1 ${
           isActive ? 'text-pau-blue font-extrabold' : 'text-gray-600 hover:text-pau-blue font-semibold'
@@ -125,7 +140,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {label}
           {external && <span className="ml-2 text-[8px] bg-gray-50 text-gray-400 px-1.5 py-0.5 rounded uppercase tracking-widest font-bold">EXT</span>}
         </span>
-      </button>
+      </a>
     );
   };
 
@@ -157,12 +172,14 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   const MobileSubLink = ({ page, label, external, externalUrl }: { page: Page, label: string, external?: boolean, externalUrl?: string }) => (
-    <button 
-      onClick={() => {
+    <a
+      href={external && externalUrl ? externalUrl : getPathForPage(page)}
+      onClick={(event) => {
         if (external) {
+          event.preventDefault();
           navigateAndClose('home');
         } else {
-          navigateAndClose(page);
+          handleMobileInternalLinkClick(event, page);
         }
       }}
       className={`text-[15px] font-medium text-left py-1 transition-colors flex items-center ${currentPage === page ? 'text-pau-gold font-bold' : 'text-gray-500 active:text-pau-blue'}`}
@@ -173,7 +190,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         {label}
         {external && <span className="ml-2 text-[8px] bg-gray-50 text-gray-400 px-1.5 py-0.5 rounded uppercase tracking-widest font-bold">EXT</span>}
       </span>
-    </button>
+    </a>
   );
 
   return (
@@ -195,9 +212,10 @@ export const Navbar: React.FC<NavbarProps> = ({
       <nav className={`fixed w-full z-50 transition-all duration-500 ${topOffset} ${navBgClass}`} role="navigation" aria-label="Main navigation">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
-            <div 
+            <a
+              href={getPathForPage('home')}
               className="flex-shrink-0 cursor-pointer group flex items-center"
-              onClick={() => onNavigate('home')}
+              onClick={(event) => handleInternalLinkClick(event, 'home')}
             >
               <img 
                 src={isTransparent ? '/images/logo/logo-white.svg' : '/images/logo/logo-main.svg'}
@@ -210,7 +228,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   }
                 }}
               />
-            </div>
+            </a>
 
             <div className="hidden md:flex items-center space-x-1">
               {/* 1. ABOUT */}
@@ -237,7 +255,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 {activeDropdown === 'about' && (
                   <DropdownWrapper widthClass="w-72">
                     <div className="px-10 space-y-4">
-                      <SubmenuBtn page="history-mission" label={shared.nav.historyMission} />
+                      <SubmenuBtn page="history-mission" label="About Overview" />
                       <SubmenuBtn page="bar-reg" label={shared.nav.barReg} />
                       <SubmenuBtn page="disclosure" label={shared.nav.disclosure} />
                       <SubmenuBtn page="president-welcome" label={shared.nav.presidentWelcome} />
@@ -266,7 +284,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       setActiveDropdown(null);
                     }
                   }}
-                  className={navLinkClass([/*'academics',*/ 'academic-calendar', /*'bar-info',*/ 'curriculum-schedule', 'counseling', 'grad-reqs'/*, 'centers', 'student-resources', 'library'*/].includes(currentPage))}
+                  className={navLinkClass(['academics', 'academic-calendar', /*'bar-info',*/ 'curriculum-schedule', 'counseling', 'grad-reqs'/*, 'centers', 'student-resources', 'library'*/].includes(currentPage))}
                   aria-label={`${shared.nav.academics} menu`}
                   aria-expanded={activeDropdown === 'academics'}
                   aria-haspopup="true"
@@ -277,7 +295,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 {activeDropdown === 'academics' && (
                   <DropdownWrapper widthClass="w-72">
                     <div className="px-10 space-y-4">
-                      {/* <SubmenuBtn page="academics" label="Overview" /> */}
+                      <SubmenuBtn page="academics" label="Academics Overview" />
                       {/* <SubmenuBtn page="centers" label={shared.nav.centers} /> */}
                       {/* <SubmenuBtn page="library" label={shared.nav.library} /> */}
                       <SubmenuBtn page="academic-calendar" label={shared.nav.academicCalendar} />
@@ -294,7 +312,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <div className="relative group" onMouseEnter={() => handleMouseEnter('admissions')} onMouseLeave={handleMouseLeave}>
                 <button 
                   onClick={() => toggleDropdown('admissions')}
-                  className={navLinkClass([/*'admissions',*/ 'apply-now', 'app-steps', 'admission-reqs', 'transfer-int', 'tech-reqs'/*, 'careers'*/].includes(currentPage))}
+                  className={navLinkClass(['admissions', 'apply-now', 'app-steps', 'admission-reqs', 'transfer-int', 'tech-reqs'/*, 'careers'*/].includes(currentPage))}
                   aria-label={`${shared.nav.admissions} menu`}
                   aria-expanded={activeDropdown === 'admissions'}
                   aria-haspopup="true"
@@ -306,7 +324,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <DropdownWrapper widthClass="w-72">
                     <div className="px-10 space-y-4">
                       <SubmenuBtn page="home" label={shared.nav.applyNow} external />
-                      {/* <SubmenuBtn page="admissions" label="Admissions Home" /> */}
+                      <SubmenuBtn page="admissions" label="Admissions Overview" />
                       {/* <SubmenuBtn page="careers" label={shared.nav.careers} /> */}
                       <SubmenuBtn page="app-steps" label={shared.nav.appSteps} />
                       <SubmenuBtn page="admission-reqs" label={shared.nav.admissionReqs} />
@@ -373,6 +391,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 {activeDropdown === 'contact' && (
                   <DropdownWrapper widthClass="w-64">
                     <div className="px-10 space-y-4">
+                      <SubmenuBtn page="contact" label="Contact Overview" />
                       <SubmenuBtn page="office-hours" label={shared.nav.officeHours} />
                       <SubmenuBtn page="contact-info" label={shared.nav.contactInfo} />
                       <SubmenuBtn page="request-info" label={shared.nav.requestInfo} />
@@ -438,6 +457,19 @@ export const Navbar: React.FC<NavbarProps> = ({
               </button>
             </div>
           </div>
+        </div>
+
+        <div className="sr-only" aria-label="Search engine navigation links">
+          <a href={getPathForPage('history-mission')}>About PAU School of Law</a>
+          <a href={getPathForPage('academics')}>Academics</a>
+          <a href={getPathForPage('admissions')}>Admissions</a>
+          <a href={getPathForPage('tuition')}>Tuition</a>
+          <a href={getPathForPage('contact')}>Contact</a>
+          <a href={getPathForPage('academic-calendar')}>Academic Calendar</a>
+          <a href={getPathForPage('curriculum-schedule')}>Curriculum Schedule</a>
+          <a href={getPathForPage('admission-reqs')}>Admission Requirements</a>
+          <a href={getPathForPage('tuition-fees')}>Tuition Fees</a>
+          <a href={getPathForPage('request-info')}>Request Information</a>
         </div>
 
         {isMobileMenuOpen && (

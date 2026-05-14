@@ -4,12 +4,13 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 
 interface FooterProps {
   onNavigate: (page: Page) => void;
+  getPathForPage: (page: Page) => string;
   shared: SharedContent;
 }
 
 type ModalType = 'privacy' | 'terms' | 'accessibility' | null;
 
-export const Footer: React.FC<FooterProps> = ({ onNavigate, shared }) => {
+export const Footer: React.FC<FooterProps> = ({ onNavigate, getPathForPage, shared }) => {
   const [activeModal, setActiveModal] = useState<ModalType>(null);
   const modalRef = useRef<HTMLDivElement>(null);
   const firstFocusableRef = useRef<HTMLElement | null>(null);
@@ -102,6 +103,11 @@ Last Updated: January 2026`
     }
   };
 
+  const handleInternalLinkClick = (event: React.MouseEvent<HTMLAnchorElement>, page: Page) => {
+    event.preventDefault();
+    onNavigate(page);
+  };
+
   return (
     <>
     <footer className="bg-pau-darkBlue text-white pt-20 pb-10 px-6 font-sans" role="contentinfo">
@@ -173,8 +179,8 @@ Last Updated: January 2026`
         <div className="col-span-1">
           <h3 className="text-[10px] font-bold text-pau-gold uppercase tracking-[0.2em] mb-6">{shared.footer.quickLinks}</h3>
           <ul className="text-xs text-gray-300 space-y-3 font-bold">
-            <li><button onClick={() => onNavigate('apply-now')} className="hover:text-white transition-colors" aria-label="Navigate to application page">{shared.footer.applyNow}</button></li>
-            <li><button onClick={() => onNavigate('academic-calendar')} className="hover:text-white transition-colors" aria-label="Navigate to academic calendar">{shared.footer.academicCalendar}</button></li>
+            <li><a href={getPathForPage('admissions')} onClick={(event) => handleInternalLinkClick(event, 'admissions')} className="hover:text-white transition-colors" aria-label="Navigate to application page">{shared.footer.applyNow}</a></li>
+            <li><a href={getPathForPage('academic-calendar')} onClick={(event) => handleInternalLinkClick(event, 'academic-calendar')} className="hover:text-white transition-colors" aria-label="Navigate to academic calendar">{shared.footer.academicCalendar}</a></li>
             {/* <li><button onClick={() => onNavigate('library')} className="hover:text-white transition-colors">Law Library</button></li> */}
             {/* <li><button onClick={() => onNavigate('careers')} className="hover:text-white transition-colors">Career Services</button></li> */}
           </ul>
