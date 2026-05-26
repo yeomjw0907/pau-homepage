@@ -1,4 +1,39 @@
 {
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.law.paucal.org"
+        }
+      ],
+      "destination": "https://law.paucal.org/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "pau-homepage.vercel.app"
+        }
+      ],
+      "destination": "https://law.paucal.org/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "pau-homepage-garden-yeoms-projects.vercel.app"
+        }
+      ],
+      "destination": "https://law.paucal.org/:path*",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/((?!api/|images/|locales/|sitemap.xml|robots.txt|favicon.ico).*)",

@@ -102,6 +102,7 @@ export const getCanonicalUrl = (page: Page): string => `${SITE_ORIGIN}${getPathF
 
 export const applyPageSeo = (page: Page): void => {
   const route = getRouteForPage(page);
+  const canonicalUrl = getCanonicalUrl(page);
   document.title = route.title;
 
   let description = document.querySelector<HTMLMetaElement>('meta[name="description"]');
@@ -118,5 +119,13 @@ export const applyPageSeo = (page: Page): void => {
     canonical.rel = 'canonical';
     document.head.appendChild(canonical);
   }
-  canonical.href = getCanonicalUrl(page);
+  canonical.href = canonicalUrl;
+
+  let ogUrl = document.querySelector<HTMLMetaElement>('meta[property="og:url"]');
+  if (!ogUrl) {
+    ogUrl = document.createElement('meta');
+    ogUrl.setAttribute('property', 'og:url');
+    document.head.appendChild(ogUrl);
+  }
+  ogUrl.content = canonicalUrl;
 };
